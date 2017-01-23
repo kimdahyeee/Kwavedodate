@@ -1,0 +1,243 @@
+/* Theme Name: The Project - Responsive Website Template
+Author:HtmlCoder
+Author URI:http://www.htmlcoder.me
+Author e-mail:htmlcoder.me@gmail.com
+Version:1.2.0
+Created:December 2014
+License URI:http://support.wrapbootstrap.com/
+File Description: Place here your custom CSS styles
+*/
+.navbar-nav > li > a {
+	line-height: 0;
+}
+
+/* banner video 크기 조정 */
+.banner.video-background-banner {
+    min-height: 550px;
+    padding-top: 100px;
+}
+
+.banner.video-background-banner h1{
+    font-size: 80px;
+}
+
+.banner.video-background-banner p{
+    font-size: 25px;
+}
+
+/* header font-awesome으로 인해 높이가 맞지 않는 현상 발생 */
+.header-top-dropdown i.fa{
+	line-height: 0;
+}
+
+/* header drop-down custom */
+.header-top-dropdown .dropdown-menu {
+  text-align: center;
+  z-index: 103;
+  padding: 0;
+  min-width: 105px;
+  margin-top: 6px;
+  border: 1px solid #D0D0D0;
+  border-top: none;
+  background: #f2f2f2;
+  font-weight: 400;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}
+
+.header-dropdown-buttons .btn-group .dropdown-menu {
+  text-align: center;
+  z-index: 103;
+  padding: 5px;
+  min-width: 235px;
+  margin-top: 10px;
+  top: 100%;
+  border: none;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}
+
+/* campaign 남은 기간 */
+.campaign-badge {
+  position: absolute;
+  font-size: 12px;
+  border: 1px solid #09afdf;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #09afdf;
+  font-weight: 400;
+  padding: 4px;
+  top: 10px;
+  right: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+/* campaign Learn More 버튼 custom */
+.image-box {
+  position: relative;
+}
+
+.image-box .btn-learn-more {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-weight: bold;
+}
+
+/* 문자열 ellipsis */
+.ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap:break-word; 
+  line-height: 1.2em;
+  height: 2.4em;
+}
+
+/* swiper custumize */
+.swiper-container {
+  width: 100%;
+  height: auto;
+  margin: 20px auto;
+
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: transparent;
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+
+  align-items: center;
+}
+
+img.swiper-img {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.9));
+  filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.9));
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background: black;
+}
+
+.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+    background-image: none;
+    right: 10px;
+    left: auto;
+}
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+  background-image: none;
+  left: 10px;
+  right: auto;
+}
+
+/* form-block custom */
+.form-block {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  width: 430px;
+  border: 1px solid #dcdcdc;
+}
+
+.form-horizontal .checkbox {
+  padding-top: 0px;
+}
+
+.form-horizontal .btn {
+  margin-bottom: 1px;
+}
+
+.form-horizontal .form-group.last-form {
+    margin-bottom: 5px;
+}
+
+/* 화면 너비 0px ~ 767px */
+@media (max-width: 767px) {
+	.header-left .header-dropdown-buttons {
+    position: absolute;
+    top: 5px;
+    /* line-height: 0; */
+    right: 10px;
+	}
+}
+
+/* 화면 너비 0px ~ 991px */
+@media (max-width: 991px) {
+
+}
+
+/* 화면 너비 0px ~ 1199px */
+@media (max-width: 1199px) {
+
+}
+
+/* 화면 너비 768px ~ 무한 픽셀 */
+@media (min-width: 768px) {
+  .main-navigation.with-dropdown-buttons .navbar-default .navbar-collapse {
+    padding-right: 0px;
+  }
+}
+
+/* 화면 너비 991px ~ 무한 픽셀 */
+@media (min-width: 991px) {
+  header.header .header-right {
+    float: right !important;
+  }
+}
+
+/* 화면 너비 1199px ~ 무한 픽셀 */
+@media (min-width: 1199px) {
+  .header-top-dropdown .dropdown-menu {
+    min-width: 122px;
+  }
+}
+
+/* 화면 너비 768px ~ 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+  header.header .header-right {
+    width: 359px;
+    margin: 0 auto;
+  }
+}
+
+/* 화면 너비 768px ~ 1199px */
+@media (min-width: 768px) and (max-width: 1199px) {
+
+}
+
+/* 화면 너비 991px ~ 1199px */
+@media (min-width: 991px) and (max-width: 1199px) {
+
+}
+
+
+
