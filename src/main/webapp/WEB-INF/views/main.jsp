@@ -1,7 +1,10 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 	<head>
-		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>KWAVE D</title>
 		<meta name="description" content="Kwave Donate cor">
 		<meta name="author" content="Choi Hong Hee">
@@ -32,7 +35,6 @@
 		<link href="resources/css/customs1.css" rel="stylesheet">
 		
 	</head>
-
 	<body class="no-trans transparent-header">
 		<div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
 		
@@ -301,7 +303,7 @@
 										<li class="xing"><a target="_blank" href="http://www.xing.com"><i class="fa fa-xing"></i></a></li>
 									</ul>
 
-									<p class="text-center">Copyright © 2016 KWAVE D. All Rights Reserved</p>
+									<p class="text-center">Copyright Â© 2016 KWAVE D. All Rights Reserved</p>
 								</div>
 							</div>
 						</div>
