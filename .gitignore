@@ -39,3 +39,4 @@ hs_err_pid*
 .project
 .classpath
 src/test/
+src/main/webapp/WEB-INF/database.properties
