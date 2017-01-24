@@ -24,12 +24,12 @@ public class HomeController {
 	private SqlSession sqlSession;
 	
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * 메인화면
 	 */
 	@RequestMapping(value = "/")
 	public String main(Locale locale, Model model) {
-		IDao dao = sqlSession.getMapper(IDao.class); 
-		model.addAttribute("list", dao.listDao());
+		/*IDao dao = sqlSession.getMapper(IDao.class); 
+		model.addAttribute("list", dao.listDao());*/
 		return "main";
 	}
 	

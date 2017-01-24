@@ -35,6 +35,10 @@
 		<link href="resources/css/customs1.css" rel="stylesheet">
 		
 	</head>
+	<%-- <c:forEach items="${list}" var="dto">
+	<p>${dto.userName }</p>
+	</c:forEach> --%>
+	
 	<body class="no-trans transparent-header">
 		<div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
 		

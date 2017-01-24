@@ -7,12 +7,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-<!-- schemeLocation에 추가하라고 나왔었음 properties파일에서 가져오기위해 -->
-<!-- http://www.springframework.org/schema/context 
-      http://www.springframework.org/schema/context/spring-context-3.2.xsd
- -->
- 
-	<context:property-placeholder location="/WEB-INF/*.properties" /> 
+	<context:property-placeholder location="/resources/*.properties" /> 
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
