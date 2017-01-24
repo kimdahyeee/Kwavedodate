@@ -180,6 +180,28 @@ img.swiper-img {
     margin-bottom: 5px;
 }
 
+.form-horizontal .form-group a {
+  text-decoration-line: underline;
+}
+
+.has-error .error {
+  font-weight: 400;
+  margin-bottom: 3px;
+  display: block;
+  color: #dc143c;
+  font-style: italic;
+}
+
+.form-horizontal .control-label {
+  padding: 0px; margin: 0px;
+}
+
+/* nav nav-pills custom */
+
+
+
+
+
 /* 화면 너비 0px ~ 767px */
 @media (max-width: 767px) {
 	.header-left .header-dropdown-buttons {
