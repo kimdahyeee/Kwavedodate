@@ -8,7 +8,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:property-placeholder location="/resources/*.properties" /> 
-
+	<context:property-placeholder location="/resources/database.properties" />
+	
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -61,7 +62,6 @@
 	        </beans:list>
 	    </beans:property>
 	</beans:bean>
-	
 	
 	
 </beans:beans>

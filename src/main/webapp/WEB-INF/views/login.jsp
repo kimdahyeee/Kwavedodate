@@ -1,3 +1,12 @@
+<c:set var="oauthUrl" value="${oauthUrl}"></c:set>
+<script type="text/javascript">
+
+/* <c:if test="${!empty oauthUrl and empty sessionScope.ACCESS_TOKEN}"> */
+
+    window.open('${oauthUrl}',"facebookLogin", "width=620, height=556, scrollbars=yes, resizable=yes");
+
+/* </c:if> */
+</script>
 			<div class="main-container">
 				<div class="container">
 					<div class="row">
@@ -33,12 +42,14 @@
 									<div class="separator"></div>
 
 									<div class="form-group">
-										<div class="col-sm-12">							
-											<a class="btn square btn-primary" style="width: 100%;">
+										<div class="col-sm-12">					
+											<a href="${pageContext.request.contextPath}/facebookSignIn" class="btn square btn-primary" style="width: 100%;">
 												<i class="fa fa-facebook"></i> facebook login
 											</a>
 										</div>
 									</div>
+								</form>
+								<form name="LoginForm" action="${pageContext.request.contextPath}/facebook/index" method="post">
 								</form>
 							</div>
 						</div>
