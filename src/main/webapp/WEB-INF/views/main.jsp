@@ -1,5 +1,5 @@
 			<div class="banner video-background-banner pv-40 dark-translucent-bg hovered">
-			    <div id="container">
+				<div class="container">
 					<div class="row">
 						<div class="col-md-8 text-center col-md-offset-2 pv-20">
 							<h1 class="title object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100">EXTRAORDINARY EXPERIENCE</h1>
@@ -89,13 +89,16 @@
 									</div>
 								</div>
 							</div>
+							<label></label>
+							<div class="text-center">
+								<a href="campaigns" class="btn btn-lg btn-danger"> See Them All </a>
+							</div>
 						<div>
 					</div>
-				</div>
+				</div>	
 			</section>
 			
 			<section class="dark-translucent-bg" style="background-color: black;">
-				
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<h2 class="text-center">Because of your <strong>generosity</strong></h2>
@@ -165,4 +168,3 @@
 					<!-- clients end -->
 				</div>
 			</div>
-		</div>

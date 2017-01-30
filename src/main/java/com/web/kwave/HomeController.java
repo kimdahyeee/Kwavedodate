@@ -39,14 +39,11 @@ public class HomeController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Inject
-	private Environment environment;
-	
 	/**
 	 * 메인화면
 	 */
 	@RequestMapping(value = "/")
-	public String main(HttpSession session, Model model) {
+	public String main(Locale locale, Model model) {
 		/*IDao dao = sqlSession.getMapper(IDao.class); 
 		model.addAttribute("list", dao.listDao());*/
 		
@@ -67,7 +64,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/findpassword")
 	public String findPassword(Locale locale, Model model) {
-		return "findpassword";
+		return "findPassword";
 	}
 	
 	/**
@@ -78,4 +75,67 @@ public class HomeController {
 		return "signin";
 	}
 	
+	/**
+	 * 내 정보
+	 */
+	@RequestMapping(value = "/myAccount")
+	public String myAccount() {
+		return "myAccount";
+	}
+	
+	/**
+	 * 회사소개
+	 */
+	@RequestMapping(value = "/aboutUs")
+	public String aboutUs() {
+		return "aboutUs";
+	}
+	
+	/**
+	 * 캠페인
+	 */
+	@RequestMapping(value = "/campaigns")
+	public String campaigns() {
+		return "campaigns";
+	}
+	
+	/**
+	 * 캠페인 상세보기
+	 */
+	@RequestMapping(value = "/campaignDetail")
+	public String campaignDetail() {
+		return "campaignDetail";
+	}
+	
+	/**
+	 * 결제
+	 */
+	@RequestMapping(value = "/payment")
+	public String payment() {
+		return "payment";
+	}
+	
+	/**
+	 * 결제
+	 */
+	@RequestMapping(value = "/completePayment")
+	public String completePayment() {
+		return "completePayment";
+	}
+	
+	/**
+	 * 리워드
+	 */
+	@RequestMapping(value = "/rewards")
+	public String rewards() {
+		return "rewards";
+	}
+	
+	/**
+	 * 임시 비밀번호
+	 */
+	@RequestMapping(value = "/temporaryPassword")
+	public String temporaryPassword() {
+		return "temporaryPassword";
+	}
 }

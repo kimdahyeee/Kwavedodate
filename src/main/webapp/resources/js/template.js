@@ -1248,8 +1248,7 @@
 			if (Modernizr.touch) {
 				$(".video-background").vide({
 					mp4: "resources/videos/background-video.mp4",
-					webm: "resources/videos/background-video.webm",
-					poster: "resources/videos/video-fallback.jpg"
+					webm: "resources/videos/background-video.webm"
 				}, {
 					volume: 1,
 					playbackRate: 1,
@@ -1263,8 +1262,7 @@
 			} else {
 				$(".video-background").vide({
 					mp4: "resources/videos/background-video.mp4",
-					webm: "resources/videos/background-video.webm",
-					poster: "resources/videos/video-poster.jpg"
+					webm: "resources/videos/background-video.webm"
 				}, {
 					volume: 1,
 					playbackRate: 1,
@@ -1282,8 +1280,7 @@
 			if (Modernizr.touch) {
 				$(".video-background-banner").vide({
 					mp4: "resources/videos/background-video-banner.mp4",
-					webm: "resources/videos/background-video-banner.webm",
-					poster: "resources/videos/video-fallback.jpg"
+					webm: "resources/videos/background-video-banner.webm"
 				}, {
 					volume: 1,
 					playbackRate: 1,
@@ -1297,8 +1294,7 @@
 			} else {
 				$(".video-background-banner").vide({
 					mp4: "resources/videos/background-video-banner.mp4",
-					webm: "resources/videos/background-video-banner.webm",
-					poster: "resources/videos/video-banner-poster.jpg"
+					webm: "resources/videos/background-video-banner.webm"
 				}, {
 					volume: 1,
 					playbackRate: 1,
