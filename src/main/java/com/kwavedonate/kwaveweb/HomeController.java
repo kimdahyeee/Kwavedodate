@@ -58,11 +58,6 @@ public class HomeController {
 		return "main";
 	}
 	
-	@RequestMapping("/main")
-	public String maingo() {
-		return "main";
-	}
-	
 	
 	@RequestMapping(value="/checkAuth", method=RequestMethod.GET)
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
@@ -74,49 +69,6 @@ public class HomeController {
 		model.addAttribute("vo", vo);
 		return "checkAuth";
 	}
-/*	
-	
-	@RequestMapping("/main")
-	public String mainPage() {
-		return "main";
-	}
-
-	@RequestMapping("/signForm")
-	public String sign(){
-		return "user/signForm";
-	}
-
-	@RequestMapping("/user/loginPage")
-	public String login() {
-		return "/user/loginPage";
-	}
-	
-	@RequestMapping("logout")
-	public String logout(HttpSession session) {
-		session.setAttribute("userLoginInfo", null);
-		return "redirect:/main";
-	}
-	
-	@RequestMapping(value="/signProcess", method=RequestMethod.POST)
-	public String signDone(HttpServletRequest request, Model model) {
-		
-		if (request.getParameter("userPassword").equals(request.getParameter("userPasswordcheck"))){
-			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			passwordEncoding = new PasswordEncoding(passwordEncoder);
-			
-			IDao dao = sqlSession.getMapper(IDao.class);
-			dao.signDao(request.getParameter("userEmail"), passwordEncoding.encode(request.getParameter("userPassword")), request.getParameter("userName"));
-		} else {
-			return "redirect:/user/signForm";
-		}
-		
-		return "redirect:/main";
-	}
-	
-	@RequestMapping(value="/loginProcess", method=RequestMethod.POST)
-	public String loginComplete(HttpServletRequest request, HttpSession session, Model model) {
-		return "redirect:/main";
-	}*/
 	
 
 	

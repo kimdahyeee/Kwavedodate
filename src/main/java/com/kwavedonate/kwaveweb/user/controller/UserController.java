@@ -53,8 +53,10 @@ public class UserController {
 		return "/user/denied";
 	}
 	
+	
+	//·Î±×ÀÎ
 	@ResponseBody
-   @RequestMapping(value="/insertUser", method=RequestMethod.POST)
+	@RequestMapping(value="/insertUser", method=RequestMethod.POST)
    public HashMap<String, Object> insertUser(@RequestParam("userEmail")String userEmail, @RequestParam("userPassword")String userPassword, @RequestParam("userName")String userName) {
       String dbpw = encoder.encode(userPassword);
       Map<String, String> paramMap = new HashMap<String, String>();
