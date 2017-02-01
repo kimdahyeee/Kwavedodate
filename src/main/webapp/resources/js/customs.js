@@ -146,11 +146,12 @@ $(document).ready(function() {
     // 회원가입 validation
     if($("#validateSignIn").length>0) {
         $("#validateSignIn").validate({
+           
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/",
+                    url: "/kwaveweb/insertUser",
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val(),
@@ -158,7 +159,12 @@ $(document).ready(function() {
                     },
                     dataType: "json",
                     success: function(data) {
-                        //성공 시 데이터 처리 
+                       if(data.KEY == "SUCCESS"){
+                          alert("회원가입을 축하드립니다");
+                         window.location = "http://localhost:8181/kwaveweb/login";
+                       }else{
+                          alert("회원가입에 실패하셨습니다.");
+                       }
                     }
                 });
             },
