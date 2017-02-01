@@ -1,2 +1,0 @@
-# Kwavedodate
-www.kwavedonate.com
