@@ -36,11 +36,13 @@ public class UserAuthenticationService implements UserDetailsService {
 		// TODO Auto-generated method stub
 		Map<String, Object> user;
 		user = sqlSession.selectOne("user.selectUser", username);
-
+		System.out.println(user.get("USERNAME"));
 		if(user == null) throw new UsernameNotFoundException(username);
 		
 		logger.info("helloLogger {}", user.toString());
 	
+		//userEmail, userPassword, userName, userRegdate, isSNS, userNation, 
+		//phone, zipCode, address1, address2, city, region, country, authority, enabled
 		List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
 		gas.add(new SimpleGrantedAuthority(user.get("AUTHORITY").toString()));
 		return new UserDetailsVO(
@@ -50,7 +52,16 @@ public class UserAuthenticationService implements UserDetailsService {
 				true, 
 				true, 
 				true, 
-				gas
+				gas,
+				user.get("USER_NAME").toString(),
+				user.get("USERNATION").toString(),
+				user.get("PHONE").toString(),
+				user.get("ZIPCODE").toString(),
+				user.get("ADDRESS1").toString(),
+				user.get("ADDRESS2").toString(),
+				user.get("CITY").toString(),
+				user.get("REGION").toString(),
+				user.get("COUNTRY").toString()
 				);
 
 	}

@@ -1,3 +1,18 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="com.kwavedonate.kwaveweb.user.vo.UserDetailsVO" %>
+
+<%
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	Object principal = auth.getPrincipal();
+	String name="";
+	if(principal != null && principal instanceof UserDetailsVO) {
+		name = ((UserDetailsVO)principal).getUsername();
+	}
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -55,9 +70,19 @@
 												<li>
 													<a href="aboutUs">About Us</a>
 												</li>
-												<li class="">
-													<a href="#">Log in</a>
-												</li>
+												<sec:authorize access="isAnonymous()">
+													<li class="">
+														<a href="login">Log in</a>
+													</li>
+												</sec:authorize>
+												<sec:authorize access="isAuthenticated()">
+													<li class="">
+														<a href="myAccount">My account</a>
+													</li>
+													<li class="">
+														<a href="/logout">Log out</a>
+													</li>
+												</sec:authorize>
 												<a href="#" class="btn btn-default btn-sm">Korean</a>
 												<a href="#" class="btn btn-default btn-sm">English</a>
 												<a href="#" class="btn btn-default btn-sm">Chinese</a>
@@ -65,7 +90,7 @@
 										</div>
 									</div>
 									<div id="logo" class="logo">
-										<a href="/kwave/"><img id="logo_img" src="resources/images/logo.png" alt="The Project"></a>
+										<a href="/kwaveweb/"><img id="logo_img" src="resources/images/logo.png" alt="The Project"></a>
 									</div>
 								</div>
 							</div>
@@ -91,9 +116,19 @@
 														<li>
 															<a href="aboutUs">About Us</a>
 														</li>
-														<li class="">
-															<a href="login">Log in</a>
-														</li>
+														<sec:authorize access="isAnonymous()">
+															<li class="">
+																<a href="login">Log in</a>
+															</li>
+														</sec:authorize>
+														<sec:authorize access="isAuthenticated()">
+															<li class="">
+																<a href="myAccount">My account</a>
+															</li>
+															<li class="">
+																<a href="logout">Log out</a>
+															</li>
+														</sec:authorize>
 														<li class="header-top-dropdown">
 															<a href="#" class="dropdown-toggle language" data-toggle="dropdown">Language <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 															<ul class="dropdown-menu dropdown-menu-right dropdown-animation">

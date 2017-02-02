@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 		<section class="main-container">
 				<div class="container">
 					<div class="row">
@@ -92,19 +95,19 @@
 													<div class="modal-body">
 														<div class="form-group has-feedback">
 															<div class="col-sm-12">
-																<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email" value="vvshinevv@naver.com" disabled>
+																<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email" value='<sec:authentication property="principal.username"/>' disabled>
 																<i class="fa fa-envelope-o form-control-feedback"></i>
 															</div>
 														</div>
 														<div class="form-group has-feedback">
 															<div class="col-sm-12">
-																<input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" value="Choi Hong Hee" required>
+																<input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" value='${username}' required>
 																<i class="fa fa-user form-control-feedback"></i>
 															</div>
 														</div>
 														<div class="form-group has-feedback">
 															<div class="col-sm-12">
-																<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" value="010-3315-6214" required>
+																<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" value='${phone}' required>
 																<i class="fa fa-mobile form-control-feedback fa-lg"></i>
 															</div>
 														</div>
@@ -130,22 +133,23 @@
 
 									<label class="col-sm-3 control-label">User Name: </label>
 									<div class="col-sm-9">
-										<p>Choi hong Hee<p>
+										<p>${username}</p>
 									</div>
 
 									<label class="col-sm-3 control-label">Email: </label>
 									<div class="col-sm-9">
-										<p>vvshinevv@naver.com<p>
+										<p><sec:authentication property="principal.username"/><p>
 									</div>
 
 									<label class="col-sm-3 control-label">Phone: </label>
 									<div class="col-sm-9">
-										<p>010-3315-6214<p>
+										<!-- <p><sec:authentication property="principal.phone"/><p> -->
+										<p>${phone}</p>
 									</div>
 
 									<label class="col-sm-3 control-label">Nation: </label>
 									<div class="col-sm-9">
-										<p>ENG<p>
+										<p>${usernation} <p>
 									</div>
 
 									<!-- pills margin-top (width에 따라서 다르게 설정하였음)-->
@@ -164,43 +168,49 @@
 													<h4 class="modal-title" id="myModalLabel">Update Your Shipping Address</h4>
 												</div>
 													
-												<form class="form-horizontal" id="validateShippingAddress">
+												<form class="form-horizontal" id="validateDeliveryInfo">
 													<div class="modal-body">
 														<div class="form-group has-feedback">
 															<div class="col-sm-12">
-																<input type="text" class="form-control postcodify_address" id="address1" name="address1" placeholder="Address" value="Gyeonggi-do Goyang-si Ilsandong-gu Jungsan-dong.">
+																<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email" value='${username}' disabled>
+																<i class="fa fa-envelope-o form-control-feedback"></i>
+															</div>
+														</div>
+														<div class="form-group has-feedback">
+															<div class="col-sm-12">
+																<input type="text" class="form-control postcodify_address" id="address1" name="address1" placeholder="Address" value='${address1}'>
 																<i class="fa fa-home form-control-feedback"></i>
 															</div>
 														</div>
 														<div class="form-group has-feedback">
 															<div class="col-sm-12">
-																<input type="text" class="form-control postcodify_details" id="address2" name="address2" placeholder="Address Detail" value="Jungsan villeage, 703dong">
+																<input type="text" class="form-control postcodify_details" id="address2" name="address2" placeholder="Address Detail" value='${address2}'>
 																<i class="fa fa-paper-plane-o form-control-feedback"></i>
 															</div>
 														</div>
 														<div class="form-group has-feedback">
 															
 															<div class="col-md-12">
-																<input type="text" class="form-control postcodify_postcode5" id="zipCode" name="zipCode" placeholder="Zip Code" value="10333">
+																<input type="text" class="form-control postcodify_postcode5" id="zipCode" name="zipCode" placeholder="Zip Code" value='${zipcode}'>
 																<i class="fa fa-list-alt form-control-feedback"></i>
 															</div>
 															
 														</div>
 														<div class="form-group has-feedback">
 															<div class="col-sm-12">
-																<input type="text" class="form-control" id="city" name="city" placeholder="City" value="GoYang-si">
+																<input type="text" class="form-control" id="city" name="city" placeholder="City" value='${city}'>
 																<i class="fa fa-tag form-control-feedback fa-lg"></i>
 															</div>
 														</div>
 														<div class="form-group has-feedback">
 															<div class="col-sm-12">
-																<input type="text" class="form-control" id="country" name="country" placeholder="Country" value="Gyeonggi-do">
+																<input type="text" class="form-control" id="country" name="country" placeholder="Country" value='${country}'>
 																<i class="fa fa-tag form-control-feedback fa-lg"></i>
 															</div>
 														</div>
 														<div class="form-group has-feedback last-form">
 															<div class="col-sm-12">
-																<input type="text" class="form-control" id="region" name="region" placeholder="State/Region/Province" value="Jungsan-dong">
+																<input type="text" class="form-control" id="region" name="region" placeholder="State/Region/Province" value='${region}'>
 																<i class="fa fa-tags form-control-feedback fa-lg"></i>
 															</div>
 														</div>
@@ -217,31 +227,31 @@
 
 									<label class="col-sm-3 control-label">Address: </label>
 									<div class="col-sm-9">
-										<p>Gyeonggi-do Goyang-si Ilsandong-gu Jungsan-dong.<p>
+										<p>${address1}<p>
 									</div>
 
 									<label class="col-sm-3 control-label">Address Detail: </label>
 									<div class="col-sm-9">
-										<p>Jungsan villeage, 703dong<p>
+										<p>${address2}<p>
 									</div>
 
 									<label class="col-sm-3 control-label">Zip code: </label>
 									<div class="col-sm-9">
-										<p>10333<p>
+										<p>${zipcode}<p>
 									</div>
 
 									<!-- 여기서부터는 해외인 경우에만 적용 -->
 									<label class="col-sm-3 control-label">City: </label>
 									<div class="col-sm-9">
-										<p>Goyang-si<p>
+										<p>${city}<p>
 									</div>
 									<label class="col-sm-3 control-label">Country: </label>
 									<div class="col-sm-9">
-										<p>Gyeonggi-do<p>
+										<p>${country}<p>
 									</div>
 									<label class="col-sm-3 control-label">Region: </label>
 									<div class="col-sm-9">
-										<p>Jungsan-dong<p>
+										<p>${region}<p>
 									</div>
 								</div>
 

@@ -1,5 +1,6 @@
 package com.kwavedonate.kwaveweb.user.dao;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -16,10 +17,29 @@ public class UserDaoServiceImpl extends SqlSessionDaoSupport implements UserDaoS
 		return getSqlSession().insert("user.insertUser", paramMap);
 	}
 
+
 	@Override
 	public Map<String, Object> selectUser(String username) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectOne("user.selectUser", username);
+	}
+	
+@Override
+	public Map<String, Object> selectUserAccount(String username) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("user.selectUserAccount", username);
+	}
+	
+	@Override
+	public int modifyUser(Map<String, String> paramMap) {
+		// TODO Auto-generated method stub
+		return getSqlSession().update("user.modifyUser", paramMap);
+	}
+	
+	@Override
+	public int modifyAddress(Map<String, String> paramMap) {
+		// TODO Auto-generated method stub
+		return getSqlSession().update("user.modifyAddress", paramMap);
 	}
 
 }

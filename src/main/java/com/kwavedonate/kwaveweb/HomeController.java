@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,9 +56,37 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/")
-	public String homeGo() {
+	public String main() {
 		return "main";
 	}
+	
+	@RequestMapping("/campaigns")
+	public String campaigns(Authentication authentication) {
+		try {
+			UserDetailsVO vo = (UserDetailsVO) authentication.getPrincipal();
+			System.out.println(vo);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return "campaigns";
+	}
+	
+	@RequestMapping("/aboutUs")
+	public String aboutUs(Authentication authentication) {
+		try {
+			UserDetailsVO vo = (UserDetailsVO) authentication.getPrincipal();
+			System.out.println(vo);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return "aboutUs";
+	}
+	
+	
+/*	
 	
 	
 	@RequestMapping(value="/checkAuth", method=RequestMethod.GET)
@@ -68,7 +98,7 @@ public class HomeController {
 		model.addAttribute("auth", auth);
 		model.addAttribute("vo", vo);
 		return "checkAuth";
-	}
+	}*/
 	
 
 	
