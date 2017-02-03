@@ -26,33 +26,32 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserLoginSuccessHandler.class);
 
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-			throws IOException, ServletException {
-		
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
+
 		System.out.println();
-		
+
 		ObjectMapper om = new ObjectMapper();
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("success",  true);
+		map.put("success", true);
 		map.put("returnUrl", getReturnUrl(request, response));
-		
+
 		String jsonString = om.writeValueAsString(map);
-		
+
 		OutputStream out = response.getOutputStream();
 		out.write(jsonString.getBytes());
-		
+
 		UserDetails u = (UserDetails) authentication.getPrincipal();
 
-		
 		System.out.println("로그인 성공" + request.getSession().toString());
 		response.sendRedirect("/kwaveweb");
 	}
-	
+
 	/**
 	 * 로그인 하기 전에 요청했던 URL을 알아낸다.
 	 * 
@@ -63,7 +62,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 	private String getReturnUrl(HttpServletRequest request, HttpServletResponse response) {
 		RequestCache requestCache = new HttpSessionRequestCache();
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
-		if(savedRequest == null) {
+		if (savedRequest == null) {
 			return request.getSession().getServletContext().getContextPath();
 		}
 		return savedRequest.getRedirectUrl();

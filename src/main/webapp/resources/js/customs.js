@@ -296,13 +296,19 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/",
+                    url: "/kwaveweb/sendLink",
                     data: {
                         "userEmail": $("#userEmail").val()
                     },
                     dataType: "json",
                     success: function(data) {
-                        //성공 시 데이터 처리 
+                    	if(data.KEY == "SUCCESS"){
+                            alert("메일이 전송되었습니다.");
+                            window.location = "http://localhost:8181/kwaveweb/";
+                         }else{
+                            alert("메일을 확인해주세요.");
+                            window.location = "http://localhost:8181/kwaveweb/";
+                         }
                     }
                 });
             },
@@ -342,7 +348,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/",
+                    url: "/kwaveweb/modifyPassword",
                     data: {
                         "currentPassword": $("#currentPassword").val(),
                         "newPassword": $("#newPassword").val()
@@ -350,6 +356,13 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
+                    	if(data.KEY == "SUCCESS"){
+                            alert("비밀번호가 변경되었습니다.");
+                            window.location = "http://localhost:8181/kwaveweb/myAccount";
+                         }else{
+                            alert("비밀번호를 확인해주세요.");
+                            window.location = "http://localhost:8181/kwaveweb/myAccount";
+                         }
                     }
                 });
             },
@@ -480,7 +493,6 @@ $(document).ready(function() {
                     type: "POST",
                     url: "/kwaveweb/modifyAddress",
                     data: {
-                    	 "userEmail": $("#userEmail").val(),
                     	 "address1": $("#address1").val(),
                          "address2": $("#address2").val(),
                          "zipCode": $("#zipCode").val(),

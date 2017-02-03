@@ -18,7 +18,13 @@ if($("#validateLogin").length>0) {
                 dataType: "json",
                 success: function(data) {
                     //성공 시 데이터 처리 
-                	 //location.href="/"
+                	 if(data.success == false){
+                         alert("아이디와 비밀번호를 확인해주세요.");
+                         window.location = "http://localhost:8181/kwaveweb/login";
+                      }else{
+                         //alert("이미 회원가입 된 이메일입니다.");
+                         //window.location = "http://localhost:8181/kwaveweb/signin";
+                      }
                 }
             });
         },

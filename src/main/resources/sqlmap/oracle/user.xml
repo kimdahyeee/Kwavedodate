@@ -4,53 +4,81 @@
 
 <mapper namespace="user">
 	<insert id="insertUser">
-	insert into users 
-	(userEmail, userPassword, userName, userRegdate, isSNS, userNation, phone, zipCode, address1, address2, city, region, country, authority, enabled) 
-	values (#{userEmail}, #{userPassword}, #{userName}, sysdate, 1 , '수정하세요', '수정하세요', '수정하세요', '수정하세요', '수정하세요', '수정하세요', '수정하세요', '수정하세요', 'ROLE_USER', 1)
+		insert into users
+		(userEmail, userPassword, userName, userRegdate, isSNS, userNation, phone,
+		zipCode, address1, address2, city, region, country, authority,
+		enabled)
+		values (#{userEmail}, #{userPassword}, #{userName}, sysdate, 1 , '수정하세요',
+		'수정하세요', '수정하세요', '수정하세요', '수정하세요', '수정하세요', '수정하세요', '수정하세요',
+		'ROLE_USER', 1)
 	</insert>
-	
+
 	<update id="modifyUser">
-	update users
-	set userName = #{userName},
+		update users
+		set userName = #{userName},
 		phone = #{phone},
 		userNation = #{userNation}
-	where userEmail = #{userEmail}
+		where userEmail = #{userEmail}
 	</update>
-	
+
 	<update id="modifyAddress">
-	update users
-	set zipCode = #{zipCode},
+		update users
+		set zipCode = #{zipCode},
 		address1 = #{address1},
 		address2 = #{address2},
 		city = #{city},
 		region = #{region},
 		country = #{country}
-	where userEmail = #{userEmail}
+		where userEmail = #{userEmail}
 	</update>
 	
+	<select id="selectEmail" resultType="map">
+		SELECT
+			userEmail
+		FROM
+			users
+		WHERE
+			userEmail = #{userEmail}
+	</select>
+
 	<select id="selectUser" resultType="map">
 		SELECT
-			userEmail as username,
-			userPassword as password,
-			enabled as enabled,
-			authority as authority,
-			username as user_name,
-			usernation,
-			phone,
-			zipcode,
-			address1,
-			address2,
-			city,
-			region,
-			country
+		userEmail as username,
+		userPassword as password,
+		enabled as enabled,
+		authority as authority,
+		username as user_name,
+		usernation,
+		phone,
+		zipcode,
+		address1,
+		address2,
+		city,
+		region,
+		country
 		FROM USERS
 		WHERE userEmail = #{username}
 	</select>
-	
+
 	<select id="selectUserAccount" resultType="map">
 		SELECT
-			userEmail, username, usernation, phone, zipcode, address1, address2, city, region, country
+		userEmail, username, usernation, phone, zipcode, address1, address2, city,
+		region, country
 		FROM users
 		WHERE userEmail = #{username}
 	</select>
+	
+	<!-- modify password -->
+	<select id="selectPassword" resultType="map">
+		SELECT
+		userPassword as rowpassword
+		FROM users
+		WHERE userEmail = #{userEmail}
+	</select>
+	<update id="modifyPassword">
+		UPDATE users
+		SET userPassword = #{newPassword}
+		WHERE userEmail = #{userEmail}
+	</update>
+	
 </mapper>

@@ -24,10 +24,11 @@
 							 default-target-url="/"
 							 authentication-success-handler-ref="userLoginSuccessHandler"
 							 authentication-failure-handler-ref="userLoginFailureHandler"
+							 authentication-failure-url="/loginfail"
 							 always-use-default-target="false"/>
 		
 		<security:session-management invalid-session-url="/login">
-			<security:concurrency-control max-sessions="1" expired-url="/" error-if-maximum-exceeded="true"/>
+			<security:concurrency-control max-sessions="1" expired-url="/"/>
 		</security:session-management>
 		
 		<security:logout delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" 
