@@ -64,21 +64,21 @@ public class HomeController {
 
 		List<Map<String, Object>> list = campaignService.getMainCampaign();
 		
-		
 		for(Map<String, Object> lists : list){
-			String campaingnDueDate = lists.get("campaingnDueDate").toString();
+			int campaingnDueDate = Integer.valueOf(lists.get("campaingnDueDate").toString());
 			
 			logger.info("campaingnDueDate == {}.", campaingnDueDate);
-			if(campaingnDueDate.equals("7")){
+			if(campaingnDueDate == 7){
 				lists.put("campaingnDueDate", "a week left");
-			}else if(campaingnDueDate.equals("1")){
+			}else if(campaingnDueDate == 1){
 				lists.put("campaingnDueDate", "a day left");
-			}else if(campaingnDueDate.equals("0")){
+			}else if(campaingnDueDate == 0){
 				lists.put("campaingnDueDate", "ends today");
 			}else{
 				lists.put("campaingnDueDate", campaingnDueDate+" days left");
 			}
 		}
+		
 		logger.info("main == {}.", list);
 		model.addAttribute("list", list);
 		
@@ -95,7 +95,4 @@ public class HomeController {
 		model.addAttribute("vo", vo);
 		return "checkAuth";
 	}
-	
-
-	
 }
