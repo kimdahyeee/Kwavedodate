@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kwavedonate.kwaveweb.campaign.service.CampaignMapper">
+
+	<resultMap id="mainCampaign" type="hashmap">
+		<result property="campaingnName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="campaingnSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="campaingnImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
+		<result property="campaingnDueDate" column="DUEDATE" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<select id="selectMainCampaign" resultMap="mainCampaign">
+	<![CDATA[ 
+		SELECT
+			CAMPAIGNNAME,
+			CAMPAIGNSUBJECT,
+			CAMPAIGNIMG,
+			TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+		FROM CAMPAIGNS
+		WHERE ROWNUM <= 4
+	]]> 
+	</select>
+	
+</mapper>
