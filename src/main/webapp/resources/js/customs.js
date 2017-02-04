@@ -5,6 +5,7 @@
  * Created: Jan 2017
  * File Description: Custom scripts
  */
+
 $(document).ready(function() {
 
 
@@ -151,7 +152,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/insertUser",
+                    url: "/kwaveweb/insertUser", 
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val(),
@@ -161,9 +162,10 @@ $(document).ready(function() {
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
                           alert("회원가입을 축하드립니다");
-                         window.location = "http://localhost:8181/kwaveweb/login";
+                          window.location = "http://localhost:8181/kwaveweb/login";
                        }else{
-                          alert("회원가입에 실패하셨습니다.");
+                          alert("이미 회원가입 된 이메일입니다.");
+                          window.location = "http://localhost:8181/kwaveweb/signin";
                        }
                     }
                 });
@@ -229,14 +231,15 @@ $(document).ready(function() {
         });
     }
 
-    // 로그인 validation
+    /*// 로그인 validation
     if($("#validateLogin").length>0) {
         $("#validateLogin").validate({
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
-                    type: "POST",
-                    url: "/",
+                    
+                	type: "POST",
+                    url: '<c:url value="j_spring_security_check"/>',
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val()
@@ -244,6 +247,8 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
+                    	 location.href="/"
+                        
                     }
                 });
             },
@@ -282,7 +287,7 @@ $(document).ready(function() {
                 $(element).siblings("label").removeClass("hide");
             }
         });
-    }
+    }*/
 
     // 비밀번호 찾기 validation
     if($("#validateFindPassword").length>0) {
@@ -291,13 +296,19 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/",
+                    url: "/kwaveweb/sendLink",
                     data: {
                         "userEmail": $("#userEmail").val()
                     },
                     dataType: "json",
                     success: function(data) {
-                        //성공 시 데이터 처리 
+                    	if(data.KEY == "SUCCESS"){
+                            alert("메일이 전송되었습니다.");
+                            window.location = "http://localhost:8181/kwaveweb/";
+                         }else{
+                            alert("메일을 확인해주세요.");
+                            window.location = "http://localhost:8181/kwaveweb/";
+                         }
                     }
                 });
             },
@@ -337,7 +348,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/",
+                    url: "/kwaveweb/modifyPassword",
                     data: {
                         "currentPassword": $("#currentPassword").val(),
                         "newPassword": $("#newPassword").val()
@@ -345,6 +356,13 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
+                    	if(data.KEY == "SUCCESS"){
+                            alert("비밀번호가 변경되었습니다.");
+                            window.location = "http://localhost:8181/kwaveweb/myAccount";
+                         }else{
+                            alert("비밀번호를 확인해주세요.");
+                            window.location = "http://localhost:8181/kwaveweb/myAccount";
+                         }
                     }
                 });
             },
@@ -402,15 +420,24 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/",
+                    url: "/kwaveweb/modifyUser",
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userName": $("#userName").val(),
-                        "nation": $("#nation").val()
+                        "nation": $("#nation").val(),
+                        "phone" : $("#phone").val()
+                
                     },
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
+                    	if(data.KEY == "SUCCESS"){
+                            alert("회원정보수정이 완료되었습니다.");
+                           location.href = "http://localhost:8181/kwaveweb/myAccount";
+                           
+                         }else{
+                            alert("회원정보수정이 실패했습니다.");
+                         }
                     }
                 });
             },
@@ -464,13 +491,23 @@ $(document).ready(function() {
                 // Iamport 결제 모듈 연동
                 $.ajax({
                     type: "POST",
-                    url: "/",
+                    url: "/kwaveweb/modifyAddress",
                     data: {
-                        
+                    	 "address1": $("#address1").val(),
+                         "address2": $("#address2").val(),
+                         "zipCode": $("#zipCode").val(),
+                         "city" : $("#city").val(),
+                         "country" : $("#country").val(),
+                         "region" : $("#region").val()                        
                     },
                     dataType: "json",
                     success: function(data) {
-                        
+                    	if(data.KEY == "SUCCESS"){
+                            alert("주소지 정보 수정이 완료되었습니다.");
+                            location.href = "http://localhost:8181/kwaveweb/myAccount";
+                         }else{
+                            alert("주소지 정보 수정이 실패했습니다.");
+                         }
                     }
                 });
             },

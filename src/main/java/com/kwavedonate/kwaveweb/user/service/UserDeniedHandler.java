@@ -14,17 +14,18 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 public class UserDeniedHandler implements AccessDeniedHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDeniedHandler.class);
+
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException ade)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		
-		logger.info("Exceiption : {}",ade);
-		logger.info("LocalizedMessage : {}",ade.getLocalizedMessage());
-		logger.info("Message : {}",ade.getMessage());
-		logger.info("StackTrace : {}",ade.getStackTrace());
-		
-		request.setAttribute("errMsg",ade.getMessage());
+
+		logger.info("Exceiption : {}", ade);
+		logger.info("LocalizedMessage : {}", ade.getLocalizedMessage());
+		logger.info("Message : {}", ade.getMessage());
+		logger.info("StackTrace : {}", ade.getStackTrace());
+
+		request.setAttribute("errMsg", ade.getMessage());
 		request.getRequestDispatcher("/WEB-INF/views/user/denied.jsp").forward(request, response);
 	}
 

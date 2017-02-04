@@ -42,3 +42,4 @@ src/test/
 src/main/webapp/WEB-INF/database.properties
 src/main/webapp/resources/database.properties
 /bin/
+src/main/resources/log4j.xml

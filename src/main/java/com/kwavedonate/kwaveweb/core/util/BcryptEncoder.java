@@ -8,20 +8,17 @@ import org.springframework.stereotype.Service;
 
 @Service("bcryptEncoder")
 public class BcryptEncoder implements PasswordEncoder {
-	
-	
 
-	@Resource(name="passwordEncoder")
+	@Resource(name = "passwordEncoder")
 	private PasswordEncoder encoder;
-	
+
 	public BcryptEncoder() {
 		this.encoder = new BCryptPasswordEncoder();
-	} 
-	
-	public BcryptEncoder(PasswordEncoder passwordEncoder) { 
-		this.encoder = passwordEncoder; 
 	}
 
+	public BcryptEncoder(PasswordEncoder passwordEncoder) {
+		this.encoder = passwordEncoder;
+	}
 
 	@Override
 	public String encode(CharSequence rawPassword) {
@@ -34,6 +31,5 @@ public class BcryptEncoder implements PasswordEncoder {
 		// TODO Auto-generated method stub
 		return encoder.matches(rawPassword, encodedPassword);
 	}
-
 
 }
