@@ -5,15 +5,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("campaignService")
 public class CampaignServiceImpl implements CampaignService{
-	
-	@Autowired
-	private SqlSession sqlSession;
 	
 	@Resource(name="campaignMapper")
 	private CampaignMapper campaignMapper;
@@ -21,6 +16,11 @@ public class CampaignServiceImpl implements CampaignService{
 	@Override
 	public List<Map<String, Object>> getMainCampaign() {		
 		return campaignMapper.selectMainCampaign();
+	}
+
+	@Override
+	public List<Map<String, Object>> getCampaignsList() {
+		return campaignMapper.selectCampaigns();
 	}
 
 }

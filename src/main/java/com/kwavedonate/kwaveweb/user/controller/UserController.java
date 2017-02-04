@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
-import com.kwavedonate.kwaveweb.core.util.EmailSenderService;
 import com.kwavedonate.kwaveweb.user.dao.UserDaoService;
 import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 
@@ -256,7 +253,7 @@ public class UserController {
 				MimeMessage message = mailSender.createMimeMessage();
 				
 				message.setFrom(new InternetAddress("tantosuperb@gmail.com"));
-				message.addRecipient(RecipientType.TO, new InternetAddress(userEmailExist.get("USEREMAIL").toString()));
+				message.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(userEmailExist.get("USEREMAIL").toString()));
 				message.setSubject("KWAVE DONATE 비밀번호 변경 안내입니다.");
 				message.setText(htmlContent, "UTF-8", "html");
 				

@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface CampaignService {
 	public List<Map<String, Object>> getMainCampaign();
+	public List<Map<String, Object>> getCampaignsList();
 }

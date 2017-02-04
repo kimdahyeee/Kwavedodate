@@ -4,10 +4,17 @@
 <mapper namespace="com.kwavedonate.kwaveweb.campaign.service.CampaignMapper">
 
 	<resultMap id="mainCampaign" type="hashmap">
-		<result property="campaingnName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
-		<result property="campaingnSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
-		<result property="campaingnImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
-		<result property="campaingnDueDate" column="DUEDATE" javaType="java.lang.String"/>
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
+		<result property="campaignDueDate" column="DUEDATE" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<resultMap id="campaigns" type="hashmap">
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
+		<result property="campaignDueDate" column="DUEDATE" javaType="java.lang.String"/>
 	</resultMap>
 	
 	<select id="selectMainCampaign" resultMap="mainCampaign">
@@ -21,6 +28,18 @@
 		WHERE ROWNUM <= 4 AND TO_DATE(to_char(DUEDATE,'YYYYMMDD')) >= TO_DATE(to_char(SYSDATE,'YYYYMMDD'))
 		AND LAUCHDATE <= SYSDATE
 	]]> 
+	</select>
+	
+	<select id="selectCampaigns" resultMap="campaigns">
+	<![CDATA[ 
+		SELECT
+			CAMPAIGNNAME,
+			CAMPAIGNSUBJECT,
+			CAMPAIGNIMG,
+			TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+		FROM CAMPAIGNS
+		WHERE LAUCHDATE <= SYSDATE
+	]]>
 	</select>
 	
 </mapper>

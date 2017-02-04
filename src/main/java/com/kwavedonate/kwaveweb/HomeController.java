@@ -7,10 +7,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import org.apache.ibatis.session.SqlSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -31,9 +30,6 @@ import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	@Autowired
-	private SqlSession sqlSession;
 	
 	@Resource(name="bcryptEncoder")
 	private BcryptEncoder encoder;
@@ -65,23 +61,23 @@ public class HomeController {
 		List<Map<String, Object>> list = campaignService.getMainCampaign();
 		
 		for(Map<String, Object> lists : list){
-			int campaingnDueDate = Integer.valueOf(lists.get("campaingnDueDate").toString());
+			int campaignDueDate = Integer.valueOf(lists.get("campaignDueDate").toString());
 			
-			logger.info("campaingnDueDate == {}.", campaingnDueDate);
-			if(campaingnDueDate == 7){
-				lists.put("campaingnDueDate", "a week left");
-			}else if(campaingnDueDate == 1){
-				lists.put("campaingnDueDate", "a day left");
-			}else if(campaingnDueDate == 0){
-				lists.put("campaingnDueDate", "ends today");
+			logger.info("campaignDueDate == {}.", campaignDueDate);
+			if(campaignDueDate == 7){
+				lists.put("campaignDueDate", "a week left");
+			}else if(campaignDueDate == 1){
+				lists.put("campaignDueDate", "a day left");
+			}else if(campaignDueDate == 0){
+				lists.put("campaignDueDate", "ends today");
 			}else{
-				lists.put("campaingnDueDate", campaingnDueDate+" days left");
+				lists.put("campaignDueDate", campaignDueDate+" days left");
 			}
 		}
 		
 		logger.info("main == {}.", list);
 		model.addAttribute("list", list);
-		
+
 		return "main";
 	}
 	

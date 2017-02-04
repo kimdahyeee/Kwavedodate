@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface CampaignMapper {
 	List<Map<String, Object>> selectMainCampaign();
+	List<Map<String, Object>> selectCampaigns();
 }
