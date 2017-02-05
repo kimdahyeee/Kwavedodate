@@ -10,29 +10,29 @@
 		<meta name="author" content="Choi Hong Hee">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="shortcut icon" href="resources/images/favicon.png">
+		<link rel="shortcut icon" href="<c:url value='/resources/images/favicon.png' />">
 
 		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
 
-		<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
-		<link href="resources/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
-		<link href="resources/fonts/fontello/css/fontello.css" rel="stylesheet">
+		<link href="<c:url value='/resources/bootstrap/css/bootstrap.css' />" rel="stylesheet">
+		<link href="<c:url value='/resources/fonts/font-awesome/css/font-awesome.css' />" rel="stylesheet">
+		<link href="<c:url value='/resources/fonts/fontello/css/fontello.css' />" rel="stylesheet">
 
-		<link href="resources/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
-		<link href="resources/plugins/rs-plugin/css/settings.css" rel="stylesheet">
-		<link href="resources/css/animations.css" rel="stylesheet">
-		<link href="resources/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
-		<link href="resources/plugins/owl-carousel/owl.transitions.css" rel="stylesheet">
-		<link href="resources/plugins/swiper/swiper.min.css" rel="stylesheet" type="text/css" >
-		<link href="resources/plugins/hover/hover-min.css" rel="stylesheet">		
+		<link href="<c:url value='/resources/plugins/magnific-popup/magnific-popup.css' />" rel="stylesheet">
+		<link href="<c:url value='/resources/plugins/rs-plugin/css/settings.css' />" rel="stylesheet">
+		<link href="<c:url value='/resources/css/animations.css' />" rel="stylesheet">
+		<link href="<c:url value='/resources/plugins/owl-carousel/owl.carousel.css' />" rel="stylesheet">
+		<link href="<c:url value='/resources/plugins/owl-carousel/owl.transitions.css' />" rel="stylesheet">
+		<link href="<c:url value='/resources/plugins/swiper/swiper.min.css' />" rel="stylesheet" type="text/css" >
+		<link href="<c:url value='/resources/plugins/hover/hover-min.css' />" rel="stylesheet">		
 		
-		<link href="resources/css/styles.css" rel="stylesheet" >
-		<link href="resources/css/skins/light_blue.css" rel="stylesheet">
+		<link href="<c:url value='/resources/css/styles.css' />" rel="stylesheet" >
+		<link href="<c:url value='/resources/css/skins/light_blue.css' />" rel="stylesheet">
 
-		<link href="resources/css/customs.css" rel="stylesheet">
+		<link href="<c:url value='/resources/css/customs.css' />" rel="stylesheet">
 
 	</head>
 
@@ -68,7 +68,7 @@
 										</div>
 									</div>
 									<div id="logo" class="logo">
-										<a href="/kwave/"><img id="logo_img" src="resources/images/logo.png" alt="The Project"></a>
+										<a href="/kwave/"><img id="logo_img" src="<c:url value='/resources/images/logo.png' />" alt="The Project"></a>
 									</div>
 								</div>
 							</div>

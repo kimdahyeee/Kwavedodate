@@ -26,9 +26,9 @@
 										<div class="row">
 										<c:if test="${fn:length(currentList) > 0}">
 										<c:forEach items="${currentList}" var="currentLists" begin="0" end="${fn:length(currentList)}" step="1" varStatus="status">
-											<input type="hidden" name="campaignName" value="${currentList[status.index].campaignName}" />
 											<div class="col-sm-6">
 												<div class="image-box style-2 mb-20 bordered light-gray-bg">
+												<input type="hidden" name="campaignName" value="${currentList[status.index].campaignName}" />
 													<div class="overlay-container overlay-visible">
 														<span class="campaign-badge"><i>${currentList[status.index].campaignDueDate}</i></span>
 														<img src="${currentList[status.index].campaignImg}" alt="">

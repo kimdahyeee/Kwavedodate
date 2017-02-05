@@ -24,9 +24,9 @@
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
 						<c:forEach items="${list}" var="lists" begin="0" end="${fn:length(list)}" step="1" varStatus="status">
-							<input type="hidden" name="campaignName" value="${list[status.index].campaignName}" />
 							<div class="col-sm-6">
 								<div class="image-box style-2 mb-20 bordered light-gray-bg">
+								<input type="hidden" name="campaignName" value="${list[status.index].campaignName}" />
 									<div class="overlay-container overlay-visible">
 										<span class="campaign-badge"><i>${list[status.index].campaignDueDate}</i></span>
 										<img src='${list[status.index].campaignImg}' alt="">
