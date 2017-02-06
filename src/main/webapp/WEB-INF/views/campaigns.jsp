@@ -26,7 +26,6 @@
 										<div class="row">
 										<c:if test="${fn:length(currentList) > 0}">
 										<c:forEach items="${currentList}" var="currentLists" begin="0" end="${fn:length(currentList)}" step="1" varStatus="status">
-											<input type="hidden" name="campaignName" value="${currentList[status.index].campaignName}" />
 											<div class="col-sm-6">
 												<div class="image-box style-2 mb-20 bordered light-gray-bg">
 													<div class="overlay-container overlay-visible">
@@ -38,7 +37,7 @@
 														<p class="ellipsis">${currentList[status.index].campaignSubject}</p>
 														<label></label>
 														<div class="btn-learn-more">
-															<a class="text-info btn-md-link" href="#">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+															<a class="text-info btn-md-link" href="<c:url value='/campaigns/${currentList[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 														</div>
 													</div>
 												</div>
@@ -53,7 +52,6 @@
 								<div class="tab-pane fade" id="recentlyClosed">	
 									<c:if test="${fn:length(recentlyList) > 0}">
 									<c:forEach items="${recentlyList}" var="recentlyLists" begin="0" end="${fn:length(recentlyList)}" step="1" varStatus="status">
-									<input type="hidden" name="campaignName" value="${recentlyList[status.index].campaignName}" />
 									<div class="col-sm-6">
 										<div class="image-box style-2 mb-20 bordered light-gray-bg">
 											<div class="overlay-container overlay-visible">
@@ -64,7 +62,7 @@
 												<p class="ellipsis">${recentlyList[status.index].campaignSubject}</p>
 												<label></label>
 												<div class="btn-learn-more">
-													<a class="text-info btn-md-link" href="#">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+													<a class="text-info btn-md-link" href="<c:url value='/campaigns/${recentlyList[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 												</div>
 											</div>
 										</div>

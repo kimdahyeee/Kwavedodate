@@ -11,11 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
+import com.kwavedonate.kwaveweb.campaign.vo.CampaignVo;
 
 @Controller
+@RequestMapping(value="/campaigns")
 public class CampaignController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CampaignController.class);
@@ -23,7 +26,7 @@ public class CampaignController {
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
-	@RequestMapping(value="/campaigns")
+	@RequestMapping(value="")
 	public String CampaignsView(Model model){
 		
 		List<Map<String, Object>> list = campaignService.getCampaignsList();
@@ -67,4 +70,27 @@ public class CampaignController {
 		return "campaigns";
 	}
 	
+	@RequestMapping(value="/{campaignName}")
+	public String CampaignsDetail(@PathVariable("campaignName") String campaignName, Model model){
+		System.out.println(campaignName);
+		CampaignVo campaignDetail = campaignService.getCampaignDetail(campaignName);
+		
+		int campaignDueDate = Integer.valueOf(campaignDetail.getDuedateToSysdate());
+		
+		if(campaignDueDate >= 0){
+			if(campaignDueDate == 7){
+				campaignDetail.setDuedateToSysdate("a week left");
+			}else if(campaignDueDate == 1){
+				campaignDetail.setDuedateToSysdate("a day left");
+			}else if(campaignDueDate == 0){
+				campaignDetail.setDuedateToSysdate("ends today");
+			}else{
+				campaignDetail.setDuedateToSysdate(campaignDueDate+" days left");
+			}
+		}
+		
+		model.addAttribute("details", campaignDetail);
+		
+		return "campaignDetail";
+	}
 }

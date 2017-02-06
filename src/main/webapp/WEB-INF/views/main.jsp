@@ -24,7 +24,6 @@
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
 						<c:forEach items="${list}" var="lists" begin="0" end="${fn:length(list)}" step="1" varStatus="status">
-							<input type="hidden" name="campaignName" value="${list[status.index].campaignName}" />
 							<div class="col-sm-6">
 								<div class="image-box style-2 mb-20 bordered light-gray-bg">
 									<div class="overlay-container overlay-visible">
@@ -36,7 +35,7 @@
 										<p class="ellipsis"><c:out value="${list[status.index].campaignSubject }"/></p>
 										<label></label>
 										<div class="btn-learn-more">
-											<a class="text-info btn-md-link" href="#">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+											<a class="text-info btn-md-link" href="<c:url value='/campaigns/${list[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 										</div>
 									</div>
 								</div>
