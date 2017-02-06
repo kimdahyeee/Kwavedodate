@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kwavedonate.kwaveweb.campaign.service.CampaignMapper">
+
+	<resultMap id="mainCampaign" type="hashmap">
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
+		<result property="campaignDueDate" column="DUEDATE" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<resultMap id="campaigns" type="hashmap">
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
+		<result property="campaignDueDate" column="DUEDATE" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<resultMap id="allCampaings" type="com.kwavedonate.kwaveweb.campaign.vo.CampaignVo">
+		<result property="campaignName" column="cName" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="cSubject" javaType="java.lang.String"/>
+		<result property="campaignSummary" column="cSummary" javaType="java.lang.String"/>
+		<result property="campaignContents" column="cContents" javaType="java.lang.String"/>
+		<result property="gatherMount" column="cAmount" javaType="int"/>
+		<result property="fundingUserCount" column="cUserCount" javaType="int"/>
+		<result property="launchDate" column="cLuanchDate" javaType="java.lang.String"/>
+		<result property="dueDate" column="cDueDate" javaType="java.lang.String"/>
+		<result property="youtubeCode" column="cYoutubeCode" javaType="java.lang.String"/>
+		<result property="youtubeImg" column="cYoutubeImg" javaType="java.lang.String"/>
+		<result property="campaignImg" column="cImg" javaType="java.lang.String"/>
+		<result property="duedateToSysdate" column="cDueToSys" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<select id="selectMainCampaign" resultMap="mainCampaign">
+	<![CDATA[ 
+		SELECT
+			CAMPAIGNNAME,
+			CAMPAIGNSUBJECT,
+			CAMPAIGNIMG,
+			TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+		FROM CAMPAIGNS
+		WHERE ROWNUM <= 4 AND TO_DATE(to_char(DUEDATE,'YYYYMMDD')) >= TO_DATE(to_char(SYSDATE,'YYYYMMDD'))
+		AND LAUNCHDATE <= SYSDATE
+	]]> 
+	</select>
+	
+	<select id="selectCampaigns" resultMap="campaigns">
+	<![CDATA[ 
+		SELECT
+			CAMPAIGNNAME,
+			CAMPAIGNSUBJECT,
+			CAMPAIGNIMG,
+			TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+		FROM CAMPAIGNS
+		WHERE LAUNCHDATE <= SYSDATE
+	]]>
+	</select>
+	
+	<select id="detailCampaigns" resultMap="allCampaings">
+	SELECT
+		CAMPAIGNNAME as cName,
+		CAMPAIGNSUBJECT as cSubject,
+		CAMPAIGNSUMMARY as cSummary,
+		CAMPAIGNCONTENTS as cContents,
+		GATHERAMOUNT as cAmount,
+		FUNDINGUSERCNT as cUserCount,
+		LAUNCHDATE as cLuanchDate,
+		DUEDATE as cDueDate,
+		YOUTUBECODE as cYoutubeCode,
+		YOUTUBEIMG as cYoutubeImg,
+		CAMPAIGNIMG as cImg,
+		TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as cDueToSys
+	FROM CAMPAIGNS
+   	WHERE CAMPAIGNNAME = '${campaignName}'
+	
+	</select>
+	
+</mapper>

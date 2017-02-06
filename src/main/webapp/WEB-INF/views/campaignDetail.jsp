@@ -1,12 +1,16 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 			<section class="main-container">
 				<div class="container">
+				<input type="hidden" value="${details.youtubeCode}" id="youtube_code"/>
+				<input type="hidden" value="${details.dueDate}" id="dueDate" />
 					<div class="row">
 						<div class="col-md-8 col-lg-8">
 							<article class="campaign-img-border">
 								<div class="overlay-container">
-									<span class="campaign-badge"><i>2 days left</i></span>
-									<img src="resources/images/iu-campaign.jpg" alt="">
-									<a class="overlay-link" href="#"> <i class="fa fa-play" aria-hidden="true"></i></a>
+								<div class="embed-container"><div id="player"></div></div>
+									<span class="campaign-badge"><i>${details.duedateToSysdate }</i></span>
+									<img src="${details.youtubeImg}" id="play_img">
+									<a class="overlay-link" id="play_vid"> <i class="fa fa-play" aria-hidden="true"></i></a>
 								</div>
 							</article>
 							<div class="separator"></div>
@@ -21,7 +25,7 @@
 										<!-- campaignSubject -->
 										<!-- =============== -->
 										<div class="campaignSubject">
-											<h1>IU Play Just For You</h1>
+											<h1>${details.campaignSubject }</h1>
 										</div>
 										<!-- =============== -->
 
@@ -30,12 +34,7 @@
 										<!-- campaignSummary -->
 										<!-- =============== -->
 										<div class="campaignSummary">
-											<h4><strong>You and 3 friends will:</strong></h4>
-											<ul>
-												<li>Assemble and join Chris Evans for the escape room adventure of a lifetime</li>
-												<li>Celebrate your escape (or soothe your sorrows) with burgers and beer</li>
-												<li>Get flown out and put up in a 4-star hotel</li>
-											</ul>
+											${details.campaignSummary }
 										</div>
 										<!-- =============== -->
 
@@ -66,19 +65,14 @@
 										<!-- campaignSubject -->
 										<!-- =============== -->
 										<div class="campaignSubject">
-											<h1>IU Play Just For You</h1>
+											<h1>${details.campaignSubject }</h1>
 										</div>
 										<!-- =============== -->
 										<label></label>
 										<!-- campaignSummary -->
 										<!-- =============== -->
 										<div class="campaignSummary">
-											<h4><strong>You and 3 friends will:</strong></h4>
-											<ul>
-												<li>Assemble and join Chris Evans for the escape room adventure of a lifetime</li>
-												<li>Celebrate your escape (or soothe your sorrows) with burgers and beer</li>
-												<li>Get flown out and put up in a 4-star hotel</li>
-											</ul>
+											${details.campaignSummary }
 										</div>
 									</div>
 								</div>
@@ -96,34 +90,7 @@
 							<!-- 여기부터는 관리자 단에서 입력한 campaign 내용이 Fetch되어서 들어 감 -->
 							<!-- 단지 보이는 view를 위해 내용을 쓴 것 뿐임 -->
 							<!-- ====================================== -->
-							<article>
-								<div class="campaign-detail-header">
-									<h1>what you'll do</h1>
-								</div>
-								<div class="campaign-detail-content">
-									<div class="campagin-detail-img">
-										<img src="resources/images/iu-campaign1.jpg" alt="">
-									</div>
-									<div>
-										<label></label>
-										<p> From stealing the answers to the SAT in The Perfect Score to fighting his way through a train of horrors in Snowpiercer, when it comes to escape, few have more experience than Chris Evans. Now, Chris is inviting you and three friends to join him in what could be one of his most action-packed adventures yet: a custom escape room. You could solve a murder, get locked up in a haunted house, rob a bank or maybe even solve a murder in a haunted bank. No matter the narrative, it’s going to be a night you’ll never forget, complete with scares, laughs, and celebratory burgers and beer. Flights and hotel are on us.</p>
-									</div>
-								</div>
-							</article>
-							<article>
-								<div class="campaign-detail-header">
-									<h1>who you'll help</h1>
-								</div>
-								<div class="campaign-detail-content">
-									<div class="campagin-detail-img">
-										<img src="resources/images/iu-campaign2.jpg" alt="">
-									</div>
-									<label></label>
-									<div>
-										<p> Christopher’s Haven operates a supportive community consisting of nine temporary apartments and a community recreation area for families of children being treated for cancer in nearby Boston hospitals. Over 300 families to date have stayed in the fully-furnished and equipped apartments located across the street from Massachusetts General Hospital. The Loft is utilized to provide programming for children undergoing outpatient treatment, as well as their siblings and parents. Activities coordinated primarily by volunteers, include massage therapy, pet therapy, arts & crafts, movie nights, birthday and holiday parties, bell-ringing ceremonies, outings to sporting events and excursions to local attractions.</p>
-									</div>
-								</div>	
-							</article>
+							${details.campaignContents}
 							<!-- campaignContents -->
 							<!-- ====================================== -->
 						</div>
@@ -167,7 +134,7 @@
 									<div class="image-box style-2 mb-20 bordered">
 										<div class="overlay-container overlay-visible">
 											<span class="campaign-badge"><i>200/350</i></span>
-											<img src="resources/images/perks-1.jpg" alt="">
+											<img src="<c:url value='/resources/images/perks-1.jpg' />" alt="">
 											<div class="overlay-link"></div>										
 										</div>
 										<div class="body">
@@ -184,7 +151,7 @@
 									<div class="image-box style-2 mb-20 bordered">
 										<div class="overlay-container overlay-visible">
 											<span class="campaign-badge"><i>90/100</i></span>
-											<img src="resources/images/perks-2.jpg" alt="">
+											<img src="<c:url value='/resources/images/perks-2.jpg' />" alt="">
 											<div class="overlay-link"></div>									
 										</div>
 										<div class="body">
@@ -200,7 +167,7 @@
 									<div class="image-box style-2 mb-20 bordered">
 										<div class="overlay-container overlay-visible">
 											<span class="campaign-badge"><i>19/50</i></span>
-											<img src="resources/images/perks-3.jpg" alt="">
+											<img src="<c:url value='/resources/images/perks-3.jpg' />" alt="">
 											<div class="overlay-link"></div>										
 										</div>
 										<div class="body">
@@ -216,7 +183,7 @@
 									<div class="image-box style-2 mb-20 bordered">
 										<div class="overlay-container overlay-visible">
 											<span class="campaign-badge"><i>9/20</i></span>
-											<img src="resources/images/perks-4.jpg" alt="">
+											<img src="<c:url value='/resources/images/perks-4.jpg' />" alt="">
 											<div class="overlay-link"></div>										
 										</div>
 										<div class="body">
@@ -232,7 +199,7 @@
 									<div class="image-box style-2 mb-20 bordered">
 										<div class="overlay-container overlay-visible">
 											<span class="campaign-badge"><i>3/10</i></span>
-											<img src="resources/images/perks-5.jpg" alt="">
+											<img src="<c:url value='/resources/images/perks-5.jpg' />" alt="">
 											<div class="overlay-link"></div>										
 										</div>
 										<div class="body">
@@ -248,7 +215,7 @@
 									<div class="image-box style-2 mb-20 bordered">
 										<div class="overlay-container overlay-visible">
 											<span class="campaign-badge"><i>0/5</i></span>
-											<img src="resources/images/perks-6.jpg" alt="">
+											<img src="<c:url value='/resources/images/perks-6.jpg' />" alt="">
 											<div class="overlay-link"></div>										
 										</div>
 										<div class="body">
@@ -264,7 +231,7 @@
 									<div class="image-box style-2 mb-20 bordered">
 										<div class="overlay-container overlay-visible">
 											<span class="campaign-badge"><i>0/2</i></span>
-											<img src="resources/images/perks-7.jpg" alt="">
+											<img src="<c:url value='/resources/images/perks-7.jpg' />" alt="">
 											<div class="overlay-link"></div>									
 										</div>
 										<div class="body">

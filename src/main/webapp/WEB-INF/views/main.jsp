@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 			<div class="banner video-background-banner pv-40 dark-translucent-bg hovered">
 				<div class="container">
 					<div class="row">
@@ -21,79 +23,31 @@
 					</div>
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
+						<c:forEach items="${list}" var="lists" begin="0" end="${fn:length(list)}" step="1" varStatus="status">
 							<div class="col-sm-6">
 								<div class="image-box style-2 mb-20 bordered light-gray-bg">
 									<div class="overlay-container overlay-visible">
-										<span class="campaign-badge"><i>2 days left</i></span>
-										<img src="resources/images/iu-campaign.jpg" alt="">
-
+										<span class="campaign-badge"><i>${list[status.index].campaignDueDate}</i></span>
+										<img src='${list[status.index].campaignImg}' alt="">
 									</div>
 									<div class="body">
 										<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-										<p class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque ipsam nihil, adipisci rem minus? Voluptatem distinctio laborum porro aspernatur.</p>
+										<p class="ellipsis"><c:out value="${list[status.index].campaignSubject }"/></p>
 										<label></label>
 										<div class="btn-learn-more">
-											<a class="text-info btn-md-link" href="#">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+											<a class="text-info btn-md-link" href="<c:url value='/campaigns/${list[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 										</div>
 									</div>
 								</div>
 							</div>
-
-							<div class="col-sm-6">
-								<div class="image-box style-2 mb-20 bordered light-gray-bg">
-									<div class="overlay-container overlay-visible">
-										<span class="campaign-badge"><i>a week left</i></span>
-										<img src="resources/images/gong-you-campaign.jpg" alt="">
-									</div>
-									<div class="body">
-										<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-										<p class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque ipsam nihil, adipisci rem minus? Voluptatem distinctio laborum porro aspernatur.</p>
-										<label></label>
-										<div class="btn-learn-more">
-											<a class="text-info btn-md-link" href="#">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-6">
-								<div class="image-box style-2 mb-20 bordered light-gray-bg">
-									<div class="overlay-container overlay-visible">
-										<span class="campaign-badge"><i>35 days left</i></span>
-										<img src="resources/images/oh-yeon-campaign.jpg" alt="">
-									</div>
-									<div class="body">
-										<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-										<p class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque ipsam nihil, adipisci rem minus? Voluptatem distinctio laborum porro aspernatur.</p>
-										<label></label>
-										<div class="btn-learn-more">
-											<a class="text-info btn-md-link" href="#">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-6">
-								<div class="image-box style-2 mb-20 bordered light-gray-bg">
-									<div class="overlay-container overlay-visible">
-										<span class="campaign-badge"><i>a day left</i></span>
-										<img src="resources/images/kim-go-eun-campaign.jpg" alt="">
-									</div>
-									<div class="body">
-										<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-										<p class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque ipsam nihil, adipisci rem minus? Voluptatem distinctio laborum porro aspernatur.</p>
-										<label></label>
-										<div class="btn-learn-more">
-											<a class="text-info btn-md-link" href="#">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<label></label>
-							<div class="text-center">
-								<a href="campaigns" class="btn btn-lg btn-danger"> See Them All </a>
-							</div>
-						<div>
+						</c:forEach>
+						</div>
+						<label></label>
+						<c:if test="${fn:length(list)== '4'}">
+						<div class="text-center">
+							<a href="campaigns" class="btn btn-lg btn-danger"> See Them All </a>
+						</div>
+						</c:if>
 					</div>
 				</div>	
 			</section>

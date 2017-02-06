@@ -1,7 +1,6 @@
 package com.kwavedonate.kwaveweb.user.service;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;

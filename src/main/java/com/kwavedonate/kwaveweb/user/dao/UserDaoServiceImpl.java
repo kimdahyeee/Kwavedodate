@@ -1,6 +1,5 @@
 package com.kwavedonate.kwaveweb.user.dao;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
