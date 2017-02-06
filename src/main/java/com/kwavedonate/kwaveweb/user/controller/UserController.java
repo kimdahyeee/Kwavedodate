@@ -17,6 +17,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
-import com.kwavedonate.kwaveweb.core.util.EmailSenderService;
 import com.kwavedonate.kwaveweb.user.dao.UserDaoService;
 import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 
@@ -34,6 +34,9 @@ import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	private String check="check";
+
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -41,6 +44,7 @@ public class UserController {
 	@Resource(name = "userDaoService")
 	private UserDaoService dao;
 
+	
 	@Resource(name = "bcryptEncoder")
 	private BcryptEncoder encoder;
 
@@ -58,6 +62,11 @@ public class UserController {
 	@RequestMapping("/findPassword")
 	public String findpassword() {
 		return "findPassword";
+	}
+	
+	@RequestMapping("/errorPage") 
+	public String errorPage() {
+		return "errorPage";
 	}
 
 	@RequestMapping("/user/denied")
@@ -240,18 +249,23 @@ public class UserController {
 		return hashmap;
 	}
 	
+	
+	// userEmail은 암호화, 복호화를 사용해야함, 현재는 bcrypt암호화 때문에 복호화가 진행되지 않음. 비교만 가능
 	@ResponseBody
 	@RequestMapping(value="/sendLink", method=RequestMethod.POST)
 	public Map<String, Object> sendLink (@RequestParam("userEmail")String userEmail) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Map<String, Object> userEmailExist = dao.selectEmail(userEmail);
-		System.out.println("TEST : sendLink");
 	
 		if (userEmailExist != null) {
+			String ue = userEmailExist.get("USEREMAIL").toString();
+			String encEmail = encoder.encode(ue);
 			
-			String getURL = encoder.encode(userEmailExist.get("USEREMAIL").toString());
-			System.out.println(getURL);
-			String htmlContent = "<br/><a href=\"localhost:8181/kwaveweb/login?" + getURL + "\">클릭하면 비밀번호 변경 페이지로 이동 합니다.</a>" ;
+			System.out.println(encEmail);
+			String htmlContent = "<h1>아래 주소를 클릭하여 비밀번호를 변경하세요.</h1><br/>"
+					+ "<h3>링크에 접속한 후 비밀 번호를 변경하지 않으면 이메일을 다시 전송해야 합니다.</h3>"
+					+ "http://localhost:8181/kwaveweb/pwdService?bep=" 
+					+ encEmail + "&ue=" + ue;
 			try {
 				MimeMessage message = mailSender.createMimeMessage();
 				
@@ -272,6 +286,53 @@ public class UserController {
 	
 		
 		return result;
+	}
+	
+	
+	
+
+	@RequestMapping(value="/pwdService", method=RequestMethod.GET)
+	public String pwdService(HttpServletRequest request, Model model) {
+
+		String bep = request.getParameter("bep").toString();
+		String ue = request.getParameter("ue").toString();
+		
+		if (!(check.equals(bep))) {
+			model.addAttribute("ue", ue);
+			check = bep;
+			if(encoder.matches(ue, bep)) {
+				return "pwdService";
+				
+			} else {
+				System.out.println("안되네");
+				return "/errorPage";
+			}
+		} else {
+			return "/errorPage";
+		}
+		
+		
+		
+	}
+
+	
+	@ResponseBody
+	@RequestMapping(value="/pwdmodifyService", method=RequestMethod.POST)
+	public HashMap<String, Object> pwdmodifyService(@RequestParam("userEmail")String userEmail, @RequestParam("userPassword")String userPassword) {
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		String encodedPassword = encoder.encode(userPassword);
+		Map<String, String> password = new HashMap<String, String>();
+		
+		password.put("userEmail", userEmail);
+		password.put("newPassword", encodedPassword);
+		
+		if(dao.modifyPassword(password)==1) {
+			hashmap.put("KEY", "SUCCESS");
+		} else {
+			hashmap.put("KEY", "FAIL");
+		}
+		return hashmap;
+		
 	}
 
 }

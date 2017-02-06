@@ -290,8 +290,8 @@ $(document).ready(function() {
     }*/
 
     // 비밀번호 찾기 validation
-    if($("#validateFindPassword").length>0) {
-        $("#validateFindPassword").validate({
+    if($("#validateFindPasswordSend").length>0) {
+        $("#validateFindPasswordSend").validate({
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
@@ -470,6 +470,72 @@ $(document).ready(function() {
                 },
                 nation: {
                     required: "You have to select nation."
+                }
+            },
+            errorElement: "span",
+            highlight: function (element) {
+                $(element).parent().removeClass("has-success").addClass("has-error");
+                $(element).siblings("label").addClass("hide");
+            },
+            success: function (element) {
+                $(element).parent().removeClass("has-error").addClass("has-success");
+                $(element).siblings("label").removeClass("hide");
+            }
+        });
+    }
+    
+    
+    // 비밀번호 찾기 변경
+    // 비밀번호 찾기 validation
+    if($("#validateFindPassword").length>0) {
+        $("#validateFindPassword").validate({
+            submitHandler: function(form) {   
+                // 데이터 베이스에 저장 ajax 사용
+                $.ajax({
+                    type: "POST",
+                    url: "/kwaveweb/pwdmodifyService",
+                    data: {
+                    	"userEmail" : $("#userEmail").val(),
+                        "userPassword": $("#newPassword").val()
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        //성공 시 데이터 처리 
+                    	if(data.KEY == "SUCCESS"){
+                            alert("비밀 번호가 변경되었습니다. 로그인 해주세요.");
+                           location.href = "http://localhost:8181/kwaveweb/login";
+                           
+                         }else{
+                            alert("실패");
+                         }
+                    }
+                });
+            },
+            errorPlacement: function(error, element) {  
+                error.appendTo(element.parent());  
+            },
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                newPassword: {
+                    required: true,
+                    minlength: 6
+                },
+                newPasswordConfirm: {
+                    required: true,
+                    minlength: 6,
+                    equalTo: "#newPassword"
+                }
+            },
+            messages: {
+                newPassword: {
+                    required: "Please enter a new password.",
+                    minlength: "Your password must be at least 6 charaters long."
+                },
+                newPasswordConfirm: {
+                    required: "Please confirm the password.",
+                    minlength: "Your password must be at least 6 charaters long.",
+                    equalTo: "Please enter the same password as above."
                 }
             },
             errorElement: "span",

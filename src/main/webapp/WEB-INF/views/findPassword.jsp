@@ -4,7 +4,7 @@
 						<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
 							<div class="form-block center-block p-30">
 								<h2 class="title text-center"><strong>Forgot Password?</strong></h2>
-								<form class="form-horizontal" id="validateFindPassword">
+								<form class="form-horizontal" id="validateFindPasswordSend">
 									<div class="form-group has-feedback">
 										<div class="col-sm-12">
 											<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email" required>
