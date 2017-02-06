@@ -68,7 +68,7 @@
 										</div>
 									</div>
 									<div id="logo" class="logo">
-										<a href="/kwave/"><img id="logo_img" src="<c:url value='/resources/images/logo.png' />" alt="The Project"></a>
+										<a href="/kwaveweb/"><img id="logo_img" src="<c:url value='/resources/images/logo.png' />" alt="The Project"></a>
 									</div>
 								</div>
 							</div>
