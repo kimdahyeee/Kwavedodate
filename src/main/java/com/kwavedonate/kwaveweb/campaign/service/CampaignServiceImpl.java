@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.kwavedonate.kwaveweb.campaign.vo.CampaignVo;
+import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 
 @Service("campaignService")
 public class CampaignServiceImpl implements CampaignService{
@@ -30,4 +31,8 @@ public class CampaignServiceImpl implements CampaignService{
 		return campaignMapper.detailCampaigns(campaignName);
 	}
 
+	@Override
+	public List<RewardsVo> getRewardsDetail(String campaignName) {
+		return campaignMapper.detailRewards(campaignName);
+	}
 }

@@ -4,9 +4,9 @@ public class RewardsVo {
 
 	private int rewardNum;
 	private String campaignName;
-	private int rewardAmount;
-	private int rewardTotalCnt;
-	private int rewardCurrentCnt;
+	private String rewardAmount;
+	private String rewardTotalCnt;
+	private String rewardCurrentCnt;
 	private String rewardSubject;
 	private String rewardContents;
 	private String rewardImg;
@@ -23,22 +23,22 @@ public class RewardsVo {
 	public void setCampaignName(String campaignName) {
 		this.campaignName = campaignName;
 	}
-	public int getRewardAmount() {
+	public String getRewardAmount() {
 		return rewardAmount;
 	}
-	public void setRewardAmount(int rewardAmount) {
+	public void setRewardAmount(String rewardAmount) {
 		this.rewardAmount = rewardAmount;
 	}
-	public int getRewardTotalCnt() {
+	public String getRewardTotalCnt() {
 		return rewardTotalCnt;
 	}
-	public void setRewardTotalCnt(int rewardTotalCnt) {
+	public void setRewardTotalCnt(String rewardTotalCnt) {
 		this.rewardTotalCnt = rewardTotalCnt;
 	}
-	public int getRewardCurrentCnt() {
+	public String getRewardCurrentCnt() {
 		return rewardCurrentCnt;
 	}
-	public void setRewardCurrentCnt(int rewardCurrentCnt) {
+	public void setRewardCurrentCnt(String rewardCurrentCnt) {
 		this.rewardCurrentCnt = rewardCurrentCnt;
 	}
 	public String getRewardSubject() {
