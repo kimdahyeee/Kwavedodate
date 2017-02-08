@@ -50,5 +50,41 @@
 	</beans:bean>
 	
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+	
+	
+
+	
+	<beans:bean id="connectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+		<beans:constructor-arg value="${facebook.app.id}"/>
+		<beans:constructor-arg value="${facebook.app.secret}"/>
+	</beans:bean>
+	
+	<beans:bean id="oAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<beans:property name="scope" value="${facebook.app.scope}"/>
+		<beans:property name="redirectUri" value="${facebook.redirect.uri}"/>
+	</beans:bean>
+	
+	<!-- 다국어 처리 -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="basenames" value="locale/messages"/>
+	</beans:bean>
+	
+	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<beans:property name="defaultLocale" value="ko" />
+	</beans:bean>
+	
+	<interceptors>
+	    <beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+	    <beans:property name="paramName" value="lang" />
+	    </beans:bean>
+    </interceptors>	 
+    
+   <!--  <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >    
+	    <beans:property name="cookieName" value="clientlanguage"/>   
+	    <beans:property name="cookieMaxAge" value="100000"/>
+	    <beans:property name="cookiePath" value="web/cookie"/>
+	</beans:bean>  -->
+	
 
 </beans:beans>

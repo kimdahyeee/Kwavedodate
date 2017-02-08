@@ -64,5 +64,10 @@
 		<error-code>500</error-code>
 		<location>/login</location>
 	</error-page>
+	
+	<display-name>main</display-name>
+	<welcome-file-list>
+		<welcome-file>/kwaveweb</welcome-file>		
+	</welcome-file-list>
 
 </web-app>

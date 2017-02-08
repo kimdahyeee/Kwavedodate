@@ -1,5 +1,7 @@
 package com.kwavedonate.kwaveweb.user.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ import javax.annotation.Resource;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
+import com.kwavedonate.kwaveweb.core.util.GetIpAddress;
 import com.kwavedonate.kwaveweb.user.dao.UserDaoService;
 import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 
@@ -52,8 +56,16 @@ public class UserController {
 		this.sqlSession = sqlSession;
 	}
 
-	@RequestMapping("/signin")
-	public String signPage() {
+	@RequestMapping(value="/signin", method=RequestMethod.GET)
+	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
+		logger.info("UserController - SignIn");
+		
+		// IP 확인		
+		String ipc = GetIpAddress.getClientIP(request);
+		System.out.println("Web browser 정보 : " +ipc);
+		
+		model.addAttribute("ipAddress", ipc);
+		
 		return "signin";
 	}
 
@@ -67,14 +79,14 @@ public class UserController {
 		return "errorPage";
 	}
 
-	@RequestMapping("/user/denied")
+	@RequestMapping("/denied")
 	public String denied(Model model, Authentication auth, HttpServletRequest request) {
 		AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
 		logger.info("ex : {}", ade);
 		model.addAttribute("auth", auth);
 		model.addAttribute("errMsg", ade);
 
-		return "/user/denied";
+		return "denied";
 	}
 
 	// myAccount Controller
@@ -142,6 +154,8 @@ public class UserController {
 			@RequestParam("userEmail") String userEmail) {
 		Map<String, String> paramMap = new HashMap<String, String>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		
+		paramMap.put("authority", "ROLE_USER_" + userNation);
 		paramMap.put("userName", userName);
 		paramMap.put("phone", phone);
 		paramMap.put("userNation", userNation);

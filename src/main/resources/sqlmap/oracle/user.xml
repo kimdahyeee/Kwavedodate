@@ -17,7 +17,8 @@
 		update users
 		set userName = #{userName},
 		phone = #{phone},
-		userNation = #{userNation}
+		userNation = #{userNation},
+		authority = #{authority}
 		where userEmail = #{userEmail}
 	</update>
 

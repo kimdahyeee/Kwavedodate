@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 			<div class="banner video-background-banner pv-40 dark-translucent-bg hovered">
 				<div class="container">
 					<div class="row">
@@ -18,7 +19,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<h2 class="text-center">AWSOME <strong>EXPERIENCE</strong></h2>
+							<h2 class="text-center">AWSOME <strong><spring:message code="EXPERIENCE"/></strong></h2>
 						</div>
 					</div>
 					<div class="row">

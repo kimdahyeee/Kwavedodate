@@ -25,8 +25,8 @@ public class UserDeniedHandler implements AccessDeniedHandler {
 		logger.info("Message : {}", ade.getMessage());
 		logger.info("StackTrace : {}", ade.getStackTrace());
 
-		request.setAttribute("errMsg", ade.getMessage());
-		request.getRequestDispatcher("/WEB-INF/views/user/denied.jsp").forward(request, response);
+		
+		response.sendRedirect("/kwaveweb/denide");
 	}
 
 }

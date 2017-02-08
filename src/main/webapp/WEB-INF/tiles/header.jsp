@@ -74,9 +74,9 @@
 														<a href="<c:url value='/logout'/>">Log out</a>
 													</li>
 												</sec:authorize>
-												<a href="#" class="btn btn-default btn-sm">Korean</a>
-												<a href="#" class="btn btn-default btn-sm">English</a>
-												<a href="#" class="btn btn-default btn-sm">Chinese</a>
+												<li><a href="/kwaveweb/?lang=ko" class="btn btn-default btn-sm">Korean</a></li>
+												<li><a href="/kwaveweb/?lang=en" class="btn btn-default btn-sm">English</a></li>
+												<li><a href="/kwaveweb/?lang=ch" class="btn btn-default btn-sm">Chinese</a></li>
 											</ul>
 										</div>
 									</div>
@@ -124,9 +124,9 @@
 														<li class="header-top-dropdown">
 															<a href="#" class="dropdown-toggle language" data-toggle="dropdown">Language <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 															<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-																<li ><a href="#">Korean</a></li>
-																<li ><a href="#">English</a></li>
-																<li ><a href="#">Chinese</a></li>
+																<li><a href="/kwaveweb/?lang=ko" class="btn btn-default btn-sm">Korean</a></li>
+																<li><a href="/kwaveweb/?lang=en" class="btn btn-default btn-sm">English</a></li>
+																<li><a href="/kwaveweb/?lang=ch" class="btn btn-default btn-sm">Chinese</a></li>
 															</ul>
 														</li>
 													</ul>

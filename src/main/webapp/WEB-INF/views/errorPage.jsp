@@ -9,6 +9,6 @@
 <body>
 	errorPage입니다.<br/>
 	
-	<a href="/kwaveweb/main">main으로 이동</a>
+	<a href="/kwaveweb/">main으로 이동</a>
 </body>
 </html>

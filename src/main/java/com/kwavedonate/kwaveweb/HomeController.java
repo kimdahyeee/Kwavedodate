@@ -7,12 +7,18 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
-import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 
 
 
@@ -33,6 +38,19 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	private Facebook facebook;
+	private ConnectionRepository connectionRepository;
+	
+	@Inject
+	public HomeController(Facebook facebook, ConnectionRepository connectionRepository) {
+		this.facebook = facebook;
+		this.connectionRepository = connectionRepository;
+	}
+	
+	@Autowired
+	private FacebookConnectionFactory connectionFactory;
+	
+	@Autowired
+	private OAuth2Parameters oAuth2Parameters;
 
 	@Resource(name = "bcryptEncoder")
 	private BcryptEncoder encoder;
@@ -40,24 +58,7 @@ public class HomeController {
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
-	}
-	
+	/* 메인 페이지 */
 	@RequestMapping(value="/")
 	public String main(Model model) {
 
@@ -83,15 +84,27 @@ public class HomeController {
 
 		return "main";
 	}
-	
-	@RequestMapping(value="/checkAuth", method=RequestMethod.GET)
-	@Secured({"ROLE_ADMIN", "ROLE_USER"})
-	public String checkAuth(Locale locale, Model model, Authentication auth) {
-		UserDetailsVO vo = (UserDetailsVO) auth.getPrincipal();
-		logger.info("Welcome checkAuth! Authentication is {}.", auth);
-		logger.info("UserDetailsVO == {}.", vo);
-		model.addAttribute("auth", auth);
-		model.addAttribute("vo", vo);
-		return "checkAuth";
+
+
+	/* about us 페이지 */
+	@RequestMapping("/aboutUs")
+	public String aboutUs() {
+		return "aboutUs";
 	}
+	
+	/* 로그인 실패시 이동 */
+	@RequestMapping("/loginfail")
+	public String loginfail(HttpServletResponse response) {
+
+		return "/login";
+	}
+	
+	@RequestMapping("/facebookLogin")
+	public String facebookLogin(Model model) {
+		if(connectionRepository.findPrimaryConnection(Facebook.class)!=null) {
+			model.addAttribute("facebookProfile", facebook.userOperations().getUserProfile());
+		}
+		return "/";
+	}
+
 }

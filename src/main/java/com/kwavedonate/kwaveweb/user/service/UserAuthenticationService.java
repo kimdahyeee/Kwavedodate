@@ -33,7 +33,6 @@ public class UserAuthenticationService implements UserDetailsService {
 		// TODO Auto-generated method stub
 		Map<String, Object> user;
 		user = sqlSession.selectOne("user.selectUser", username);
-		System.out.println(user.get("USERNAME"));
 		if (user == null)
 			throw new UsernameNotFoundException(username);
 

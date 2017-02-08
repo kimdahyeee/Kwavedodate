@@ -103,7 +103,7 @@ if($("#validateLogin").length>0) {
 
 									<div class="form-group">
 										<div class="col-sm-12">							
-											<a id="facebookLoginBtn" class="btn square btn-primary" style="width: 100%;">
+											<a id="facebookLoginBtn" class="btn square btn-primary" href="/kwaveweb/facebookLogin" style="width: 100%;">
 												<i class="fa fa-facebook"></i> facebook login
 											</a>
 										</div>
