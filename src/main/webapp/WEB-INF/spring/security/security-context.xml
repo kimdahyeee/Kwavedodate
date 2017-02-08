@@ -15,6 +15,8 @@
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI',
 																	'ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/payments/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+
 		<security:intercept-url pattern="/**" access="permitAll"/>
 		
 		<!-- custom 로그인 폼 -->

@@ -32,6 +32,23 @@
 		<result property="duedateToSysdate" column="cDueToSys" javaType="java.lang.String"/>
 	</resultMap>
 	
+	<resultMap id="allRewards" type="com.kwavedonate.kwaveweb.campaign.vo.RewardsVo">
+		<result property="rewardNum" column="rNum"/>
+		<result property="campaignName" column="rName" javaType="java.lang.String"/>
+		<result property="rewardAmount" column="rAmount" javaType="java.lang.String"/>
+		<result property="rewardTotalCnt" column="rTotalCnt" javaType="java.lang.String"/>
+		<result property="rewardCurrentCnt" column="rCurrnetCnt" javaType="java.lang.String"/>
+		<result property="rewardSubject" column="rSubject" javaType="java.lang.String"/>
+		<result property="rewardContents" column="rContents" javaType="java.lang.String"/>
+		<result property="rewardImg" column="rImg" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<resultMap id="rewardsPayment" type="hashmap">
+		<result property="rewardSubject" column="REWARDSUBJECT" javaType="java.lang.String"/>
+		<result property="rewardImg" column="REWARDIMG" javaType="java.lang.String"/>
+		<result property="rewardAmount" column="REWARDAMOUNT" javaType="java.lang.String"/>
+	</resultMap>
+	
 	<select id="selectMainCampaign" resultMap="mainCampaign">
 	<![CDATA[ 
 		SELECT
@@ -57,6 +74,15 @@
 	]]>
 	</select>
 	
+	<select id="selectRewards" resultMap="rewardsPayment">
+	SELECT
+		REWARDSUBJECT,
+		REWARDIMG,
+		REWARDAMOUNT
+	FROM REWARDS
+	WHERE REWARDNUM=${rewardNum} AND CAMPAIGNNAME='${campaignName}'
+	</select>
+	
 	<select id="detailCampaigns" resultMap="allCampaings">
 	SELECT
 		CAMPAIGNNAME as cName,
@@ -73,7 +99,20 @@
 		TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as cDueToSys
 	FROM CAMPAIGNS
    	WHERE CAMPAIGNNAME = '${campaignName}'
+	</select>
 	
+	<select id="detailRewards" resultMap="allRewards">
+	SELECT
+		REWARDNUM as rNum,
+		CAMPAIGNNAME as rName,
+		REWARDAMOUNT as rAmount,
+		REWARDTOTALCNT as rTotalCnt,
+		REWARDCURRENTCNT as rCurrnetCnt,
+		REWARDSUBJECT as rSubject,
+		REWARDCONTENTS as rContents,
+		REWARDIMG as rImg
+	FROM REWARDS
+    WHERE CAMPAIGNNAME = '${campaignName}'
 	</select>
 	
 </mapper>

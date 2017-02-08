@@ -39,7 +39,7 @@
 							</div>
 						</div>
 						<div class="col-md-10 col-md-offset-1 text-center">
-							<a href="/kwave/" type="submit" class="btn square btn-danger">Home </a>
+							<a href="/kwaveweb/" type="submit" class="btn square btn-danger">Home </a>
 							<label></label>
 							<a href="myAccount" type="submit" class="btn square btn-danger">History </a>
 						</div>
