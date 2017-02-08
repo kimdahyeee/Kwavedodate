@@ -43,6 +43,12 @@
 		<result property="rewardImg" column="rImg" javaType="java.lang.String"/>
 	</resultMap>
 	
+	<resultMap id="rewardsPayment" type="hashmap">
+		<result property="rewardSubject" column="REWARDSUBJECT" javaType="java.lang.String"/>
+		<result property="rewardImg" column="REWARDIMG" javaType="java.lang.String"/>
+		<result property="rewardAmount" column="REWARDAMOUNT" javaType="java.lang.String"/>
+	</resultMap>
+	
 	<select id="selectMainCampaign" resultMap="mainCampaign">
 	<![CDATA[ 
 		SELECT
@@ -66,6 +72,15 @@
 		FROM CAMPAIGNS
 		WHERE LAUNCHDATE <= SYSDATE
 	]]>
+	</select>
+	
+	<select id="selectRewards" resultMap="rewardsPayment">
+	SELECT
+		REWARDSUBJECT,
+		REWARDIMG,
+		REWARDAMOUNT
+	FROM REWARDS
+	WHERE REWARDNUM=${rewardNum} AND CAMPAIGNNAME='${campaignName}'
 	</select>
 	
 	<select id="detailCampaigns" resultMap="allCampaings">

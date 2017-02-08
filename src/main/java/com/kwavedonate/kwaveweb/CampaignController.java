@@ -89,18 +89,13 @@ public class CampaignController {
 			}else{
 				campaignDetail.setDuedateToSysdate(campaignDueDate+" days left");
 			}
+		}else{
+			campaignDetail.setDuedateToSysdate("end");
 		}
 		
 		model.addAttribute("details", campaignDetail);
 		
 		return "campaignDetail";
-	}
-	
-	@RequestMapping(value="/{campaignName}/rewards")
-	public String rewardsView(@PathVariable("campaignName") String campaignName, Model model){
-		List<RewardsVo> rewardsDetail = campaignService.getRewardsDetail(campaignName);
-		model.addAttribute("rewards", rewardsDetail);
-		return "rewards";
 	}
 	
 	@RequestMapping(value="/{campaignName}/reward")
@@ -109,4 +104,5 @@ public class CampaignController {
 		model.addAttribute("rewards", rewardsDetail);
 		return "empty/rewards";
 	}
+	
 }

@@ -13,4 +13,5 @@ public interface CampaignMapper {
 	List<Map<String, Object>> selectCampaigns();
 	CampaignVo detailCampaigns(@Param("campaignName") String campaignName);
 	List<RewardsVo> detailRewards(@Param("campaignName") String campaignName);
+	Map<String, Object> selectRewards(@Param("campaignName") String campaignName, @Param("rewardNum") String rewardNum);
 }

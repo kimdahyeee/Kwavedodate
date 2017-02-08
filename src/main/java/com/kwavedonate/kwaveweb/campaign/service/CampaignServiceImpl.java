@@ -35,4 +35,9 @@ public class CampaignServiceImpl implements CampaignService{
 	public List<RewardsVo> getRewardsDetail(String campaignName) {
 		return campaignMapper.detailRewards(campaignName);
 	}
+	
+	@Override
+	public Map<String, Object> getRewards(String campaignName, String rewardNum) {
+		return campaignMapper.selectRewards(campaignName, rewardNum);
+	}
 }

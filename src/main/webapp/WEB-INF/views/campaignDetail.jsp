@@ -8,7 +8,9 @@
 							<article class="campaign-img-border">
 								<div class="overlay-container">
 								<div class="embed-container"><div id="player"></div></div>
+								<c:if test="${details.duedateToSysdate != 'end'}">
 									<span class="campaign-badge"><i>${details.duedateToSysdate }</i></span>
+								</c:if>
 									<img src="${details.youtubeImg}" id="play_img">
 									<a class="overlay-link" id="play_vid"> <i class="fa fa-play" aria-hidden="true"></i></a>
 								</div>
@@ -39,12 +41,20 @@
 										<!-- =============== -->
 
 										<!-- -->
+										<c:choose>
+										<c:when test="${details.duedateToSysdate != 'end'}">
 										<div class="countdown clearfix"></div>
 										<label></label>
-
 										<div class="text-center">
-											<a href="<c:url value='/campaigns/${details.campaignName}/rewards'/>" class="btn btn-lg btn-danger" style="width: 60%"> Enter Now </a>
+											<a href="<c:url value='/payments/${details.campaignName}/rewards'/>" class="btn btn-lg btn-danger" style="width: 60%"> Enter Now </a>
 										</div>
+										</c:when>
+										<c:otherwise>
+										<div class="text-center">
+											<a class="btn btn-lg btn-danger campaign-enter-btn" style="width: 80%" disabled> finished campaign! </a>
+										</div>
+										</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 							</aside>
@@ -103,10 +113,14 @@
 			<!-- mobile width(0~991px)일때 아래에 고정 div -->
 			<!-- ======================================== -->
 			<div class="campaignEnterNow-mobile-fixed">
+			<c:if test="${details.duedateToSysdate != 'end'}">
 				<div class="countdown"></div>
 				<div class="text-center">
 					<a href="#" class="btn btn-lg btn-danger campaign-enter-btn" style="width: 80%"> Enter Now </a>
 				</div>
+			</c:if>
 			</div>
 			<!-- ======================================== -->
+			<c:if test="${details.duedateToSysdate != 'end'}">
 			<c:import url="/campaigns/${details.campaignName}/reward" />
+			</c:if>

@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 			<section class="main-container campaign-perks">
 				<div class="container">
 					<div class="row">
@@ -14,22 +16,23 @@
 											<div class="form-group has-feedback text-center">
 												<label for="inputUserEmail" class="col-xs-3 col-sm-3">Email : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email" value="vvshinevv@naver.com" required disabled>
+													<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email" value="<sec:authentication property="principal.username"/>" required disabled>
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
 												<label for="inputUserName" class="col-xs-3 col-sm-3">Name : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="userName" name="userName" placeholder="Name" value="" required>
+													<input type="text" class="form-control" id="userName" name="userName" placeholder="Name" value="${userName }" required>
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
 												<label for="inputPhone" class="col-xs-3 col-sm-3">Phone : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="" required>
+													<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="${userPhone}" required>
 												</div>
 											</div>
 											<label></label>
+											<c:if test="${rewardNum != 0}">
 											<h3>Where should we send your stuff?</h3>
 											<label></label>
 											<div class="form-group has-feedback text-center">
@@ -194,38 +197,46 @@
 													<textarea></textarea>
 												</div>
 											</div>
+											</c:if>
 										</div>
 									</div>
 									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 isotope-item delivery-summary">
 										<div class="mb-20 bordered">
+											<c:if test="${rewardNum != 0 }">
 											<div class="overlay-container overlay-visible">
 												<!-- reward 사진은 이전 페이지에서 선택 시 넘어오는 값이다. -->
-												<img src="resources/images/perks-1.jpg" alt="">
+												<img src="${reward.rewardImg }" alt="">
 												<div class="overlay-link"></div>										
 											</div>
+											</c:if>
 											<div class="body ph-20">
 												<!-- reward name -->
 												<!-- =========== -->
-												<h5><strong>Music Brings Us Together Tee</strong></h5>
+												<c:if test="${rewardNum != 0 }">
+												<h5><strong>${reward.rewardSubject}</strong></h5>
+												</c:if>
 												<!-- =========== -->
 												<div class="separator"></div>
 												<div class="reward-detail">
-													<!-- rewardNum은 hidden type으로 설정해서 post 전송 -->
-													<!-- rewardNum은 이전 페이지에서 선택 시 넘어오는 값이다. --> 
-													<input type="hidden" id="rewardNum" name="rewardNum" value="1">
-
 													<!-- rewardAount는 단순 보여주기를 위한 방식 -->
 													<!-- rewardNum과 함께 넘어오는 값임 -->
-													<span class="text-left">Reward: </span> 
-													<span class="text-right">$20</span><br>
-
-													<span class="text-left">Shipping: </span>
-													<span class="text-right">$5</span><br>
-													<input type="hidden" id="shippingAmount" name="shippingAmount" value="5">
-
-													<span class="text-left">Total:</span>
-													<span class="text-right">$25</span><br>
-													<input type="hidden" id="totalAmount" name="totalAmount" value="25">
+													<c:choose>
+														<c:when test="${rewardNum != 0 }">
+														<span class="text-left">Reward: </span> 
+														<span class="text-right">$${reward.rewardAmount }</span><br>
+														<span class="text-left">Shipping: </span>
+														<span class="text-right">$5</span><br>
+														<input type="hidden" id="shippingAmount" name="shippingAmount" value="5">
+														<span class="text-left">Total:</span>
+														<span class="text-right">$${reward.rewardAmount+5 }</span><br>
+														</c:when>
+														<c:otherwise>
+														<span class="text-left">Reward: </span> 
+														<span class="text-right">$10</span><br>
+														</c:otherwise>
+													</c:choose>
+													
+													<input type="hidden" id="totalAmount" name="totalAmount" value="">
 													<label></label>
 												</div>
 											</div>
