@@ -1,6 +1,7 @@
 			<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 			<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 			<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+			<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			<div class="banner video-background-banner pv-40 dark-translucent-bg hovered">
 				<div class="container">
 					<div class="row">
@@ -32,10 +33,10 @@
 										</div>
 										<div class="body">
 											<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-											<p class="ellipsis"><c:out value="${list[status.index].campaignSubject }"/></p>
+											<h4 class="ellipsis"><strong><c:out value="${list[status.index].campaignSubject }"/></strong></h4>
 											<label></label>
 											<div class="btn-learn-more">
-												<a class="text-info btn-md-link" href="<c:url value='/campaigns/${list[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+												<a class="text-info btn-md-link" href="<c:url value='/campaigns/${list[status.index].campaignName}' />">Learn more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 											</div>
 										</div>
 									</div>
