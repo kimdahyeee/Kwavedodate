@@ -1,7 +1,5 @@
 package com.kwavedonate.kwaveweb.user.controller;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -322,11 +319,7 @@ public class UserController {
 		} else {
 			return "/errorPage";
 		}
-		
-		
-		
 	}
-
 	
 	@ResponseBody
 	@RequestMapping(value="/pwdmodifyService", method=RequestMethod.POST)

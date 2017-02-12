@@ -360,7 +360,7 @@ article.campaign-img-border {
   background-color: white;
 }
 
-/* �솕硫� �꼫鍮� 0px ~ 431px */
+/* 화면 너비 0px ~ 431px */
 @media (max-width: 431px) {
   .form-block {
     width: inherit;
@@ -374,7 +374,7 @@ article.campaign-img-border {
   }
 }
 
-/* �솕硫� �꼫鍮� 0px ~ 691px */
+/* 화면 너비 0px ~ 691px */
 @media (max-width: 691px) {
   .tab-content > .tab-pane .pills-space {
     margin-top: 50px;
@@ -386,7 +386,7 @@ article.campaign-img-border {
   }
 }
 
-/* �솕硫� �꼫鍮� 0px ~ 767px */
+/* 화면 너비 0px ~ 767px */
 @media (max-width: 767px) {
 
 	.header-left .header-dropdown-buttons {
@@ -407,7 +407,7 @@ article.campaign-img-border {
   }
 }
 
-/* �솕硫� �꼫鍮� 0px ~ 991px */
+/* 화면 너비 0px ~ 991px */
 @media (max-width: 991px) {
   div.campaignEnterNow-web {
     display: none;  
@@ -419,12 +419,12 @@ article.campaign-img-border {
 
 }
 
-/* �솕硫� �꼫鍮� 0px ~ 1199px */
+/* 화면 너비 0px ~ 1199px */
 @media (max-width: 1199px) {
 
 }
 
-/* �솕硫� �꼫鍮� 768px ~ 臾댄븳 �뵿�� */
+/* 화면 너비 768px ~ 무한 픽셀 */
 @media (min-width: 768px) {
   .main-navigation.with-dropdown-buttons .navbar-default .navbar-collapse {
     padding-right: 0px;
@@ -434,7 +434,7 @@ article.campaign-img-border {
   }
 }
 
-/* �솕硫� �꼫鍮� 991px ~ 臾댄븳 �뵿�� */
+/* 화면 너비 991px ~ 무한 픽셀 */
 @media (min-width: 992px) {
   header.header .header-right {
     float: right !important;
@@ -445,10 +445,13 @@ article.campaign-img-border {
   div.campaignEnterNow-mobile, div.campaignEnterNow-mobile-fixed {
     display: none;  
   }
+  .fixed-header-on .header-left {
+    padding: 12px 0 0 0;
+  }
 }
 
-/* �솕硫� �꼫鍮� 1199px ~ 臾댄븳 �뵿�� */
-@media (min-width: 1199px) {
+/* 화면 너비 1199px ~ 무한 픽셀 */
+@media (min-width: 1199px) {	
   .header-top-dropdown .dropdown-menu {
     min-width: 122px;
   }
@@ -468,14 +471,14 @@ article.campaign-img-border {
 }
 
 
-/* �솕硫� �꼫鍮� 691px ~ 768px */
+/* 화면 너비 691px ~ 768px */
 @media (min-width: 691px) and (max-width: 768px) {
   .tab-content > .tab-pane .pills-space {
     margin-top: 60px;
   }
 }
 
-/* �솕硫� �꼫鍮� 768px ~ 991px */
+/* 화면 너비 768px ~ 991px */
 @media (min-width: 768px) and (max-width: 991px) {
   header.header .header-right {
     width: 359px;
@@ -483,12 +486,12 @@ article.campaign-img-border {
   }
 }
 
-/* �솕硫� �꼫鍮� 768px ~ 1199px */
+/* 화면 너비 768px ~ 1199px */
 @media (min-width: 768px) and (max-width: 1199px) {
 
 }
 
-/* �솕硫� �꼫鍮� 991px ~ 1199px */
+/* 화면 너비 991px ~ 1199px */
 @media (min-width: 991px) and (max-width: 1199px) {
 
 }

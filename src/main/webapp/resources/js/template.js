@@ -1311,7 +1311,7 @@
 				});
 			};
 		};
-		//Scroll totop
+		//Scroll to top
 		//-----------------------------------------------
 		$(window).scroll(function() {
 			if($(this).scrollTop() != 0) {

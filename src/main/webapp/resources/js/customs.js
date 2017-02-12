@@ -6,67 +6,7 @@
  * File Description: Custom scripts
  */
 
-/*
- * youtube video
- */
-if(jQuery("#player").length > 0){
-	var tag = document.createElement('script');
-	
-	tag.src = "https://www.youtube.com/iframe_api";
-	var firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-	
-	// 3. This function creates an <iframe> (and YouTube player)
-	//    after the API code downloads.
-	var player;
-	function onYouTubeIframeAPIReady() {
-	  player = new YT.Player('player', {
-	    height: '315px',
-	    width: '560px',
-	    videoId: document.getElementById('youtube_code').value,
-	    rel:0,
-	    events: {
-	    	'onReady': onPlayerReady,
-	    	'onStateChange': onPlayerStateChange
-	    }
-	  });
-	}
-	
-	// 5. The API calls this function when the player's state changes.
-	//    The function indicates that when playing a video (state=1),
-	//    the player should play for six seconds and then stop.
-	   
-	    function onPlayerStateChange(event) {
-	      if (event.data == YT.PlayerState.ENDED) {
-	    	  $('.embed-container').hide();
-	      $('#play_vid').show();
-	      $('#play_img').show();
-	      $('.campaign-badge').show();
-	  }
-	}
-	
-	function onPlayerReady(event) {
-	    $('#play_vid').click(function() {
-	        event.target.playVideo();
-	    });
-	}
-	
-	function stopVideo() {
-	  player.stopVideo();
-	}
-	
-	$(document).ready(function() {
-	    $('#play_vid').click(function() {
-	        $('.embed-container').show();
-	        $('#play_vid').hide();
-	        $('#play_img').hide();
-	        $('.campaign-badge').hide();
-	    });
-	});
-}
-
 $(document).ready(function() {
-
 
     /* banner custom */
     if($(".campaigns-banner").length>0) {
@@ -88,8 +28,7 @@ $(document).ready(function() {
             });
         };
     };
-
-
+    
     if($(".aboutUs-banner").length>0) {
         if (Modernizr.touch) {
             $(".aboutUs-banner").vide({
@@ -110,11 +49,9 @@ $(document).ready(function() {
         };
     };
 
-
     /* fixed aside custom */
     if($("aside.campaignEnterNow-web").length>0) {
         $("aside.campaignEnterNow-web").scrollToFixed({  
-            
             marginTop: $('header').outerHeight(true) + 10,
             limit: function() {
                 return $('.campaign-perks').offset().top - $(this).outerHeight(true);
@@ -135,74 +72,75 @@ $(document).ready(function() {
         
 
 	/* swiper customize */
-    var swiper = new Swiper('.swiper-container', {
-    	initialSlide: 2,
-        pagination: '.swiper-pagination',
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-        slidesPerView: 1,
-        centeredSlides: true,
-        paginationClickable: true,
-        spaceBetween: 10,
-        breakpoints: {
-        	320: {
-        		slidesPerView: 1, 
-        		spaceBetween: 10
-        	},
-        	480: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-        	640: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-        	767: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-        	991: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-        	1199: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-            1280: {
-                slidesPerView: 2,
-                spaceBetween: 20
-            },
+    if($(".swiper-container").length>0) {
+    	var swiper = new Swiper('.swiper-container', {
+        	initialSlide: 2,
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            slidesPerView: 1,
+            centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 10,
+            breakpoints: {
+            	320: {
+            		slidesPerView: 1, 
+            		spaceBetween: 10
+            	},
+            	480: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+            	640: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+            	767: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+            	991: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+            	1199: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+                1280: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
 
-        	1320: {
-        		slidesPerView: 2,
-        		spaceBetween: 20
-        	},
-        	1640: {
-				slidesPerView: 2,
-        		spaceBetween: 20
-        	},
-        	2000: {
-        		slidesPerView: 3,
-        		spaceBetween: 30
-        	},
-        	3000: {
-				slidesPerView: 3,
-        		spaceBetween: 30
-        	},
-        	4000: {
-				slidesPerView: 3,
-        		spaceBetween: 30
-        	},
-        	6000: {
-        		slidesPerView: 5,
-        		spaceBetween: 30
-        	}
-        }
-    });
+            	1320: {
+            		slidesPerView: 2,
+            		spaceBetween: 20
+            	},
+            	1640: {
+    				slidesPerView: 2,
+            		spaceBetween: 20
+            	},
+            	2000: {
+            		slidesPerView: 3,
+            		spaceBetween: 30
+            	},
+            	3000: {
+    				slidesPerView: 3,
+            		spaceBetween: 30
+            	},
+            	4000: {
+    				slidesPerView: 3,
+            		spaceBetween: 30
+            	},
+            	6000: {
+            		slidesPerView: 5,
+            		spaceBetween: 30
+            	}
+            }
+        });
+    }
 
     /* Contact form validation customize*/
-
     // 회원가입 validation
     if($("#validateSignIn").length>0) {
         $("#validateSignIn").validate({
@@ -717,3 +655,56 @@ $(document).ready(function() {
         });
     }
 });
+
+/*
+ * youtube video
+ */
+if(jQuery("#player").length > 0){
+	var tag = document.createElement('script');
+	
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	
+	var player;
+	function onYouTubeIframeAPIReady() {
+	  player = new YT.Player('player', {
+	    height: '315px',
+	    width: '560px',
+	    videoId: document.getElementById('youtube_code').value,
+	    rel:0,
+	    events: {
+	    	'onReady': onPlayerReady,
+	    	'onStateChange': onPlayerStateChange
+	    }
+	  });
+	}
+	   
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.ENDED) {
+    	  $('.embed-container').hide();
+	      $('#play_vid').show();
+	      $('#play_img').show();
+	      $('.campaign-badge').show();
+	  }
+	}
+	
+	function onPlayerReady(event) {
+	    $('#play_vid').click(function() {
+	        event.target.playVideo();
+	    });
+	}
+	
+	function stopVideo() {
+	  player.stopVideo();
+	}
+	
+	$(document).ready(function() {
+	    $('#play_vid').click(function() {
+	        $('.embed-container').show();
+	        $('#play_vid').hide();
+	        $('#play_img').hide();
+	        $('.campaign-badge').hide();
+	    });
+	});
+}

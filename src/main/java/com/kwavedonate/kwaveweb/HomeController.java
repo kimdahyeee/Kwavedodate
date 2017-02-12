@@ -4,16 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.connect.FacebookConnectionFactory;
-import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,21 +25,6 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	private Facebook facebook;
-	private ConnectionRepository connectionRepository;
-	
-	@Inject
-	public HomeController(Facebook facebook, ConnectionRepository connectionRepository) {
-		this.facebook = facebook;
-		this.connectionRepository = connectionRepository;
-	}
-	
-	@Autowired
-	private FacebookConnectionFactory connectionFactory;
-	
-	@Autowired
-	private OAuth2Parameters oAuth2Parameters;
-
 	@Resource(name = "bcryptEncoder")
 	private BcryptEncoder encoder;
 	
@@ -93,11 +72,4 @@ public class HomeController {
 		return "/login";
 	}
 	
-	@RequestMapping("/facebookLogin")
-	public String facebookLogin(Model model) {
-		if(connectionRepository.findPrimaryConnection(Facebook.class)!=null) {
-			model.addAttribute("facebookProfile", facebook.userOperations().getUserProfile());
-		}
-		return "/";
-	}
 }
