@@ -6,67 +6,7 @@
  * File Description: Custom scripts
  */
 
-/*
- * youtube video
- */
-if(jQuery("#player").length > 0){
-	var tag = document.createElement('script');
-	
-	tag.src = "https://www.youtube.com/iframe_api";
-	var firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-	
-	// 3. This function creates an <iframe> (and YouTube player)
-	//    after the API code downloads.
-	var player;
-	function onYouTubeIframeAPIReady() {
-	  player = new YT.Player('player', {
-	    height: '315px',
-	    width: '560px',
-	    videoId: document.getElementById('youtube_code').value,
-	    rel:0,
-	    events: {
-	    	'onReady': onPlayerReady,
-	    	'onStateChange': onPlayerStateChange
-	    }
-	  });
-	}
-	
-	// 5. The API calls this function when the player's state changes.
-	//    The function indicates that when playing a video (state=1),
-	//    the player should play for six seconds and then stop.
-	   
-	    function onPlayerStateChange(event) {
-	      if (event.data == YT.PlayerState.ENDED) {
-	    	  $('.embed-container').hide();
-	      $('#play_vid').show();
-	      $('#play_img').show();
-	      $('.campaign-badge').show();
-	  }
-	}
-	
-	function onPlayerReady(event) {
-	    $('#play_vid').click(function() {
-	        event.target.playVideo();
-	    });
-	}
-	
-	function stopVideo() {
-	  player.stopVideo();
-	}
-	
-	$(document).ready(function() {
-	    $('#play_vid').click(function() {
-	        $('.embed-container').show();
-	        $('#play_vid').hide();
-	        $('#play_img').hide();
-	        $('.campaign-badge').hide();
-	    });
-	});
-}
-
 $(document).ready(function() {
-
 
     /* banner custom */
     if($(".campaigns-banner").length>0) {
@@ -88,8 +28,7 @@ $(document).ready(function() {
             });
         };
     };
-
-
+    
     if($(".aboutUs-banner").length>0) {
         if (Modernizr.touch) {
             $(".aboutUs-banner").vide({
@@ -110,11 +49,9 @@ $(document).ready(function() {
         };
     };
 
-
     /* fixed aside custom */
     if($("aside.campaignEnterNow-web").length>0) {
         $("aside.campaignEnterNow-web").scrollToFixed({  
-            
             marginTop: $('header').outerHeight(true) + 10,
             limit: function() {
                 return $('.campaign-perks').offset().top - $(this).outerHeight(true);
@@ -135,74 +72,75 @@ $(document).ready(function() {
         
 
 	/* swiper customize */
-    var swiper = new Swiper('.swiper-container', {
-    	initialSlide: 2,
-        pagination: '.swiper-pagination',
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-        slidesPerView: 1,
-        centeredSlides: true,
-        paginationClickable: true,
-        spaceBetween: 10,
-        breakpoints: {
-        	320: {
-        		slidesPerView: 1, 
-        		spaceBetween: 10
-        	},
-        	480: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-        	640: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-        	767: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-        	991: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-        	1199: {
-        		slidesPerView: 1,
-        		spaceBetween: 10
-        	},
-            1280: {
-                slidesPerView: 2,
-                spaceBetween: 20
-            },
+    if($(".swiper-container").length>0) {
+    	var swiper = new Swiper('.swiper-container', {
+        	initialSlide: 2,
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            slidesPerView: 1,
+            centeredSlides: true,
+            paginationClickable: true,
+            spaceBetween: 10,
+            breakpoints: {
+            	320: {
+            		slidesPerView: 1, 
+            		spaceBetween: 10
+            	},
+            	480: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+            	640: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+            	767: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+            	991: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+            	1199: {
+            		slidesPerView: 1,
+            		spaceBetween: 10
+            	},
+                1280: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
 
-        	1320: {
-        		slidesPerView: 2,
-        		spaceBetween: 20
-        	},
-        	1640: {
-				slidesPerView: 2,
-        		spaceBetween: 20
-        	},
-        	2000: {
-        		slidesPerView: 3,
-        		spaceBetween: 30
-        	},
-        	3000: {
-				slidesPerView: 3,
-        		spaceBetween: 30
-        	},
-        	4000: {
-				slidesPerView: 3,
-        		spaceBetween: 30
-        	},
-        	6000: {
-        		slidesPerView: 5,
-        		spaceBetween: 30
-        	}
-        }
-    });
+            	1320: {
+            		slidesPerView: 2,
+            		spaceBetween: 20
+            	},
+            	1640: {
+    				slidesPerView: 2,
+            		spaceBetween: 20
+            	},
+            	2000: {
+            		slidesPerView: 3,
+            		spaceBetween: 30
+            	},
+            	3000: {
+    				slidesPerView: 3,
+            		spaceBetween: 30
+            	},
+            	4000: {
+    				slidesPerView: 3,
+            		spaceBetween: 30
+            	},
+            	6000: {
+            		slidesPerView: 5,
+            		spaceBetween: 30
+            	}
+            }
+        });
+    }
 
     /* Contact form validation customize*/
-
     // 회원가입 validation
     if($("#validateSignIn").length>0) {
         $("#validateSignIn").validate({
@@ -609,7 +547,7 @@ $(document).ready(function() {
         });
     }
 
-    // 배송정보 validation
+ // 배송정보 validation
     if($("#validateDeliveryInfo").length>0) {
         $("#validateDeliveryInfo").validate({
             submitHandler: function(form) {   
@@ -635,6 +573,142 @@ $(document).ready(function() {
                          }
                     }
                 });
+            },
+            errorPlacement: function(error, element) {  
+                error.appendTo(element.parent());  
+            },
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                //단순 입력이 되는 값에 한정함
+                //넘어오는 값들(ex. rewardNum, proejctName, rewardAmount, shippingAmount...)은 rules에 담지 않았음
+                
+                zipCode: {
+                    required: true
+                },
+                address1: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                region: {
+                    required: true
+                },
+                country: {
+                    required: true
+                },
+                shippingMethod: {
+                    required: true
+                }
+            },
+            messages: {
+                zipCode: {
+                    required: "Please enter your zip code number."
+                },
+                address1: {
+                    required: "Please enter your address."
+                },
+                city: {
+                    required: "Please enter your city."
+                },
+                region: {
+                    required: "Please enter your region."
+                },
+                country: {
+                    required: "Please select your country. This depend on shipping amount."
+                },
+                shippingMethod: {
+                    required: "Please enter your shipping method"
+                }
+            },
+            errorElement: "span",
+            highlight: function (element) {
+                $(element).parent().removeClass("has-success").addClass("has-error");
+                $(element).siblings("label").addClass("hide");
+            },
+            success: function (element) {
+                $(element).parent().removeClass("has-error").addClass("has-success");
+                $(element).siblings("label").removeClass("hide");
+            }
+        });
+    }
+    
+    	
+
+ // 결제정보 validation
+    if($("#validatePaymentInfo").length>0) {
+    	var IMP = window.IMP;
+    	IMP.init('imp57757789');	
+    	
+        $("#validatePaymentInfo").validate({
+            submitHandler: function(form) {  
+            	IMP.request_pay({
+        		    pg : 'inicis', // version 1.1.0부터 지원.
+        		    pay_method : document.getElementById(payment_method),
+        		    merchant_uid : 'merchant_' + new Date().getTime(),
+        		    name : '주문명:KWAVE_D결제테스트',
+        		    amount : $("#totalAmount").val(),
+        		    buyer_email : $("#userEmail").val(),
+        		    buyer_name : $("#userName").val(),
+        		    buyer_tel : $("#phone").val(),
+        		    buyer_addr : $("#address1").val(),
+        		    buyer_postcode : '123-456',
+        		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+        		}, function(rsp) {
+        		    if ( rsp.success ) {
+        		        var msg = '결제가 완료되었습니다.';
+        		        msg += '고유ID : ' + rsp.imp_uid;
+        		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+        		        msg += '결제 금액 : ' + rsp.paid_amount;
+        		        msg += '카드 승인번호 : ' + rsp.apply_num;
+        		        $.ajax({
+                            type: "POST",
+                            url: "/kwaveweb/insertDelivery",	// delivery table
+                            data: {
+                            	 "imp_uid" : rsp.imp_uid,
+                            	 "merchant_uid" : rsp.merchant_uid,
+
+                                 "userEmail": $("#userEmail").val(),
+                                 "campaignName" : $("#campaignName").val(),
+                                 "rewardNum" : $("#rewardNum").val(),
+                                 "totalAmount" : $("#totalAmount").val(),
+                                 "shippingAmount" : $("#shippingAmount").val(),
+                                 "shippingMethod" : $("#shippingMethod").val(),
+                                 //"note" : $("#note").val(),
+                                 
+                                 "userName": $("#userName").val(),
+                                 "phone": $("#phone").val(),
+                            	 "address1": $("#address1").val(),
+                                 "address2": $("#address2").val(),
+                                 "zipCode": $("#zipCode").val(),
+                                 "city" : $("#city").val(),
+                                 "country" : $("#country").val(),
+                                 "region" : $("#region").val(),
+                                 
+                                 
+                            },
+                            dataType: "json",
+                            success: function(data) {
+                            	if(data.KEY == "SUCCESS"){
+                            		alert("성공처리 되었습니다.")
+                                 }else{
+                                    alert("주소지 정보 수정이 실패했습니다.");
+                                 }
+                            }
+                        });
+        		    } else {
+        		        var msg = '결제에 실패하였습니다.';
+        		        msg += '에러내용 : ' + rsp.error_msg;
+        		        msg += '고유ID : ' + rsp.imp_uid;
+        		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+        		        msg += '결제 금액 : ' + rsp.paid_amount;
+        		    }
+        		    
+        		    alert(msg);
+        		    
+        		});
+             
             },
             errorPlacement: function(error, element) {  
                 error.appendTo(element.parent());  
@@ -717,3 +791,56 @@ $(document).ready(function() {
         });
     }
 });
+
+/*
+ * youtube video
+ */
+if(jQuery("#player").length > 0){
+	var tag = document.createElement('script');
+	
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	
+	var player;
+	function onYouTubeIframeAPIReady() {
+	  player = new YT.Player('player', {
+	    height: '315px',
+	    width: '560px',
+	    videoId: document.getElementById('youtube_code').value,
+	    rel:0,
+	    events: {
+	    	'onReady': onPlayerReady,
+	    	'onStateChange': onPlayerStateChange
+	    }
+	  });
+	}
+	   
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.ENDED) {
+    	  $('.embed-container').hide();
+	      $('#play_vid').show();
+	      $('#play_img').show();
+	      $('.campaign-badge').show();
+	  }
+	}
+	
+	function onPlayerReady(event) {
+	    $('#play_vid').click(function() {
+	        event.target.playVideo();
+	    });
+	}
+	
+	function stopVideo() {
+	  player.stopVideo();
+	}
+	
+	$(document).ready(function() {
+	    $('#play_vid').click(function() {
+	        $('.embed-container').show();
+	        $('#play_vid').hide();
+	        $('#play_img').hide();
+	        $('.campaign-badge').hide();
+	    });
+	});
+}

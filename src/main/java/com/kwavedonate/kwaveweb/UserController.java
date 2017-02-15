@@ -9,7 +9,6 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +44,6 @@ public class UserController {
 	@Resource(name = "bcryptEncoder")
 	private BcryptEncoder encoder;
 
-	private SqlSession sqlSession;
-
-	public void setSqlSession(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
-	}
 
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
@@ -107,7 +101,8 @@ public class UserController {
 	}
 
 	@RequestMapping("/login")
-	public String login() {
+	public String login(HttpServletRequest request) {
+
 		return "login";
 	}
 
@@ -116,9 +111,13 @@ public class UserController {
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
 	public HashMap<String, Object> insertUser(@RequestParam("userEmail") String userEmail,
 			@RequestParam("userPassword") String userPassword, @RequestParam("userName") String userName) {
+		
+		
 		String dbpw = encoder.encode(userPassword);
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("userPassword", dbpw);
 		paramMap.put("userName", userName);
@@ -312,7 +311,6 @@ public class UserController {
 			return "/errorPage";
 		}
 	}
-
 	
 	@ResponseBody
 	@RequestMapping(value="/pwdmodifyService", method=RequestMethod.POST)
@@ -339,6 +337,42 @@ public class UserController {
 		System.out.println("username: " +userName);
 		
 		return "/";
+	}
+	/*
+	 * 결제관련 컨트롤러
+	 */
+	@ResponseBody
+	@RequestMapping(value="insertDelivery", method=RequestMethod.POST)
+	public HashMap<String, Object> insertDelivery(
+			@RequestParam("imp_uid")String imp_uid, @RequestParam("merchant_uid")String merchant_uid,
+			@RequestParam("userEmail")String userEmail,
+			//@RequestParam("campaignsName")String campaignsName,
+			@RequestParam("rewardNum")String rewardNum,
+			@RequestParam("totalAmount")String totalAmount,
+			@RequestParam("shippingAmount")String shippingAmount,
+			@RequestParam("shippingMethod")String shippingMethod,
+			@RequestParam("userName")String userName,
+			@RequestParam("phone")String phone,
+			@RequestParam("address1")String address1,
+			@RequestParam("address2")String address2,
+			@RequestParam("zipCode")String zipCode,
+			@RequestParam("city")String city,
+			@RequestParam("country")String country,
+			@RequestParam("region")String region ) {
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		
+		System.out.println("imp_uid : " + imp_uid);
+		System.out.println("merchant : " + merchant_uid);
+		
+		/*System.out.println("userEmail : " + userEmail 
+				+ "campaignsName : " 
+				+ "rewardNum" + Integer.parseInt(rewardNum)
+				+ "totalAmount" + Integer.parseInt(totalAmount)
+				+ shippingAmount + shippingMethod 
+				+ userName + phone + address1 + address2
+				+ zipCode + city + country + region);*/
+		
+		return hashmap;
 	}
 
 }

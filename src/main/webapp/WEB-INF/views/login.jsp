@@ -12,7 +12,9 @@ if($("#validateLogin").length>0) {
                 url: '<c:url value="j_spring_security_check"/>',
                 data: {
                     "userEmail": $("#userEmail").val(),
-                    "userPassword": $("#userPassword").val()
+                    "userPassword": $("#userPassword").val(),
+                    "loginRedirect" : $("#loginRedirect").val()
+                    
                 },
                 dataType: "json",
                 success: function(data) {
@@ -105,6 +107,8 @@ if($("#validateLogin").length>0) {
 											</a>
 										</div>
 									</div>
+									
+									<input type="hidden" id="loginRedirect" name="loginRedirect" value="${loginRedirect}"/>
 								</form>
 							</div>
 						</div>

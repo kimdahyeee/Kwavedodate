@@ -19,32 +19,32 @@
 										<a href="<c:url value='/payments/${campaignName}' />" class="btn btn-lg btn-danger" style="width: 90%"><strong> donate $10 </strong></a>
 									</div>
 								</div>
-							<c:forEach items="${rewards}" var="rewards">
-								<div class="col-sm-6 col-md-4 col-lg-4 isotope-item">
-									<div class="image-box style-2 mb-20 bordered">
-										<div class="overlay-container overlay-visible">
-											<span class="campaign-badge"><i>${rewards.rewardCurrentCnt }/${rewards.rewardTotalCnt }</i></span>
-											<img src="${rewards.rewardImg }" alt="">
-											<div class="overlay-link"></div>										
-										</div>
-										<div class="body">
-											<h3 class="text-center">${rewards.rewardSubject}</h3>
-											<div class="separator"></div>
-											<p class="small mb-10"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> App development</p>
-											<p class="text-muted">${rewards.rewardContents }</p>
-											<c:set var="current" value="${rewards.rewardCurrentCnt}"/>
-											<c:choose>
-												<c:when test="${current == 0}">
-													<a class="btn btn-lg btn-danger" style="width: 100%" disabled><strong> sold out </strong></a>
-												</c:when>
-												<c:otherwise>
-													<a href="<c:url value='/payments/${rewards.campaignName}/reward/${rewards.rewardNum}' />" class="btn btn-lg btn-danger" style="width: 100%"><strong> donate $${rewards.rewardAmount } </strong></a>
-												</c:otherwise>
-											</c:choose>
+								<c:forEach items="${rewards}" var="rewards">
+									<div class="col-sm-6 col-md-4 col-lg-4 isotope-item">
+										<div class="image-box style-2 mb-20 bordered">
+											<div class="overlay-container overlay-visible">
+												<span class="campaign-badge"><i>${rewards.rewardCurrentCnt }/${rewards.rewardTotalCnt }</i></span>
+												<img src="${rewards.rewardImg }" alt="">
+												<div class="overlay-link"></div>										
+											</div>
+											<div class="body">
+												<h3 class="text-center">${rewards.rewardSubject}</h3>
+												<div class="separator"></div>
+												<p class="small mb-10"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> App development</p>
+												<p class="text-muted ellipsis">${rewards.rewardContents }</p>
+												<c:set var="current" value="${rewards.rewardCurrentCnt}"/>
+												<c:choose>
+													<c:when test="${current == 0}">
+														<button class="btn btn-lg btn-danger" style="width: 100%" disabled><strong> Sold Out </strong></button>
+													</c:when>
+													<c:otherwise>
+														<a href="<c:url value='/payments/${rewards.campaignName}/reward/${rewards.rewardNum}' />" class="btn btn-lg btn-danger" style="width: 100%"><strong> donate $${rewards.rewardAmount } </strong></a>
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
 									</div>
-								</div>
-							</c:forEach>
+								</c:forEach>
 							</div>
 						</div>
 						<!-- main end -->

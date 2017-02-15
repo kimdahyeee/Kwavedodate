@@ -101,6 +101,7 @@ public class CampaignController {
 	public String rewardView(@PathVariable("campaignName") String campaignName, Model model){
 		List<RewardsVo> rewardsDetail = campaignService.getRewardsDetail(campaignName);
 		model.addAttribute("rewards", rewardsDetail);
+		
 		return "empty/rewards";
 	}
 	

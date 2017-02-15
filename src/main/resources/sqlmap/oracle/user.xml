@@ -5,9 +5,11 @@
 <mapper namespace="user">
 	<insert id="insertUser">
 		insert into users
-		(userEmail, userPassword, userName, userRegdate, isSNS, authority,
-		enabled)
-		values (#{userEmail}, #{userPassword}, #{userName}, sysdate, 0,
+		(userEmail, userPassword, userName, userRegdate, isSNS, 
+		userNation, phone, zipCode, address1, address2, city, region, country, 
+		authority, enabled)
+		values (#{userEmail}, #{userPassword}, #{userName}, sysdate, 0 ,
+		'Nation', 'phone', 'zipCode', 'address1', 'address2', 'city', 'region', 'country',
 		'ROLE_USER', 1)
 	</insert>
 

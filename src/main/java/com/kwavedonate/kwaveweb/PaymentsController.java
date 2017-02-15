@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,7 +27,8 @@ public class PaymentsController {
 	@Resource(name = "userDaoService")
 	private UserDaoService userDao;
 	/**
-	 * enter now´­·¶À» ¶§ rewardÈ­¸é
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * enter nowå ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™ rewardí™”å ì™ì˜™
 	 * @param campaignName
 	 * @param model
 	 * @return
@@ -41,7 +41,7 @@ public class PaymentsController {
 	}
 	
 	/**
-	 * reward ¾øÀÌ °áÁ¦ È­¸é
+	 * reward å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ í™”å ì™ì˜™
 	 * @param campaignName
 	 * @return
 	 */
@@ -57,21 +57,31 @@ public class PaymentsController {
 	}
 	
 	/**
-	 * reward¼±ÅÃ½Ã °áÁ¦È­¸é
+	 * rewardå ì™ì˜™å ì‹œì™ì˜™ å ì™ì˜™å ì™ì˜™í™”å ì™ì˜™
 	 */
 	@RequestMapping(value="/{campaignName}/reward/{rewardNum}")
 	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model){
 		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		Map<String, Object> user = userDao.selectUserAccount(userEmail);
+		model.addAttribute("user", user);
 		model.addAttribute("userName", user.get("USERNAME"));
 		model.addAttribute("userPhone", user.get("PHONE"));
 		model.addAttribute("rewardNum", rewardNum);
+		model.addAttribute("zipcode", user.get("ZIPCODE"));
+		model.addAttribute("address1", user.get("ADDRESS1"));
+		model.addAttribute("address2", user.get("ADDRESS2"));
+		model.addAttribute("city", user.get("CITY"));
+		model.addAttribute("region", user.get("REGION"));
+		model.addAttribute("country", user.get("COUNTRY"));
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("campaignName", campaignName);
 		param.put("rewardNum", rewardNum);
 		Map<String, Object> rewardMap = campaignService.getRewards(param);
 		model.addAttribute("reward", rewardMap);
+		
 		return "payment";
 	}
+	
+	
 }

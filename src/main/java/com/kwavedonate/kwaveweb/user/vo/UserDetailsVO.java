@@ -20,8 +20,12 @@ public class UserDetailsVO extends User {
 	private String region;
 	private String country;
 
-	public UserDetailsVO(String username, String password, boolean enabled, boolean accountNonExpired,
-			boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities,
+	public UserDetailsVO(String username, String password, 
+			boolean enabled, 				// true
+			boolean accountNonExpired,		// true
+			boolean credentialsNonExpired,  // true
+			boolean accountNonLocked, 		// true
+			Collection<? extends GrantedAuthority> authorities,
 			String user_name, String userNation, String phone, String zipCode, String address1, String address2,
 			String city, String region, String country) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);

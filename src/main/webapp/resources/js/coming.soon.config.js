@@ -8,11 +8,11 @@
 			var year = date.substr(0,4);
 			var month = date.substr(5,2);
 			var day = date.substr(8,2);
-			var untilDate = new Date(year, month-1, day, 1);
+			var untilDate = new Date(year, month, day);
 	
 			$(".countdown").countdown({
 				until: untilDate, 
-				format: 'dHMS',
+				format: 'DHMS',
 				padZeroes: true
 			});
 		}

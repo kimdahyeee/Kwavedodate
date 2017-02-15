@@ -34,7 +34,7 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 		System.out.println("로그인 실패");
 		response.setContentType("text/html;charset=utf-8");
 		String message = "잘못된 이메일이거나 잘못된 비밀번호입니다.";
-		response.sendRedirect("/kwaveweb/login");
+		response.sendRedirect("/kwaveweb/");
 		try {
 			PrintWriter out2 = response.getWriter();
 			out2.println("<script>alert(" + message + ");</script>");
