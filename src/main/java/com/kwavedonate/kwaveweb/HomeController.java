@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
 
-
-
 /**
  * Handles requests for the application home page.
  */
@@ -32,29 +30,33 @@ public class HomeController {
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
-	/* 메인 페이지 */
+	/**
+	 * 메인화면
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/")
 	public String main(Model model) {
 
-		List<Map<String, Object>> list = campaignService.getMainCampaign();
+		List<Map<String, Object>> campaignsList = campaignService.getMainCampaignsList();
 		
-		for(Map<String, Object> lists : list){
-			int campaignDueDate = Integer.valueOf(lists.get("campaignDueDate").toString());
+		for(Map<String, Object> campaignsLists : campaignsList){
+			int campaignDueDate = Integer.valueOf(campaignsLists.get("campaignDueDate").toString());
 			
 			logger.info("campaignDueDate == {}.", campaignDueDate);
 			if(campaignDueDate == 7){
-				lists.put("campaignDueDate", "a week left");
+				campaignsLists.put("campaignDueDate", "a week left");
 			}else if(campaignDueDate == 1){
-				lists.put("campaignDueDate", "a day left");
+				campaignsLists.put("campaignDueDate", "a day left");
 			}else if(campaignDueDate == 0){
-				lists.put("campaignDueDate", "ends today");
+				campaignsLists.put("campaignDueDate", "ends today");
 			}else{
-				lists.put("campaignDueDate", campaignDueDate+" days left");
+				campaignsLists.put("campaignDueDate", campaignDueDate+" days left");
 			}
 		}
 		
-		logger.info("main == {}.", list);
-		model.addAttribute("list", list);
+		logger.info("main == {}.", campaignsList);
+		model.addAttribute("campaignsList", campaignsList);
 
 		return "main";
 	}

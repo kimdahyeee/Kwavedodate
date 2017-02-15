@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,16 +17,19 @@ import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 @Controller
 @RequestMapping(value="/campaigns")
 public class CampaignController {
-
-	private static final Logger logger = LoggerFactory.getLogger(CampaignController.class);
 	
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
+	/**
+	 * campaigns 화면
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="")
 	public String CampaignsView(Model model){
 		
-		List<Map<String, Object>> list = campaignService.getCampaignsList();
+		List<Map<String, Object>> list = campaignService.getAllCampaignsList();
 		List<Map<String, Object>> currentList = new ArrayList<Map<String,Object>>();
 		List<Map<String, Object>> recentlyList = new ArrayList<Map<String,Object>>();
 		
@@ -41,6 +40,7 @@ public class CampaignController {
 			int campaignDueDate = Integer.valueOf(lists.get("campaignDueDate").toString());
 			
 			Map<String, Object> map = new HashMap<String, Object>();
+			//current campaigns 정보
 			if(campaignDueDate >= 0){
 				if(campaignDueDate == 7){
 					map.put("campaignDueDate", "a week left");
@@ -57,6 +57,7 @@ public class CampaignController {
 				
 				currentList.add(map);
 			}else{
+				//recently campaigns 정보
 				map.put("campaignName", campaignName);
 				map.put("campaignSubject", campaignSubject);
 				map.put("campaignImg", campaignImg);
@@ -67,15 +68,19 @@ public class CampaignController {
 		
 		model.addAttribute("currentList", currentList);
 		model.addAttribute("recentlyList", recentlyList);
-		
+	
 		return "campaigns";
 	}
 	
+	/**
+	 * campaign 상세화면
+	 * @param campaignName
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/{campaignName}")
 	public String CampaignsDetail(@PathVariable("campaignName") String campaignName, Model model){
-		System.out.println(campaignName);
 		CampaignVo campaignDetail = campaignService.getCampaignDetail(campaignName);
-		
 		int campaignDueDate = Integer.valueOf(campaignDetail.getDuedateToSysdate());
 		
 		if(campaignDueDate >= 0){
@@ -97,9 +102,15 @@ public class CampaignController {
 		return "campaignDetail";
 	}
 	
+	/**
+	 * campaign detail화면에 삽입 될 rewards 목록
+	 * @param campaignName
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/{campaignName}/reward")
 	public String rewardView(@PathVariable("campaignName") String campaignName, Model model){
-		List<RewardsVo> rewardsDetail = campaignService.getRewardsDetail(campaignName);
+		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(campaignName);
 		model.addAttribute("rewards", rewardsDetail);
 		
 		return "empty/rewards";

@@ -25,23 +25,23 @@ public class PaymentsController {
 	private CampaignService campaignService;
 	
 	@Resource(name = "userDaoService")
-	private UserDaoService userDao;
+	private UserDaoService userService;
+	
 	/**
-	 * ������
-	 * enter now占쏙옙占쏙옙占쏙옙 占쏙옙 reward화占쏙옙
+	 * enter now 누른 후 reward 페이지
 	 * @param campaignName
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="/{campaignName}/rewards")
 	public String rewardsView(@PathVariable("campaignName") String campaignName, Model model){
-		List<RewardsVo> rewardsDetail = campaignService.getRewardsDetail(campaignName);
+		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(campaignName);
 		model.addAttribute("rewards", rewardsDetail);
 		return "rewards";
 	}
 	
 	/**
-	 * reward 占쏙옙占쏙옙 占쏙옙占쏙옙 화占쏙옙
+	 * $10 결제 페이지
 	 * @param campaignName
 	 * @return
 	 */
@@ -49,35 +49,34 @@ public class PaymentsController {
 	public String paymentsView(@PathVariable("campaignName") String campaignName, Authentication authentication, Model model){
 		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
-		Map<String, Object> user = userDao.selectUserAccount(userEmail);
-		model.addAttribute("userName", user.get("USERNAME"));
-		model.addAttribute("userPhone", user.get("PHONE"));
+		Map<String, Object> user = userService.selectUserAccount(userEmail);
+		model.addAttribute("user", user);
 		model.addAttribute("rewardNum", "0");
+		
 		return "payment";
 	}
 	
 	/**
-	 * reward占쏙옙占시쏙옙 占쏙옙占쏙옙화占쏙옙
+	 *  reward 선택 후 결제 페이지
+	 * @param campaignName
+	 * @param rewardNum
+	 * @param authentication
+	 * @param model
+	 * @return
 	 */
 	@RequestMapping(value="/{campaignName}/reward/{rewardNum}")
 	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model){
 		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
-		Map<String, Object> user = userDao.selectUserAccount(userEmail);
-		model.addAttribute("user", user);
-		model.addAttribute("userName", user.get("USERNAME"));
-		model.addAttribute("userPhone", user.get("PHONE"));
-		model.addAttribute("rewardNum", rewardNum);
-		model.addAttribute("zipcode", user.get("ZIPCODE"));
-		model.addAttribute("address1", user.get("ADDRESS1"));
-		model.addAttribute("address2", user.get("ADDRESS2"));
-		model.addAttribute("city", user.get("CITY"));
-		model.addAttribute("region", user.get("REGION"));
-		model.addAttribute("country", user.get("COUNTRY"));
+		Map<String, Object> user = userService.selectUserAccount(userEmail);
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("campaignName", campaignName);
 		param.put("rewardNum", rewardNum);
 		Map<String, Object> rewardMap = campaignService.getRewards(param);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("campaignName", campaignName);
+		model.addAttribute("rewardNum", rewardNum);
 		model.addAttribute("reward", rewardMap);
 		
 		return "payment";

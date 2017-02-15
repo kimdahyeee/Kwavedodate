@@ -9,7 +9,7 @@
 		<result property="campaignDueDate" column="DUEDATE" javaType="java.lang.String"/>
 	</resultMap>
 	
-	<resultMap id="campaigns" type="hashmap">
+	<resultMap id="campaignsList" type="hashmap">
 		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
 		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
 		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
@@ -61,7 +61,7 @@
 	]]> 
 	</select>
 	
-	<select id="selectCampaigns" resultMap="campaigns">
+	<select id="selectAllCampaignsList" resultMap="campaignsList">
 	<![CDATA[ 
 		SELECT
 			CAMPAIGNNAME,
@@ -100,7 +100,7 @@
    	WHERE CAMPAIGNNAME = #{campaignName}
 	</select>
 	
-	<select id="detailRewards" resultMap="allRewards">
+	<select id="selectAllRewards" resultMap="allRewards">
 	SELECT
 		REWARDNUM as rNum,
 		CAMPAIGNNAME as rName,

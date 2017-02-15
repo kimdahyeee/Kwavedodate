@@ -8,6 +8,10 @@
 
 $(document).ready(function() {
 
+	if($("#countryOp").length>0 && $("#country").length >0){
+		$("#country").val($("#countryOp").val()).attr("selected", "selected");
+	}
+	
     /* banner custom */
     if($(".campaigns-banner").length>0) {
         if (Modernizr.touch) {
