@@ -1,6 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+			<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+			<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+			<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+			<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			<div class="banner video-background-banner pv-40 dark-translucent-bg hovered">
 				<div class="container">
 					<div class="row">
@@ -13,7 +14,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div id="page-start"></div>
 			<section class="light-gray-bg pv-30 clearfix">
 				<div class="container">
@@ -24,31 +24,31 @@
 					</div>
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-						<c:forEach items="${list}" var="lists" begin="0" end="${fn:length(list)}" step="1" varStatus="status">
-							<div class="col-sm-6">
-								<div class="image-box style-2 mb-20 bordered light-gray-bg">
-									<div class="overlay-container overlay-visible">
-										<span class="campaign-badge"><i>${list[status.index].campaignDueDate}</i></span>
-										<img src='${list[status.index].campaignImg}' alt="">
-									</div>
-									<div class="body">
-										<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-										<p class="ellipsis"><c:out value="${list[status.index].campaignSubject }"/></p>
-										<label></label>
-										<div class="btn-learn-more">
-											<a class="text-info btn-md-link" href="<c:url value='/campaigns/${list[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+							<c:forEach items="${list}" var="lists" begin="0" end="${fn:length(list)}" step="1" varStatus="status">
+								<div class="col-sm-6">
+									<div class="image-box style-2 mb-20 bordered light-gray-bg">
+										<div class="overlay-container overlay-visible">
+											<span class="campaign-badge"><i>${list[status.index].campaignDueDate}</i></span>
+											<img src='${list[status.index].campaignImg}' alt="">
+										</div>
+										<div class="body">
+											<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
+											<h4 class="ellipsis"><strong><c:out value="${list[status.index].campaignSubject }"/></strong></h4>
+											<label></label>
+											<div class="btn-learn-more">
+												<a class="text-info btn-md-link" href="<c:url value='/campaigns/${list[status.index].campaignName}' />">Learn more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</c:forEach>
+							</c:forEach>
+							<label></label>
+							<c:if test="${fn:length(list) == '4'}">
+								<div class="text-center">
+									<a href="campaigns" class="btn btn-lg btn-danger"> See Them All </a>
+								</div>
+							</c:if>
 						</div>
-						<label></label>
-						<c:if test="${fn:length(list)== '4'}">
-						<div class="text-center">
-							<a href="campaigns" class="btn btn-lg btn-danger"> See Them All </a>
-						</div>
-						</c:if>
 					</div>
 				</div>	
 			</section>
@@ -90,8 +90,7 @@
 
 			<div class="section">
 				<div class="container text-center">
-					<h2><strong>Featured In<strong></h2>
-					
+					<h2><strong>Featured In</strong></h2>
 					<div class="clients-container">
 						<div class="clients">
 							<div class="client-image object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100">

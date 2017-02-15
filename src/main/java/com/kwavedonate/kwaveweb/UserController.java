@@ -318,11 +318,7 @@ public class UserController {
 		} else {
 			return "/errorPage";
 		}
-		
-		
-		
 	}
-
 	
 	@ResponseBody
 	@RequestMapping(value="/pwdmodifyService", method=RequestMethod.POST)

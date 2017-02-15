@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 			<section class="main-container">
 				<div class="container">
 				<input type="hidden" value="${details.youtubeCode}" id="youtube_code"/>
@@ -40,34 +40,30 @@
 										</div>
 										<!-- =============== -->
 
-										<!-- -->
 										<c:choose>
-										<c:when test="${details.duedateToSysdate != 'end'}">
-										<div class="countdown clearfix"></div>
-										<label></label>
-										<div class="text-center">
-											<a href="<c:url value='/payments/${details.campaignName}/rewards'/>" class="btn btn-lg btn-danger" style="width: 60%"> Enter Now </a>
-										</div>
-										</c:when>
-										<c:otherwise>
-										<div class="text-center">
-											<a class="btn btn-lg btn-danger campaign-enter-btn" style="width: 80%" disabled> finished campaign! </a>
-										</div>
-										</c:otherwise>
+											<c:when test="${details.duedateToSysdate != 'end'}">
+												<div class="countdown clearfix"></div>
+												<label></label>
+												<div class="text-center">
+													<a href="<c:url value='/payments/${details.campaignName}/rewards'/>" class="btn btn-lg btn-danger" style="width: 60%"> Enter Now </a>
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="text-center">
+													<button class="btn btn-lg btn-danger campaign-enter-btn" style="width: 80%" disabled> finished campaign! </button>
+												</div>
+											</c:otherwise>
 										</c:choose>
 									</div>
 								</div>
 							</aside>
 						</div>
-						
-					
-						
 						<!-- Web상(991px~무한)에서 right-aside 고정 메뉴 끝 -->
-						<!-- ============================================ -->
+						<!-- =========================== -->
 
 
 						<!-- Mobile상(991px~무한)에서 campaign 설명 버튼은 아래쪽에 고정 됨 -->
-						<!-- =========================================================== -->
+						<!-- =================================== -->
 						<div class="campaignEnterNow-mobile">
 							<div class="col-md-4 col-lg-4">
 								<div class="sidebar">
@@ -89,7 +85,7 @@
 							</div>
 						</div>
 						<!-- Mobile상(991px~무한)에서 campaign 설명 버튼은 아래쪽에 고정 됨 끝 -->
-						<!-- ============================================================== -->
+						<!-- ===================================== -->
 					</div>
 				</div>
 
@@ -99,19 +95,19 @@
 						<div class="col-md-8 col-lg-8">
 							<!-- 여기부터는 관리자 단에서 입력한 campaign 내용이 Fetch되어서 들어 감 -->
 							<!-- 단지 보이는 view를 위해 내용을 쓴 것 뿐임 -->
-							<!-- ====================================== -->
+							<!-- ==================================== -->
 							${details.campaignContents}
 							<!-- campaignContents -->
-							<!-- ====================================== -->
+							<!-- =========== -->
 						</div>
 					</div>
-
+				</div>
 			</section>
 			<!-- campaign detail 관련된 끝 -->		
-			<!-- ======================== -->
+			<!-- ============== -->
 
 			<!-- mobile width(0~991px)일때 아래에 고정 div -->
-			<!-- ======================================== -->
+			<!-- ======================== -->
 			<div class="campaignEnterNow-mobile-fixed">
 			<c:if test="${details.duedateToSysdate != 'end'}">
 				<div class="countdown"></div>
@@ -120,7 +116,7 @@
 				</div>
 			</c:if>
 			</div>
-			<!-- ======================================== -->
+			<!-- ======================== -->
 			<c:if test="${details.duedateToSysdate != 'end'}">
-			<c:import url="/campaigns/${details.campaignName}/reward" />
+				<c:import url="/campaigns/${details.campaignName}/reward" />
 			</c:if>

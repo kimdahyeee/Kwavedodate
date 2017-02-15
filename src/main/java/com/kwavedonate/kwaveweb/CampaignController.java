@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
 import com.kwavedonate.kwaveweb.campaign.vo.CampaignVo;
@@ -102,6 +101,7 @@ public class CampaignController {
 	public String rewardView(@PathVariable("campaignName") String campaignName, Model model){
 		List<RewardsVo> rewardsDetail = campaignService.getRewardsDetail(campaignName);
 		model.addAttribute("rewards", rewardsDetail);
+		
 		return "empty/rewards";
 	}
 	

@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,7 +26,8 @@ public class PaymentsController {
 	@Resource(name = "userDaoService")
 	private UserDaoService userDao;
 	/**
-	 * enter now´­·¶À» ¶§ rewardÈ­¸é
+	 * í•˜í•˜í•˜
+	 * enter nowï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ rewardÈ­ï¿½ï¿½
 	 * @param campaignName
 	 * @param model
 	 * @return
@@ -40,7 +40,7 @@ public class PaymentsController {
 	}
 	
 	/**
-	 * reward ¾øÀÌ °áÁ¦ È­¸é
+	 * reward ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½
 	 * @param campaignName
 	 * @return
 	 */
@@ -56,7 +56,7 @@ public class PaymentsController {
 	}
 	
 	/**
-	 * reward¼±ÅÃ½Ã °áÁ¦È­¸é
+	 * rewardï¿½ï¿½ï¿½Ã½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½
 	 */
 	@RequestMapping(value="/{campaignName}/reward/{rewardNum}")
 	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model){

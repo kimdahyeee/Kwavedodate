@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
+<!DOCTYPE html>
 <html lang="ko">
 	<head>
 		<meta charset="UTF-8">
@@ -61,7 +60,7 @@
 													<a href="<c:url value='/aboutUs'/>">About Us</a>
 												</li>
 												<sec:authorize access="isAnonymous()">
-														<li class="">
+														<li>
 															<a href="<c:url value='/login'/>">Log in</a>
 														</li>
 												</sec:authorize>
@@ -74,14 +73,14 @@
 														<a href="<c:url value='/logout'/>">Log out</a>
 													</li>
 												</sec:authorize>
-												<li><a href="?lang=ko" class="btn btn-default btn-sm">Korean</a></li>
-												<li><a href="?lang=en" class="btn btn-default btn-sm">English</a></li>
-												<li><a href="?lang=ch" class="btn btn-default btn-sm">Chinese</a></li>
+												<a href="<c:url value='/?lang=ko'/>" class="btn btn-default btn-sm">Korean</a>
+												<a href="<c:url value='/?lang=en'/>" class="btn btn-default btn-sm">English</a>
+												<a href="<c:url value='/?lang=ch'/>" class="btn btn-default btn-sm">Chinese</a>
 											</ul>
 										</div>
 									</div>
 									<div id="logo" class="logo">
-										<a href="/kwaveweb/"><img id="logo_img" src="<c:url value='/resources/images/logo.png' />" alt="The Project"></a>
+										<a href="<c:url value='/'/>"><img id="logo_img" src="<c:url value='/resources/images/logo.png' />" alt="The Project"></a>
 									</div>
 								</div>
 							</div>
@@ -124,9 +123,9 @@
 														<li class="header-top-dropdown">
 															<a href="#" class="dropdown-toggle language" data-toggle="dropdown">Language <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 															<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-																<li><a href="?lang=ko" class="btn btn-default btn-sm">Korean</a></li>
-																<li><a href="?lang=en" class="btn btn-default btn-sm">English</a></li>
-																<li><a href="?lang=ch" class="btn btn-default btn-sm">Chinese</a></li>
+																<li><a href="<c:url value='/?lang=ko'/>">Korean</a></li>
+																<li><a href="<c:url value='/?lang=en'/>">English</a></li>
+																<li><a href="<c:url value='/?lang=ch'/>">Chinese</a></li>
 															</ul>
 														</li>
 													</ul>
