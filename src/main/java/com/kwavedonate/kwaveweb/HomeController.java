@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -57,6 +58,8 @@ public class HomeController {
 
 		return "main";
 	}
+	
+	
 
 	/* about us 페이지 */
 	@RequestMapping("/aboutUs")
@@ -69,5 +72,14 @@ public class HomeController {
 	public String loginfail(HttpServletResponse response) {
 
 		return "/login";
+	}
+	
+	/*
+	 * 로그인 페이지
+	 */
+	@RequestMapping("/login")
+	public String login(HttpServletRequest request) {
+
+		return "login";
 	}
 }

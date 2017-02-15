@@ -228,7 +228,7 @@ $(document).ready(function() {
         });
     }
 
-    /*// 로그인 validation
+    // 로그인 validation
     if($("#validateLogin").length>0) {
         $("#validateLogin").validate({
             submitHandler: function(form) {   
@@ -236,7 +236,7 @@ $(document).ready(function() {
                 $.ajax({
                     
                 	type: "POST",
-                    url: '<c:url value="j_spring_security_check"/>',
+                    url: "/kwaveweb/j_spring_security_check",
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val()
@@ -244,8 +244,17 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
-                    	 location.href="/"
-                        
+                    	if(data.KEY=="SUCCESS") {
+                    		if((document.refferer)=="localhost:8181/kwaveweb/login") {
+                    			location.href="/kwaveweb/";
+                    		}
+                    		else {
+                    			location.replace(document.referrer);
+                    		}
+                    	} else {
+                    		alert("로그인 실패");
+                    		location.href="/kwaveweb/login";
+                    	}
                     }
                 });
             },
@@ -284,7 +293,7 @@ $(document).ready(function() {
                 $(element).siblings("label").removeClass("hide");
             }
         });
-    }*/
+    }
 
     // 비밀번호 찾기 validation
     if($("#validateFindPasswordSend").length>0) {
@@ -645,7 +654,7 @@ $(document).ready(function() {
             submitHandler: function(form) {  
             	IMP.request_pay({
         		    pg : 'inicis', // version 1.1.0부터 지원.
-        		    pay_method : document.getElementById(payment_method),
+        		    pay_method : $("#payment_method").val(),
         		    merchant_uid : 'merchant_' + new Date().getTime(),
         		    name : '주문명:KWAVE_D결제테스트',
         		    amount : $("#totalAmount").val(),

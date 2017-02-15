@@ -19,8 +19,18 @@ public class UserDetailsVO extends User {
 	private String city;
 	private String region;
 	private String country;
-
 	public UserDetailsVO(String username, String password, 
+			boolean enabled, 				// true
+			boolean accountNonExpired,		// true
+			boolean credentialsNonExpired,  // true
+			boolean accountNonLocked, 		// true
+			Collection<? extends GrantedAuthority> authorities,
+			String user_name) {
+		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+
+	}
+
+/*	public UserDetailsVO(String username, String password, 
 			boolean enabled, 				// true
 			boolean accountNonExpired,		// true
 			boolean credentialsNonExpired,  // true
@@ -38,7 +48,7 @@ public class UserDetailsVO extends User {
 		this.city = city;
 		this.region = region;
 		this.country = country;
-	}
+	}*/
 
 	public String getUser_name() {
 		return user_name;

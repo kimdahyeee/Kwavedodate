@@ -41,13 +41,14 @@ public class UserAuthenticationService implements UserDetailsService {
 		//authority, enabled
 		List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
 		gas.add(new SimpleGrantedAuthority(user.get("AUTHORITY").toString()));
+
+			return new UserDetailsVO(user.get("USERNAME").toString(), user.get("PASSWORD").toString(), true, true, true,
+					true, gas, user.get("USER_NAME").toString());
+
+
+		}
 		
-		return new UserDetailsVO(user.get("USERNAME").toString(), user.get("PASSWORD").toString(), true, true, true,
-				true, gas, user.get("USER_NAME").toString(), user.get("USERNATION").toString(),
-				user.get("PHONE").toString(), user.get("ZIPCODE").toString(), user.get("ADDRESS1").toString(),
-				user.get("ADDRESS2").toString(), user.get("CITY").toString(), user.get("REGION").toString(),
-				user.get("COUNTRY").toString());
 
 	}
 
-}
+

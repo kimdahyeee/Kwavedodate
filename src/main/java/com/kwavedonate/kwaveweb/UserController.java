@@ -44,11 +44,11 @@ public class UserController {
 	@Resource(name = "bcryptEncoder")
 	private BcryptEncoder encoder;
 
-
+	/*
+	 * 회원가입 페이지
+	 */
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
-		logger.info("UserController - SignIn");
-		
 		// IP 확인		
 		String ipc = GetIpAddress.getClientIP(request);
 		System.out.println("Web browser 정보 : " +ipc);
@@ -57,17 +57,26 @@ public class UserController {
 		
 		return "signin";
 	}
-
+	
+	/*
+	 * 비밀번호 찾기 페이지
+	 */
 	@RequestMapping("/findPassword")
 	public String findpassword() {
 		return "findPassword";
 	}
 	
+	/*
+	 * 에러 페이지
+	 */
 	@RequestMapping("/errorPage") 
 	public String errorPage() {
 		return "errorPage";
 	}
 
+	/*
+	 * 권한 없을 경우 이동하는 페이지
+	 */
 	@RequestMapping("/denied")
 	public String denied(Model model, Authentication auth, HttpServletRequest request) {
 		AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
@@ -78,41 +87,32 @@ public class UserController {
 		return "denied";
 	}
 
-	// myAccount Controller
+	/*
+	 * 정보 수정 페이지
+	 */
 	@RequestMapping("/myAccount")
 	public String myAccount(Model model, HttpServletRequest request, Authentication authentication) {
 		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
+		
 		// ModelAndView modelAndView = new ModelAndView();
 		Map<String, Object> user = dao.selectUserAccount(userEmail);
-		model.addAttribute("username", user.get("USERNAME"));
-		model.addAttribute("usernation", user.get("USERNATION"));
-		model.addAttribute("phone", user.get("PHONE"));
-		model.addAttribute("zipcode", user.get("ZIPCODE"));
-		model.addAttribute("address1", user.get("ADDRESS1"));
-		model.addAttribute("address2", user.get("ADDRESS2"));
-		model.addAttribute("city", user.get("CITY"));
-		model.addAttribute("region", user.get("REGION"));
-		model.addAttribute("country", user.get("COUNTRY"));
-
-		// modelAndView.setViewName("myAccount");
+		model.addAttribute("user", user);
 
 		return "myAccount";
 	}
 
-	@RequestMapping("/login")
-	public String login(HttpServletRequest request) {
+	
 
-		return "login";
-	}
-
-	// 회원가입
+	/*
+	 * 회원 가입 Controller
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
-	public HashMap<String, Object> insertUser(@RequestParam("userEmail") String userEmail,
+	public HashMap<String, Object> insertUser(HttpServletRequest request, @RequestParam("userEmail") String userEmail,
 			@RequestParam("userPassword") String userPassword, @RequestParam("userName") String userName) {
 		
-		
+		String ipc = GetIpAddress.getClientIP(request);
 		String dbpw = encoder.encode(userPassword);
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
@@ -121,6 +121,13 @@ public class UserController {
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("userPassword", dbpw);
 		paramMap.put("userName", userName);
+		if(ipc.equals("en")) {
+			paramMap.put("userNation", "ENG");
+		} else if(ipc.equals("ko")) {
+			paramMap.put("userNation", "KOR");
+		} else {
+			paramMap.put("userNation", "CHI");
+		}
 		int result;
 
 		try {

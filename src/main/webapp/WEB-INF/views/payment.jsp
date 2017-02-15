@@ -77,7 +77,7 @@
 											<div class="form-group has-feedback text-center">
 												<label for="inputCountry" class="col-xs-3 col-sm-3">Country : </label>
 												<div class="col-xs-9 col-sm-9">
-													<select class="form-control" id="country" name="country" required> 
+													<select class="form-control" id="country" name="country" form="paymentForm" required> 
 		                                                <option value="AL">Albania</option>
 		                                                <option value="DZ">Algeria</option>
 		                                                <option value="AR">Argentina</option>
@@ -182,6 +182,7 @@
 		                                                <option value="VN">Viet Nam</option>
 		                                                <option value="ZM">Zambia</option>
 													</select>
+													<script>documen.forms['paymentForm'].elements['country'].value = 'ZM';</script> 
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
