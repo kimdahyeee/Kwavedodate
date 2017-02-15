@@ -8,6 +8,10 @@
 
 $(document).ready(function() {
 
+	if($("#countryOp").length>0 && $("#country").length >0){
+		$("#country").val($("#countryOp").val()).attr("selected", "selected");
+	}
+	
     /* banner custom */
     if($(".campaigns-banner").length>0) {
         if (Modernizr.touch) {
@@ -645,7 +649,7 @@ $(document).ready(function() {
             submitHandler: function(form) {  
             	IMP.request_pay({
         		    pg : 'inicis', // version 1.1.0부터 지원.
-        		    pay_method : document.getElementById(payment_method),
+        		    pay_method : $("#pament_method").val(),
         		    merchant_uid : 'merchant_' + new Date().getTime(),
         		    name : '주문명:KWAVE_D결제테스트',
         		    amount : $("#totalAmount").val(),

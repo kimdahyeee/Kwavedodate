@@ -5,7 +5,6 @@
 					<div class="row">
 						<div class="col-md-8 text-center col-md-offset-2 pv-20">
 							<h1 class="title object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100">DREAM EXPERIENCES</h1>
-							
 						</div>
 					</div>
 				</div>
