@@ -241,22 +241,26 @@ $(document).ready(function() {
                 	type: "POST",
                     url: "/kwaveweb/j_spring_security_check",
                     data: {
-                        "userEmail": $("#userEmail").val()
+                        "userEmail": $("#userEmail").val(),
+                        "userPassword":$("#userPassword").val()
                     },
                     dataType: "json",
                     success: function(data) {
-                        //성공 시 데이터 처리 
-                    	if(data.KEY=="SUCCESS") {
-                    		if((document.refferer)=="localhost:8181/kwaveweb/login") {
-                    			location.href="/kwaveweb/";
-                    		}
-                    		else {
-                    			location.replace(document.referrer);
-                    		}
-                    	}
-                    }
-                });
-            },
+                    	//성공 시 데이터 처리 
+                        if(data.KEY=="SUCCESS") {
+                           if((document.refferer)=="localhost:8181/kwaveweb/login") {
+                              location.href="/kwaveweb/";
+                           }
+                           else {
+                              location.replace(document.referrer);
+                           }
+                        } else {
+                           alert("로그인 실패");
+                           location.href="/kwaveweb/login";
+                        }
+                     }
+                 });
+             },
             errorPlacement: function(error, element) {  
                 error.appendTo(element.parent());  
             },
@@ -420,6 +424,7 @@ $(document).ready(function() {
 
     // 개인 정보 변경 validation
     if($("#validateAboutYou").length>0) {
+    	$("#nation").val($("#nation_hidden").val()).attr("selected", "selected");
         $("#validateAboutYou").validate({
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
@@ -431,7 +436,6 @@ $(document).ready(function() {
                         "userName": $("#userName").val(),
                         "nation": $("#nation").val(),
                         "phone" : $("#phone").val()
-                
                     },
                     dataType: "json",
                     success: function(data) {
@@ -557,7 +561,7 @@ $(document).ready(function() {
     
  // 배송정보 validation
     if($("#validateDeliveryInfo").length>0) {
-    	$("#country").val($("#country").val()).attr("selected", "selected");
+    	$("#country").val($("#country_hidden").val()).attr("selected", "selected");
         $("#validateDeliveryInfo").validate({
             submitHandler: function(form) {   
                 // Iamport 결제 모듈 연동
