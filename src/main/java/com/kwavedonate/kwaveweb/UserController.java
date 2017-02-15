@@ -9,14 +9,23 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.cache.TransactionalCacheManager;
+import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.config.TxNamespaceHandler;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,9 +40,13 @@ import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 @Controller
 public class UserController {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private DataSourceTransactionManager transactionManager;
+	
 	
 	private String check="check";
+	
+	@Autowired
+	private SqlSession sqlSession;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -80,7 +93,6 @@ public class UserController {
 	@RequestMapping("/denied")
 	public String denied(Model model, Authentication auth, HttpServletRequest request) {
 		AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
-		logger.info("ex : {}", ade);
 		model.addAttribute("auth", auth);
 		model.addAttribute("errMsg", ade);
 
@@ -102,7 +114,6 @@ public class UserController {
 		return "myAccount";
 	}
 
-	
 
 	/*
 	 * 회원 가입 Controller
@@ -142,7 +153,6 @@ public class UserController {
 			hashmap.put("KEY", "FAIL");
 		}
 
-		logger.info("insert result ===> {}", result);
 
 		return hashmap;
 	}
@@ -176,7 +186,6 @@ public class UserController {
 			hashmap.put("KEY", "FAIL");
 		}
 
-		logger.info("modifyUser result ===> {}", result);
 
 		return hashmap;
 	}
@@ -215,7 +224,6 @@ public class UserController {
 			hashmap.put("KEY", "FAIL");
 		}
 
-		logger.info("modifyUser result ===> {}", result);
 
 		return hashmap;
 	}
@@ -257,7 +265,6 @@ public class UserController {
 			hashmap.put("KEY", "FAIL");
 		}
 
-		logger.info("modifyUser result ===> {}", result);
 
 		return hashmap;
 	}
@@ -349,13 +356,14 @@ public class UserController {
 	 * 결제관련 컨트롤러
 	 */
 	@ResponseBody
-	@RequestMapping(value="insertDelivery", method=RequestMethod.POST)
-	public HashMap<String, Object> insertDelivery(
+	@RequestMapping(value="insertDeliveryENG", method=RequestMethod.POST)
+	public HashMap<String, Object> insertDeliveryENG(
 			@RequestParam("imp_uid")String imp_uid, @RequestParam("merchant_uid")String merchant_uid,
 			@RequestParam("userEmail")String userEmail,
-			//@RequestParam("campaignsName")String campaignsName,
+			@RequestParam("campaignName")String campaignName,
 			@RequestParam("rewardNum")String rewardNum,
 			@RequestParam("totalAmount")String totalAmount,
+			@RequestParam("note")String note,
 			@RequestParam("shippingAmount")String shippingAmount,
 			@RequestParam("shippingMethod")String shippingMethod,
 			@RequestParam("userName")String userName,
@@ -366,18 +374,83 @@ public class UserController {
 			@RequestParam("city")String city,
 			@RequestParam("country")String country,
 			@RequestParam("region")String region ) {
+		int resultD = 0, resultP = 0;
+		System.out.println("ENG");
+		System.out.println(note);
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("imp_uid", imp_uid);
+		paramMap.put("userEmail", userEmail);
+		paramMap.put("merchant_uid", merchant_uid);
+		paramMap.put("campaignName", campaignName);
+		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
+		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
+		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
+		paramMap.put("shippingMethod", shippingMethod);
+		paramMap.put("userName", userName);
+		paramMap.put("phone", phone);
+		paramMap.put("note", note);
+		paramMap.put("address1", address1);
+		paramMap.put("address2", address2);
+		paramMap.put("zipCode", zipCode);
+		paramMap.put("city", city);
+		paramMap.put("country", country);
+		paramMap.put("region", region);
+		
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		
-		System.out.println("imp_uid : " + imp_uid);
-		System.out.println("merchant : " + merchant_uid);
+		resultD = dao.insertDelivery(paramMap);
+		resultP = dao.insertPayments(paramMap);
+		if(resultD == 1 && resultP == 1) {
+			hashmap.put("KEY", "SUCCESS");
+		}
 		
-		/*System.out.println("userEmail : " + userEmail 
-				+ "campaignsName : " 
-				+ "rewardNum" + Integer.parseInt(rewardNum)
-				+ "totalAmount" + Integer.parseInt(totalAmount)
-				+ shippingAmount + shippingMethod 
-				+ userName + phone + address1 + address2
-				+ zipCode + city + country + region);*/
+		
+		return hashmap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertDeliveryKOR", method=RequestMethod.POST)
+	public HashMap<String, Object> insertDeliveryKOR(
+			@RequestParam("imp_uid")String imp_uid, @RequestParam("merchant_uid")String merchant_uid,
+			@RequestParam("userEmail")String userEmail,
+			@RequestParam("campaignName")String campaignName,
+			@RequestParam("rewardNum")String rewardNum,
+			@RequestParam("totalAmount")String totalAmount,
+			@RequestParam("shippingAmount")String shippingAmount,
+			@RequestParam("shippingMethod")String shippingMethod,
+			@RequestParam("note")String note,
+			@RequestParam("userName")String userName,
+			@RequestParam("phone")String phone,
+			@RequestParam("address1")String address1,
+			@RequestParam("address2")String address2,
+			@RequestParam("zipCode")String zipCode ) {
+		System.out.println("KOR");
+		int resultD = 0, resultP=0;
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("imp_uid", imp_uid);
+		paramMap.put("merchant_uid", merchant_uid);
+		paramMap.put("userEmail", userEmail);
+		paramMap.put("campaignName", campaignName);
+		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
+		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
+		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
+		paramMap.put("shippingMethod", shippingMethod);
+		paramMap.put("note", note);
+		paramMap.put("userName", userName);
+		paramMap.put("phone", phone);
+		paramMap.put("address1", address1);
+		paramMap.put("address2", address2);
+		paramMap.put("zipCode", zipCode);
+		
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		
+		resultD = dao.insertDelivery(paramMap);
+		resultP = dao.insertPayments(paramMap);
+		if(resultD == 1 && resultP == 1) {
+			hashmap.put("KEY", "SUCCESS");
+		}
 		
 		return hashmap;
 	}

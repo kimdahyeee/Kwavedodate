@@ -74,9 +74,9 @@
 													</li>
 												</sec:authorize>
 
-												<a href="<c:url value='/?lang=ko'/>" class="btn btn-default btn-sm">Korean</a>
-												<a href="<c:url value='/?lang=en'/>" class="btn btn-default btn-sm">English</a>
-												<a href="<c:url value='/?lang=ch'/>" class="btn btn-default btn-sm">Chinese</a>
+												<a href="<c:url value='?lang=ko'/>" class="btn btn-default btn-sm">Korean</a>
+												<a href="<c:url value='?lang=en'/>" class="btn btn-default btn-sm">English</a>
+												<a href="<c:url value='?lang=ch'/>" class="btn btn-default btn-sm">Chinese</a>
 
 											</ul>
 										</div>
@@ -125,9 +125,9 @@
 														<li class="header-top-dropdown">
 															<a href="#" class="dropdown-toggle language" data-toggle="dropdown">Language <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 															<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-																<li><a href="<c:url value='/?lang=ko'/>">Korean</a></li>
-																<li><a href="<c:url value='/?lang=en'/>">English</a></li>
-																<li><a href="<c:url value='/?lang=ch'/>">Chinese</a></li>
+																<li><a href="<c:url value='?lang=ko'/>">Korean</a></li>
+																<li><a href="<c:url value='?lang=en'/>">English</a></li>
+																<li><a href="<c:url value='?lang=ch'/>">Chinese</a></li>
 															</ul>
 														</li>
 													</ul>

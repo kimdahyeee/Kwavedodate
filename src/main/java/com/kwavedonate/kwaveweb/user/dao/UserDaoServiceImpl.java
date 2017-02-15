@@ -15,6 +15,20 @@ public class UserDaoServiceImpl extends SqlSessionDaoSupport implements UserDaoS
 		// TODO Auto-generated method stub
 		return getSqlSession().insert("user.insertUser", paramMap);
 	}
+	
+	@Override
+	@Transactional
+	public int insertDelivery(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return getSqlSession().insert("user.insertDelivery", paramMap);
+	}
+	
+	@Override
+	@Transactional
+	public int insertPayments(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return getSqlSession().insert("user.insertPayments", paramMap);
+	}
 
 	@Override
 	public Map<String, Object> selectUser(String username) {

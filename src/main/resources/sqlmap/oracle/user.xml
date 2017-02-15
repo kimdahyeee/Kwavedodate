@@ -82,4 +82,19 @@
 		WHERE userEmail = #{userEmail}
 	</update>
 	
+	<insert id="insertDelivery">
+		INSERT INTO delivery
+		(imp_uid, userEmail, campaignName, rewardNum, totalAmount, shippingAmount, shippingMethod, note, phone, zipCode, address1, address2, city, region, country)
+		VALUES
+		(#{imp_uid}, #{userEmail}, #{campaignName}, #{rewardNum}, #{totalAmount}, #{shippingAmount}, #{shippingMethod}, #{note}, #{phone}, #{zipCode}, #{address1}, #{address2}, #{city}, #{region}, #{country})
+	</insert>
+	
+	<insert id="insertPayments">
+		INSERT INTO payments
+		(imp_uid, userEmail, campaignName, marchant_uid, rewardNum) 
+		VALUES
+		(#{imp_uid}, #{userEmail}, #{campaignName}, #{merchant_uid}, #{rewardNum}) 
+	
+	</insert>
+	
 </mapper>

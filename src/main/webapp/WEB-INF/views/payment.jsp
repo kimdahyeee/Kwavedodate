@@ -60,7 +60,12 @@
 											<!-- 해외인 경우 -->
 											<!-- 한국인 경우 hidden으로 기본값을 줄 것 -->
 											<!-- =================================== -->
-											<c:if test="${user.USERNATION != 'KOR'}">
+											<c:if test="${user.USERNATION eq 'KOR'}">
+												<input type="hidden" id="nation" name="nation" value="KOR">
+											</c:if>
+											
+											<c:if test="${user.USERNATION ne 'KOR'}">
+											<input type="hidden" id="nation" name="nation" value="ENG">
 												<div class="form-group has-feedback text-center">
 													<label for="inputCity" class="col-xs-3 col-sm-3">City : </label>
 													<div class="col-xs-9 col-sm-9">
@@ -197,7 +202,7 @@
 											<div class="form-group has-feedback text-center">
 												<label for="inputNode" class="col-xs-3 col-sm-3">Note : </label>
 												<div class="col-xs-9 col-sm-9">
-													<textarea></textarea>
+													<textarea id="note"></textarea>
 												</div>
 											</div>
 											</c:if>
