@@ -109,13 +109,13 @@
 											</div>
 											<div class="form-group has-feedback">
 												<div class="col-sm-12">
-													<input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" value='${username}' required> 
+													<input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" value='${user.USERNAME}' required> 
 														<i class="fa fa-user form-control-feedback"></i>
 												</div>
 											</div>
 											<div class="form-group has-feedback">
 												<div class="col-sm-12">
-													<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" value='${phone}'/> 
+													<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" value='${user.PHONE}' required> 
 														<i class="fa fa-mobile form-control-feedback fa-lg"></i>
 												</div>
 											</div>
@@ -143,7 +143,7 @@
 						<div class="col-xs-12 col-sm-12">
 							<label class="col-xs-4 col-sm-3 control-label">User Name: </label>
 							<div class="col-xs-8 col-sm-9 control-label">
-								<p style="display: inline;">${username}</p>
+								<p style="display: inline;">${user.USERNAME}</p>
 								<a class="text-warning btn-md-link" href="<c:url value='/logout'/>">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a><br>
 							</div>
 						</div>
@@ -157,19 +157,18 @@
 							</div>
 						</div>
 						
-
 						<div class="col-xs-12 col-sm-12 mt-5">
 							<label class="col-xs-4  col-sm-3 control-label">Phone: </label>
 							<div class="col-xs-8 col-sm-9">
 								<!-- <p><sec:authentication property="principal.phone"/><p> -->
-								<p>${phone}</p>
+								<p>${user.PHONE}</p>
 							</div>
 						</div>
 						
 						<div class="col-xs-12 col-sm-12 mt-5">
 							<label class="col-xs-4  col-sm-3 control-label">Nation: </label>
 							<div class="col-xs-8 col-sm-9">
-								<p>${usernation}</p>
+								<p>${user.USERNATION}</p>
 							</div>
 						</div>
 						
@@ -195,31 +194,32 @@
 											<div class="modal-body">
 												<div class="form-group has-feedback">
 													<div class="col-sm-12">
-														<input type="text" class="form-control postcodify_address" id="address1" name="address1" placeholder="Address" value='${address1}'/> 
+														<input type="text" class="form-control postcodify_address" id="address1" name="address1" placeholder="Address" value='${user.ADDRESS1}'> 
 														<i class="fa fa-home form-control-feedback"></i>
 													</div>
 												</div>
 												<div class="form-group has-feedback">
 													<div class="col-sm-12">
-														<input type="text" class="form-control postcodify_details" id="address2" name="address2" placeholder="Address Detail" value='${address2}'/>
+														<input type="text" class="form-control postcodify_details" id="address2" name="address2" placeholder="Address Detail" value='${user.ADDRESS2}'>
 														<i class="fa fa-paper-plane-o form-control-feedback"></i>
 													</div>
 												</div>
 												<div class="form-group has-feedback">
 													<div class="col-md-12">
-														<input type="text" class="form-control postcodify_postcode5" id="zipCode" name="zipCode" placeholder="Zip Code" value='${zipcode}'/>
+														<input type="text" class="form-control postcodify_postcode5" id="zipCode" name="zipCode" placeholder="Zip Code" value='${user.ZIPCODE}'>
 														<i class="fa fa-list-alt form-control-feedback"></i>
 													</div>
 												</div>
+												<c:if test="${user.USERNATION ne 'KOR'}">
 												<div class="form-group has-feedback">
 													<div class="col-sm-12">
-														<input type="text" class="form-control" id="city" name="city" placeholder="City" value='${city}'/> 
+														<input type="text" class="form-control" id="city" name="city" placeholder="City" value='${user.CITY}'> 
 														<i class="fa fa-tag form-control-feedback fa-lg"></i>
 													</div>
 												</div>
 												<div class="form-group has-feedback">
 													<div class="col-sm-12">
-														<input type="hidden" value='${country}'/>
+														<input type="hidden" value='${user.COUNTRY}'/>
 														<select class="form-control" id="country" name="country" required> 
 			                                                <option value="AL">Albania</option>
 			                                                <option value="DZ">Algeria</option>
@@ -329,9 +329,10 @@
 												</div>
 												<div class="form-group has-feedback last-form">
 													<div class="col-sm-12">
-														<input type="text" class="form-control" id="region" name="region" placeholder="State/Region/Province" value='${region}'/> <i class="fa fa-tags form-control-feedback fa-lg"></i>
+														<input type="text" class="form-control" id="region" name="region" placeholder="State/Region/Province" value='${user.REGION}'/> <i class="fa fa-tags form-control-feedback fa-lg"></i>
 													</div>
 												</div>
+												</c:if>
 											</div>
 											<div class="modal-footer">
 												<button type="submit" class="btn btn-sm btn-default">Save changes</button>
@@ -342,47 +343,45 @@
 								</div>
 							</div>
 							<br/><br/> 
-							
-							
 							<div class="col-xs-12 col-sm-12">
 								<label class="col-xs-4  col-sm-3 control-label">Address: </label>
 								<div class="col-xs-8 col-sm-9">
-									<p>${address1}<p>
+									<p>${user.ADDRESS1}<p>
 								</div>
 							</div>
 							
 							<div class="col-xs-12 col-sm-12 mt-5">
 								<label class="col-xs-4  col-sm-3 control-label">Address Detail: </label>
 								<div class="col-xs-8 col-sm-9">
-									<p>${address2}<p>
+									<p>${user.ADDRESS2}<p>
 								</div>
 							</div>
 							
 							<div class="col-xs-12 col-sm-12 mt-5">
 								<label class="col-xs-4  col-sm-3 control-label">Zip code: </label>
 								<div class="col-xs-8 col-sm-9">
-									<p>${zipcode}<p>
+									<p>${user.ZIPCODE}<p>
 								</div>
 							</div>
 
 							<div class="col-xs-12 col-sm-12 mt-5">
 								<label class="col-xs-4  col-sm-3 control-label">City: </label>
 								<div class="col-xs-8 col-sm-9">
-									<p>${city}<p>
+									<p>${user.CITY}<p>
 								</div>
 							</div>
 
 							<div class="col-xs-12 col-sm-12 mt-5">
 								<label class="col-xs-4  col-sm-3 control-label">Country: </label>
 								<div class="col-xs-8 col-sm-9">
-									<p>${country}<p>
+									<p>${user.COUNTRY}<p>
 								</div>
 							</div>
 							
 							<div class="col-xs-12 col-sm-12 mt-5">
 								<label class="col-xs-4  col-sm-3 control-label">Region: </label>
 								<div class="col-xs-8 col-sm-9">
-									<p>${region}<p>
+									<p>${user.REGION}<p>
 								</div>
 							</div>	
 						</div>

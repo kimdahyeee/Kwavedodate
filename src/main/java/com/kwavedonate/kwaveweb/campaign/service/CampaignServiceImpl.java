@@ -3,7 +3,6 @@ package com.kwavedonate.kwaveweb.campaign.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +13,13 @@ import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 public class CampaignServiceImpl extends SqlSessionDaoSupport implements CampaignService{
 	
 	@Override
-	public List<Map<String, Object>> getMainCampaign() {		
-		return getSqlSession().selectList("campaign.selectMainCampaign");
+	public List<Map<String, Object>> getAllCampaignsList() {
+		return getSqlSession().selectList("campaign.selectAllCampaignsList");
 	}
 
 	@Override
-	public List<Map<String, Object>> getCampaignsList() {
-		return getSqlSession().selectList("campaign.selectCampaigns");
+	public List<Map<String, Object>> getMainCampaignsList() {		
+		return getSqlSession().selectList("campaign.selectMainCampaign");
 	}
 
 	@Override
@@ -29,8 +28,8 @@ public class CampaignServiceImpl extends SqlSessionDaoSupport implements Campaig
 	}
 
 	@Override
-	public List<RewardsVo> getRewardsDetail(String campaignName) {
-		return getSqlSession().selectList("campaign.detailRewards", campaignName);
+	public List<RewardsVo> getAllRewards(String campaignName) {
+		return getSqlSession().selectList("campaign.selectAllRewards", campaignName);
 	}
 	
 	@Override

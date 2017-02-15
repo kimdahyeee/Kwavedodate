@@ -8,6 +8,10 @@
 
 $(document).ready(function() {
 
+	if($("#countryOp").length>0 && $("#country").length >0){
+		$("#country").val($("#countryOp").val()).attr("selected", "selected");
+	}
+	
     /* banner custom */
     if($(".campaigns-banner").length>0) {
         if (Modernizr.touch) {
@@ -162,7 +166,7 @@ $(document).ready(function() {
                           window.location = "http://localhost:8181/kwaveweb/login";
                        }else{
                           alert("이미 회원가입 된 이메일입니다.");
-                          window.location = "http://localhost:8181/kwaveweb/signin";
+                          
                        }
                     }
                 });
@@ -242,7 +246,14 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
-                    	 location.href="/"
+                    	if(data.KEY=="SUCCESS") {
+                    		if((document.refferer)=="localhost:8181/kwaveweb/login") {
+                    			location.href="/kwaveweb/";
+                    		}
+                    		else {
+                    			location.replace(document.referrer);
+                    		}
+                    	}
                     }
                 });
             },
@@ -600,7 +611,7 @@ $(document).ready(function() {
             submitHandler: function(form) {  
             	IMP.request_pay({
         		    pg : 'inicis', // version 1.1.0부터 지원.
-        		    pay_method : document.getElementById(payment_method),
+        		    pay_method : $("#payment_method").val(),
         		    merchant_uid : 'merchant_' + new Date().getTime(),
         		    name : '주문명:KWAVE_D결제테스트',
         		    amount : $("#totalAmount").val(),
@@ -617,9 +628,10 @@ $(document).ready(function() {
         		        msg += '상점 거래ID : ' + rsp.merchant_uid;
         		        msg += '결제 금액 : ' + rsp.paid_amount;
         		        msg += '카드 승인번호 : ' + rsp.apply_num;
-        		        $.ajax({
+        		        if(($("#nation").val()) == 'KOR') { 
+        		        	$.ajax({
                             type: "POST",
-                            url: "/kwaveweb/insertDelivery",	// delivery table
+                            url: "/kwaveweb/insertDeliveryKOR",	// delivery table
                             data: {
                             	 "imp_uid" : rsp.imp_uid,
                             	 "merchant_uid" : rsp.merchant_uid,
@@ -630,7 +642,38 @@ $(document).ready(function() {
                                  "totalAmount" : $("#totalAmount").val(),
                                  "shippingAmount" : $("#shippingAmount").val(),
                                  "shippingMethod" : $("#shippingMethod").val(),
-                                 //"note" : $("#note").val(),
+                                 "note" : $("#note").val(),
+                                 
+                                 "userName": $("#userName").val(),
+                                 "phone": $("#phone").val(),
+                            	 "address1": $("#address1").val(),
+                                 "address2": $("#address2").val(),
+                                 "zipCode": $("#zipCode").val()
+                                 
+                            },
+                            dataType: "json",
+                            success: function(data) {
+                            	if(data.KEY == "SUCCESS"){
+                            		alert("성공처리 되었습니다.")
+                                 }else{
+                                    alert("실패했습니다.");
+                                 }
+                            }
+                        });}
+        		        else { $.ajax({
+                            type: "POST",
+                            url: "/kwaveweb/insertDeliveryENG",	// delivery table
+                            data: {
+                            	 "imp_uid" : rsp.imp_uid,
+                            	 "merchant_uid" : rsp.merchant_uid,
+
+                                 "userEmail": $("#userEmail").val(),
+                                 "campaignName" : $("#campaignName").val(),
+                                 "rewardNum" : $("#rewardNum").val(),
+                                 "totalAmount" : $("#totalAmount").val(),
+                                 "shippingAmount" : $("#shippingAmount").val(),
+                                 "shippingMethod" : $("#shippingMethod").val(),
+                                 "note" : $("#note").val(),
                                  
                                  "userName": $("#userName").val(),
                                  "phone": $("#phone").val(),
@@ -638,8 +681,8 @@ $(document).ready(function() {
                                  "address2": $("#address2").val(),
                                  "zipCode": $("#zipCode").val(),
                                  "city" : $("#city").val(),
-                                 "country" : $("#country").val(),
-                                 "region" : $("#region").val(),
+                                 "country" : $("#countryOp").val(),
+                                 "region" : $("#region").val()
                                  
                                  
                             },
@@ -648,10 +691,11 @@ $(document).ready(function() {
                             	if(data.KEY == "SUCCESS"){
                             		alert("성공처리 되었습니다.")
                                  }else{
-                                    alert("주소지 정보 수정이 실패했습니다.");
+                                    alert("실패했습니다.");
                                  }
                             }
-                        });
+                        });}
+        		       
         		    } else {
         		        var msg = '결제에 실패하였습니다.';
         		        msg += '에러내용 : ' + rsp.error_msg;

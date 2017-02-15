@@ -24,7 +24,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<c:forEach items="${list}" var="lists" begin="0" end="${fn:length(list)}" step="1" varStatus="status">
+							<c:forEach items="${campaignsList}" var="campaignsLists" begin="0" end="${fn:length(campaignsList)}" step="1" varStatus="status">
 								<div class="col-sm-6">
 									<div class="image-box style-2 mb-20 bordered light-gray-bg">
 										<div class="overlay-container overlay-visible">
@@ -34,17 +34,17 @@
 										</div>
 										<div class="body">
 											<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-											<h4 class="ellipsis"><strong><c:out value="${list[status.index].campaignSubject }"/></strong></h4>
+											<h4 class="ellipsis"><strong><c:out value="${campaignsList[status.index].campaignSubject }"/></strong></h4>
 											<label></label>
 											<div class="btn-learn-more">
-												<a class="text-info btn-md-link" href="<c:url value='/campaigns/${list[status.index].campaignName}' />">Learn more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+												<a class="text-info btn-md-link" href="<c:url value='/campaigns/${campaignsList[status.index].campaignName}' />">Learn more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 											</div>
 										</div>
 									</div>
 								</div>
 							</c:forEach>
 							<label></label>
-							<c:if test="${fn:length(list) == '4'}">
+							<c:if test="${fn:length(campaignsList) == '4'}">
 								<div class="text-center">
 									<a href="campaigns" class="btn btn-lg btn-danger"> See Them All </a>
 								</div>
