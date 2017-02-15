@@ -67,6 +67,7 @@
 	<script type="text/javascript" src="<c:url value='/resources/plugins/jquery.countdown/jquery.plugin.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/plugins/jquery.countdown/jquery.countdown.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/coming.soon.config.js' />"></script>
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/template.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/socialLogin.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/customs.js' />"></script>

@@ -31,21 +31,6 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	private Facebook facebook;
-	private ConnectionRepository connectionRepository;
-	
-	@Inject
-	public HomeController(Facebook facebook, ConnectionRepository connectionRepository) {
-		this.facebook = facebook;
-		this.connectionRepository = connectionRepository;
-	}
-	
-	@Autowired
-	private FacebookConnectionFactory connectionFactory;
-	
-	@Autowired
-	private OAuth2Parameters oAuth2Parameters;
-
 	@Resource(name = "bcryptEncoder")
 	private BcryptEncoder encoder;
 	
@@ -93,11 +78,9 @@ public class HomeController {
 		return "/login";
 	}
 	
-	@RequestMapping("/facebookLogin")
-	public String facebookLogin(Model model) {
-		if(connectionRepository.findPrimaryConnection(Facebook.class)!=null) {
-			model.addAttribute("facebookProfile", facebook.userOperations().getUserProfile());
-		}
-		return "/";
+	@RequestMapping("/testsite")
+	public String testsite() {
+		return "aboutUs?test=1";
 	}
+	
 }

@@ -18,6 +18,7 @@
         <property name="password" value="${jdbc.password}" />
 	</bean>
 	
+	<!-- mybatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="configLocation" value="classpath:sqlmap/mybatis.xml"/>

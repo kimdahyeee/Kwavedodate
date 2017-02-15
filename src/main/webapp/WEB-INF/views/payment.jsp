@@ -1,12 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+
 			<section class="main-container campaign-perks">
 				<div class="container">
 					<div class="row">
 						<div class="main col-md-10 col-md-offset-1">
 							<h1 class="page-title text-center">Just a few more details...</h1>
 							<label></label>
-							<form class="form-horizontal" id="validateDeliveryInfo">
+							<form name="paymentForm" class="form-horizontal" id="validatePaymentInfo">
 								<div class="isotope-container-fitrows row grid-space-10">
 									<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 isotope-item">
 										<div class="mb-20 ph-20 bordered text-left">
@@ -22,7 +23,7 @@
 											<div class="form-group has-feedback text-center">
 												<label for="inputUserName" class="col-xs-3 col-sm-3">Name : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="userName" name="userName" placeholder="Name" value="${userName }" required>
+													<input type="text" class="form-control" id="userName" name="userName" placeholder="Name" value="${userName}" required>
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
@@ -38,21 +39,21 @@
 											<div class="form-group has-feedback text-center">
 												<label for="inputZipCode" class="col-xs-3 col-sm-3">Zip Code : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Zip Code" value="" required>
+													<input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="ZipCode" value="${zipcode}" required>
 													
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
 												<label for="inputAddress" class="col-xs-3 col-sm-3">Address : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="address1" name="address1" placeholder="Address" value="" required>
+													<input type="text" class="form-control" id="address1" name="address1" placeholder="Address" value="${address1}" required>
 													
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
 												<label for="inputAddressDetail" class="col-xs-3 col-sm-3">Address detail : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="address2" name="address2" placeholder="Address Detail" value="">
+													<input type="text" class="form-control" id="address2" name="address2" placeholder="Address Detail" value="${address2}">
 													
 												</div>
 											</div>
@@ -63,14 +64,14 @@
 											<div class="form-group has-feedback text-center">
 												<label for="inputCity" class="col-xs-3 col-sm-3">City : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="city" name="city" placeholder="City" value="" required>
+													<input type="text" class="form-control" id="city" name="city" placeholder="City" value="${city}" required>
 													
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
 												<label for="inputRegion" class="col-xs-3 col-sm-3">Region : </label>
 												<div class="col-xs-9 col-sm-9">
-													<input type="text" class="form-control" id="region" name="region" placeholder="Region" value="" required>
+													<input type="text" class="form-control" id="region" name="region" placeholder="Region" value="${region}" required>
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
@@ -236,17 +237,18 @@
 														</c:otherwise>
 													</c:choose>
 													
-													<input type="hidden" id="totalAmount" name="totalAmount" value="">
+													<input type="hidden" id="totalAmount" name="totalAmount" value="${reward.rewardAmount+5}">
+													<input type="hidden" id="campaignName" name="campaignName" value="${reward.campaignName}">
 													<label></label>
 												</div>
 											</div>
 										</div>
 										<div class="style-2 mb-20 ph-20 bordered text-center">
-											<span class="text-left"><input type="radio" name="payment_method" id="card" value="card" checked required> Card
+											<span class="text-left"><input type="radio" name="payment_method" id="payment_method_card" value="card" checked required> Card
 											</span>
-											<span><input type="radio" name="payment_method" id="trans" value="trans" required> Trans
+											<span><input type="radio" name="payment_method" id="payment_method_trans" value="trans" required> Trans
 											</span>
-											<span class="text-right"><input type="radio" name="payment_method" id="phone" value="phone" required> Phone
+											<span class="text-right"><input type="radio" name="payment_method" id="payment_method_phone" value="phone" required> Phone
 											</span>
 										</div>
 										<button type="submit" class="btn btn-lg btn-danger" style="width: 100%"><strong>Submit payment</strong></button>

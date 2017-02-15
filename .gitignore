@@ -45,3 +45,4 @@ src/main/webapp/resources/database.properties
 src/main/resources/log4j.xml
 src/main/webapp/resources/css/customs.css.rej
 src/main/webapp/WEB-INF/tiles/footer.jsp.rej
+src/main/webapp/resources/application.properties

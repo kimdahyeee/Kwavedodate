@@ -609,7 +609,7 @@ $(document).ready(function() {
         });
     }
 
-    // 배송정보 validation
+ // 배송정보 validation
     if($("#validateDeliveryInfo").length>0) {
         $("#validateDeliveryInfo").validate({
             submitHandler: function(form) {   
@@ -635,6 +635,142 @@ $(document).ready(function() {
                          }
                     }
                 });
+            },
+            errorPlacement: function(error, element) {  
+                error.appendTo(element.parent());  
+            },
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                //단순 입력이 되는 값에 한정함
+                //넘어오는 값들(ex. rewardNum, proejctName, rewardAmount, shippingAmount...)은 rules에 담지 않았음
+                
+                zipCode: {
+                    required: true
+                },
+                address1: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                region: {
+                    required: true
+                },
+                country: {
+                    required: true
+                },
+                shippingMethod: {
+                    required: true
+                }
+            },
+            messages: {
+                zipCode: {
+                    required: "Please enter your zip code number."
+                },
+                address1: {
+                    required: "Please enter your address."
+                },
+                city: {
+                    required: "Please enter your city."
+                },
+                region: {
+                    required: "Please enter your region."
+                },
+                country: {
+                    required: "Please select your country. This depend on shipping amount."
+                },
+                shippingMethod: {
+                    required: "Please enter your shipping method"
+                }
+            },
+            errorElement: "span",
+            highlight: function (element) {
+                $(element).parent().removeClass("has-success").addClass("has-error");
+                $(element).siblings("label").addClass("hide");
+            },
+            success: function (element) {
+                $(element).parent().removeClass("has-error").addClass("has-success");
+                $(element).siblings("label").removeClass("hide");
+            }
+        });
+    }
+    
+    	
+
+ // 결제정보 validation
+    if($("#validatePaymentInfo").length>0) {
+    	var IMP = window.IMP;
+    	IMP.init('imp57757789');	
+    	
+        $("#validatePaymentInfo").validate({
+            submitHandler: function(form) {  
+            	IMP.request_pay({
+        		    pg : 'inicis', // version 1.1.0부터 지원.
+        		    pay_method : document.getElementById(payment_method),
+        		    merchant_uid : 'merchant_' + new Date().getTime(),
+        		    name : '주문명:KWAVE_D결제테스트',
+        		    amount : $("#totalAmount").val(),
+        		    buyer_email : $("#userEmail").val(),
+        		    buyer_name : $("#userName").val(),
+        		    buyer_tel : $("#phone").val(),
+        		    buyer_addr : $("#address1").val(),
+        		    buyer_postcode : '123-456',
+        		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+        		}, function(rsp) {
+        		    if ( rsp.success ) {
+        		        var msg = '결제가 완료되었습니다.';
+        		        msg += '고유ID : ' + rsp.imp_uid;
+        		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+        		        msg += '결제 금액 : ' + rsp.paid_amount;
+        		        msg += '카드 승인번호 : ' + rsp.apply_num;
+        		        $.ajax({
+                            type: "POST",
+                            url: "/kwaveweb/insertDelivery",	// delivery table
+                            data: {
+                            	 "imp_uid" : rsp.imp_uid,
+                            	 "merchant_uid" : rsp.merchant_uid,
+
+                                 "userEmail": $("#userEmail").val(),
+                                 "campaignName" : $("#campaignName").val(),
+                                 "rewardNum" : $("#rewardNum").val(),
+                                 "totalAmount" : $("#totalAmount").val(),
+                                 "shippingAmount" : $("#shippingAmount").val(),
+                                 "shippingMethod" : $("#shippingMethod").val(),
+                                 //"note" : $("#note").val(),
+                                 
+                                 "userName": $("#userName").val(),
+                                 "phone": $("#phone").val(),
+                            	 "address1": $("#address1").val(),
+                                 "address2": $("#address2").val(),
+                                 "zipCode": $("#zipCode").val(),
+                                 "city" : $("#city").val(),
+                                 "country" : $("#country").val(),
+                                 "region" : $("#region").val(),
+                                 
+                                 
+                            },
+                            dataType: "json",
+                            success: function(data) {
+                            	if(data.KEY == "SUCCESS"){
+                            		alert("성공처리 되었습니다.")
+                                 }else{
+                                    alert("주소지 정보 수정이 실패했습니다.");
+                                 }
+                            }
+                        });
+        		    } else {
+        		        var msg = '결제에 실패하였습니다.';
+        		        msg += '에러내용 : ' + rsp.error_msg;
+        		        msg += '고유ID : ' + rsp.imp_uid;
+        		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+        		        msg += '결제 금액 : ' + rsp.paid_amount;
+        		    }
+        		    
+        		    alert(msg);
+        		    
+        		});
+             
             },
             errorPlacement: function(error, element) {  
                 error.appendTo(element.parent());  

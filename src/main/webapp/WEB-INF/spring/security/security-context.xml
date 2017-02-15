@@ -12,10 +12,11 @@
 	<security:http auto-config="true" use-expressions="true" create-session="never">
 	
 		<!-- 페이지 권한 설정 -->
+		<security:intercept-url pattern="/login" access="anonymous"/>
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<security:intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI',
 																	'ROLE_ADMIN')"/>
-		<security:intercept-url pattern="/payments/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/payments/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_USER_KOR', 'ROLE_USER_ENG')"/>
 
 		<security:intercept-url pattern="/**" access="permitAll"/>
 		
@@ -24,13 +25,12 @@
 							 username-parameter="userEmail"
 							 password-parameter="userPassword"
 							 login-processing-url="/j_spring_security_check"
-							 default-target-url="/"
 							 authentication-success-handler-ref="userLoginSuccessHandler"
 							 authentication-failure-handler-ref="userLoginFailureHandler"
 							 authentication-failure-url="/loginfail"
 							 always-use-default-target="false"/>
 		
-		<security:session-management invalid-session-url="/login">
+		<security:session-management>
 			<security:concurrency-control max-sessions="1" expired-url="/"/>
 		</security:session-management>
 		
@@ -53,7 +53,11 @@
 	</bean>
 	
 	<bean id="userDeniedHandler" class="com.kwavedonate.kwaveweb.user.service.UserDeniedHandler"/>
-	<bean id="userLoginSuccessHandler" class="com.kwavedonate.kwaveweb.user.service.UserLoginSuccessHandler"/>
+	<bean id="userLoginSuccessHandler" class="com.kwavedonate.kwaveweb.user.service.UserLoginSuccessHandler">
+		<property name="targetUrlParameter" value="loginRedirect"/>
+		<property name="useReferer" value="true"/>
+		<property name="defaultUrl" value="/"/>
+	</bean>
 	<bean id="userLoginFailureHandler" class="com.kwavedonate.kwaveweb.user.service.UserLoginFailureHandler"/>
 	
 	

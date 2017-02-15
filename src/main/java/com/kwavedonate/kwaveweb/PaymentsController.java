@@ -63,11 +63,22 @@ public class PaymentsController {
 		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		Map<String, Object> user = userDao.selectUserAccount(userEmail);
+		model.addAttribute("user", user);
 		model.addAttribute("userName", user.get("USERNAME"));
 		model.addAttribute("userPhone", user.get("PHONE"));
 		model.addAttribute("rewardNum", rewardNum);
+		model.addAttribute("zipcode", user.get("ZIPCODE"));
+		model.addAttribute("address1", user.get("ADDRESS1"));
+		model.addAttribute("address2", user.get("ADDRESS2"));
+		model.addAttribute("city", user.get("CITY"));
+		model.addAttribute("region", user.get("REGION"));
+		model.addAttribute("country", user.get("COUNTRY"));
+		
 		Map<String, Object> rewardMap = campaignService.getRewards(campaignName, rewardNum);
 		model.addAttribute("reward", rewardMap);
+		
 		return "payment";
 	}
+	
+	
 }
