@@ -74,9 +74,9 @@
 														<a href="<c:url value='/logout'/>">Log out</a>
 													</li>
 												</sec:authorize>
-												<li><a href="/kwaveweb/?lang=ko" class="btn btn-default btn-sm">Korean</a></li>
-												<li><a href="/kwaveweb/?lang=en" class="btn btn-default btn-sm">English</a></li>
-												<li><a href="/kwaveweb/?lang=ch" class="btn btn-default btn-sm">Chinese</a></li>
+												<a href="/kwaveweb/?lang=ko" class="btn btn-default btn-sm">Korean</a>
+												<a href="/kwaveweb/?lang=en" class="btn btn-default btn-sm">English</a>
+												<a href="/kwaveweb/?lang=ch" class="btn btn-default btn-sm">Chinese</a>
 											</ul>
 										</div>
 									</div>

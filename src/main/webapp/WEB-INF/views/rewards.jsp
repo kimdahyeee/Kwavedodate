@@ -35,7 +35,7 @@
 											<c:set var="current" value="${rewards.rewardCurrentCnt}"/>
 											<c:choose>
 												<c:when test="${current == 0}">
-													<a class="btn btn-lg btn-danger" style="width: 100%" disabled><strong> donate $${rewards.rewardAmount } </strong></a>
+													<a class="btn btn-lg btn-danger" style="width: 100%" disabled><strong> sold out </strong></a>
 												</c:when>
 												<c:otherwise>
 													<a href="<c:url value='/payments/${rewards.campaignName}/reward/${rewards.rewardNum}' />" class="btn btn-lg btn-danger" style="width: 100%"><strong> donate $${rewards.rewardAmount } </strong></a>

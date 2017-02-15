@@ -26,8 +26,6 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 
-		System.out.println();
-
 		ObjectMapper om = new ObjectMapper();
 
 		Map<String, Object> map = new HashMap<String, Object>();

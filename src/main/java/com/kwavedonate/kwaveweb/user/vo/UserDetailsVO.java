@@ -24,7 +24,6 @@ public class UserDetailsVO extends User {
 			boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities,
 			String user_name, String userNation, String phone, String zipCode, String address1, String address2,
 			String city, String region, String country) {
-		// TODO Auto-generated constructor stub
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.user_name = user_name;
 		this.userNation = userNation;

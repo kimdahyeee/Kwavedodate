@@ -1,5 +1,6 @@
 package com.kwavedonate.kwaveweb;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +67,10 @@ public class PaymentsController {
 		model.addAttribute("userName", user.get("USERNAME"));
 		model.addAttribute("userPhone", user.get("PHONE"));
 		model.addAttribute("rewardNum", rewardNum);
-		Map<String, Object> rewardMap = campaignService.getRewards(campaignName, rewardNum);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("campaignName", campaignName);
+		param.put("rewardNum", rewardNum);
+		Map<String, Object> rewardMap = campaignService.getRewards(param);
 		model.addAttribute("reward", rewardMap);
 		return "payment";
 	}

@@ -8,7 +8,6 @@ if($("#validateLogin").length>0) {
         submitHandler: function(form) {   
             // 데이터 베이스에 저장 ajax 사용
             $.ajax({
-                
             	type: "POST",
                 url: '<c:url value="j_spring_security_check"/>',
                 data: {
@@ -65,9 +64,7 @@ if($("#validateLogin").length>0) {
     });
 }
 </script>
-
-
-<div class="main-container">
+		<div class="main-container">
 				<div class="container">
 					<div class="row">
 						<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
@@ -103,7 +100,7 @@ if($("#validateLogin").length>0) {
 
 									<div class="form-group">
 										<div class="col-sm-12">							
-											<a id="facebookLoginBtn" class="btn square btn-primary" href="/kwaveweb/facebookLogin" style="width: 100%;">
+											<a id="facebookLoginBtn" class="btn square btn-primary" style="width: 100%;">
 												<i class="fa fa-facebook"></i> facebook login
 											</a>
 										</div>
