@@ -35,14 +35,12 @@ public class UserController {
 	
 	private String check="check";
 
-
 	@Autowired
 	private JavaMailSender mailSender;
 	
 	@Resource(name = "userDaoService")
 	private UserDaoService dao;
 
-	
 	@Resource(name = "bcryptEncoder")
 	private BcryptEncoder encoder;
 
@@ -257,7 +255,6 @@ public class UserController {
 		return hashmap;
 	}
 	
-	
 	// userEmail은 암호화, 복호화를 사용해야함, 현재는 bcrypt암호화 때문에 복호화가 진행되지 않음. 비교만 가능
 	@ResponseBody
 	@RequestMapping(value="/sendLink", method=RequestMethod.POST)
@@ -291,13 +288,8 @@ public class UserController {
 		} else {
 			result.put("KEY", "FAIL");
 		}
-	
-		
 		return result;
 	}
-	
-	
-	
 
 	@RequestMapping(value="/pwdService", method=RequestMethod.GET)
 	public String pwdService(HttpServletRequest request, Model model) {
@@ -339,6 +331,13 @@ public class UserController {
 		
 	}
 	
+	@RequestMapping(value="/facebookLogin", method=RequestMethod.POST)
+	public String FacebookLogin(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName){
+		System.out.println("usermail: " +userEmail);
+		System.out.println("username: " +userName);
+		
+		return "/";
+	}
 	/*
 	 * 결제관련 컨트롤러
 	 */

@@ -1,5 +1,6 @@
 package com.kwavedonate.kwaveweb;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +27,8 @@ public class PaymentsController {
 	@Resource(name = "userDaoService")
 	private UserDaoService userDao;
 	/**
-	 * 하하하
-	 * enter now������ �� rewardȭ��
+	 * ������
+	 * enter now占쏙옙占쏙옙占쏙옙 占쏙옙 reward화占쏙옙
 	 * @param campaignName
 	 * @param model
 	 * @return
@@ -40,7 +41,7 @@ public class PaymentsController {
 	}
 	
 	/**
-	 * reward ���� ���� ȭ��
+	 * reward 占쏙옙占쏙옙 占쏙옙占쏙옙 화占쏙옙
 	 * @param campaignName
 	 * @return
 	 */
@@ -56,7 +57,7 @@ public class PaymentsController {
 	}
 	
 	/**
-	 * reward���ý� ����ȭ��
+	 * reward占쏙옙占시쏙옙 占쏙옙占쏙옙화占쏙옙
 	 */
 	@RequestMapping(value="/{campaignName}/reward/{rewardNum}")
 	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model){
@@ -73,8 +74,10 @@ public class PaymentsController {
 		model.addAttribute("city", user.get("CITY"));
 		model.addAttribute("region", user.get("REGION"));
 		model.addAttribute("country", user.get("COUNTRY"));
-		
-		Map<String, Object> rewardMap = campaignService.getRewards(campaignName, rewardNum);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("campaignName", campaignName);
+		param.put("rewardNum", rewardNum);
+		Map<String, Object> rewardMap = campaignService.getRewards(param);
 		model.addAttribute("reward", rewardMap);
 		
 		return "payment";

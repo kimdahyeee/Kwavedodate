@@ -10,6 +10,7 @@
 			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 			
 	<context:property-placeholder location="/resources/*.properties" /> 
+	
 	<!-- Oracle DataBase -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driver}" />
@@ -25,19 +26,12 @@
 		<property name="mapperLocations" value="classpath:sqlmap/*/*.xml"/>
 	</bean>
 	
-	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
  		<property name="dataSource" ref="dataSource"/>
 	</bean>
-
  
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
  		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean> 
-	
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.kwavedonate.kwaveweb.campaign.service"/>
-    </bean>
-
 </beans>

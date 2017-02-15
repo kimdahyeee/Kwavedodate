@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kwavedonate.kwaveweb.campaign.service.CampaignMapper">
-
+<mapper namespace="campaign">
 	<resultMap id="mainCampaign" type="hashmap">
 		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
 		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
@@ -74,13 +73,13 @@
 	]]>
 	</select>
 	
-	<select id="selectRewards" resultMap="rewardsPayment">
+	<select id="selectRewards" parameterType="hashmap" resultMap="rewardsPayment">
 	SELECT
 		REWARDSUBJECT,
 		REWARDIMG,
 		REWARDAMOUNT
 	FROM REWARDS
-	WHERE REWARDNUM=${rewardNum} AND CAMPAIGNNAME='${campaignName}'
+	WHERE REWARDNUM=#{rewardNum} AND CAMPAIGNNAME=#{campaignName}
 	</select>
 	
 	<select id="detailCampaigns" resultMap="allCampaings">
@@ -98,7 +97,7 @@
 		CAMPAIGNIMG as cImg,
 		TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as cDueToSys
 	FROM CAMPAIGNS
-   	WHERE CAMPAIGNNAME = '${campaignName}'
+   	WHERE CAMPAIGNNAME = #{campaignName}
 	</select>
 	
 	<select id="detailRewards" resultMap="allRewards">
@@ -112,7 +111,7 @@
 		REWARDCONTENTS as rContents,
 		REWARDIMG as rImg
 	FROM REWARDS
-    WHERE CAMPAIGNNAME = '${campaignName}'
+    WHERE CAMPAIGNNAME = #{campaignName}
 	</select>
 	
 </mapper>

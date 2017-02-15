@@ -27,9 +27,17 @@ $(document).ready(function(){
 	$("#facebookLoginBtn").click(function(event){
 		FB.getLoginStatus(function(response) {
 			 FB.login(function(response) {
-
 			  if (response.status === 'connected') {
 			    console.log(response.authResponse.accessToken);
+			    FB.api('/me', {fields: 'name,email'}, function(user){
+			    	if(user.email == null){
+			    		alert("이메일 정보가 누락된 sns 계정입니다. 일반 회원가입을 해주시길 바랍니다.");
+			    		location.replace("/kwaveweb/signin");
+			    	}else{
+			    		$.post("http://localhost:8181/kwaveweb/facebookLogin", {"userEmail" : user.email, "userName" : user.name});
+			    		location.replace("/kwaveweb");
+			    	}
+			    });
 			  }
 			},{scope: 'public_profile, email'});
 		});

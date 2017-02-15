@@ -58,7 +58,6 @@ public class HomeController {
 		return "main";
 	}
 
-
 	/* about us ÆäÀÌÁö */
 	@RequestMapping("/aboutUs")
 	public String aboutUs() {
