@@ -69,19 +69,11 @@
 													<li class="">
 														<a href="<c:url value='/myAccount'/>">My account</a>
 													</li>
-													<li class="">
-														<a href="<c:url value='/logout'/>">Log out</a>
-													</li>
 												</sec:authorize>
-<<<<<<< HEAD
-												<a href="/kwaveweb/?lang=ko" class="btn btn-default btn-sm">Korean</a>
-												<a href="/kwaveweb/?lang=en" class="btn btn-default btn-sm">English</a>
-												<a href="/kwaveweb/?lang=ch" class="btn btn-default btn-sm">Chinese</a>
-=======
+
 												<a href="<c:url value='/?lang=ko'/>" class="btn btn-default btn-sm">Korean</a>
 												<a href="<c:url value='/?lang=en'/>" class="btn btn-default btn-sm">English</a>
 												<a href="<c:url value='/?lang=ch'/>" class="btn btn-default btn-sm">Chinese</a>
->>>>>>> 9924b874f858bf81861e745cbdf76d71d4c1f1f0
 											</ul>
 										</div>
 									</div>
@@ -121,9 +113,6 @@
 														<sec:authorize access="isAuthenticated()">
 															<li class="">
 																<a href="<c:url value='/myAccount'/>">My account</a>
-															</li>
-															<li class="">
-																<a href="<c:url value='/logout'/>">Log out</a>
 															</li>
 														</sec:authorize>
 														<li class="header-top-dropdown">

@@ -30,11 +30,12 @@
 												<div class="image-box style-2 mb-20 bordered light-gray-bg">
 													<div class="overlay-container overlay-visible">
 														<span class="campaign-badge"><i>${currentList[status.index].campaignDueDate}</i></span>
-														<img src="${currentList[status.index].campaignImg}" alt="">
+														<img src="${currentList[status.index].campaignImg}" />
+														<a class="overlay-link" href="<c:url value='/campaigns/${currentList[status.index].campaignName}' />"></a>
 													</div>
 													<div class="body">
 														<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-														<p class="ellipsis">${currentList[status.index].campaignSubject}</p>
+														<h4 class="ellipsis"><strong>${currentList[status.index].campaignSubject}</strong></h4>
 														<label></label>
 														<div class="btn-learn-more">
 															<a class="text-info btn-md-link" href="<c:url value='/campaigns/${currentList[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
@@ -55,11 +56,12 @@
 									<div class="col-sm-6">
 										<div class="image-box style-2 mb-20 bordered light-gray-bg">
 											<div class="overlay-container overlay-visible">
-												<img src="${recentlyList[status.index].campaignImg}" alt="">
+												<img src="${recentlyList[status.index].campaignImg}"/>
+												<a class="overlay-link" href="<c:url value='/campaigns/${recentlyList[status.index].campaignName}' />"></a>
 											</div>
 											<div class="body">
 												<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>
-												<p class="ellipsis">${recentlyList[status.index].campaignSubject}</p>
+												<h4 class="ellipsis"><strong>${recentlyList[status.index].campaignSubject}</strong></h4>
 												<label></label>
 												<div class="btn-learn-more">
 													<a class="text-info btn-md-link" href="<c:url value='/campaigns/${recentlyList[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>

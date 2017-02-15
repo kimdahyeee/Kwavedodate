@@ -8,15 +8,18 @@
 				<ul class="nav nav-pills nav-justified" role="tablist">
 					<li class="active">
 						<a href="#history" role="tab" data-toggle="tab" title="images">
-						<h4><strong>History</strong></h4></a>
+							<h4><strong>History</strong></h4>
+						</a>
 					</li>
 					<li>
 						<a href="#yourInfo" role="tab" data-toggle="tab" title="video">
-						<h4><strong>Your Info</strong></h4></a>
+							<h4><strong>Your Info</strong></h4>
+						</a>
 					</li>
 					<li>
-						<a href="#changePassword" role="tab" data-toggle="tab" title="text"><h4>
-						<strong>Change Password</strong></h4></a>
+						<a href="#changePassword" role="tab" data-toggle="tab" title="text">
+							<h4><strong>Change Password</strong></h4>
+						</a>
 					</li>
 				</ul>
 
@@ -31,7 +34,6 @@
 										<th>Campaigns</th>
 										<th>Amount</th>
 										<th>Date</th>
-										<th>Track Delivery</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -46,7 +48,7 @@
 										</td>
 										<td>$200</td>
 										<td>2017-01-26 20:28</td>
-										<td class="yet">Yet</td>
+										
 									</tr>
 									<tr>
 										<!-- ììì¦ ì¡°í íì´ì§ë¡ href -->
@@ -59,7 +61,7 @@
 										</td>
 										<td>$400</td>
 										<td>2017-01-10 10:30</td>
-										<td class="delivering">Delivering</td>
+										
 									</tr>
 									<tr>
 										<!-- ììì¦ ì¡°í íì´ì§ë¡ href -->
@@ -72,7 +74,7 @@
 										</td>
 										<td>$300</td>
 										<td>2016-12-20 14:20</td>
-										<td class="complete">Complete</td>
+										
 									</tr>
 								</tbody>
 							</table>
@@ -113,7 +115,7 @@
 											</div>
 											<div class="form-group has-feedback">
 												<div class="col-sm-12">
-													<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" value='${phone}' required> 
+													<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" value='${phone}'/> 
 														<i class="fa fa-mobile form-control-feedback fa-lg"></i>
 												</div>
 											</div>
@@ -123,7 +125,7 @@
 														required>
 														<option value="KOR">KOREAN</option>
 														<option value="ENG" selected>ENGLISH</option>
-														<!-- <option value="CHI">CHINESE</option> -->
+														<option value="CHI">CHINESE</option>
 													</select>
 												</div>
 											</div>
@@ -136,41 +138,52 @@
 								</div>
 							</div>
 						</div>
-						<br/> <br/> 
-						<label class="col-sm-3 control-label">User Name: </label>
-						<div class="col-sm-9">
-							<p>${username}</p>
+						<br/><br/> 
+						
+						<div class="col-xs-12 col-sm-12">
+							<label class="col-xs-4 col-sm-3 control-label">User Name: </label>
+							<div class="col-xs-8 col-sm-9 control-label">
+								<p style="display: inline;">${username}</p>
+								<a class="text-warning btn-md-link" href="<c:url value='/logout'/>">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a><br>
+							</div>
 						</div>
+						
+						<div class="col-xs-12 col-sm-12 mt-5">
+							<label class="col-xs-4  col-sm-3 control-label">Email: </label>
+							<div class="col-xs-8 col-sm-9">
+								<p>
+									<sec:authentication property="principal.username" />
+								<p>
+							</div>
+						</div>
+						
 
-						<label class="col-sm-3 control-label">Email: </label>
-						<div class="col-sm-9">
-							<p>
-								<sec:authentication property="principal.username" />
-							<p>
+						<div class="col-xs-12 col-sm-12 mt-5">
+							<label class="col-xs-4  col-sm-3 control-label">Phone: </label>
+							<div class="col-xs-8 col-sm-9">
+								<!-- <p><sec:authentication property="principal.phone"/><p> -->
+								<p>${phone}</p>
+							</div>
 						</div>
-
-						<label class="col-sm-3 control-label">Phone: </label>
-						<div class="col-sm-9">
-							<!-- <p><sec:authentication property="principal.phone"/><p> -->
-							<p>${phone}</p>
+						
+						<div class="col-xs-12 col-sm-12 mt-5">
+							<label class="col-xs-4  col-sm-3 control-label">Nation: </label>
+							<div class="col-xs-8 col-sm-9">
+								<p>${usernation}</p>
+							</div>
 						</div>
-
-						<label class="col-sm-3 control-label">Nation: </label>
-						<div class="col-sm-9">
-							<p>${usernation}</p>
-						</div>
+						
 						<!-- pills margin-top (width에 따라서 다르게 설정하였음)-->
 						<div class="pills-space"></div>
 						
 						<!-- ================================================ -->
 						
 						<h3> Shipping Address: </h3>
-									<a class="text-info btn-md-link" data-toggle="modal" data-target="#updateShippingAddress" href="#">Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
-									<!-- SHIPPING ADDRESS CONTENTS -->
-							<div class="modal fade" id="updateShippingAddress" tabindex="-1" role="dialog" aria-labelledby="updateShippingAddressLabel" aria-hidden="true" action="#">
+								<a class="text-info btn-md-link" data-toggle="modal" data-target="#updateShippingAddress" href="#">Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
+								<!-- SHIPPING ADDRESS CONTENTS -->
+							<div class="modal fade" id="updateShippingAddress" tabindex="-1" role="dialog" aria-labelledby="updateShippingAddressLabel" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
-
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal">
 												<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
@@ -182,40 +195,141 @@
 											<div class="modal-body">
 												<div class="form-group has-feedback">
 													<div class="col-sm-12">
-														<input type="text" class="form-control postcodify_address" id="address1" name="address1" placeholder="Address" value='${address1}'> 
+														<input type="text" class="form-control postcodify_address" id="address1" name="address1" placeholder="Address" value='${address1}'/> 
 														<i class="fa fa-home form-control-feedback"></i>
 													</div>
 												</div>
 												<div class="form-group has-feedback">
 													<div class="col-sm-12">
-														<input type="text" class="form-control postcodify_details" id="address2" name="address2" placeholder="Address Detail" value='${address2}'>
+														<input type="text" class="form-control postcodify_details" id="address2" name="address2" placeholder="Address Detail" value='${address2}'/>
 														<i class="fa fa-paper-plane-o form-control-feedback"></i>
 													</div>
 												</div>
 												<div class="form-group has-feedback">
 													<div class="col-md-12">
-														<input type="text" class="form-control postcodify_postcode5" id="zipCode" name="zipCode" placeholder="Zip Code" value='${zipcode}'>
+														<input type="text" class="form-control postcodify_postcode5" id="zipCode" name="zipCode" placeholder="Zip Code" value='${zipcode}'/>
 														<i class="fa fa-list-alt form-control-feedback"></i>
 													</div>
 												</div>
 												<div class="form-group has-feedback">
 													<div class="col-sm-12">
-														<input type="text" class="form-control" id="city" name="city" placeholder="City" value='${city}'> 
+														<input type="text" class="form-control" id="city" name="city" placeholder="City" value='${city}'/> 
 														<i class="fa fa-tag form-control-feedback fa-lg"></i>
 													</div>
 												</div>
 												<div class="form-group has-feedback">
 													<div class="col-sm-12">
-														<input type="text" class="form-control" id="country" name="country" placeholder="Country" value='${country}'>
-														<i class="fa fa-tag form-control-feedback fa-lg"></i>
+														<input type="hidden" value='${country}'/>
+														<select class="form-control" id="country" name="country" required> 
+			                                                <option value="AL">Albania</option>
+			                                                <option value="DZ">Algeria</option>
+			                                                <option value="AR">Argentina</option>
+			                                                <option value="AM">Armenia</option>
+			                                                <option value="AU">Australia</option>
+			                                                <option value="AT">Austria</option>
+			                                                <option value="AZ">Azerbaijan</option>
+			                                                <option value="BH">Bahrain</option>
+			                                                <option value="BD">Bangladesh</option>
+			                                                <option value="BY">Belarus</option>
+			                                                <option value="BE">Belgium</option>
+			                                                <option value="BT">Bhutan</option>
+			                                                <option value="BA">Bosnia and Herzegovina</option>
+			                                                <option value="BW">Botswana</option>
+			                                                <option value="BR">Brazil</option>
+			                                                <option value="BN">Brunei Darussalam</option>
+			                                                <option value="BG">Bulgaria</option>
+			                                                <option value="KH">Cambodia</option>
+			                                                <option value="CA">Canada</option>
+			                                                <option value="CV">Cape Verde</option>
+			                                                <option value="CL">Chile</option>
+			                                                <option value="CN">China</option>
+			                                                <option value="CR">Costa Rica</option>
+			                                                <option value="HR">Croatia</option>
+			                                                <option value="CU">Cuba</option>
+			                                                <option value="CY">Cyprus</option>
+			                                                <option value="CZ">Czech Republic</option>
+			                                                <option value="DK">Denmark</option>
+			                                                <option value="DJ">Djibouti</option>
+			                                                <option value="DM">Dominica</option>
+			                                                <option value="EC">Ecuador</option>
+			                                                <option value="EG">Egypt</option>
+			                                                <option value="EE">Estonia</option>
+			                                                <option value="ET">Ethiopia</option>
+			                                                <option value="FJ">Fiji</option>
+			                                                <option value="FI">Finland</option>
+			                                                <option value="FR">France</option>
+			                                                <option value="GE">Georgia</option>
+			                                                <option value="DE">Germany</option>
+			                                                <option value="GR">Greece</option>
+			                                                <option value="HK">Hong Kong</option>
+			                                                <option value="HU">Hungary</option>
+			                                                <option value="IN">India</option>
+			                                                <option value="ID">Indonesia</option>
+			                                                <option value="IR">Iran, Islamic Republic of</option>
+			                                                <option value="IE">Ireland</option>
+			                                                <option value="IL">Israel</option>
+			                                                <option value="IT">Italy</option>
+			                                                <option value="JP">Japan</option>
+			                                                <option value="JO">Jordan</option>
+			                                                <option value="KZ">Kazakhstan</option>
+			                                                <option value="KE">Kenya</option>
+			                                                <option value="KR">Korea</option>
+			                                                <option value="LA">Lao People's Democratic Republic</option>
+			                                                <option value="LV">Latvia</option>
+			                                                <option value="LU">Luxembourg</option>
+			                                                <option value="MO">Macao</option>
+			                                                <option value="MK">Macedonia, the former Yugoslav Republic of</option>
+			                                                <option value="MY">Malaysia</option>
+			                                                <option value="MV">Maldives</option>
+			                                                <option value="MU">Mauritius</option>
+			                                                <option value="MX">Mexico</option>
+			                                                <option value="MN">Mongolia</option>
+			                                                <option value="MA">Morocco</option>
+			                                                <option value="MZ">Mozambique</option>
+			                                                <option value="MM">Myanmar</option>
+			                                                <option value="NP">Nepal</option>
+			                                                <option value="NL">Netherlands</option>
+			                                                <option value="NZ">New Zealand</option>
+			                                                <option value="NG">Nigeria</option>
+			                                                <option value="NO">Norway</option>
+			                                                <option value="OM">Oman</option>
+			                                                <option value="PK">Pakistan</option>
+			                                                <option value="PA">Panama</option>
+			                                                <option value="PE">Peru</option>
+			                                                <option value="PH">Philippines</option>
+			                                                <option value="PL">Poland</option>
+			                                                <option value="PT">Portugal</option>
+			                                                <option value="QA">Qatar</option>
+			                                                <option value="RO">Romania</option>
+			                                                <option value="RU">Russian Federation</option>
+			                                                <option value="RW">Rwanda</option>
+			                                                <option value="SA">Saudi Arabia</option>
+			                                                <option value="SG">Singapore</option>
+			                                                <option value="SK">Slovakia</option>
+			                                                <option value="SI">Slovenia</option>
+			                                                <option value="ES">Spain</option>
+			                                                <option value="LK">Sri Lanka</option>
+			                                                <option value="SE">Sweden</option>
+			                                                <option value="CH">Switzerland</option>
+			                                                <option value="TW">Taiwan</option>
+			                                                <option value="TZ">Tanzania, United Republic of</option>
+			                                                <option value="TH">Thailand</option>
+			                                                <option value="TN">Tunisia</option>
+			                                                <option value="TR">Turkey</option>
+			                                                <option value="UA">Ukraine</option>
+			                                                <option value="AE">United Arab Emirates</option>
+			                                                <option value="GB">United Kingdom</option>
+			                                                <option value="US">United States</option>
+			                                                <option value="UZ">Uzbekistan</option>
+			                                                <option value="VE">Venezuela</option>
+			                                                <option value="VN">Viet Nam</option>
+			                                                <option value="ZM">Zambia</option>
+														</select>
 													</div>
 												</div>
 												<div class="form-group has-feedback last-form">
 													<div class="col-sm-12">
-														<input type="text" class="form-control" id="region"
-															name="region" placeholder="State/Region/Province"
-															value='${region}'> <i
-															class="fa fa-tags form-control-feedback fa-lg"></i>
+														<input type="text" class="form-control" id="region" name="region" placeholder="State/Region/Province" value='${region}'/> <i class="fa fa-tags form-control-feedback fa-lg"></i>
 													</div>
 												</div>
 											</div>
@@ -228,34 +342,49 @@
 								</div>
 							</div>
 							<br/><br/> 
-							<label class="col-sm-3 control-label">Address: </label>
-							<div class="col-sm-9">
-								<p>${address1}<p>
+							
+							
+							<div class="col-xs-12 col-sm-12">
+								<label class="col-xs-4  col-sm-3 control-label">Address: </label>
+								<div class="col-xs-8 col-sm-9">
+									<p>${address1}<p>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 col-sm-12 mt-5">
+								<label class="col-xs-4  col-sm-3 control-label">Address Detail: </label>
+								<div class="col-xs-8 col-sm-9">
+									<p>${address2}<p>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 col-sm-12 mt-5">
+								<label class="col-xs-4  col-sm-3 control-label">Zip code: </label>
+								<div class="col-xs-8 col-sm-9">
+									<p>${zipcode}<p>
+								</div>
 							</div>
 
-							<label class="col-sm-3 control-label">Address Detail: </label>
-							<div class="col-sm-9">
-								<p>${address2}<p>
+							<div class="col-xs-12 col-sm-12 mt-5">
+								<label class="col-xs-4  col-sm-3 control-label">City: </label>
+								<div class="col-xs-8 col-sm-9">
+									<p>${city}<p>
+								</div>
 							</div>
 
-							<label class="col-sm-3 control-label">Zip code: </label>
-							<div class="col-sm-9">
-								<p>${zipcode}<p>
+							<div class="col-xs-12 col-sm-12 mt-5">
+								<label class="col-xs-4  col-sm-3 control-label">Country: </label>
+								<div class="col-xs-8 col-sm-9">
+									<p>${country}<p>
+								</div>
 							</div>
-
-							<!-- 여기서부터는 해외인 경우에만 적용 -->
-							<label class="col-sm-3 control-label">City: </label>
-							<div class="col-sm-9">
-								<p>${city}<p>
-							</div>
-							<label class="col-sm-3 control-label">Country: </label>
-							<div class="col-sm-9">
-								<p>${country}<p>
-							</div>
-							<label class="col-sm-3 control-label">Region: </label>
-							<div class="col-sm-9">
-								<p>${region}<p>
-							</div>
+							
+							<div class="col-xs-12 col-sm-12 mt-5">
+								<label class="col-xs-4  col-sm-3 control-label">Region: </label>
+								<div class="col-xs-8 col-sm-9">
+									<p>${region}<p>
+								</div>
+							</div>	
 						</div>
 
 						<!-- #CHANGE PASSWORD -->
@@ -301,30 +430,30 @@
 							</div>
 
 							<!-- SNS 로그인인 경우 비밀번호 변경 불가능 UI -->
-									<div class="main-container">
-										<div class="container">
-											<div class="row">
-												<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-													<div class="form-block center-block p-30">
-														<h1>Sorry!</h1>
-														
-														<form class="form-horizontal" id="validateChangePassword">
-															<div class="form-group has-feedback">
-																<div class="col-sm-12">
-																	<p>You can't change password. <br/>
-																	Because you log in with SNS!</p>
-																</div>
-															</div>
-														</form>
+							<div class="main-container">
+								<div class="container">
+									<div class="row">
+										<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
+											<div class="form-block center-block p-30">
+												<h1>Sorry!</h1>
+												
+												<form class="form-horizontal" id="validateChangePassword">
+													<div class="form-group has-feedback">
+														<div class="col-sm-12">
+															<p>You can't change password. <br/>
+															Because you log in with SNS!</p>
+														</div>
 													</div>
-												</div>
+												</form>
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
+
 						</div>
+					</div>
+				</div>
 
 					</div>
 				</div>

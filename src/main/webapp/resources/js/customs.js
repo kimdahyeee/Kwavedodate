@@ -228,24 +228,21 @@ $(document).ready(function() {
         });
     }
 
-    /*// 로그인 validation
+    // 로그인 validation
     if($("#validateLogin").length>0) {
         $("#validateLogin").validate({
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
-                    
                 	type: "POST",
-                    url: '<c:url value="j_spring_security_check"/>',
+                    url: "/kwaveweb/j_spring_security_check",
                     data: {
-                        "userEmail": $("#userEmail").val(),
-                        "userPassword": $("#userPassword").val()
+                        "userEmail": $("#userEmail").val()
                     },
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
                     	 location.href="/"
-                        
                     }
                 });
             },
@@ -284,7 +281,7 @@ $(document).ready(function() {
                 $(element).siblings("label").removeClass("hide");
             }
         });
-    }*/
+    }
 
     // 비밀번호 찾기 validation
     if($("#validateFindPasswordSend").length>0) {
@@ -546,9 +543,10 @@ $(document).ready(function() {
             }
         });
     }
-
+    
  // 배송정보 validation
     if($("#validateDeliveryInfo").length>0) {
+    	$("#country").val($("#country").val()).attr("selected", "selected");
         $("#validateDeliveryInfo").validate({
             submitHandler: function(form) {   
                 // Iamport 결제 모듈 연동
@@ -579,49 +577,6 @@ $(document).ready(function() {
             },
             onkeyup: false,
             onclick: false,
-            rules: {
-                //단순 입력이 되는 값에 한정함
-                //넘어오는 값들(ex. rewardNum, proejctName, rewardAmount, shippingAmount...)은 rules에 담지 않았음
-                
-                zipCode: {
-                    required: true
-                },
-                address1: {
-                    required: true
-                },
-                city: {
-                    required: true
-                },
-                region: {
-                    required: true
-                },
-                country: {
-                    required: true
-                },
-                shippingMethod: {
-                    required: true
-                }
-            },
-            messages: {
-                zipCode: {
-                    required: "Please enter your zip code number."
-                },
-                address1: {
-                    required: "Please enter your address."
-                },
-                city: {
-                    required: "Please enter your city."
-                },
-                region: {
-                    required: "Please enter your region."
-                },
-                country: {
-                    required: "Please select your country. This depend on shipping amount."
-                },
-                shippingMethod: {
-                    required: "Please enter your shipping method"
-                }
-            },
             errorElement: "span",
             highlight: function (element) {
                 $(element).parent().removeClass("has-success").addClass("has-error");

@@ -1492,6 +1492,9 @@ h5 + .separator {
 .p-20 {
   padding: 20px;
 }
+.p-0 {
+	padding: 0;
+}
 .p-30 {
   padding: 30px;
 }
@@ -1522,6 +1525,9 @@ h5 + .separator {
   padding-top: 40px;
   padding-bottom: 40px;
 }
+.m-0 {
+  margin: 0;
+}
 .mt-5 {
   margin-top: 5px;
 }
@@ -1533,6 +1539,9 @@ h5 + .separator {
 }
 .mb-10 {
   margin-bottom: 10px;
+}
+.mt-15 {
+	margin-top:15px;
 }
 .mt-20 {
   margin-top: 20px;
