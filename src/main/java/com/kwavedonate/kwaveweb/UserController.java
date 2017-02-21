@@ -9,23 +9,12 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.cache.TransactionalCacheManager;
-import org.apache.ibatis.session.SqlSession;
-import org.mybatis.spring.MyBatisSystemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.config.TxNamespaceHandler;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,18 +24,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
 import com.kwavedonate.kwaveweb.core.util.GetIpAddress;
 import com.kwavedonate.kwaveweb.user.dao.UserDaoService;
-import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
+import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 
 @Controller
 public class UserController {
 
-	private DataSourceTransactionManager transactionManager;
+
 	
 	
 	private String check="check";
-	
-	@Autowired
-	private SqlSession sqlSession;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -104,7 +90,7 @@ public class UserController {
 	 */
 	@RequestMapping("/myAccount")
 	public String myAccount(Model model, HttpServletRequest request, Authentication authentication) {
-		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		
 		// ModelAndView modelAndView = new ModelAndView();
@@ -197,7 +183,7 @@ public class UserController {
 			@RequestParam("address1") String address1, @RequestParam("address2") String address2,
 			@RequestParam("zipCode") String zipCode, @RequestParam("city") String city,
 			@RequestParam("country") String country, @RequestParam("region") String region) {
-		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
@@ -234,7 +220,7 @@ public class UserController {
 	public HashMap<String, Object> modifyPassword(Authentication authentication,
 			@RequestParam("currentPassword") String currentPassword, @RequestParam("newPassword") String newPassword) {
 		
-		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		int result = 0;
 		Map<String, Object> user = dao.selectPassword(userEmail);

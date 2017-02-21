@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.userdetails.User;
 
-public class UserDetailsVO extends User {
+public class UserDetailsVo extends User {
 
 	private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
@@ -19,7 +19,7 @@ public class UserDetailsVO extends User {
 	private String city;
 	private String region;
 	private String country;
-	public UserDetailsVO(String username, String password, 
+	public UserDetailsVo(String username, String password, 
 			boolean enabled, 				// true
 			boolean accountNonExpired,		// true
 			boolean credentialsNonExpired,  // true

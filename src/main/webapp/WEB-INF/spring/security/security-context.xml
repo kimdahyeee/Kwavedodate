@@ -8,44 +8,41 @@
 	
 	<!-- resources요청에 대해 security 처리하지 않겠다 -->
 	<security:http pattern="/resources/**" security="none"/>
-	
 	<security:http auto-config="true" use-expressions="true" create-session="never">
-	
 		<!-- 페이지 권한 설정 -->
-		<security:intercept-url pattern="/login" access="anonymous"/>
-		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-		<security:intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI',
-																	'ROLE_ADMIN')"/>
-		<security:intercept-url pattern="/payments/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_USER_KOR', 'ROLE_USER_ENG')"/>
-
-		<security:intercept-url pattern="/**" access="permitAll"/>
-		
+		<security:intercept-url 
+			pattern="/login" access="anonymous"/>
+		<security:intercept-url 
+			pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url 
+			pattern="/user/**" 
+			access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI',	'ROLE_ADMIN')"/>
+		<security:intercept-url 
+			pattern="/payments/**" 
+			access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_USER_KOR', 'ROLE_USER_ENG')"/>
+		<security:intercept-url 
+			pattern="/**" access="permitAll"/>
 		<!-- custom 로그인 폼 -->
-		<security:form-login login-page="/login"
-							 username-parameter="userEmail"
-							 password-parameter="userPassword"
-							 login-processing-url="/j_spring_security_check"
-							 authentication-success-handler-ref="userLoginSuccessHandler"
-							 authentication-failure-handler-ref="userLoginFailureHandler"
-							 authentication-failure-url="/loginfail"
-							 always-use-default-target="false"/>
-		
+		<security:form-login 
+			login-page="/login"
+			username-parameter="userEmail"
+			password-parameter="userPassword"
+			login-processing-url="/j_spring_security_check"
+			authentication-success-handler-ref="userLoginSuccessHandler"
+			authentication-failure-handler-ref="userLoginFailureHandler"
+			authentication-failure-url="/loginfail"
+			always-use-default-target="false"/>
 		<security:session-management>
 			<security:concurrency-control max-sessions="1" expired-url="/"/>
 		</security:session-management>
-		
-		<security:logout delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" 
-						 logout-success-url="/" 
-						 logout-url="/logout" 
-						 invalidate-session="true"/>
-		
+		<security:logout 
+			delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" 
+			 logout-success-url="/" 
+			 logout-url="/logout" 
+			 invalidate-session="true"/>
 		<security:access-denied-handler ref="userDeniedHandler"/>
-		
 		<!-- 자동로그인 (Remember-me) -->
 		<security:remember-me remember-me-parameter="_spring_security_remember_me" key="keykeykey" token-validity-seconds="2419200"/>
-		
-		<!-- CSRF 공격 방어  <csrf/> -->
-		
 	</security:http>
 	
 	<bean id="userService" class="com.kwavedonate.kwaveweb.user.service.UserAuthenticationService">

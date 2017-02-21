@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
+import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 
 public class UserAuthenticationService implements UserDetailsService {
 
@@ -42,7 +42,7 @@ public class UserAuthenticationService implements UserDetailsService {
 		List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
 		gas.add(new SimpleGrantedAuthority(user.get("AUTHORITY").toString()));
 
-			return new UserDetailsVO(user.get("USERNAME").toString(), user.get("PASSWORD").toString(), true, true, true,
+			return new UserDetailsVo(user.get("USERNAME").toString(), user.get("PASSWORD").toString(), true, true, true,
 					true, gas, user.get("USER_NAME").toString());
 
 
