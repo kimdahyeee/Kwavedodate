@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
 import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 import com.kwavedonate.kwaveweb.user.dao.UserDaoService;
-import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
+import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 
 @Controller
 @RequestMapping(value="/payments")
@@ -28,7 +28,7 @@ public class PaymentsController {
 	private UserDaoService userService;
 	
 	/**
-	 * enter now 누른 후 reward 페이지
+	 * enter now ��瑜� �� reward ���댁�
 	 * @param campaignName
 	 * @param model
 	 * @return
@@ -41,13 +41,13 @@ public class PaymentsController {
 	}
 	
 	/**
-	 * $10 결제 페이지
+	 * $10 寃곗�� ���댁�
 	 * @param campaignName
 	 * @return
 	 */
 	@RequestMapping("/{campaignName}")
 	public String paymentsView(@PathVariable("campaignName") String campaignName, Authentication authentication, Model model){
-		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		Map<String, Object> user = userService.selectUserAccount(userEmail);
 		model.addAttribute("user", user);
@@ -57,7 +57,7 @@ public class PaymentsController {
 	}
 	
 	/**
-	 *  reward 선택 후 결제 페이지
+	 *  reward ���� �� 寃곗�� ���댁�
 	 * @param campaignName
 	 * @param rewardNum
 	 * @param authentication
@@ -66,7 +66,7 @@ public class PaymentsController {
 	 */
 	@RequestMapping(value="/{campaignName}/reward/{rewardNum}")
 	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model){
-		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		Map<String, Object> user = userService.selectUserAccount(userEmail);
 		Map<String, Object> param = new HashMap<String, Object>();

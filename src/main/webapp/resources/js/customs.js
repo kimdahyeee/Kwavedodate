@@ -809,7 +809,17 @@ $(document).ready(function() {
     	$("#validatePaymentInfo").validate({
     		submitHandler: function(form) {
     			IMP.request_pay({
-    				
+    				pg : 'inicis', // version 1.1.0부터 지원.
+                    pay_method : $("#payment_method").val(),
+                    merchant_uid : 'merchant_' + new Date().getTime(),
+                    name : '주문명:KWAVE_D결제테스트',
+                    amount : $("#totalAmount").val(),
+                    buyer_email : $("#userEmail").val(),
+                    buyer_name : $("#userName").val(),
+                    buyer_tel : $("#phone").val(),
+                    buyer_addr : $("#address1").val(),
+                    buyer_postcode : '123-456',
+                    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
     			}, function(rsp) {
     				if(rsp.success) {
     					var msg = '결제가 완료되었습니다.';
@@ -973,7 +983,6 @@ $(document).ready(function() {
     	});
     }
 });
-
 
 
 /*
