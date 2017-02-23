@@ -844,6 +844,7 @@ $(document).ready(function() {
 	                            data: {
 	                            	 "imp_uid" : rsp.imp_uid,
 	                            	 "merchant_uid" : rsp.merchant_uid,
+	                            	 "receipt_url" : rsp.receipt_url,
 	
 	                                 "userEmail": $("#userEmail").val(),
 	                                 "campaignName" : $("#campaignName").val(),
@@ -852,8 +853,7 @@ $(document).ready(function() {
 	                                 "shippingAmount" : $("#shippingAmount").val(),
 	                                 "shippingMethod" : $("#shippingMethod").val(),
 	                                 "note" : $("#note").val(),
-	                                 
-	                                 "userName": $("#userName").val(),
+	                                 "country" : $("#country").val(),
 	                                 "phone": $("#phone").val(),
 	                            	 "address1": $("#address1").val(),
 	                                 "address2": $("#address2").val(),
@@ -875,6 +875,8 @@ $(document).ready(function() {
 	                            data: {
 	                            	 "imp_uid" : rsp.imp_uid,
 	                            	 "merchant_uid" : rsp.merchant_uid,
+	                            	 "receipt_url" : rsp.receipt_url,
+	                            	 
 	                                 "userEmail": $("#userEmail").val(),
 	                                 "campaignName" : $("#campaignName").val(),
 	                                 "rewardNum" : $("#rewardNum").val(),
@@ -888,7 +890,7 @@ $(document).ready(function() {
 	                                 "address2": $("#address2").val(),
 	                                 "zipCode": $("#zipCode").val(),
 	                                 "city" : $("#city").val(),
-	                                 "country" : $("#countryOp").val(),
+	                                 "country" : $("#country").val(),
 	                                 "region" : $("#region").val()
 	                            },
 	                            dataType: "json",

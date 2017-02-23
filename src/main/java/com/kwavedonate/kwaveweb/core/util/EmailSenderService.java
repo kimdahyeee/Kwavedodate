@@ -14,9 +14,9 @@ public class EmailSenderService {
 	
 	public void sendMail(String userEmail) {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setSubject("[Simple] Å×½ºÆ®");
-		message.setFrom("tantosuperb@gmail.com");
-		message.setText("½ÅÃÌ");
+		message.setSubject("[KWAVEDONATE] ");
+		message.setFrom("vvshinevv@kwavedonate.com");
+		message.setText("ï¿½ï¿½ï¿½ï¿½");
 		message.setTo(userEmail);
 		try {
 			mailSender.send(message);

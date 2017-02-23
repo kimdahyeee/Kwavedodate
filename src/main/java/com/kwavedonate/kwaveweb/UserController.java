@@ -34,7 +34,9 @@ import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 @Controller
 public class UserController {
 
+	@Autowired
 	private PlatformTransactionManager transactionManager;
+	
 	private String check="check";
 
 	@Autowired
@@ -47,13 +49,13 @@ public class UserController {
 	private BcryptEncoder encoder;
 
 	/*
-	 * È¸¿ø°¡ÀÔ ÆäÀÌÁö
+	 * È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
-		// IP È®ÀÎ		
+		// IP È®ï¿½ï¿½		
 		String ipc = GetIpAddress.getClientIP(request);
-		System.out.println("Web browser Á¤º¸ : " +ipc);
+		System.out.println("Web browser ï¿½ï¿½ï¿½ï¿½ : " +ipc);
 		
 		model.addAttribute("ipAddress", ipc);
 		
@@ -61,7 +63,7 @@ public class UserController {
 	}
 	
 	/*
-	 * ºñ¹Ð¹øÈ£ Ã£±â ÆäÀÌÁö
+	 * ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("/findPassword")
 	public String findpassword() {
@@ -69,7 +71,7 @@ public class UserController {
 	}
 	
 	/*
-	 * ¿¡·¯ ÆäÀÌÁö
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("/errorPage") 
 	public String errorPage() {
@@ -77,7 +79,7 @@ public class UserController {
 	}
 
 	/*
-	 * ±ÇÇÑ ¾øÀ» °æ¿ì ÀÌµ¿ÇÏ´Â ÆäÀÌÁö
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("/denied")
 	public String denied(Model model, Authentication auth, HttpServletRequest request) {
@@ -89,7 +91,7 @@ public class UserController {
 	}
 
 	/*
-	 * Á¤º¸ ¼öÁ¤ ÆäÀÌÁö
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("/myAccount")
 	public String myAccount(Model model, HttpServletRequest request, Authentication authentication) {
@@ -110,7 +112,7 @@ public class UserController {
 
 
 	/*
-	 * È¸¿ø °¡ÀÔ Controller
+	 * È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Controller
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
@@ -152,7 +154,7 @@ public class UserController {
 	}
 
 	/**
-	 * Áßº¹È®ÀÎ
+	 * ï¿½ßºï¿½È®ï¿½ï¿½
 	 */
 	@ResponseBody
 	@RequestMapping(value="/validateOk", method=RequestMethod.POST)
@@ -206,7 +208,7 @@ public class UserController {
 		return hashmap;
 	}
 	
-	// About You ¼öÁ¤
+	// About You ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value = "/modifyUser", method = RequestMethod.POST)
 	public HashMap<String, Object> modifyUser(@RequestParam("userName") String userName,
@@ -239,7 +241,7 @@ public class UserController {
 		return hashmap;
 	}
 
-	// Shipping Address ¼öÁ¤
+	// Shipping Address ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value = "/modifyAddress", method = RequestMethod.POST)
 	public HashMap<String, Object> modifyAddress(Authentication authentication,
@@ -277,7 +279,7 @@ public class UserController {
 		return hashmap;
 	}
 
-	// password º¯°æ
+	// password ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value="/modifyPassword", method=RequestMethod.POST)
 	public HashMap<String, Object> modifyPassword(Authentication authentication,
@@ -318,7 +320,7 @@ public class UserController {
 		return hashmap;
 	}
 	
-	// userEmailÀº ¾ÏÈ£È­, º¹È£È­¸¦ »ç¿ëÇØ¾ßÇÔ, ÇöÀç´Â bcrypt¾ÏÈ£È­ ¶§¹®¿¡ º¹È£È­°¡ ÁøÇàµÇÁö ¾ÊÀ½. ºñ±³¸¸ °¡´É
+	// userEmailï¿½ï¿½ ï¿½ï¿½È£È­, ï¿½ï¿½È£È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ bcryptï¿½ï¿½È£È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ñ±³¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value="/sendLink", method=RequestMethod.POST)
 	public Map<String, Object> sendLink (@RequestParam("userEmail")String userEmail) {
@@ -330,8 +332,8 @@ public class UserController {
 			String encEmail = encoder.encode(ue);
 			
 			System.out.println(encEmail);
-			String htmlContent = "<h1>¾Æ·¡ ÁÖ¼Ò¸¦ Å¬¸¯ÇÏ¿© ºñ¹Ð¹øÈ£¸¦ º¯°æÇÏ¼¼¿ä.</h1><br/>"
-					+ "<h3>¸µÅ©¿¡ Á¢¼ÓÇÑ ÈÄ ºñ¹Ð ¹øÈ£¸¦ º¯°æÇÏÁö ¾ÊÀ¸¸é ÀÌ¸ÞÀÏÀ» ´Ù½Ã Àü¼ÛÇØ¾ß ÇÕ´Ï´Ù.</h3>"
+			String htmlContent = "<h1>ï¿½Æ·ï¿½ ï¿½Ö¼Ò¸ï¿½ Å¬ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.</h1><br/>"
+					+ "<h3>ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.</h3>"
 					+ "http://localhost:8181/kwaveweb/pwdService?bep=" 
 					+ encEmail + "&ue=" + ue;
 			try {
@@ -339,7 +341,7 @@ public class UserController {
 				
 				message.setFrom(new InternetAddress("tantosuperb@gmail.com"));
 				message.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(userEmailExist.get("USEREMAIL").toString()));
-				message.setSubject("KWAVE DONATE ºñ¹Ð¹øÈ£ º¯°æ ¾È³»ÀÔ´Ï´Ù.");
+				message.setSubject("KWAVE DONATE ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½ ï¿½È³ï¿½ï¿½Ô´Ï´ï¿½.");
 				message.setText(htmlContent, "UTF-8", "html");
 				
 				mailSender.send(message);
@@ -367,7 +369,7 @@ public class UserController {
 				return "pwdService";
 				
 			} else {
-				System.out.println("¾ÈµÇ³×");
+				System.out.println("ï¿½ÈµÇ³ï¿½");
 				return "/errorPage";
 			}
 		} else {
@@ -402,7 +404,7 @@ public class UserController {
 		return "/";
 	}
 	/*
-	 * °áÁ¦°ü·Ã ÄÁÆ®·Ñ·¯
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
 	 */
 	@ResponseBody
 	@RequestMapping(value="insertDeliveryENG", method=RequestMethod.POST)
@@ -478,8 +480,9 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="insertDeliveryKOR", method=RequestMethod.POST)
 	public HashMap<String, Object> insertDeliveryKOR(
-			@RequestParam("imp_uid")String imp_uid, @RequestParam("merchant_uid")String merchant_uid,
-			@RequestParam("rewardAmount")String rewardAmount,
+			@RequestParam("imp_uid")String imp_uid, 
+			@RequestParam("merchant_uid")String merchant_uid, 
+			@RequestParam("receipt_url")String receipt_url,
 			@RequestParam("userEmail")String userEmail,
 			@RequestParam("campaignName")String campaignName,
 			@RequestParam("rewardNum")String rewardNum,
@@ -487,7 +490,7 @@ public class UserController {
 			@RequestParam("shippingAmount")String shippingAmount,
 			@RequestParam("shippingMethod")String shippingMethod,
 			@RequestParam("note")String note,
-			@RequestParam("userName")String userName,
+			@RequestParam("country")String country,
 			@RequestParam("phone")String phone,
 			@RequestParam("address1")String address1,
 			@RequestParam("address2")String address2,
@@ -500,17 +503,23 @@ public class UserController {
 		paramMap.put("merchant_uid", merchant_uid);
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("campaignName", campaignName);
-		paramMap.put("rewardAmount", Integer.parseInt(rewardAmount));
 		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
 		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
 		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
 		paramMap.put("shippingMethod", shippingMethod);
 		paramMap.put("note", note);
-		paramMap.put("userName", userName);
+		paramMap.put("city", "city");
+		paramMap.put("region", "region");
+		paramMap.put("country", country);
 		paramMap.put("phone", phone);
 		paramMap.put("address1", address1);
 		paramMap.put("address2", address2);
 		paramMap.put("zipCode", zipCode);
+		paramMap.put("receipt_url", receipt_url);
+		
+		System.out.println("imp_uid : " + receipt_url);
+		
+		
 		
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		
@@ -519,18 +528,22 @@ public class UserController {
 		
 		TransactionStatus status = transactionManager.getTransaction(def);
 		try {
-			resultD = dao.insertDelivery(paramMap);
+			System.out.println("tryë¬¸ ë“¤ì–´ì˜´");
 			resultP = dao.insertPayments(paramMap);
-			dao.updateCampaignsByPayment(paramMap);
-			dao.updaterewardsByPayment(paramMap);
+			resultD = dao.insertDelivery(paramMap);
+			
+			//dao.updateCampaignsByPayment(paramMap);
+			//dao.updaterewardsByPayment(paramMap);
 			if(resultD == 1 && resultP == 1) {
 				hashmap.put("KEY", "SUCCESS");
 			}
 		} catch (Exception e) {
+			System.out.println("catchë¬¸ ë“¤ì–´ì˜´");
 			transactionManager.rollback(status);
 			hashmap.put("KEY", "FAIL");
 			e.printStackTrace();
 		}
+		transactionManager.commit(status);
 		
 		return hashmap;
 	}

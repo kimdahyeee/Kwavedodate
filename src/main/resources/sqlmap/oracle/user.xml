@@ -99,16 +99,16 @@
 	
 	<insert id="insertDelivery">
 		INSERT INTO delivery
-		(imp_uid, userEmail, campaignName, rewardNum, totalAmount, shippingAmount, shippingMethod, note, phone, zipCode, address1, address2, city, region, country)
+		(imp_uid, phone, country, zipCode, address1, address2, city, region, shippingMethod, note, state)
 		VALUES
-		(#{imp_uid}, #{userEmail}, #{campaignName}, #{rewardNum}, #{totalAmount}, #{shippingAmount}, #{shippingMethod}, #{note}, #{phone}, #{zipCode}, #{address1}, #{address2}, #{city}, #{region}, #{country})
+		(#{imp_uid}, #{phone}, #{country}, #{zipCode}, #{address1}, #{address2}, #{city}, #{region}, #{shippingMethod}, #{note}, 'yet')
 	</insert>
 	
 	<insert id="insertPayments">
 		INSERT INTO payments
-		(imp_uid, userEmail, campaignName, marchant_uid, rewardNum) 
+		(imp_uid, userEmail, campaignName, rewardNum, merchant_uid, totalAmount, shippingAmount, receipt_url, paid_at) 
 		VALUES
-		(#{imp_uid}, #{userEmail}, #{campaignName}, #{merchant_uid}, #{rewardNum}) 
+		(#{imp_uid}, #{userEmail}, #{campaignName}, #{rewardNum}, #{merchant_uid}, #{totalAmount}, #{shippingAmount}, #{receipt_url}, sysdate) 
 	
 	</insert>
 	
