@@ -97,4 +97,17 @@
 	
 	</insert>
 	
+	<update id="updateRewardsByPayment">
+	UPDATE rewards
+	SET rewardCurrentCnt - 1
+	WHERE campaignName = #{campaignName} and rewardNum = #{rewardNum}
+	</update>
+	
+	<update id="updateCampaignsByPayment">
+	UPDATE campaigns
+	SET gatherAmount + #{rewardAmount}),
+		fundingUserCnt = ((SELECT fundingUserCnt from campaigns WHERE campaignName = #{campaignName}) + 1)
+	WHERE campaignName = #{campaignName}
+	</update>
+	
 </mapper>

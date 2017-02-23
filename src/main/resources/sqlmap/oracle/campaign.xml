@@ -114,4 +114,6 @@
     WHERE CAMPAIGNNAME = #{campaignName}
 	</select>
 	
+	
+	
 </mapper>

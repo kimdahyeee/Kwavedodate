@@ -5,16 +5,17 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
+import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 
 /**
  * Handles requests for the application home page.
@@ -66,14 +67,8 @@ public class HomeController {
 	/* about us 페이지 */
 	@RequestMapping("/aboutUs")
 	public String aboutUs() {
+		logger.info("aboutUs");
 		return "aboutUs";
-	}
-	
-	/* 로그인 실패시 이동 */
-	@RequestMapping("/loginfail")
-	public String loginfail(HttpServletResponse response) {
-
-		return "/login";
 	}
 	
 	/*
@@ -81,7 +76,8 @@ public class HomeController {
 	 */
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request) {
-
+		logger.info("loginPage");
+		
 		return "login";
 	}
 }

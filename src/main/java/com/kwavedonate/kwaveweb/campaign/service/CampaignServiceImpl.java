@@ -36,4 +36,6 @@ public class CampaignServiceImpl extends SqlSessionDaoSupport implements Campaig
 	public Map<String, Object> getRewards(Map<String, Object> param) {
 		return getSqlSession().selectOne("campaign.selectRewards", param);
 	}
+	
+
 }

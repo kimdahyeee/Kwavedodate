@@ -23,5 +23,7 @@ public interface UserDaoService {
 	public int modifyAddress(Map<String, String> paramMap);
 
 	public int modifyPassword(Map<String, String> paramMap);
+	public int updateCampaignsByPayment(Map<String, Object> paramMap);
+	public int updaterewardsByPayment(Map<String, Object> paramMap);
 	
 }
