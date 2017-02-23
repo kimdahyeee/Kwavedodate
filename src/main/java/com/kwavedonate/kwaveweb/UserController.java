@@ -164,16 +164,18 @@ public class UserController {
 	 * 중복확인
 	 */
 	@ResponseBody
-	@RequestMapping(value="/validateOk", method=RequestMethod.POST)
-	public HashMap<String, Object> validate(HttpServletRequest request, @RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
+	@RequestMapping(value="/FacebookValidate", method=RequestMethod.POST)
+	public HashMap<String, Object> FacebookValidate(HttpServletRequest request, @RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
 		
 		String ipc = GetIpAddress.getClientIP(request);
+		String dbpw = encoder.encode(userEmail+userName+"1@#$@#!$$$#@");
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("userName", userName);
+		paramMap.put("userPassword", dbpw);
 		if(ipc.equals("en")) {
 			paramMap.put("userNation", "ENG");
 		} else if(ipc.equals("ko")) {
@@ -184,31 +186,23 @@ public class UserController {
 		int result;
 
 		try {
+			//처음 가입하는 경우
 			result = dao.insertFacebookUser(paramMap);
 		} catch (Exception e) {
-			result = 0;
+			//이미 가입된 경우
+			Map<String, Object> snsMap = dao.selectIsSns(userEmail);
+			int isSns = Integer.valueOf(snsMap.get("ISSNS").toString());
+			if(isSns == 1){
+				result = 1; //sns 가입된 경우
+			}else{
+				result=0; //로그인 실패
+			}
 		}
 
+		System.out.println("삽입안됨!" + result);
 		if (result == 1) {
-			hashmap.put("KEY", "SUCCESS");
-		} else {
-			hashmap.put("KEY", "FAIL");
-		}
-
-		return hashmap;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/isSnsAlready", method=RequestMethod.POST)
-	public HashMap<String, Object> isSnsAlready(HttpServletRequest request, @RequestParam("userEmail") String userEmail) {
-		
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		Map<String, Object> result = dao.selectIsSns(userEmail);
-		int isSns = Integer.valueOf(result.get("ISSNS").toString());
-		
-		if(isSns == 1){
-			hashmap.put("KEY", "SUCCESS");
-		}else{
+			hashmap.put("KEY", "SUCCESS"); //처음 가입하는 경우
+		}else {
 			hashmap.put("KEY", "FAIL");
 		}
 
@@ -243,7 +237,6 @@ public class UserController {
 		} else {
 			hashmap.put("KEY", "FAIL");
 		}
-
 
 		return hashmap;
 	}
@@ -403,13 +396,6 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/facebookLogin", method=RequestMethod.POST)
-	public String FacebookLogin(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName){
-		System.out.println("usermail: " +userEmail);
-		System.out.println("username: " +userName);
-		
-		return "/";
-	}
 	/*
 	 * 결제관련 컨트롤러
 	 */

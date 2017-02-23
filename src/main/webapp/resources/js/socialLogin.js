@@ -34,8 +34,48 @@ $(document).ready(function(){
 			    		alert("이메일 정보가 누락된 sns 계정입니다. 일반 회원가입을 해주시길 바랍니다.");
 			    		location.replace("/kwaveweb/signin");
 			    	}else{
-			    		$.post("http://localhost:8181/kwaveweb/facebookLogin", {"userEmail" : user.email, "userName" : user.name});
-			    		location.replace("/kwaveweb");
+			    		$.ajax({
+		                    type: "POST",
+		                    url: "/kwaveweb/FacebookValidate", 
+		                    data: {
+		                        "userEmail" : user.email,
+		                        "userName" : user.name
+		                    },
+		                    dataType: "json",
+		                    success: function(data) {
+		                       if(data.KEY == "SUCCESS"){
+		                    	   //처음 페이스북 로그인시
+		                    	   $.ajax({
+		                           	type: "POST",
+		                               url: "/kwaveweb/j_spring_security_check",
+		                               data: {
+		                                   "userEmail": user.email,
+		                                   "userPassword":user.email+user.name+"1@#$@#!$$$#@"
+		                               },
+		                               dataType: "json",
+		                               success: function(data) {
+		                               	//성공 시 데이터 처리 
+		                                   if(data.KEY=="SUCCESS") {
+		                                      if((document.refferer)=="localhost:8181/kwaveweb/login") {
+		                                         location.href="/kwaveweb/";
+		                                      }
+		                                      else {
+		                                         location.replace(document.referrer);
+		                                      }
+		                                   } else {
+		                                      alert("로그인 실패");
+		                                      location.href="/kwaveweb/login";
+		                                   }
+		                                }
+		                            });
+		                    	  // $.post("/kwaveweb/j_spring_security_check", {"userEmail" : user.email, "userPassword" : user.email+user.name+"1@#$@#!$$$#@"});
+		                    	   //location.href="/kwaveweb/";
+		                       }else{
+   		                          alert("이미 회원가입 된 이메일입니다.");
+   		                          location.replace("/kwaveweb/login");
+		                       }
+		                    }
+		                });
 			    	}
 			    });
 			  }

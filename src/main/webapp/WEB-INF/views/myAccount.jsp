@@ -38,49 +38,22 @@
 									</tr>
 								</thead>
 								<tbody>
-								<c:if test="${fn:length(historyList) > 0}">
-									<c:forEach items="${historyList}" var="historyLists" begin="0" end="${fn:length(historyList)}" step="1" varStatus="status">
-										<tr>
-											<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
-											<td><a href="#">${historyList[status.index].PIMP_UID}</a></td>
-											<td>
-												<div class="table-header">
-													<img src="${historyList[status.index].CCAMPAIGNIMG}">
-												</div>
-												<div class="table-footer">${historyList[status.index].CCAMPAIGNSUBJECT}/${historyList[status.index].RREWARDSUBJECT}</div>
-											</td>
-											<td>$20 수정해야함</td>
-											<td>${historyList[status.index].PPAID_AT}</td>
-											
-										</tr>
-									</c:forEach>
-								</c:if>
-									<tr>
-										<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
-										<td><a href="#">imp_274106034545</a></td>
-										<td>
-											<div class="table-header">
-												<img src="resources/images/gong-you-campaign.jpg" alt="">
-											</div>
-											<div class="table-footer">projectName/rewardName</div>
-										</td>
-										<td>$400</td>
-										<td>2017-01-10 10:30</td>
-										
-									</tr>
-									<tr>
-										<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
-										<td><a href="#">imp_764558197620</a></td>
-										<td>
-											<div class="table-header">
-												<img src="resources/images/kim-go-eun-campaign.jpg" alt="">
-											</div>
-											<div class="table-footer">projectName/rewardName</div>
-										</td>
-										<td>$300</td>
-										<td>2016-12-20 14:20</td>
-										
-									</tr>
+									<c:if test="${fn:length(historyList) > 0}">
+										<c:forEach items="${historyList}" var="historyLists" begin="0" end="${fn:length(historyList)}" step="1" varStatus="status">
+											<tr>
+												<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
+												<td><a href="${historyList[status.index].PRECEIPT_URL}">${historyList[status.index].PIMP_UID}</a></td>
+												<td>
+													<div class="table-header">
+														<img src="${historyList[status.index].CCAMPAIGNIMG}">
+													</div>
+													<div class="table-footer">${historyList[status.index].CCAMPAIGNSUBJECT}/${historyList[status.index].RREWARDSUBJECT}</div>
+												</td>
+												<td>$${historyList[status.index].PTOTALAMOUNT }</td>
+												<td>${historyList[status.index].PPAID_AT}</td>
+											</tr>
+										</c:forEach>
+									</c:if>
 								</tbody>
 							</table>
 						</div>
