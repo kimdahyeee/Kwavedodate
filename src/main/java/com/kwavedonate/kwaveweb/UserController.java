@@ -11,14 +11,10 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -33,19 +29,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
 import com.kwavedonate.kwaveweb.core.util.GetIpAddress;
 import com.kwavedonate.kwaveweb.user.dao.UserDaoService;
-import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
+import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 
 @Controller
 public class UserController {
 
-	@Autowired
 	private PlatformTransactionManager transactionManager;
-	
-	
 	private String check="check";
-	
-	@Autowired
-	private SqlSession sqlSession;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -104,8 +94,9 @@ public class UserController {
 	@RequestMapping("/myAccount")
 	public String myAccount(Model model, HttpServletRequest request, Authentication authentication) {
 		Locale currentLocale = LocaleContextHolder.getLocale();
-		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		Map<String, Object> map = new HashMap<String, Object>();
+
 		String userEmail = u.getUsername().toString();
 		map.put("userEmail", userEmail);
 		map.put("currentLocale", currentLocale);
@@ -229,7 +220,7 @@ public class UserController {
 			result = dao.modifyUser(paramMap);
 		} catch (Exception e) {
 			result = 0;
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		if (result == 1) {
@@ -248,7 +239,7 @@ public class UserController {
 			@RequestParam("address1") String address1, @RequestParam("address2") String address2,
 			@RequestParam("zipCode") String zipCode, @RequestParam("city") String city,
 			@RequestParam("country") String country, @RequestParam("region") String region) {
-		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
@@ -266,7 +257,7 @@ public class UserController {
 			result = dao.modifyAddress(paramMap);
 		} catch (Exception e) {
 			result = 0;
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		if (result == 1) {
@@ -285,7 +276,7 @@ public class UserController {
 	public HashMap<String, Object> modifyPassword(Authentication authentication,
 			@RequestParam("currentPassword") String currentPassword, @RequestParam("newPassword") String newPassword) {
 		
-		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		int result = 0;
 		Map<String, Object> user = dao.selectPassword(userEmail);
@@ -303,7 +294,7 @@ public class UserController {
 			try {
 				result = dao.modifyPassword(password);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 				result = 0;
 			}
 
@@ -347,7 +338,7 @@ public class UserController {
 				mailSender.send(message);
 				result.put("KEY", "SUCCESS");
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 				System.out.println(e);
 			}
 		} else {
@@ -460,7 +451,7 @@ public class UserController {
 				hashmap.put("KEY", "SUCCESS");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 			transactionManager.rollback(status);
 			hashmap.put("KEY", "FAIL");
 			e.printStackTrace();
@@ -522,7 +513,6 @@ public class UserController {
 				hashmap.put("KEY", "SUCCESS");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			transactionManager.rollback(status);
 			hashmap.put("KEY", "FAIL");
 			e.printStackTrace();

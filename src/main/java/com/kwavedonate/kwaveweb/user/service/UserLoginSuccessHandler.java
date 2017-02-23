@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.security.core.Authentication;
-
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -35,7 +34,13 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		OutputStream out = response.getOutputStream(); 
 		out.write(jsonString.getBytes());
 	}
-	/** * 로그인 하기 전의 요청했던 URL을 알아낸다. * * @param request * @param response * @return */ 
+	
+	/** 
+	 * 로그인 하기 전의 요청했던 URL을 알아낸다. 
+	 * @param request 
+	 * @param response 
+	 * @return 
+	 * */ 
 	private String getReturnUrl(HttpServletRequest request, HttpServletResponse response) { 
 		RequestCache requestCache = new HttpSessionRequestCache(); 
 		SavedRequest savedRequest = requestCache.getRequest(request, response); 
