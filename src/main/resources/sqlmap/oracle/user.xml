@@ -15,9 +15,9 @@
 	
 	<insert id="insertFacebookUser">
 		insert into users
-		(userEmail, userName, userRegdate, isSNS, userNation,
+		(userEmail, userPassword, userName, userRegdate, isSNS, userNation,
 		authority, enabled)
-		values (#{userEmail}, #{userName}, sysdate, 1 , #{userNation},
+		values (#{userEmail}, #{userPassword}, #{userName}, sysdate, 1 , #{userNation},
 		'ROLE_USER', 1)
 	</insert>
 
@@ -113,16 +113,19 @@
 	</insert>
 	
 	<select id="selectHistoryList" resultType="hashmap">
-		SELECT 
-		  P.IMP_UID as Pimp_Uid,
-		  TO_DATE(P.PAID_AT,'YYYY-MM-DD HH24:MI:SS') as Ppaid_At,
-		  R.REWARDSUBJECT as RrewardSubject,
-		  C.CAMPAIGNSUBJECT as CcampaignSubject,
-		  C.CAMPAIGNIMG as CcampaignImg
-		FROM PAYMENTS P,
-		     REWARDS_${currentLocale} R,
-		     CAMPAIGNS_${currentLocale} C
-		WHERE P.USEREMAIL =#{userEmail} AND C.CAMPAIGNNAME = P.CAMPAIGNNAME AND R.REWARDNUM = P.REWARDNUM
+	SELECT 
+		P.IMP_UID as Pimp_Uid,
+		P.TOTALAMOUNT as PtotalAmount,
+		P.RECEIPT_URL as Preceipt_url,
+		TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') as Ppaid_At,
+		R.REWARDSUBJECT as RrewardSubject,
+		CL.CAMPAIGNSUBJECT as CcampaignSubject,
+		C.CAMPAIGNIMG as CcampaignImg
+	FROM PAYMENTS P,
+		REWARDS_${currentLocale} R,
+		CAMPAIGNS_${currentLocale} CL,
+		Campaigns c
+	WHERE P.USEREMAIL = #{userEmail} AND P.CAMPAIGNNAME = C.CAMPAIGNNAME AND P.CAMPAIGNNAME = CL.CAMPAIGNNAME AND P.REWARDNUM = R.REWARDNUM
 	</select>
 	
 	<update id="updateRewardsByPayment">

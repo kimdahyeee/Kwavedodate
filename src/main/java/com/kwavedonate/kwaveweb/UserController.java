@@ -157,16 +157,18 @@ public class UserController {
 	 * ï¿½ßºï¿½È®ï¿½ï¿½
 	 */
 	@ResponseBody
-	@RequestMapping(value="/validateOk", method=RequestMethod.POST)
-	public HashMap<String, Object> validate(HttpServletRequest request, @RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
+	@RequestMapping(value="/FacebookValidate", method=RequestMethod.POST)
+	public HashMap<String, Object> FacebookValidate(HttpServletRequest request, @RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
 		
 		String ipc = GetIpAddress.getClientIP(request);
+		String dbpw = encoder.encode(userEmail+userName+"1@#$@#!$$$#@");
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("userName", userName);
+		paramMap.put("userPassword", dbpw);
 		if(ipc.equals("en")) {
 			paramMap.put("userNation", "ENG");
 		} else if(ipc.equals("ko")) {
@@ -177,31 +179,23 @@ public class UserController {
 		int result;
 
 		try {
+			//Ã³À½ °¡ÀÔÇÏ´Â °æ¿ì
 			result = dao.insertFacebookUser(paramMap);
 		} catch (Exception e) {
-			result = 0;
+			//ÀÌ¹Ì °¡ÀÔµÈ °æ¿ì
+			Map<String, Object> snsMap = dao.selectIsSns(userEmail);
+			int isSns = Integer.valueOf(snsMap.get("ISSNS").toString());
+			if(isSns == 1){
+				result = 1; //sns °¡ÀÔµÈ °æ¿ì
+			}else{
+				result=0; //·Î±×ÀÎ ½ÇÆÐ
+			}
 		}
 
+		System.out.println("»ðÀÔ¾ÈµÊ!" + result);
 		if (result == 1) {
-			hashmap.put("KEY", "SUCCESS");
-		} else {
-			hashmap.put("KEY", "FAIL");
-		}
-
-		return hashmap;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/isSnsAlready", method=RequestMethod.POST)
-	public HashMap<String, Object> isSnsAlready(HttpServletRequest request, @RequestParam("userEmail") String userEmail) {
-		
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		Map<String, Object> result = dao.selectIsSns(userEmail);
-		int isSns = Integer.valueOf(result.get("ISSNS").toString());
-		
-		if(isSns == 1){
-			hashmap.put("KEY", "SUCCESS");
-		}else{
+			hashmap.put("KEY", "SUCCESS"); //Ã³À½ °¡ÀÔÇÏ´Â °æ¿ì
+		}else {
 			hashmap.put("KEY", "FAIL");
 		}
 
@@ -236,7 +230,6 @@ public class UserController {
 		} else {
 			hashmap.put("KEY", "FAIL");
 		}
-
 
 		return hashmap;
 	}
@@ -396,13 +389,6 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/facebookLogin", method=RequestMethod.POST)
-	public String FacebookLogin(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName){
-		System.out.println("usermail: " +userEmail);
-		System.out.println("username: " +userName);
-		
-		return "/";
-	}
 	/*
 	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
 	 */
