@@ -19,7 +19,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<h2 class="text-center">AWSOME <strong><spring:message code="EXPERIENCE"/></strong></h2>
+							<h2 class="text-center">AWESOME <strong><spring:message code="EXPERIENCE"/></strong></h2>
 						</div>
 					</div>
 					<div class="row">
@@ -28,9 +28,9 @@
 								<div class="col-sm-6">
 									<div class="image-box style-2 mb-20 bordered light-gray-bg">
 										<div class="overlay-container overlay-visible">
-											<span class="campaign-badge"><i>${list[status.index].campaignDueDate}</i></span>
-											<img src='${list[status.index].campaignImg}' />
-											<a class="overlay-link" href="<c:url value='/campaigns/${list[status.index].campaignName}' />"></a>
+											<span class="campaign-badge"><i>${campaignsList[status.index].campaignDueDate}</i></span>
+											<img src="${campaignsList[status.index].campaignImg}" />
+											<a class="overlay-link" href="<c:url value='/campaigns/${campaignsList[status.index].campaignName}' />"></a>
 										</div>
 										<div class="body">
 											<p class="small mb-10 text-muted"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> Web Design</p>

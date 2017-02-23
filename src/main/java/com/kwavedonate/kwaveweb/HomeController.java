@@ -1,14 +1,16 @@
 package com.kwavedonate.kwaveweb;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +38,12 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value="/")
-	public String main(Model model) {
-
-		List<Map<String, Object>> campaignsList = campaignService.getMainCampaignsList();
+	public String main(Model model, Locale loc) {
+		
+		Locale currentLocale = LocaleContextHolder.getLocale();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("currentLocale", currentLocale);
+		List<Map<String, Object>> campaignsList = campaignService.getMainCampaignsList(map);
 		
 		for(Map<String, Object> campaignsLists : campaignsList){
 			int campaignDueDate = Integer.valueOf(campaignsLists.get("campaignDueDate").toString());
@@ -57,23 +62,14 @@ public class HomeController {
 		
 		logger.info("main == {}.", campaignsList);
 		model.addAttribute("campaignsList", campaignsList);
-
 		return "main";
 	}
-	
-	
 
 	/* about us 페이지 */
 	@RequestMapping("/aboutUs")
 	public String aboutUs() {
+		logger.info("aboutUs");
 		return "aboutUs";
-	}
-	
-	/* 로그인 실패시 이동 */
-	@RequestMapping("/loginfail")
-	public String loginfail(HttpServletResponse response) {
-
-		return "/login";
 	}
 	
 	/*
@@ -81,7 +77,8 @@ public class HomeController {
 	 */
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request) {
-
+		logger.info("loginPage");
+		
 		return "login";
 	}
 }

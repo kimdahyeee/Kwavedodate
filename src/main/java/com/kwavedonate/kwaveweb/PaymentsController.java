@@ -2,10 +2,12 @@ package com.kwavedonate.kwaveweb;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,8 +36,12 @@ public class PaymentsController {
 	 * @return
 	 */
 	@RequestMapping(value="/{campaignName}/rewards")
-	public String rewardsView(@PathVariable("campaignName") String campaignName, Model model){
-		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(campaignName);
+	public String rewardsView(@PathVariable("campaignName") String campaignName, Model model, Locale locale){
+		Locale currentLocale = LocaleContextHolder.getLocale();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("campaignName", campaignName);
+		map.put("currentLocale", currentLocale);
+		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(map);
 		model.addAttribute("rewards", rewardsDetail);
 		return "rewards";
 	}
@@ -65,14 +71,16 @@ public class PaymentsController {
 	 * @return
 	 */
 	@RequestMapping(value="/{campaignName}/reward/{rewardNum}")
-	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model){
+	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model, Locale locale){
+		Locale currentLocale = LocaleContextHolder.getLocale();
 		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		Map<String, Object> user = userService.selectUserAccount(userEmail);
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("campaignName", campaignName);
-		param.put("rewardNum", rewardNum);
-		Map<String, Object> rewardMap = campaignService.getRewards(param);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("currentLocale", currentLocale);
+		map.put("campaignName", campaignName);
+		map.put("rewardNum", rewardNum);
+		Map<String, Object> rewardMap = campaignService.getRewards(map);
 		
 		model.addAttribute("user", user);
 		model.addAttribute("campaignName", campaignName);

@@ -2,8 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security.xsd">
 			
 	
 	<!-- resources요청에 대해 security 처리하지 않겠다 -->
@@ -11,12 +13,14 @@
 	<security:http auto-config="true" use-expressions="true" create-session="never">
 		<!-- 페이지 권한 설정 -->
 		<security:intercept-url 
-			pattern="/login" access="anonymous"/>
+			pattern="/login" access="isAnonymous()"/>
+		<security:intercept-url 
+			pattern="/signin" access="isAnonymous()"/>
 		<security:intercept-url 
 			pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<security:intercept-url 
 			pattern="/user/**" 
-			access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI',	'ROLE_ADMIN')"/>
+			access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI', 'ROLE_ADMIN')"/>
 		<security:intercept-url 
 			pattern="/payments/**" 
 			access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_USER_KOR', 'ROLE_USER_ENG')"/>
@@ -30,8 +34,8 @@
 			login-processing-url="/j_spring_security_check"
 			authentication-success-handler-ref="userLoginSuccessHandler"
 			authentication-failure-handler-ref="userLoginFailureHandler"
-			authentication-failure-url="/loginfail"
 			always-use-default-target="false"/>
+
 		<security:session-management>
 			<security:concurrency-control max-sessions="1" expired-url="/"/>
 		</security:session-management>

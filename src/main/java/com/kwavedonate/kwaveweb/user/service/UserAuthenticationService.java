@@ -30,25 +30,16 @@ public class UserAuthenticationService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		Map<String, Object> user;
 		user = sqlSession.selectOne("user.selectUser", username);
 		if (user == null)
 			throw new UsernameNotFoundException(username);
-
 		// userEmail, userPassword, userName, userRegdate, isSNS, 
 		//userNation, phone, zipCode, address1, address2, city, region, country
 		//authority, enabled
 		List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
 		gas.add(new SimpleGrantedAuthority(user.get("AUTHORITY").toString()));
-
-			return new UserDetailsVo(user.get("USERNAME").toString(), user.get("PASSWORD").toString(), true, true, true,
-					true, gas, user.get("USER_NAME").toString());
-
-
-		}
-		
-
-	}
-
+		return new UserDetailsVo(user.get("USERNAME").toString(), user.get("PASSWORD").toString(), true, true, true, 	true, gas, user.get("USER_NAME").toString());
+	}	
+}
 

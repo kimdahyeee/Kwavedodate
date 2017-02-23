@@ -12,7 +12,22 @@
 		<!-- 'Nation', 'phone', 'zipCode', 'address1', 'address2', 'city', 'region', 'country', -->
 		'ROLE_USER', 1)
 	</insert>
+	
+	<insert id="insertFacebookUser">
+		insert into users
+		(userEmail, userName, userRegdate, isSNS, userNation,
+		authority, enabled)
+		values (#{userEmail}, #{userName}, sysdate, 1 , #{userNation},
+		'ROLE_USER', 1)
+	</insert>
 
+	<select id="selectIsSns" resultType="hashmap">
+		SELECT 
+		  ISSNS
+		FROM USERS
+		WHERE USEREMAIL = #{userEmail}
+	</select>
+	
 	<update id="modifyUser">
 		update users
 		set userName = #{userName},
@@ -96,5 +111,31 @@
 		(#{imp_uid}, #{userEmail}, #{campaignName}, #{merchant_uid}, #{rewardNum}) 
 	
 	</insert>
+	
+	<select id="selectHistoryList" resultType="hashmap">
+		SELECT 
+		  P.IMP_UID as Pimp_Uid,
+		  TO_DATE(P.PAID_AT,'YYYY-MM-DD HH24:MI:SS') as Ppaid_At,
+		  R.REWARDSUBJECT as RrewardSubject,
+		  C.CAMPAIGNSUBJECT as CcampaignSubject,
+		  C.CAMPAIGNIMG as CcampaignImg
+		FROM PAYMENTS P,
+		     REWARDS_${currentLocale} R,
+		     CAMPAIGNS_${currentLocale} C
+		WHERE P.USEREMAIL =#{userEmail} AND C.CAMPAIGNNAME = P.CAMPAIGNNAME AND R.REWARDNUM = P.REWARDNUM
+	</select>
+	
+	<update id="updateRewardsByPayment">
+	UPDATE rewards
+	SET rewardCurrentCnt - 1
+	WHERE campaignName = #{campaignName} and rewardNum = #{rewardNum}
+	</update>
+	
+	<update id="updateCampaignsByPayment">
+	UPDATE campaigns
+	SET gatherAmount + #{rewardAmount}),
+		fundingUserCnt = ((SELECT fundingUserCnt from campaigns WHERE campaignName = #{campaignName}) + 1)
+	WHERE campaignName = #{campaignName}
+	</update>
 	
 </mapper>

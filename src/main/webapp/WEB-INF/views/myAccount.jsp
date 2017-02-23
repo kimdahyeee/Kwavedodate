@@ -1,84 +1,89 @@
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-	<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-	
-	<section class="main-container">
-		<div class="container">
-			<div class="row">
-				<div class="main col-md-8 col-md-offset-2 text-center">
-					<ul class="nav nav-pills nav-justified" role="tablist">
-						<li class="active">
-							<a href="#history" role="tab" data-toggle="tab" title="images">
-								<strong>History</strong>
-							</a>
-						</li>
-						<li>
-							<a href="#yourInfo" role="tab" data-toggle="tab" title="video">
-								<strong>Your Info</strong>
-							</a>
-						</li>
-						<li>
-							<a href="#changePassword" role="tab" data-toggle="tab" title="text">
-								<strong>Change Password</strong>
-							</a>
-						</li>
-					</ul>
-					<div class="tab-content clear-style text-left">
-						<!-- #HISTORY -->
-						<!-- ====== -->
-						<div class="tab-pane active" id="history">
-							<div class="table-responsive" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-								<table class="table table-colored text-center">
-									<thead>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+
+<section class="main-container">
+	<div class="container">
+		<div class="row">
+			<div class="main col-md-8 col-md-offset-2 text-center">
+				<ul class="nav nav-pills nav-justified" role="tablist">
+					<li class="active">
+						<a href="#history" role="tab" data-toggle="tab" title="images">
+							<strong>History</strong>
+						</a>
+					</li>
+					<li>
+						<a href="#yourInfo" role="tab" data-toggle="tab" title="video">
+							<strong>Your Info</strong>
+						</a>
+					</li>
+					<li>
+						<a href="#changePassword" role="tab" data-toggle="tab" title="text">
+							<strong>Change Password</strong>
+						</a>
+					</li>
+				</ul>
+
+				<div class="tab-content clear-style text-left">
+					<!-- #HISTORY -->
+					<div class="tab-pane active" id="history">
+						<div class="table-responsive" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
+							<table class="table table-colored text-center">
+								<thead>
+									<tr>
+										<th>Pledge number</th>
+										<th>Campaigns</th>
+										<th>Amount</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody>
+								<c:if test="${fn:length(historyList) > 0}">
+									<c:forEach items="${historyList}" var="historyLists" begin="0" end="${fn:length(historyList)}" step="1" varStatus="status">
 										<tr>
-											<th>Pledge number</th>
-											<th>Campaigns</th>
-											<th>Amount</th>
-											<th>Date</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											
-											<td><a href="#">imp_404382851169</a></td>
+											<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
+											<td><a href="#">${historyList[status.index].PIMP_UID}</a></td>
 											<td>
 												<div class="table-header">
-													<img src="resources/images/oh-yeon-campaign.jpg">
+													<img src="${historyList[status.index].CCAMPAIGNIMG}">
 												</div>
-												<div class="table-footer">projectName/rewardName</div>
+												<div class="table-footer">${historyList[status.index].CCAMPAIGNSUBJECT}/${historyList[status.index].RREWARDSUBJECT}</div>
 											</td>
-											<td>$200</td>
-											<td>2017-01-26 20:28</td>
+											<td>$20 수정해야함</td>
+											<td>${historyList[status.index].PPAID_AT}</td>
 											
 										</tr>
-										<tr>
-											
-											<td><a href="#">imp_274106034545</a></td>
-											<td>
-												<div class="table-header">
-													<img src="resources/images/gong-you-campaign.jpg" alt="">
-												</div>
-												<div class="table-footer">projectName/rewardName</div>
-											</td>
-											<td>$400</td>
-											<td>2017-01-10 10:30</td>
-											
-										</tr>
-										<tr>
-											
-											<td><a href="#">imp_764558197620</a></td>
-											<td>
-												<div class="table-header">
-													<img src="resources/images/kim-go-eun-campaign.jpg" alt="">
-												</div>
-												<div class="table-footer">projectName/rewardName</div>
-											</td>
-											<td>$300</td>
-											<td>2016-12-20 14:20</td>
-											
-										</tr>
-									</tbody>
-								</table>
-							</div>
+									</c:forEach>
+								</c:if>
+									<tr>
+										<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
+										<td><a href="#">imp_274106034545</a></td>
+										<td>
+											<div class="table-header">
+												<img src="resources/images/gong-you-campaign.jpg" alt="">
+											</div>
+											<div class="table-footer">projectName/rewardName</div>
+										</td>
+										<td>$400</td>
+										<td>2017-01-10 10:30</td>
+										
+									</tr>
+									<tr>
+										<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
+										<td><a href="#">imp_764558197620</a></td>
+										<td>
+											<div class="table-header">
+												<img src="resources/images/kim-go-eun-campaign.jpg" alt="">
+											</div>
+											<div class="table-footer">projectName/rewardName</div>
+										</td>
+										<td>$300</td>
+										<td>2016-12-20 14:20</td>
+										
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						<!-- ====== -->
 	
@@ -166,14 +171,15 @@
 									<p>${user.PHONE}</p>
 								</div>
 							</div>
-							
 							<div class="col-xs-12 col-sm-12 mt-5">
 								<label class="col-xs-4  col-sm-3 control-label">Nation(Language): </label>
 								<div class="col-xs-8 col-sm-9">
 									<p>${user.USERNATION}</p>
 								</div>
 							</div>				
+							
 							<div class="pills-space"></div>
+							
 							<h3> Shipping Address: </h3>
 							<a class="text-info btn-md-link" data-toggle="modal" data-target="#updateShippingAddress" href="#">Edit <i class="fa fa-pencil" aria-hidden="true"></i></a>
 							<div class="modal fade" id="updateShippingAddress" tabindex="-1" role="dialog" aria-labelledby="updateShippingAddressLabel" aria-hidden="true">
@@ -301,7 +307,7 @@
 						<!-- #CHANGE PASSWORD -->
 						<!-- ============== -->
 						<div class="tab-pane" id="changePassword">
-							<!-- 일반 로그인인 경우 비밀번호 변경 가능 UI -->
+							<!-- ì¼ë° ë¡ê·¸ì¸ì¸ ê²½ì° ë¹ë°ë²í¸ ë³ê²½ ê°ë¥ UI -->
 							<div class="main-container">
 								<div class="container">
 									<div class="row">
@@ -339,8 +345,6 @@
 									</div>
 								</div>
 							</div>
-								
-								
 							<div class="main-container">
 								<div class="container">
 									<div class="row">
@@ -361,8 +365,6 @@
 									</div>
 								</div>
 							</div>
-							<!-- ============== -->
-	
 						</div>
 					</div>
 				</div>

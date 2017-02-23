@@ -114,6 +114,7 @@
 												<div class="reward-detail">
 													<input type="hidden" id="rewardNum" value="${rewardNum}"/>
 													<c:choose>
+
 			                                          <c:when test="${rewardNum != 0 }">
 			                                          	  <h5><strong>${reward.rewardSubject}</strong></h5>
 			                                          	  <div class="separator"></div>
@@ -147,6 +148,7 @@
 											<div id="paymentMethodGlobal">
 												<span><input type="radio" name="payment_method" id="payment_method_paypal" value="paypal" checked required> Paypal</span>
 											</div>	
+
 										</div>
 										<button type="submit" class="btn btn-lg btn-danger" style="width: 100%"><strong>Submit payment</strong></button>
 									</div>

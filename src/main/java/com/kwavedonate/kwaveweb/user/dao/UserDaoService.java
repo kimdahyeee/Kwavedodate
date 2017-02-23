@@ -1,10 +1,15 @@
 package com.kwavedonate.kwaveweb.user.dao;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserDaoService {
 
 	public int insertUser(Map<String, String> paramMap);
+	
+	public int insertFacebookUser(Map<String, Object> paramMap);
+	
+	public Map<String, Object> selectIsSns(String userEmail);
 	
 	public int insertDelivery(Map<String, Object> paramMap);
 	
@@ -23,5 +28,8 @@ public interface UserDaoService {
 	public int modifyAddress(Map<String, String> paramMap);
 
 	public int modifyPassword(Map<String, String> paramMap);
+	public int updateCampaignsByPayment(Map<String, Object> paramMap);
+	public int updaterewardsByPayment(Map<String, Object> paramMap);
 	
+	public List<Map<String, Object>> selectHistoryList(Map<String, Object> map);
 }

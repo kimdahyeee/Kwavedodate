@@ -1,6 +1,8 @@
 package com.kwavedonate.kwaveweb;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -10,11 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,9 +34,7 @@ import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 @Controller
 public class UserController {
 
-
-	
-	
+	private PlatformTransactionManager transactionManager;
 	private String check="check";
 
 	@Autowired
@@ -78,11 +81,11 @@ public class UserController {
 	 */
 	@RequestMapping("/denied")
 	public String denied(Model model, Authentication auth, HttpServletRequest request) {
-		AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
+		/*AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
 		model.addAttribute("auth", auth);
-		model.addAttribute("errMsg", ade);
+		model.addAttribute("errMsg", ade);*/
 
-		return "denied";
+		return "deniedPage";
 	}
 
 	/*
@@ -90,12 +93,17 @@ public class UserController {
 	 */
 	@RequestMapping("/myAccount")
 	public String myAccount(Model model, HttpServletRequest request, Authentication authentication) {
+		Locale currentLocale = LocaleContextHolder.getLocale();
 		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
+		Map<String, Object> map = new HashMap<String, Object>();
+
 		String userEmail = u.getUsername().toString();
-		
-		// ModelAndView modelAndView = new ModelAndView();
+		map.put("userEmail", userEmail);
+		map.put("currentLocale", currentLocale);
 		Map<String, Object> user = dao.selectUserAccount(userEmail);
+		List<Map<String, Object>> historyList = dao.selectHistoryList(map);
 		model.addAttribute("user", user);
+		model.addAttribute("historyList", historyList);
 
 		return "myAccount";
 	}
@@ -143,6 +151,61 @@ public class UserController {
 		return hashmap;
 	}
 
+	/**
+	 * 중복확인
+	 */
+	@ResponseBody
+	@RequestMapping(value="/validateOk", method=RequestMethod.POST)
+	public HashMap<String, Object> validate(HttpServletRequest request, @RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
+		
+		String ipc = GetIpAddress.getClientIP(request);
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		
+		paramMap.put("userEmail", userEmail);
+		paramMap.put("userName", userName);
+		if(ipc.equals("en")) {
+			paramMap.put("userNation", "ENG");
+		} else if(ipc.equals("ko")) {
+			paramMap.put("userNation", "KOR");
+		} else {
+			paramMap.put("userNation", "CHI");
+		}
+		int result;
+
+		try {
+			result = dao.insertFacebookUser(paramMap);
+		} catch (Exception e) {
+			result = 0;
+		}
+
+		if (result == 1) {
+			hashmap.put("KEY", "SUCCESS");
+		} else {
+			hashmap.put("KEY", "FAIL");
+		}
+
+		return hashmap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/isSnsAlready", method=RequestMethod.POST)
+	public HashMap<String, Object> isSnsAlready(HttpServletRequest request, @RequestParam("userEmail") String userEmail) {
+		
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		Map<String, Object> result = dao.selectIsSns(userEmail);
+		int isSns = Integer.valueOf(result.get("ISSNS").toString());
+		
+		if(isSns == 1){
+			hashmap.put("KEY", "SUCCESS");
+		}else{
+			hashmap.put("KEY", "FAIL");
+		}
+
+		return hashmap;
+	}
+	
 	// About You 수정
 	@ResponseBody
 	@RequestMapping(value = "/modifyUser", method = RequestMethod.POST)
@@ -163,7 +226,7 @@ public class UserController {
 			result = dao.modifyUser(paramMap);
 		} catch (Exception e) {
 			result = 0;
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		if (result == 1) {
@@ -201,7 +264,7 @@ public class UserController {
 			result = dao.modifyAddress(paramMap);
 		} catch (Exception e) {
 			result = 0;
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		if (result == 1) {
@@ -238,7 +301,7 @@ public class UserController {
 			try {
 				result = dao.modifyPassword(password);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 				result = 0;
 			}
 
@@ -282,7 +345,7 @@ public class UserController {
 				mailSender.send(message);
 				result.put("KEY", "SUCCESS");
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 				System.out.println(e);
 			}
 		} else {
@@ -385,12 +448,29 @@ public class UserController {
 		
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		
-		resultD = dao.insertDelivery(paramMap);
+		/*resultD = dao.insertDelivery(paramMap);
 		resultP = dao.insertPayments(paramMap);
 		if(resultD == 1 && resultP == 1) {
 			hashmap.put("KEY", "SUCCESS");
-		}
+		}*/
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		TransactionStatus status = transactionManager.getTransaction(def);
+		try {
+			resultD = dao.insertDelivery(paramMap);
+			resultP = dao.insertPayments(paramMap);
+			if(resultD == 1 && resultP == 1) {
+				hashmap.put("KEY", "SUCCESS");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			transactionManager.rollback(status);
+			hashmap.put("KEY", "FAIL");
+			e.printStackTrace();
+		}
+		transactionManager.commit(status);
 		
 		return hashmap;
 	}
@@ -399,6 +479,7 @@ public class UserController {
 	@RequestMapping(value="insertDeliveryKOR", method=RequestMethod.POST)
 	public HashMap<String, Object> insertDeliveryKOR(
 			@RequestParam("imp_uid")String imp_uid, @RequestParam("merchant_uid")String merchant_uid,
+			@RequestParam("rewardAmount")String rewardAmount,
 			@RequestParam("userEmail")String userEmail,
 			@RequestParam("campaignName")String campaignName,
 			@RequestParam("rewardNum")String rewardNum,
@@ -419,6 +500,7 @@ public class UserController {
 		paramMap.put("merchant_uid", merchant_uid);
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("campaignName", campaignName);
+		paramMap.put("rewardAmount", Integer.parseInt(rewardAmount));
 		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
 		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
 		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
@@ -432,10 +514,22 @@ public class UserController {
 		
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		
-		resultD = dao.insertDelivery(paramMap);
-		resultP = dao.insertPayments(paramMap);
-		if(resultD == 1 && resultP == 1) {
-			hashmap.put("KEY", "SUCCESS");
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		TransactionStatus status = transactionManager.getTransaction(def);
+		try {
+			resultD = dao.insertDelivery(paramMap);
+			resultP = dao.insertPayments(paramMap);
+			dao.updateCampaignsByPayment(paramMap);
+			dao.updaterewardsByPayment(paramMap);
+			if(resultD == 1 && resultP == 1) {
+				hashmap.put("KEY", "SUCCESS");
+			}
+		} catch (Exception e) {
+			transactionManager.rollback(status);
+			hashmap.put("KEY", "FAIL");
+			e.printStackTrace();
 		}
 		
 		return hashmap;
