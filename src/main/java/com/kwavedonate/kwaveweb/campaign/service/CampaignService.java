@@ -12,4 +12,5 @@ public interface CampaignService {
 	public CampaignVo getCampaignDetail(Map<String, Object> map);
 	public List<RewardsVo> getAllRewards(Map<String, Object> map);
 	public Map<String, Object> getRewards(Map<String, Object> param);
+
 }

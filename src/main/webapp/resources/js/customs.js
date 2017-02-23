@@ -610,14 +610,22 @@ $(document).ready(function() {
     if($("#validatePaymentInfo").length>0) {
     	var IMP = window.IMP;
     	IMP.init('imp57757789');	
-    	
         $("#validatePaymentInfo").validate({
             submitHandler: function(form) {  
+
+            	var payment_method = document.getElementsByName("payment_method");
+            	var payment_method_checked = '';
+            	for(var i = 0; i < payment_method.length; i++) {
+            		if(payment_method[i].checked == true) {
+            			payment_method_checked = payment_method[i].value;
+            		}
+            	}
+            	
             	IMP.request_pay({
-        		    pg : 'inicis', // version 1.1.0부터 지원.
-        		    pay_method : $("#payment_method").val(),
+        		    pg : 'inicis', // version 1.1.0부터 지원.	// inicis
+        		    pay_method : payment_method_checked,//payment_method_checked,
         		    merchant_uid : 'merchant_' + new Date().getTime(),
-        		    name : '주문명:KWAVE_D결제테스트',
+        		    name : $("#campaignName").val(),
         		    amount : $("#totalAmount").val(),
         		    buyer_email : $("#userEmail").val(),
         		    buyer_name : $("#userName").val(),
@@ -632,6 +640,7 @@ $(document).ready(function() {
         		        msg += '상점 거래ID : ' + rsp.merchant_uid;
         		        msg += '결제 금액 : ' + rsp.paid_amount;
         		        msg += '카드 승인번호 : ' + rsp.apply_num;
+        		        if(($("#")))
         		        if(($("#nation").val()) == 'KOR') { 
         		        	$.ajax({
                             type: "POST",
@@ -640,6 +649,7 @@ $(document).ready(function() {
                             	 "imp_uid" : rsp.imp_uid,
                             	 "merchant_uid" : rsp.merchant_uid,
 
+                            	 "rewardAmout" : $("#rewardAmount").val(),
                                  "userEmail": $("#userEmail").val(),
                                  "campaignName" : $("#campaignName").val(),
                                  "rewardNum" : $("#rewardNum").val(),
@@ -671,6 +681,7 @@ $(document).ready(function() {
                             	 "imp_uid" : rsp.imp_uid,
                             	 "merchant_uid" : rsp.merchant_uid,
 
+                            	 "rewardAmout" : $("#rewardAmount").val(),
                                  "userEmail": $("#userEmail").val(),
                                  "campaignName" : $("#campaignName").val(),
                                  "rewardNum" : $("#rewardNum").val(),
@@ -711,7 +722,7 @@ $(document).ready(function() {
         		    alert(msg);
         		    
         		});
-             
+            // );
             },
             errorPlacement: function(error, element) {  
                 error.appendTo(element.parent());  

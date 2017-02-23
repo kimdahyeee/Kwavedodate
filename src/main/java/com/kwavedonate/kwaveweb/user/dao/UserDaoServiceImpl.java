@@ -83,6 +83,18 @@ public class UserDaoServiceImpl extends SqlSessionDaoSupport implements UserDaoS
 		// TODO Auto-generated method stub
 		return getSqlSession().update("user.modifyPassword", paramMap);
 	}
+	
+	@Override
+	public int updateCampaignsByPayment(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return getSqlSession().update("user.updateCampaignsByPayment", paramMap);
+	}
+	
+	@Override
+	public int updaterewardsByPayment(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return getSqlSession().update("user.updaterewardsByPayment", paramMap);
+	}
 
 	@Override
 	public List<Map<String, Object>> selectHistoryList(Map<String, Object> map) {

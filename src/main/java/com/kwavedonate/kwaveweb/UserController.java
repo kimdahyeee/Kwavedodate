@@ -20,6 +20,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +38,8 @@ import com.kwavedonate.kwaveweb.user.vo.UserDetailsVO;
 @Controller
 public class UserController {
 
-	private DataSourceTransactionManager transactionManager;
+	@Autowired
+	private PlatformTransactionManager transactionManager;
 	
 	
 	private String check="check";
@@ -86,11 +91,11 @@ public class UserController {
 	 */
 	@RequestMapping("/denied")
 	public String denied(Model model, Authentication auth, HttpServletRequest request) {
-		AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
+		/*AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
 		model.addAttribute("auth", auth);
-		model.addAttribute("errMsg", ade);
+		model.addAttribute("errMsg", ade);*/
 
-		return "denied";
+		return "deniedPage";
 	}
 
 	/*
@@ -452,12 +457,29 @@ public class UserController {
 		
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		
-		resultD = dao.insertDelivery(paramMap);
+		/*resultD = dao.insertDelivery(paramMap);
 		resultP = dao.insertPayments(paramMap);
 		if(resultD == 1 && resultP == 1) {
 			hashmap.put("KEY", "SUCCESS");
-		}
+		}*/
 		
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		TransactionStatus status = transactionManager.getTransaction(def);
+		try {
+			resultD = dao.insertDelivery(paramMap);
+			resultP = dao.insertPayments(paramMap);
+			if(resultD == 1 && resultP == 1) {
+				hashmap.put("KEY", "SUCCESS");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			transactionManager.rollback(status);
+			hashmap.put("KEY", "FAIL");
+			e.printStackTrace();
+		}
+		transactionManager.commit(status);
 		
 		return hashmap;
 	}
@@ -466,6 +488,7 @@ public class UserController {
 	@RequestMapping(value="insertDeliveryKOR", method=RequestMethod.POST)
 	public HashMap<String, Object> insertDeliveryKOR(
 			@RequestParam("imp_uid")String imp_uid, @RequestParam("merchant_uid")String merchant_uid,
+			@RequestParam("rewardAmount")String rewardAmount,
 			@RequestParam("userEmail")String userEmail,
 			@RequestParam("campaignName")String campaignName,
 			@RequestParam("rewardNum")String rewardNum,
@@ -486,6 +509,7 @@ public class UserController {
 		paramMap.put("merchant_uid", merchant_uid);
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("campaignName", campaignName);
+		paramMap.put("rewardAmount", Integer.parseInt(rewardAmount));
 		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
 		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
 		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
@@ -499,10 +523,23 @@ public class UserController {
 		
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		
-		resultD = dao.insertDelivery(paramMap);
-		resultP = dao.insertPayments(paramMap);
-		if(resultD == 1 && resultP == 1) {
-			hashmap.put("KEY", "SUCCESS");
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		TransactionStatus status = transactionManager.getTransaction(def);
+		try {
+			resultD = dao.insertDelivery(paramMap);
+			resultP = dao.insertPayments(paramMap);
+			dao.updateCampaignsByPayment(paramMap);
+			dao.updaterewardsByPayment(paramMap);
+			if(resultD == 1 && resultP == 1) {
+				hashmap.put("KEY", "SUCCESS");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			transactionManager.rollback(status);
+			hashmap.put("KEY", "FAIL");
+			e.printStackTrace();
 		}
 		
 		return hashmap;

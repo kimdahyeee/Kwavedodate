@@ -237,25 +237,27 @@
 														<input type="hidden" id="shippingAmount" name="shippingAmount" value="5">
 														<span class="text-left">Total:</span>
 														<span class="text-right">$${reward.rewardAmount+5 }</span><br>
+														<input type="hidden" id="rewardAmount" name="rewardAmount" value="${reward.rewardAmount}">
 														</c:when>
 														<c:otherwise>
 														<span class="text-left">Reward: </span> 
 														<span class="text-right">$10</span><br>
+														<input type="hidden" id="rewardAmount" name="rewardAmount" value="10">
 														</c:otherwise>
 													</c:choose>
 													
-													<input type="hidden" id="totalAmount" name="totalAmount" value="${reward.rewardAmount+5}">
+													<input type="hidden" id="totalAmount" name="totalAmount" value="${reward.rewardAmount+25}">
 													<input type="hidden" id="campaignName" name="campaignName" value="${campaignName}">
 													<label></label>
 												</div>
 											</div>
 										</div>
 										<div class="style-2 mb-20 ph-20 bordered text-center">
-											<span class="text-left"><input type="radio" name="payment_method" id="payment_method_card" value="card" checked required> Card
+											<span class="text-left"><input type="radio" name="payment_method" value="card" checked required> Card
 											</span>
-											<span><input type="radio" name="payment_method" id="payment_method_trans" value="trans" required> Trans
+											<span><input type="radio" name="payment_method" value="trans" required> Trans
 											</span>
-											<span class="text-right"><input type="radio" name="payment_method" id="payment_method_phone" value="phone" required> Phone
+											<span class="text-right"><input type="radio" name="payment_method" value="phone" required> Phone
 											</span>
 										</div>
 										<button type="submit" class="btn btn-lg btn-danger" style="width: 100%"><strong>Submit payment</strong></button>
