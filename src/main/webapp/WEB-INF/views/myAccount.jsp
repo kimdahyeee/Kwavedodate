@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 <section class="main-container">
 	<div class="container">
@@ -37,21 +38,25 @@
 									</tr>
 								</thead>
 								<tbody>
+								<c:if test="${fn:length(historyList) > 0}">
+									<c:forEach items="${historyList}" var="historyLists" begin="0" end="${fn:length(historyList)}" step="1" varStatus="status">
+										<tr>
+											<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
+											<td><a href="#">${historyList[status.index].PIMP_UID}</a></td>
+											<td>
+												<div class="table-header">
+													<img src="${historyList[status.index].CCAMPAIGNIMG}">
+												</div>
+												<div class="table-footer">${historyList[status.index].CCAMPAIGNSUBJECT}/${historyList[status.index].RREWARDSUBJECT}</div>
+											</td>
+											<td>$20 수정해야함</td>
+											<td>${historyList[status.index].PPAID_AT}</td>
+											
+										</tr>
+									</c:forEach>
+								</c:if>
 									<tr>
-										<!-- ììì¦ ì¡°í íì´ì§ë¡ href -->
-										<td><a href="#">imp_404382851169</a></td>
-										<td>
-											<div class="table-header">
-												<img src="resources/images/oh-yeon-campaign.jpg">
-											</div>
-											<div class="table-footer">projectName/rewardName</div>
-										</td>
-										<td>$200</td>
-										<td>2017-01-26 20:28</td>
-										
-									</tr>
-									<tr>
-										<!-- ììì¦ ì¡°í íì´ì§ë¡ href -->
+										<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
 										<td><a href="#">imp_274106034545</a></td>
 										<td>
 											<div class="table-header">
@@ -64,7 +69,7 @@
 										
 									</tr>
 									<tr>
-										<!-- ììì¦ ì¡°í íì´ì§ë¡ href -->
+										<!-- Ã¬ÂÂÃ¬ÂÂÃ¬Â¦Â Ã¬Â¡Â°Ã­ÂÂ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡Â href -->
 										<td><a href="#">imp_764558197620</a></td>
 										<td>
 											<div class="table-header">
@@ -172,7 +177,7 @@
 							</div>
 						</div>
 						
-						<!-- pills margin-top (width에 따라서 다르게 설정하였음)-->
+						<!-- pills margin-top (widthì ë°ë¼ì ë¤ë¥´ê² ì¤ì íìì)-->
 						<div class="pills-space"></div>
 						
 						<!-- ================================================ -->
@@ -394,7 +399,7 @@
 						
 						<!-- #CHANGE PASSWORD -->
 						<div class="tab-pane" id="changePassword">
-							<!-- 일반 로그인인 경우 비밀번호 변경 가능 UI -->
+							<!-- ì¼ë° ë¡ê·¸ì¸ì¸ ê²½ì° ë¹ë°ë²í¸ ë³ê²½ ê°ë¥ UI -->
 							<div class="main-container">
 								<div class="container">
 									<div class="row">
@@ -433,7 +438,7 @@
 								</div>
 							</div>
 
-							<!-- SNS 로그인인 경우 비밀번호 변경 불가능 UI -->
+							<!-- SNS ë¡ê·¸ì¸ì¸ ê²½ì° ë¹ë°ë²í¸ ë³ê²½ ë¶ê°ë¥ UI -->
 							<div class="main-container">
 								<div class="container">
 									<div class="row">

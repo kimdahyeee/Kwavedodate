@@ -22,7 +22,7 @@
 		<result property="campaignSummary" column="cSummary" javaType="java.lang.String"/>
 		<result property="campaignContents" column="cContents" javaType="java.lang.String"/>
 		<result property="gatherMount" column="cAmount" javaType="int"/>
-		<result property="fundingUserCount" column="cUserCount" javaType="int"/>
+		<result property="fundingUserCount" column="cUseRCount" javaType="int"/>
 		<result property="launchDate" column="cLuanchDate" javaType="java.lang.String"/>
 		<result property="dueDate" column="cDueDate" javaType="java.lang.String"/>
 		<result property="youtubeCode" column="cYoutubeCode" javaType="java.lang.String"/>
@@ -36,9 +36,9 @@
 		<result property="campaignName" column="rName" javaType="java.lang.String"/>
 		<result property="rewardAmount" column="rAmount" javaType="java.lang.String"/>
 		<result property="rewardTotalCnt" column="rTotalCnt" javaType="java.lang.String"/>
-		<result property="rewardCurrentCnt" column="rCurrnetCnt" javaType="java.lang.String"/>
+		<result property="rewardCurrentCnt" column="RLurrnetCnt" javaType="java.lang.String"/>
 		<result property="rewardSubject" column="rSubject" javaType="java.lang.String"/>
-		<result property="rewardContents" column="rContents" javaType="java.lang.String"/>
+		<result property="rewardContents" column="RLontents" javaType="java.lang.String"/>
 		<result property="rewardImg" column="rImg" javaType="java.lang.String"/>
 	</resultMap>
 	
@@ -51,67 +51,72 @@
 	<select id="selectMainCampaign" resultMap="mainCampaign">
 	<![CDATA[ 
 		SELECT
-			CAMPAIGNNAME,
-			CAMPAIGNSUBJECT,
-			CAMPAIGNIMG,
-			TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
-		FROM CAMPAIGNS
-		WHERE ROWNUM <= 4 AND TO_DATE(to_char(DUEDATE,'YYYYMMDD')) >= TO_DATE(to_char(SYSDATE,'YYYYMMDD'))
-		AND LAUNCHDATE <= SYSDATE
+			C.CAMPAIGNNAME as CAMPAIGNNAME,
+			CL.CAMPAIGNSUBJECT as CAMPAIGNSUBJECT,
+			C.CAMPAIGNIMG as CAMPAIGNIMG,
+			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+		FROM CAMPAIGNS_${currentLocale} CL,
+			CAMPAIGNS C
+		WHERE ROWNUM <= 4 AND TO_DATE(to_char(C.DUEDATE,'YYYYMMDD')) >= TO_DATE(to_char(SYSDATE,'YYYYMMDD'))
+		AND C.LAUNCHDATE <= SYSDATE AND CL.CAMPAIGNNAME = C.CAMPAIGNNAME
 	]]> 
 	</select>
 	
 	<select id="selectAllCampaignsList" resultMap="campaignsList">
 	<![CDATA[ 
 		SELECT
-			CAMPAIGNNAME,
-			CAMPAIGNSUBJECT,
-			CAMPAIGNIMG,
-			TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
-		FROM CAMPAIGNS
-		WHERE LAUNCHDATE <= SYSDATE
+			C.CAMPAIGNNAME as CAMPAIGNNAME,
+			CL.CAMPAIGNSUBJECT as CAMPAIGNSUBJECT,
+			C.CAMPAIGNIMG as CAMPAIGNIMG,
+			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+		FROM CAMPAIGNS_${currentLocale} CL,
+			CAMPAIGNS C
+		WHERE C.LAUNCHDATE <= SYSDATE AND CL.CAMPAIGNNAME = C.CAMPAIGNNAME
 	]]>
 	</select>
 	
 	<select id="selectRewards" parameterType="hashmap" resultMap="rewardsPayment">
 	SELECT
-		REWARDSUBJECT,
-		REWARDIMG,
-		REWARDAMOUNT
-	FROM REWARDS
-	WHERE REWARDNUM=#{rewardNum} AND CAMPAIGNNAME=#{campaignName}
+		RL.REWARDSUBJECT as REWARDSUBJECT,
+		R.REWARDIMG as REWARDIMG,
+		R.REWARDAMOUNT as REWARDAMOUNT
+	FROM REWARDS_${currentLocale} RL,
+		REWARDS R
+	WHERE R.REWARDNUM=#{rewardNum} AND R.CAMPAIGNNAME=#{campaignName} AND R.REWARDNUM = RL.REWARDNUM
 	</select>
 	
-	<select id="detailCampaigns" resultMap="allCampaings">
+	<select id="detailCampaigns" parameterType="hashmap" resultMap="allCampaings">
 	SELECT
-		CAMPAIGNNAME as cName,
-		CAMPAIGNSUBJECT as cSubject,
-		CAMPAIGNSUMMARY as cSummary,
-		CAMPAIGNCONTENTS as cContents,
-		GATHERAMOUNT as cAmount,
-		FUNDINGUSERCNT as cUserCount,
-		LAUNCHDATE as cLuanchDate,
-		DUEDATE as cDueDate,
-		YOUTUBECODE as cYoutubeCode,
-		YOUTUBEIMG as cYoutubeImg,
-		CAMPAIGNIMG as cImg,
-		TO_DATE(to_char(DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as cDueToSys
-	FROM CAMPAIGNS
-   	WHERE CAMPAIGNNAME = #{campaignName}
+		C.CAMPAIGNNAME as cName,
+		CL.CAMPAIGNSUBJECT as cSubject,
+		CL.CAMPAIGNSUMMARY as cSummary,
+		CL.CAMPAIGNCONTENTS as cContents,
+		C.GATHERAMOUNT as cAmount,
+		C.FUNDINGUSERCNT as cUseRCount,
+		C.LAUNCHDATE as cLuanchDate,
+		C.DUEDATE as cDueDate,
+		C.YOUTUBECODE as cYoutubeCode,
+		C.YOUTUBEIMG as cYoutubeImg,
+		C.CAMPAIGNIMG as cImg,
+		TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as cDueToSys
+	FROM CAMPAIGNS_${currentLocale} CL,
+		CAMPAIGNS C
+   	WHERE C.CAMPAIGNNAME = #{campaignName} AND CL.CAMPAIGNNAME = C.CAMPAIGNNAME
 	</select>
 	
-	<select id="selectAllRewards" resultMap="allRewards">
+	<select id="selectAllRewards" parameterType="hashmap" resultMap="allRewards">
 	SELECT
-		REWARDNUM as rNum,
-		CAMPAIGNNAME as rName,
-		REWARDAMOUNT as rAmount,
-		REWARDTOTALCNT as rTotalCnt,
-		REWARDCURRENTCNT as rCurrnetCnt,
-		REWARDSUBJECT as rSubject,
-		REWARDCONTENTS as rContents,
-		REWARDIMG as rImg
-	FROM REWARDS
-    WHERE CAMPAIGNNAME = #{campaignName}
+		R.REWARDNUM as rNum,
+		R.CAMPAIGNNAME as rName,
+		R.REWARDAMOUNT as rAmount,
+		R.REWARDTOTALCNT as rTotalCnt,
+		R.REWARDCURRENTCNT as RLurrnetCnt,
+		RL.REWARDSUBJECT as rSubject,
+		RL.REWARDCONTENTS as RLontents,
+		R.REWARDIMG as rImg
+	FROM REWARDS_${currentLocale} RL,
+		REWARDS R
+    WHERE R.CAMPAIGNNAME = #{campaignName} AND R.REWARDNUM = RL.REWARDNUM
 	</select>
 	
 </mapper>

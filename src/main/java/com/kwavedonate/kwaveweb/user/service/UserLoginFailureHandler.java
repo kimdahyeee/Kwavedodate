@@ -2,7 +2,6 @@ package com.kwavedonate.kwaveweb.user.service;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +22,7 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-
+System.out.println("fail");
 		ObjectMapper om = new ObjectMapper(); 
 		Map<String, Object> map = new HashMap<String, Object>(); 
 		map.put("success", false); map.put("message", exception.getMessage()); 

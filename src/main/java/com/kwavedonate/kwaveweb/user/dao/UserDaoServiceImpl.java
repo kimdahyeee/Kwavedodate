@@ -1,5 +1,6 @@
 package com.kwavedonate.kwaveweb.user.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -8,6 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("userDaoService")
 public class UserDaoServiceImpl extends SqlSessionDaoSupport implements UserDaoService {
+
+	@Override
+	public int insertFacebookUser(Map<String, Object> paramMap) {
+		return getSqlSession().insert("user.insertFacebookUser", paramMap);
+	}
+	
+	@Override
+	public Map<String, Object> selectIsSns(String userEmail) {
+		return getSqlSession().selectOne("user.selectIsSns", userEmail);
+
+	}
 
 	@Override
 	@Transactional
@@ -72,4 +84,8 @@ public class UserDaoServiceImpl extends SqlSessionDaoSupport implements UserDaoS
 		return getSqlSession().update("user.modifyPassword", paramMap);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectHistoryList(Map<String, Object> map) {
+		return getSqlSession().selectList("user.selectHistoryList", map);
+	}
 }

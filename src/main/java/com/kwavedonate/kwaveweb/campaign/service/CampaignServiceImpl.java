@@ -13,23 +13,23 @@ import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 public class CampaignServiceImpl extends SqlSessionDaoSupport implements CampaignService{
 	
 	@Override
-	public List<Map<String, Object>> getAllCampaignsList() {
-		return getSqlSession().selectList("campaign.selectAllCampaignsList");
+	public List<Map<String, Object>> getAllCampaignsList(Map<String, Object> map) {
+		return getSqlSession().selectList("campaign.selectAllCampaignsList", map);
 	}
 
 	@Override
-	public List<Map<String, Object>> getMainCampaignsList() {		
-		return getSqlSession().selectList("campaign.selectMainCampaign");
+	public List<Map<String, Object>> getMainCampaignsList(Map<String, Object> map) {		
+		return getSqlSession().selectList("campaign.selectMainCampaign", map);
 	}
 
 	@Override
-	public CampaignVo getCampaignDetail(String campaignName) {
-		return getSqlSession().selectOne("campaign.detailCampaigns", campaignName);
+	public CampaignVo getCampaignDetail(Map<String, Object> map) {
+		return getSqlSession().selectOne("campaign.detailCampaigns", map);
 	}
 
 	@Override
-	public List<RewardsVo> getAllRewards(String campaignName) {
-		return getSqlSession().selectList("campaign.selectAllRewards", campaignName);
+	public List<RewardsVo> getAllRewards(Map<String, Object> map) {
+		return getSqlSession().selectList("campaign.selectAllRewards", map);
 	}
 	
 	@Override

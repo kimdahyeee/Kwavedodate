@@ -3,8 +3,11 @@ package com.kwavedonate.kwaveweb;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.annotation.Resource;
+
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,15 +24,20 @@ public class CampaignController {
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
+	
 	/**
 	 * campaigns È­¸é
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="")
-	public String CampaignsView(Model model){
+	public String CampaignsView(Model model, Locale locale){
 		
-		List<Map<String, Object>> list = campaignService.getAllCampaignsList();
+		Locale currentLocale = LocaleContextHolder.getLocale();
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("currentLocale", currentLocale);
+		
+		List<Map<String, Object>> list = campaignService.getAllCampaignsList(param);
 		List<Map<String, Object>> currentList = new ArrayList<Map<String,Object>>();
 		List<Map<String, Object>> recentlyList = new ArrayList<Map<String,Object>>();
 		
@@ -79,8 +87,12 @@ public class CampaignController {
 	 * @return
 	 */
 	@RequestMapping(value="/{campaignName}")
-	public String CampaignsDetail(@PathVariable("campaignName") String campaignName, Model model){
-		CampaignVo campaignDetail = campaignService.getCampaignDetail(campaignName);
+	public String CampaignsDetail(@PathVariable("campaignName") String campaignName, Model model, Locale locale){
+		Locale currentLocale = LocaleContextHolder.getLocale();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("campaignName", campaignName);
+		map.put("currentLocale", currentLocale);
+		CampaignVo campaignDetail = campaignService.getCampaignDetail(map);
 		int campaignDueDate = Integer.valueOf(campaignDetail.getDuedateToSysdate());
 		
 		if(campaignDueDate >= 0){
@@ -109,8 +121,12 @@ public class CampaignController {
 	 * @return
 	 */
 	@RequestMapping(value="/{campaignName}/reward")
-	public String rewardView(@PathVariable("campaignName") String campaignName, Model model){
-		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(campaignName);
+	public String rewardView(@PathVariable("campaignName") String campaignName, Model model, Locale locale){
+		Locale currentLocale = LocaleContextHolder.getLocale();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("campaignName", campaignName);
+		map.put("currentLocale", currentLocale);
+		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(map);
 		model.addAttribute("rewards", rewardsDetail);
 		
 		return "empty/rewards";

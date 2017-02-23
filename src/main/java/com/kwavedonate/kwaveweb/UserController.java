@@ -1,6 +1,8 @@
 package com.kwavedonate.kwaveweb;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -9,23 +11,15 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.cache.TransactionalCacheManager;
 import org.apache.ibatis.session.SqlSession;
-import org.mybatis.spring.MyBatisSystemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.config.TxNamespaceHandler;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -104,12 +98,16 @@ public class UserController {
 	 */
 	@RequestMapping("/myAccount")
 	public String myAccount(Model model, HttpServletRequest request, Authentication authentication) {
+		Locale currentLocale = LocaleContextHolder.getLocale();
 		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
+		Map<String, Object> map = new HashMap<String, Object>();
 		String userEmail = u.getUsername().toString();
-		
-		// ModelAndView modelAndView = new ModelAndView();
+		map.put("userEmail", userEmail);
+		map.put("currentLocale", currentLocale);
 		Map<String, Object> user = dao.selectUserAccount(userEmail);
+		List<Map<String, Object>> historyList = dao.selectHistoryList(map);
 		model.addAttribute("user", user);
+		model.addAttribute("historyList", historyList);
 
 		return "myAccount";
 	}
@@ -157,6 +155,61 @@ public class UserController {
 		return hashmap;
 	}
 
+	/**
+	 * 중복확인
+	 */
+	@ResponseBody
+	@RequestMapping(value="/validateOk", method=RequestMethod.POST)
+	public HashMap<String, Object> validate(HttpServletRequest request, @RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
+		
+		String ipc = GetIpAddress.getClientIP(request);
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		
+		paramMap.put("userEmail", userEmail);
+		paramMap.put("userName", userName);
+		if(ipc.equals("en")) {
+			paramMap.put("userNation", "ENG");
+		} else if(ipc.equals("ko")) {
+			paramMap.put("userNation", "KOR");
+		} else {
+			paramMap.put("userNation", "CHI");
+		}
+		int result;
+
+		try {
+			result = dao.insertFacebookUser(paramMap);
+		} catch (Exception e) {
+			result = 0;
+		}
+
+		if (result == 1) {
+			hashmap.put("KEY", "SUCCESS");
+		} else {
+			hashmap.put("KEY", "FAIL");
+		}
+
+		return hashmap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/isSnsAlready", method=RequestMethod.POST)
+	public HashMap<String, Object> isSnsAlready(HttpServletRequest request, @RequestParam("userEmail") String userEmail) {
+		
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		Map<String, Object> result = dao.selectIsSns(userEmail);
+		int isSns = Integer.valueOf(result.get("ISSNS").toString());
+		
+		if(isSns == 1){
+			hashmap.put("KEY", "SUCCESS");
+		}else{
+			hashmap.put("KEY", "FAIL");
+		}
+
+		return hashmap;
+	}
+	
 	// About You 수정
 	@ResponseBody
 	@RequestMapping(value = "/modifyUser", method = RequestMethod.POST)

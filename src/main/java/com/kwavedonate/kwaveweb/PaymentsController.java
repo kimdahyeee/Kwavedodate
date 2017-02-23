@@ -2,10 +2,12 @@ package com.kwavedonate.kwaveweb;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,20 +30,24 @@ public class PaymentsController {
 	private UserDaoService userService;
 	
 	/**
-	 * enter now 누른 후 reward 페이지
+	 * enter now �늻瑜� �썑 reward �럹�씠吏�
 	 * @param campaignName
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="/{campaignName}/rewards")
-	public String rewardsView(@PathVariable("campaignName") String campaignName, Model model){
-		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(campaignName);
+	public String rewardsView(@PathVariable("campaignName") String campaignName, Model model, Locale locale){
+		Locale currentLocale = LocaleContextHolder.getLocale();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("campaignName", campaignName);
+		map.put("currentLocale", currentLocale);
+		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(map);
 		model.addAttribute("rewards", rewardsDetail);
 		return "rewards";
 	}
 	
 	/**
-	 * $10 결제 페이지
+	 * $10 寃곗젣 �럹�씠吏�
 	 * @param campaignName
 	 * @return
 	 */
@@ -57,7 +63,7 @@ public class PaymentsController {
 	}
 	
 	/**
-	 *  reward 선택 후 결제 페이지
+	 *  reward �꽑�깮 �썑 寃곗젣 �럹�씠吏�
 	 * @param campaignName
 	 * @param rewardNum
 	 * @param authentication
@@ -65,14 +71,16 @@ public class PaymentsController {
 	 * @return
 	 */
 	@RequestMapping(value="/{campaignName}/reward/{rewardNum}")
-	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model){
+	public String pamentsDetailView(@PathVariable("campaignName") String campaignName, @PathVariable("rewardNum") String rewardNum, Authentication authentication, Model model, Locale locale){
+		Locale currentLocale = LocaleContextHolder.getLocale();
 		UserDetailsVO u = (UserDetailsVO) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		Map<String, Object> user = userService.selectUserAccount(userEmail);
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("campaignName", campaignName);
-		param.put("rewardNum", rewardNum);
-		Map<String, Object> rewardMap = campaignService.getRewards(param);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("currentLocale", currentLocale);
+		map.put("campaignName", campaignName);
+		map.put("rewardNum", rewardNum);
+		Map<String, Object> rewardMap = campaignService.getRewards(map);
 		
 		model.addAttribute("user", user);
 		model.addAttribute("campaignName", campaignName);
