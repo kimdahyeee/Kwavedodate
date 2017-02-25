@@ -91,9 +91,9 @@ public class UserDaoServiceImpl extends SqlSessionDaoSupport implements UserDaoS
 	}
 	
 	@Override
-	public int updaterewardsByPayment(Map<String, Object> paramMap) {
+	public int updateRewardsByPayment(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
-		return getSqlSession().update("user.updaterewardsByPayment", paramMap);
+		return getSqlSession().update("user.updateRewardsByPayment", paramMap);
 	}
 
 	@Override

@@ -8,7 +8,7 @@
 
 									<h3 class="title">follow us on: </h3>
 									<ul class="social-links circle animated-effect-1">
-										<li class="facebook"><a target="_blank" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+										<li class="facebook"><a target="_blank" href="https://www.facebook.com/kwavedonation/"><i class="fa fa-facebook"></i></a></li>
 										<li class="twitter"><a target="_blank" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
 										<li class="googleplus"><a target="_blank" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a></li>
 										<li class="linkedin"><a target="_blank" href="http://www.linkedin.com"><i class="fa fa-linkedin"></i></a></li>
@@ -18,7 +18,7 @@
 									<div class="footer-category">
 										<div class="row text-center">
 											<div class="form-inline" data-animation-effect="fadeIn">
-												<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#">About Us</a>
+												<a class="btn square btn-gray-transparent btn-lg foot-cate" href="/kwaveweb/aboutUs">About Us</a>
 												<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#">Partnership</a>
 												<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#">Terms Of Use</a>
 												<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#">Privacy Policy</a>
