@@ -25,9 +25,9 @@ public class UserDetailsVo extends User {
 			boolean credentialsNonExpired,  // true
 			boolean accountNonLocked, 		// true
 			Collection<? extends GrantedAuthority> authorities,
-			String user_name) {
+			String user_name, String userNation) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-
+		setUserNation(userNation);
 	}
 
 /*	public UserDetailsVO(String username, String password, 

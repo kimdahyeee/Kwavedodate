@@ -22,13 +22,14 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-System.out.println("fail");
-		ObjectMapper om = new ObjectMapper(); 
-		Map<String, Object> map = new HashMap<String, Object>(); 
-		map.put("success", false); map.put("message", exception.getMessage()); 
-		// {"success" : false, "message" : "..."} 
-		String jsonString = om.writeValueAsString(map); 
-		OutputStream out = response.getOutputStream(); 
+		System.out.println("fail");
+		ObjectMapper om = new ObjectMapper();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("success", false);
+		map.put("message", exception.getMessage());
+		// {"success" : false, "message" : "..."}
+		String jsonString = om.writeValueAsString(map);
+		OutputStream out = response.getOutputStream();
 		out.write(jsonString.getBytes());
 
 	}

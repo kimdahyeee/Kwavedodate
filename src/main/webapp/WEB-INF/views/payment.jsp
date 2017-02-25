@@ -33,7 +33,9 @@
 													<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="${user.PHONE }" required>
 												</div>
 											</div>
+											
 											<label></label>
+								
 											
 											<c:if test="${rewardNum != 0}">
 												<h3>Where should we send your stuff?</h3>
@@ -52,6 +54,7 @@
 														</select>
 													</div>
 												</div>
+												
 												<div class="form-group has-feedback text-center">
 													<label for="inputZipCode" class="col-xs-3 col-sm-3">Zip Code : </label>
 													<div class="col-xs-9 col-sm-9">

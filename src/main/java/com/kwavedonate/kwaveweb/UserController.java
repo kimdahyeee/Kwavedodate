@@ -49,7 +49,7 @@ public class UserController {
 	private BcryptEncoder encoder;
 
 	/*
-	 * х╦О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫
+	 * М ▄Л⌡░Й╟─Л·┘ М▌≤Л²╢Л╖─ Л²╢К▐≥
 	 */
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
@@ -63,32 +63,13 @@ public class UserController {
 	}
 	
 	/*
-	 * О©╫О©╫п╧О©╫хё цёО©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫
+	 * find password by email
 	 */
 	@RequestMapping("/findPassword")
 	public String findpassword() {
 		return "findPassword";
 	}
 	
-	/*
-	 * О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫
-	 */
-	@RequestMapping("/errorPage") 
-	public String errorPage() {
-		return "errorPage";
-	}
-
-	/*
-	 * О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫ О©╫л╣О©╫О©╫о╢О©╫ О©╫О©╫О©╫О©╫О©╫О©╫
-	 */
-	@RequestMapping("/denied")
-	public String denied(Model model, Authentication auth, HttpServletRequest request) {
-		/*AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
-		model.addAttribute("auth", auth);
-		model.addAttribute("errMsg", ade);*/
-
-		return "deniedPage";
-	}
 
 	/*
 	 * О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫
@@ -179,22 +160,22 @@ public class UserController {
 		int result;
 
 		try {
-			//цЁю╫ ╟║ютго╢б ╟Ф©Л
+			//цЁО©╫О©╫ О©╫О©╫О©╫О©╫О©╫о╢О©╫ О©╫О©╫О©╫
 			result = dao.insertFacebookUser(paramMap);
 		} catch (Exception e) {
-			//юл╧л ╟║ют╣х ╟Ф©Л
+			//О©╫л╧О©╫ О©╫О©╫О©╫т╣О©╫ О©╫О©╫О©╫
 			Map<String, Object> snsMap = dao.selectIsSns(userEmail);
 			int isSns = Integer.valueOf(snsMap.get("ISSNS").toString());
 			if(isSns == 1){
-				result = 1; //sns ╟║ют╣х ╟Ф©Л
+				result = 1; //sns О©╫О©╫О©╫т╣О©╫ О©╫О©╫О©╫
 			}else{
-				result=0; //╥н╠вюн ╫гфп
+				result=0; //О©╫н╠О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
 			}
 		}
 
-		System.out.println("╩Пют╬х╣й!" + result);
+		System.out.println("О©╫О©╫О©╫т╬х╣О©╫!" + result);
 		if (result == 1) {
-			hashmap.put("KEY", "SUCCESS"); //цЁю╫ ╟║ютго╢б ╟Ф©Л
+			hashmap.put("KEY", "SUCCESS"); //цЁО©╫О©╫ О©╫О©╫О©╫О©╫О©╫о╢О©╫ О©╫О©╫О©╫
 		}else {
 			hashmap.put("KEY", "FAIL");
 		}
