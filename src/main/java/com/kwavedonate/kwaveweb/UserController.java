@@ -453,6 +453,7 @@ public class UserController {
 			@RequestParam("userEmail")String userEmail,
 			@RequestParam("campaignName")String campaignName,
 			@RequestParam("rewardNum")String rewardNum,
+			@RequestParam("rewardAmount")String rewardAmount,
 			@RequestParam("totalAmount")String totalAmount,
 			@RequestParam("shippingAmount")String shippingAmount,
 			@RequestParam("shippingMethod")String shippingMethod,
@@ -471,6 +472,7 @@ public class UserController {
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("campaignName", campaignName);
 		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
+		paramMap.put("rewardAmount", Integer.parseInt(rewardAmount));
 		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
 		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
 		paramMap.put("shippingMethod", shippingMethod);
@@ -499,18 +501,24 @@ public class UserController {
 			resultP = dao.insertPayments(paramMap);
 			resultD = dao.insertDelivery(paramMap);
 			
-			//dao.updateCampaignsByPayment(paramMap);
-			//dao.updaterewardsByPayment(paramMap);
+			dao.updateRewardsByPayment(paramMap);
+			dao.updateCampaignsByPayment(paramMap);
+			transactionManager.commit(status);
 			if(resultD == 1 && resultP == 1) {
 				hashmap.put("KEY", "SUCCESS");
 			}
 		} catch (Exception e) {
 			System.out.println("catch문 들어옴");
-			transactionManager.rollback(status);
+			try {
+				transactionManager.rollback(status);
+			} catch(Exception ee) {
+				 System.out.println("Exception in commit or rollback : "+ee);
+			}
+			
+			System.out.println("Exception in saveTemplatesToPCA() : "+e);
 			hashmap.put("KEY", "FAIL");
-			e.printStackTrace();
 		}
-		transactionManager.commit(status);
+		
 		
 		return hashmap;
 	}

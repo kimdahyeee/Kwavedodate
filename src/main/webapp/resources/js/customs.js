@@ -837,7 +837,7 @@ $(document).ready(function() {
                   buyer_name : $("#userName").val(),
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
-                  buyer_postcode : '123-456',
+                  buyer_postcode : $("#zipCode").val(),
                   m_redirect_url : 'https://www.yourdomain.com/payments/complete'
                 	  
               }, function(rsp) {
@@ -862,6 +862,9 @@ $(document).ready(function() {
                                     "rewardNum" : $("#rewardNum").val(),
                                     "totalAmount" : $("#totalAmount").val(),
                                     "shippingAmount" : $("#shippingAmount").val(),
+                                    "shippingMethod" : $("#shippingMethod").val(),
+                                    "rewardAmount" : $("#rewardAmount").val(),
+                                    
 	                                 "note" : $("#note").val(),
 	                                 "country" : $("#country").val(),
 	                                 "phone": $("#phone").val(),
@@ -890,6 +893,7 @@ $(document).ready(function() {
 	                                 "userEmail": $("#userEmail").val(),
 	                                 "campaignName" : $("#campaignName").val(),
 	                                 "rewardNum" : $("#rewardNum").val(),
+	                                 "rewardAmount" : $("#rewardAmount").val(),
 	                                 "totalAmount" : $("#totalAmount").val(),
 	                                 "shippingAmount" : $("#shippingAmount").val(),
 	                                 "shippingMethod" : $("#shippingMethod").val(),
