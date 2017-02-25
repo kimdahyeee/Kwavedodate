@@ -25,9 +25,12 @@ public class CampaignController {
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
+	static int KoExchangeRate = 1100; //1ë‹¬ëŸ¬ë‹¹ 1100ì›
+	static int ChExchangeRate = 165; //1ë‹¬ëŸ¬ë‹¹ 165ìœ„ì•ˆ
+	static int DefaultMoney = 10; //ê¸°ë³¸ ìš”ê¸ˆ
 	
 	/**
-	 * campaigns È­¸é
+	 * campaigns í™”ë©´
 	 * @param model
 	 * @return
 	 */
@@ -49,7 +52,7 @@ public class CampaignController {
 			int campaignDueDate = Integer.valueOf(lists.get("campaignDueDate").toString());
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			//current campaigns Á¤º¸
+			//current campaigns list
 			if(campaignDueDate >= 0){
 				if(campaignDueDate == 7){
 					map.put("campaignDueDate", "a week left");
@@ -66,7 +69,7 @@ public class CampaignController {
 				
 				currentList.add(map);
 			}else{
-				//recently campaigns Á¤º¸
+				//recently campaigns list
 				map.put("campaignName", campaignName);
 				map.put("campaignSubject", campaignSubject);
 				map.put("campaignImg", campaignImg);
@@ -82,7 +85,7 @@ public class CampaignController {
 	}
 	
 	/**
-	 * campaign »ó¼¼È­¸é
+	 * campaign ìƒì„¸í™”ë©´
 	 * @param campaignName
 	 * @param model
 	 * @return
@@ -116,7 +119,7 @@ public class CampaignController {
 	}
 	
 	/**
-	 * campaign detailÈ­¸é¿¡ »ğÀÔ µÉ rewards ¸ñ·Ï
+	 * campaign detailí™”ë©´ì— ì‚½ì…ë˜ëŠ” rewardsí™”ë©´
 	 * @param campaignName
 	 * @param model
 	 * @return
@@ -128,6 +131,30 @@ public class CampaignController {
 		map.put("campaignName", campaignName);
 		map.put("currentLocale", currentLocale);
 		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(map);
+		for(RewardsVo lists : rewardsDetail){
+			int amount = Integer.valueOf(lists.getRewardAmount());
+			if(currentLocale.toString().equals("en")){
+				lists.setRewardAmount(String.valueOf(amount));
+			}else if(currentLocale.toString().equals("ch")){
+				amount = amount * ChExchangeRate;
+				lists.setRewardAmount(String.valueOf(amount));
+			}else{
+				amount = amount * KoExchangeRate;
+				lists.setRewardAmount(String.valueOf(amount));
+			}
+		}
+		
+		int defaultMoney = DefaultMoney;
+		if(currentLocale.toString().equals("en")){
+			model.addAttribute("defaultMoney", String.valueOf(defaultMoney));
+		}else if(currentLocale.toString().equals("ch")){
+			defaultMoney = DefaultMoney * ChExchangeRate;
+			model.addAttribute("defaultMoney", String.valueOf(defaultMoney));
+		}else{
+			defaultMoney = DefaultMoney * KoExchangeRate;
+			model.addAttribute("defaultMoney", String.valueOf(defaultMoney));
+		}
+		
 		model.addAttribute("rewards", rewardsDetail);
 		
 		return "empty/rewards";
