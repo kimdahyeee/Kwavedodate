@@ -29,14 +29,14 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ObjectMapper om = new ObjectMapper(); 
 		Map<String, Object> map = new HashMap<String, Object>(); 
 		map.put("KEY", "SUCCESS"); 
-		map.put("returnUrl", getReturnUrl(request, response)); 
+		map.put("RETURNURI", getReturnUrl(request, response));
 		String jsonString = om.writeValueAsString(map); 
 		OutputStream out = response.getOutputStream(); 
 		out.write(jsonString.getBytes());
 	}
 	
 	/** 
-	 * ·Î±×ÀÎ ÇÏ±â ÀüÀÇ ¿äÃ»Çß´ø URLÀ» ¾Ë¾Æ³½´Ù. 
+	 * ì´ì „ í˜ì´ì§€ë¡œ ì´ë™
 	 * @param request 
 	 * @param response 
 	 * @return 
