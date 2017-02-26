@@ -16,6 +16,8 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
+import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
+
 
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -29,25 +31,37 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		ObjectMapper om = new ObjectMapper(); 
 		Map<String, Object> map = new HashMap<String, Object>(); 
 		map.put("KEY", "SUCCESS"); 
-		map.put("returnUrl", getReturnUrl(request, response)); 
+		map.put("RETURNURI", getReturnUrl(request, response)+getReturnLang(a));
 		String jsonString = om.writeValueAsString(map); 
 		OutputStream out = response.getOutputStream(); 
 		out.write(jsonString.getBytes());
 	}
 	
 	/** 
-	 * ·Î±×ÀÎ ÇÏ±â ÀüÀÇ ¿äÃ»Çß´ø URLÀ» ¾Ë¾Æ³½´Ù. 
+	 * ì´ì „ í˜ì´ì§€ë¡œ ì´ë™
 	 * @param request 
 	 * @param response 
 	 * @return 
 	 * */ 
 	private String getReturnUrl(HttpServletRequest request, HttpServletResponse response) { 
+		
 		RequestCache requestCache = new HttpSessionRequestCache(); 
 		SavedRequest savedRequest = requestCache.getRequest(request, response); 
 		if (savedRequest == null) { 
 			return request.getSession().getServletContext().getContextPath(); 
 		} 
 		return savedRequest.getRedirectUrl(); 
+	}
+	
+	private String getReturnLang(Authentication authentication) {
+		UserDetailsVo user = (UserDetailsVo) authentication.getPrincipal();
+		if(user.getUserNation().equals("KOR")) {
+			return "?lang=ko";
+		} else if (user.getUserNation().equals("ENG")) {
+			return "?lang=en";
+		} else {
+			return "?lang=ch";
+		}
 	}
 }
 

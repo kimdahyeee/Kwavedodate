@@ -1,11 +1,10 @@
-/* Theme Name: KWAVE D Web Service
+/* T/* Theme Name: KWAVE D Web Service
  * Author: Choi Hong Hee(Adler)
  * Author URI: http://kwavedonate.com
  * Author e-mail: vvshinevv@naver.com
  * Created: Jan 2017
  * File Description: Custom scripts
  */
-
 $(document).ready(function() {	
 	
 	/* ckEditor plug in 추가 */
@@ -81,10 +80,10 @@ $(document).ready(function() {
     }
         
 
-	/* swiper customize */
+   /* swiper customize */
     if($(".swiper-container").length>0) {
-    	var swiper = new Swiper('.swiper-container', {
-        	initialSlide: 2,
+       var swiper = new Swiper('.swiper-container', {
+           initialSlide: 2,
             pagination: '.swiper-pagination',
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev',
@@ -93,63 +92,64 @@ $(document).ready(function() {
             paginationClickable: true,
             spaceBetween: 10,
             breakpoints: {
-            	320: {
-            		slidesPerView: 1, 
-            		spaceBetween: 10
-            	},
-            	480: {
-            		slidesPerView: 1,
-            		spaceBetween: 10
-            	},
-            	640: {
-            		slidesPerView: 1,
-            		spaceBetween: 10
-            	},
-            	767: {
-            		slidesPerView: 1,
-            		spaceBetween: 10
-            	},
-            	991: {
-            		slidesPerView: 1,
-            		spaceBetween: 10
-            	},
-            	1199: {
-            		slidesPerView: 1,
-            		spaceBetween: 10
-            	},
+               320: {
+                  slidesPerView: 1, 
+                  spaceBetween: 10
+               },
+               480: {
+                  slidesPerView: 1,
+                  spaceBetween: 10
+               },
+               640: {
+                  slidesPerView: 1,
+                  spaceBetween: 10
+               },
+               767: {
+                  slidesPerView: 1,
+                  spaceBetween: 10
+               },
+               991: {
+                  slidesPerView: 1,
+                  spaceBetween: 10
+               },
+               1199: {
+                  slidesPerView: 1,
+                  spaceBetween: 10
+               },
                 1280: {
                     slidesPerView: 2,
                     spaceBetween: 20
                 },
 
-            	1320: {
-            		slidesPerView: 2,
-            		spaceBetween: 20
-            	},
-            	1640: {
-    				slidesPerView: 2,
-            		spaceBetween: 20
-            	},
-            	2000: {
-            		slidesPerView: 3,
-            		spaceBetween: 30
-            	},
-            	3000: {
-    				slidesPerView: 3,
-            		spaceBetween: 30
-            	},
-            	4000: {
-    				slidesPerView: 3,
-            		spaceBetween: 30
-            	},
-            	6000: {
-            		slidesPerView: 5,
-            		spaceBetween: 30
-            	}
+               1320: {
+                  slidesPerView: 2,
+                  spaceBetween: 20
+               },
+               1640: {
+                slidesPerView: 2,
+                  spaceBetween: 20
+               },
+               2000: {
+                  slidesPerView: 3,
+                  spaceBetween: 30
+               },
+               3000: {
+                slidesPerView: 3,
+                  spaceBetween: 30
+               },
+               4000: {
+                slidesPerView: 3,
+                  spaceBetween: 30
+               },
+               6000: {
+                  slidesPerView: 5,
+                  spaceBetween: 30
+               }
             }
         });
     }
 
+    
     /* Contact form validation customize*/
     // 회원가입 validation
     if($("#validateSignIn").length>0) {
@@ -168,7 +168,7 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
-                          alert("회원가입을 축하드립니다");
+                          alert(returnmsg(signin_welcome));//회원가입을 축하드립니다
                           window.location = "http://localhost:8181/kwaveweb/login";
                        }else{
                           alert("이미 회원가입 된 이메일입니다.");
@@ -244,7 +244,7 @@ $(document).ready(function() {
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
-                	type: "POST",
+                   type: "POST",
                     url: "/kwaveweb/j_spring_security_check",
                     data: {
                         "userEmail": $("#userEmail").val(),
@@ -252,14 +252,9 @@ $(document).ready(function() {
                     },
                     dataType: "json",
                     success: function(data) {
-                    	//성공 시 데이터 처리 
+                       //성공 시 데이터 처리 
                         if(data.KEY=="SUCCESS") {
-                           if((document.refferer)=="localhost:8181/kwaveweb/login") {
-                              location.href="/kwaveweb/";
-                           }
-                           else {
-                              location.replace(document.referrer);
-                           }
+                              location.replace(data.RETURNURI);
                         } else {
                            alert("로그인 실패");
                            location.href="/kwaveweb/login";
@@ -317,7 +312,7 @@ $(document).ready(function() {
                     },
                     dataType: "json",
                     success: function(data) {
-                    	if(data.KEY == "SUCCESS"){
+                       if(data.KEY == "SUCCESS"){
                             alert("메일이 전송되었습니다.");
                             window.location = "http://localhost:8181/kwaveweb/";
                          }else{
@@ -371,7 +366,7 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
-                    	if(data.KEY == "SUCCESS"){
+                       if(data.KEY == "SUCCESS"){
                             alert("비밀번호가 변경되었습니다.");
                             window.location = "http://localhost:8181/kwaveweb/myAccount";
                          }else{
@@ -411,7 +406,7 @@ $(document).ready(function() {
                     minlength: "Your password must be at least 6 charaters long."
                 },
                 newPasswordConfirm: {
-                    required: "Please confirm the password.",
+                    required: confirm_password, //"Please confirm the password.",
                     minlength: "Your password must be at least 6 charaters long.",
                     equalTo: "Please enter the same password as above."
                 }
@@ -430,44 +425,44 @@ $(document).ready(function() {
     
     // ui 변경
     if($("#updateYourInfo").length>0) {
-    	var cityInputTag = "" +
-    			"<div class='form-group has-feedback cityArea'>" +
-					"<div class='col-sm-12'>" +
-							"<input type='text' class='form-control' id='city' name='city' placeholder='City' value=''/>" +
-							"<i class='fa fa-tag form-control-feedback fa-lg'></i>" +
-						"</div>" +
-				"</div>";
-		var regionInputTag = "" +
-				"<div class='form-group has-feedback regionArea'>" +
-						"<div class='col-sm-12'>" +
-						"<input type='text' class='form-control' id='region' name='region' placeholder='Region' value=''/>" +
-						"<i class='fa fa-tags form-control-feedback fa-lg'></i>" +
-					"</div>" +
-				"</div>";
-		var cityRegionArea = "" +
-				"<div class='cityRegionArea'>" +
-					"<input type='hidden' id='city' name='city value=''/>" + 
-					"<input type='hidden' id='region' name='region' value=''/>" +
-				"</div>";
-    	
-    	$("#country").change(function() {
-    		if($("#country").val() == 'KR') {
-    			$(".cityArea").remove();
-    			$(".regionArea").remove();
-    			$(".appendInputArea").append(cityRegionArea);
-    		} else {	
-    			if(!($(".cityArea").length>0 && $(".regionArea").length>0)) {
-    				$(".cityRegionArea").remove();
-    				$(".appendInputArea").append(cityInputTag);
-        			$(".appendInputArea").append(regionInputTag);
-    			}
-    		}
-    	});
+       var cityInputTag = "" +
+             "<div class='form-group has-feedback cityArea'>" +
+               "<div class='col-sm-12'>" +
+                     "<input type='text' class='form-control' id='city' name='city' placeholder='City' value=''/>" +
+                     "<i class='fa fa-tag form-control-feedback fa-lg'></i>" +
+                  "</div>" +
+            "</div>";
+      var regionInputTag = "" +
+            "<div class='form-group has-feedback regionArea'>" +
+                  "<div class='col-sm-12'>" +
+                  "<input type='text' class='form-control' id='region' name='region' placeholder='Region' value=''/>" +
+                  "<i class='fa fa-tags form-control-feedback fa-lg'></i>" +
+               "</div>" +
+            "</div>";
+      var cityRegionArea = "" +
+            "<div class='cityRegionArea'>" +
+               "<input type='hidden' id='city' name='city value=''/>" + 
+               "<input type='hidden' id='region' name='region' value=''/>" +
+            "</div>";
+       
+       $("#country").change(function() {
+          if($("#country").val() == 'KR') {
+             $(".cityArea").remove();
+             $(".regionArea").remove();
+             $(".appendInputArea").append(cityRegionArea);
+          } else {   
+             if(!($(".cityArea").length>0 && $(".regionArea").length>0)) {
+                $(".cityRegionArea").remove();
+                $(".appendInputArea").append(cityInputTag);
+                 $(".appendInputArea").append(regionInputTag);
+             }
+          }
+       });
     }
 
     // 개인 정보 변경 validation
     if($("#validateAboutYou").length>0) {
-    	$("#nation").val($("#nation_hidden").val()).attr("selected", "selected");
+       $("#nation").val($("#nation_hidden").val()).attr("selected", "selected");
         $("#validateAboutYou").validate({
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
@@ -484,7 +479,7 @@ $(document).ready(function() {
                     success: function(data) {
                         //성공 시 데이터 처리 
                     	if(data.KEY == "SUCCESS"){
-                            alert("회원정보수정이 완료되었습니다.");
+                            alert(msg2); //회원정보수정이 완료되었습니다.
                            location.href = "http://localhost:8181/kwaveweb/myAccount";
                            
                          }else{
@@ -546,13 +541,13 @@ $(document).ready(function() {
                     type: "POST",
                     url: "/kwaveweb/pwdmodifyService",
                     data: {
-                    	"userEmail" : $("#userEmail").val(),
+                       "userEmail" : $("#userEmail").val(),
                         "userPassword": $("#newPassword").val()
                     },
                     dataType: "json",
                     success: function(data) {
                         //성공 시 데이터 처리 
-                    	if(data.KEY == "SUCCESS"){
+                       if(data.KEY == "SUCCESS"){
                             alert("비밀 번호가 변경되었습니다. 로그인 해주세요.");
                            location.href = "http://localhost:8181/kwaveweb/login";
                            
@@ -603,7 +598,7 @@ $(document).ready(function() {
 
     // 배송정보 validation
     if($("#validateDeliveryInfo").length>0) {
-    	$("#country").val($("#country_hidden").val()).attr("selected", "selected");
+       $("#country").val($("#country_hidden").val()).attr("selected", "selected");
         $("#validateDeliveryInfo").validate({
             submitHandler: function(form) {   
                 // Iamport 결제 모듈 연동
@@ -611,7 +606,7 @@ $(document).ready(function() {
                     type: "POST",
                     url: "/kwaveweb/modifyAddress",
                     data: {
-                    	 "address1": $("#address1").val(),
+                        "address1": $("#address1").val(),
                          "address2": $("#address2").val(),
                          "zipCode": $("#zipCode").val(),
                          "city" : $("#city").val(),
@@ -620,7 +615,7 @@ $(document).ready(function() {
                     },
                     dataType: "json",
                     success: function(data) {
-                    	if(data.KEY == "SUCCESS"){
+                       if(data.KEY == "SUCCESS"){
                             alert("주소지 정보 수정이 완료되었습니다.");
                             location.href = "http://localhost:8181/kwaveweb/myAccount";
                          }else{
@@ -657,8 +652,8 @@ $(document).ready(function() {
     	// ===============
     	if($("#rewardNum").val() != 0) {
     		if($("#country").val() == 'KR') {
-        		$(".shippingAmountArea").text("$" + sAmountKR);
-    			$(".totalAmountArea").text("$" + parseInt(parseInt(rewardAmount) + parseInt(sAmountKR)));
+        		$(".shippingAmountArea").text(notation + sAmountKR);
+    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + parseInt(sAmountKR)));
     			$("div").remove("#paymentMethodGlobal");
     			
     			// input Tag 값 설정!! 
@@ -668,44 +663,44 @@ $(document).ready(function() {
     			$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmountKR)));
     			// ==========   			
     		} else if($("#country").val() == 'CN') {
-    			$(".shippingAmountArea").text("$" + sAmountCN);
-    			$(".totalAmountArea").text("$" + parseInt(parseInt(rewardAmount) + parseInt(sAmountCN)));
+    			$(".shippingAmountArea").text(notation + sAmountCN);
+    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + parseInt(sAmountCN)));
     			$("div").remove("#paymentMethodKOR");
     			
     			$("#shippingAmount").val(sAmountCN);
     			$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmountCN)));
     		} else if($("#country").val() == 'HK') {
-    			$(".shippingAmountArea").text("$" + sAmountHK);
-    			$(".totalAmountArea").text("$" + parseInt(parseInt(rewardAmount) + parseInt(sAmountHK)));
+    			$(".shippingAmountArea").text(notation + sAmountHK);
+    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + parseInt(sAmountHK)));
     			$("div").remove("#paymentMethodKOR");
     			
     			$("#shippingAmount").val(sAmountHK);
     			$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmountHK)));
     		} else if($("#country").val() == 'JP') {
-    			$(".shippingAmountArea").text("$" + sAmountJP);
-    			$(".totalAmountArea").text("$" + parseInt(parseInt(rewardAmount) + parseInt(sAmountJP)));
+    			$(".shippingAmountArea").text(notation + sAmountJP);
+    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + parseInt(sAmountJP)));
     			$("div").remove("#paymentMethodKOR");
     			
     			$("#shippingAmount").val(sAmountJP);
     			$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmountJP)));
     		}else if($("#country").val() == 'US') {
-    			$(".shippingAmountArea").text("$" + sAmountUS);
-    			$(".totalAmountArea").text("$" + parseInt(parseInt(rewardAmount) + parseInt(sAmountUS)));
+    			$(".shippingAmountArea").text(notation + sAmountUS);
+    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + parseInt(sAmountUS)));
     			$("div").remove("#paymentMethodKOR");
     			
     			$("#shippingAmount").val(sAmountUS);
     			$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmountUS)));
     		}else if($("#country").val() == 'BR') {
-    			$(".shippingAmountArea").text("$" + sAmountBR);
-    			$(".totalAmountArea").text("$" + parseInt(parseInt(rewardAmount) + parseInt(sAmountBR)));
+    			$(".shippingAmountArea").text(notation + sAmountBR);
+    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + parseInt(sAmountBR)));
     			$("div").remove("#paymentMethodKOR");
     			
     			$("#shippingAmount").val(sAmountBR);
     			$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmountBR)));
     		} else {
     			$("#paymentMethodGlobal").remove();
-    			$(".shippingAmountArea").text("$" + 0);
-    			$(".totalAmountArea").text("$" + parseInt(parseInt(rewardAmount) + 0));
+    			$(".shippingAmountArea").text(notation + 0);
+    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + 0));
     		}
     	} else {
     		// $10인 경우 값 설정 처리 
@@ -812,59 +807,74 @@ $(document).ready(function() {
 				}
 			}
 		});
-		// ===============
     }
     
     // 결제정보 validation
     if($("#validatePaymentInfo").length>0) {
-    	var IMP = window.IMP;
-    	IMP.init('imp57757789');	
+       var IMP = window.IMP;
+       //IMP.init('imp57757789');   
         $("#validatePaymentInfo").validate({
             submitHandler: function(form) {  
-
-            	var payment_method = document.getElementsByName("payment_method");
+            	var payment_country = $("#country").val();
             	var payment_method_checked = '';
-            	for(var i = 0; i < payment_method.length; i++) {
-            		if(payment_method[i].checked == true) {
-            			payment_method_checked = payment_method[i].value;
-            		}
-            	}
+            	var payment_pg = '';
             	
-            	IMP.request_pay({
-        		    pg : 'inicis', // version 1.1.0부터 지원.	// inicis
-        		    pay_method : payment_method_checked,//payment_method_checked,
-        		    merchant_uid : 'merchant_' + new Date().getTime(),
-        		    name : $("#campaignName").val(),
-        		    amount : $("#totalAmount").val(),
-        		    buyer_email : $("#userEmail").val(),
-        		    buyer_name : $("#userName").val(),
-        		    buyer_tel : $("#phone").val(),
-        		    buyer_addr : $("#address1").val(),
-        		    buyer_postcode : '123-456',
-        		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
-        		}, function(rsp) {
-        		    if ( rsp.success ) {
-        		        var msg = '결제가 완료되었습니다.';
-        		        msg += '고유ID : ' + rsp.imp_uid;
-        		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-        		        msg += '결제 금액 : ' + rsp.paid_amount;
-        		        msg += '카드 승인번호 : ' + rsp.apply_num;
+            	var payment_method = document.getElementsByName("payment_method");
+                for(var i = 0; i < payment_method.length; i++) {
+                   if(payment_method[i].checked == true) {
+                      payment_method_checked = payment_method[i].value;
+                   }
+                }
+            	
+            	
+            	if(payment_method_checked == "paypal") {
+            		payment_pg = 'paypal';
+            		IMP.init('imp09350031');
+            		payment_method = 'card';
+            	} else {
+            		payment_pg = 'inicis';
+            		IMP.init('imp57757789');
+            	}
+              
+               
+               IMP.request_pay({
+                  pg : payment_pg, // version 1.1.0부터 지원.   // inicis
+                  pay_method : payment_method_checked,//payment_method_checked,
+                  merchant_uid : 'merchant_' + new Date().getTime(),
+                  name : $("#campaignName").val(),
+                  amount : $("#totalAmount").val(),
+                  buyer_email : $("#userEmail").val(),
+                  buyer_name : $("#userName").val(),
+                  buyer_tel : $("#phone").val(),
+                  buyer_addr : $("#address1").val(),
+                  buyer_postcode : $("#zipCode").val(),
+                  m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+                	  
+              }, function(rsp) {
+                  if ( rsp.success ) {
+                      var msg = '결제가 완료되었습니다.';
+                      msg += '고유ID : ' + rsp.imp_uid;
+                      msg += '상점 거래ID : ' + rsp.merchant_uid;
+                      msg += '결제 금액 : ' + rsp.paid_amount;
+                      msg += '카드 승인번호 : ' + rsp.apply_num;
 
-    					if(($("#country").val()) == 'KR') {
-    						$.ajax({
-	                            type: "POST",
-	                            url: "/kwaveweb/insertDeliveryKOR",	// delivery table
-	                            data: {
-	                            	 "imp_uid" : rsp.imp_uid,
-	                            	 "merchant_uid" : rsp.merchant_uid,
-	                            	 "receipt_url" : rsp.receipt_url,
-	
-	                                 "userEmail": $("#userEmail").val(),
-	                                 "campaignName" : $("#campaignName").val(),
-	                                 "rewardNum" : $("#rewardNum").val(),
-	                                 "totalAmount" : $("#totalAmount").val(),
-	                                 "shippingAmount" : $("#shippingAmount").val(),
-	                                 "shippingMethod" : $("#shippingMethod").val(),
+                   if(payment_country == "KR") {
+                      $.ajax({
+                               type: "POST",
+                               url: "/kwaveweb/insertDeliveryKOR",   // delivery table
+                               data: {
+                                   "imp_uid" : rsp.imp_uid,
+                                   "merchant_uid" : rsp.merchant_uid,
+                                   "receipt_url" : rsp.receipt_url,
+   
+                                    "userEmail": $("#userEmail").val(),
+                                    "campaignName" : $("#campaignName").val(),
+                                    "rewardNum" : $("#rewardNum").val(),
+                                    "totalAmount" : $("#totalAmount").val(),
+                                    "shippingAmount" : $("#shippingAmount").val(),
+                                    "shippingMethod" : $("#shippingMethod").val(),
+                                    "rewardAmount" : $("#rewardAmount").val(),
+                                    
 	                                 "note" : $("#note").val(),
 	                                 "country" : $("#country").val(),
 	                                 "phone": $("#phone").val(),
@@ -893,6 +903,7 @@ $(document).ready(function() {
 	                                 "userEmail": $("#userEmail").val(),
 	                                 "campaignName" : $("#campaignName").val(),
 	                                 "rewardNum" : $("#rewardNum").val(),
+	                                 "rewardAmount" : $("#rewardAmount").val(),
 	                                 "totalAmount" : $("#totalAmount").val(),
 	                                 "shippingAmount" : $("#shippingAmount").val(),
 	                                 "shippingMethod" : $("#shippingMethod").val(),

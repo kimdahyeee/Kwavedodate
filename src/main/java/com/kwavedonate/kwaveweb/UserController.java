@@ -49,7 +49,7 @@ public class UserController {
 	private BcryptEncoder encoder;
 
 	/*
-	 * È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * íšŒì›ê°€ì… í˜ì´ì§€ ì´ë™
 	 */
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
@@ -63,32 +63,13 @@ public class UserController {
 	}
 	
 	/*
-	 * ï¿½ï¿½Ğ¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * find password by email
 	 */
 	@RequestMapping("/findPassword")
 	public String findpassword() {
 		return "findPassword";
 	}
 	
-	/*
-	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	 */
-	@RequestMapping("/errorPage") 
-	public String errorPage() {
-		return "errorPage";
-	}
-
-	/*
-	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	 */
-	@RequestMapping("/denied")
-	public String denied(Model model, Authentication auth, HttpServletRequest request) {
-		/*AccessDeniedException ade = (AccessDeniedException) request.getAttribute(WebAttributes.ACCESS_DENIED_403);
-		model.addAttribute("auth", auth);
-		model.addAttribute("errMsg", ade);*/
-
-		return "deniedPage";
-	}
 
 	/*
 	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
@@ -179,22 +160,22 @@ public class UserController {
 		int result;
 
 		try {
-			//Ã³À½ °¡ÀÔÇÏ´Â °æ¿ì
+			//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
 			result = dao.insertFacebookUser(paramMap);
 		} catch (Exception e) {
-			//ÀÌ¹Ì °¡ÀÔµÈ °æ¿ì
+			//ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½
 			Map<String, Object> snsMap = dao.selectIsSns(userEmail);
 			int isSns = Integer.valueOf(snsMap.get("ISSNS").toString());
 			if(isSns == 1){
-				result = 1; //sns °¡ÀÔµÈ °æ¿ì
+				result = 1; //sns ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½
 			}else{
-				result=0; //·Î±×ÀÎ ½ÇÆĞ
+				result=0; //ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			}
 		}
 
-		System.out.println("»ğÀÔ¾ÈµÊ!" + result);
+		System.out.println("ï¿½ï¿½ï¿½Ô¾Èµï¿½!" + result);
 		if (result == 1) {
-			hashmap.put("KEY", "SUCCESS"); //Ã³À½ °¡ÀÔÇÏ´Â °æ¿ì
+			hashmap.put("KEY", "SUCCESS"); //Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
 		}else {
 			hashmap.put("KEY", "FAIL");
 		}
@@ -472,6 +453,7 @@ public class UserController {
 			@RequestParam("userEmail")String userEmail,
 			@RequestParam("campaignName")String campaignName,
 			@RequestParam("rewardNum")String rewardNum,
+			@RequestParam("rewardAmount")String rewardAmount,
 			@RequestParam("totalAmount")String totalAmount,
 			@RequestParam("shippingAmount")String shippingAmount,
 			@RequestParam("shippingMethod")String shippingMethod,
@@ -490,6 +472,7 @@ public class UserController {
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("campaignName", campaignName);
 		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
+		paramMap.put("rewardAmount", Integer.parseInt(rewardAmount));
 		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
 		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
 		paramMap.put("shippingMethod", shippingMethod);
@@ -518,18 +501,24 @@ public class UserController {
 			resultP = dao.insertPayments(paramMap);
 			resultD = dao.insertDelivery(paramMap);
 			
-			//dao.updateCampaignsByPayment(paramMap);
-			//dao.updaterewardsByPayment(paramMap);
+			dao.updateRewardsByPayment(paramMap);
+			dao.updateCampaignsByPayment(paramMap);
+			transactionManager.commit(status);
 			if(resultD == 1 && resultP == 1) {
 				hashmap.put("KEY", "SUCCESS");
 			}
 		} catch (Exception e) {
 			System.out.println("catchë¬¸ ë“¤ì–´ì˜´");
-			transactionManager.rollback(status);
+			try {
+				transactionManager.rollback(status);
+			} catch(Exception ee) {
+				 System.out.println("Exception in commit or rollback : "+ee);
+			}
+			
+			System.out.println("Exception in saveTemplatesToPCA() : "+e);
 			hashmap.put("KEY", "FAIL");
-			e.printStackTrace();
 		}
-		transactionManager.commit(status);
+		
 		
 		return hashmap;
 	}

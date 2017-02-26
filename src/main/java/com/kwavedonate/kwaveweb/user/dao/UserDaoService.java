@@ -29,7 +29,7 @@ public interface UserDaoService {
 
 	public int modifyPassword(Map<String, String> paramMap);
 	public int updateCampaignsByPayment(Map<String, Object> paramMap);
-	public int updaterewardsByPayment(Map<String, Object> paramMap);
+	public int updateRewardsByPayment(Map<String, Object> paramMap);
 	
 	public List<Map<String, Object>> selectHistoryList(Map<String, Object> map);
 }
