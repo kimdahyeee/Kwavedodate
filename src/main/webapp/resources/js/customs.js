@@ -7,6 +7,17 @@
  */
 
 $(document).ready(function() {	
+	
+	/* ckEditor plug in 추가 */
+	if($("#validateAddCampaign").length>0) {
+		 CKEDITOR.replace( 'campaginKoSummary_editor' );
+		 CKEDITOR.replace( 'campaginKoContents_editor' );
+		 CKEDITOR.replace( 'campaginEnSummary_editor' );
+		 CKEDITOR.replace( 'campaginEnContents_editor' );
+		 CKEDITOR.replace( 'campaginChSummary_editor' );
+		 CKEDITOR.replace( 'campaginChContents_editor' );
+	}
+	
     /* banner custom */
     if($(".campaigns-banner").length>0) {
         if (Modernizr.touch) {
@@ -652,6 +663,7 @@ $(document).ready(function() {
     			
     			// input Tag 값 설정!! 
     			// ==========
+    			$("#shippingMethod").val("국내배송");
     			$("#shippingAmount").val(sAmountKR);
     			$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmountKR)));
     			// ==========   			
@@ -737,11 +749,12 @@ $(document).ready(function() {
 				// KR인 경우 city와 region이 안들어가기 때문
 				$("#city").val("");
 				$("#region").val("");
+				$("#shippingMethod").val("국내배송");
 				
 				$("div").remove(".cityArea");
 				$("div").remove(".regionArea");
 				
-				$("#shippingMethod").val("국내배송");
+				
 				$(".shippingAmountArea").text("$" + sAmountKR);
 				$(".totalAmountArea").text("$" + parseInt(parseInt(rewardAmount) + parseInt(sAmountKR)));
 			

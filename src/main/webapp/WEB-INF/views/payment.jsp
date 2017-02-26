@@ -90,7 +90,7 @@
 												<div class="form-group has-feedback text-center">
 													<label for="inputShippingMethod" class="col-xs-3 col-sm-3">Shipping Method : </label>
 													<div class="col-xs-9 col-sm-9">
-														<input type="text" class="form-control" id="shippingMethod" name="shippingMethod" placeholder="Shipping Method" value="EMS" required disabled>
+														<input type="text" class="form-control" id="shippingMethod" name="shippingMethod" placeholder="Shipping Method" value="" required disabled>
 													</div>
 												</div>
 												<div class="form-group has-feedback text-center">

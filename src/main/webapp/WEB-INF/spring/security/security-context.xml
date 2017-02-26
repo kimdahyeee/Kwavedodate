@@ -17,7 +17,7 @@
 		<security:intercept-url 
 			pattern="/signin" access="isAnonymous()"/>
 		<security:intercept-url 
-			pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+			pattern="/admin/**" access="isAnonymous()"/>
 		<security:intercept-url 
 			pattern="/user/**" 
 			access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI', 'ROLE_ADMIN')"/>

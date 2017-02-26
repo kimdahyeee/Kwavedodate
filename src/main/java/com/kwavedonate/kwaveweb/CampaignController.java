@@ -27,7 +27,7 @@ public class CampaignController {
 	
 	
 	/**
-	 * campaigns È­¸é
+	 * campaigns í™”ë©´
 	 * @param model
 	 * @return
 	 */
@@ -49,7 +49,7 @@ public class CampaignController {
 			int campaignDueDate = Integer.valueOf(lists.get("campaignDueDate").toString());
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			//current campaigns Á¤º¸
+			//current campaigns ì •ë³´
 			if(campaignDueDate >= 0){
 				if(campaignDueDate == 7){
 					map.put("campaignDueDate", "a week left");
@@ -66,7 +66,7 @@ public class CampaignController {
 				
 				currentList.add(map);
 			}else{
-				//recently campaigns Á¤º¸
+				//recently campaigns ì •ë³´
 				map.put("campaignName", campaignName);
 				map.put("campaignSubject", campaignSubject);
 				map.put("campaignImg", campaignImg);
@@ -82,7 +82,7 @@ public class CampaignController {
 	}
 	
 	/**
-	 * campaign »ó¼¼È­¸é
+	 * campaign ìƒì„¸í™”ë©´
 	 * @param campaignName
 	 * @param model
 	 * @return
@@ -116,7 +116,7 @@ public class CampaignController {
 	}
 	
 	/**
-	 * campaign detailÈ­¸é¿¡ »ğÀÔ µÉ rewards ¸ñ·Ï
+	 * campaign detailí™”ë©´ì— ì‚½ì… ë  rewards ëª©ë¡
 	 * @param campaignName
 	 * @param model
 	 * @return
