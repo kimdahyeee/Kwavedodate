@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
 
-/**
+/** 
  * Handles requests for the application home page.
  */
 @Controller
@@ -32,8 +32,9 @@ public class HomeController {
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
+	
 	/**
-	 * ¸ŞÀÎÈ­¸é
+	 * ë©”ì¸í™”ë©´
 	 * @param model
 	 * @return
 	 */
@@ -65,15 +66,20 @@ public class HomeController {
 		return "main";
 	}
 
-	/* about us ÆäÀÌÁö */
+	/**
+	 * about us í™”ë©´
+	 * @return
+	 */
 	@RequestMapping("/aboutUs")
 	public String aboutUs() {
 		logger.info("aboutUs");
 		return "aboutUs";
 	}
 	
-	/*
-	 * ·Î±×ÀÎ ÆäÀÌÁö
+	/**
+	 * login í™”ë©´
+	 * @param request
+	 * @return
 	 */
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request) {

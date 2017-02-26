@@ -1,5 +1,6 @@
-			<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-			<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 			<section class="main-container campaign-perks">
 				<div class="container">
 					<div class="row">
@@ -93,7 +94,7 @@
 												<div class="form-group has-feedback text-center">
 													<label for="inputShippingMethod" class="col-xs-3 col-sm-3">Shipping Method : </label>
 													<div class="col-xs-9 col-sm-9">
-														<input type="text" class="form-control" id="shippingMethod" name="shippingMethod" placeholder="Shipping Method" value="EMS" required disabled>
+														<input type="text" class="form-control" id="shippingMethod" name="shippingMethod" placeholder="Shipping Method" value="" required disabled>
 													</div>
 												</div>
 												<div class="form-group has-feedback text-center">
@@ -122,17 +123,17 @@
 			                                          	  <h5><strong>${reward.rewardSubject}</strong></h5>
 			                                          	  <div class="separator"></div>
 				                                          <span class="text-left">Reward: </span> 
-				                                          <span class="text-right">$${reward.rewardAmount }</span><br>
+				                                          <span class="text-right"><spring:message code="notation"/>${reward.rewardAmount}</span><br>
 				                                          <span class="text-left">Shipping: </span>
 				                                          <span class="text-right shippingAmountArea"></span><br>
 				                                          <span class="text-left">Total:</span>
 				                                          <span class="text-right totalAmountArea"></span><br>
-				                                          <input type="hidden" id="rewardAmount" name="rewardAmount" value="${reward.rewardAmount}">
+				                                          <input type="hidden" id="rewardAmount" name="rewardAmount" value="${reward.rewardAmount}"/>
 			                                          </c:when>
 			                                          <c:otherwise>
 				                                          <span class="text-left">Reward: </span>
-				                                          <span class="text-right">$10</span><br>
-				                                          <input type="hidden" id="rewardAmount" name="rewardAmount" value="10"> 
+				                                          <span class="text-right"><spring:message code="notation"/>${defaultMoney}</span><br>
+				                                          <input type="hidden" id="rewardAmount" name="rewardAmount" value="${defaultMoney}"> 
 			                                          </c:otherwise>
 			                                       </c:choose>
 													<input type="hidden" id="totalAmount" name="totalAmount" value="">

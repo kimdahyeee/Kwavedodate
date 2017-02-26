@@ -27,7 +27,7 @@
 									</div>
 
 									<label></label>
-									<p class="text-center">Copyright © 2016 KWAVE D. All Rights Reserved</p>
+									<p class="text-center">Copyright ï¿½ 2016 KWAVE D. All Rights Reserved</p>
 								</div>
 							</div>
 						</div>
