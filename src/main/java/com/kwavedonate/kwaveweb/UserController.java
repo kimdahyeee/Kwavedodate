@@ -56,7 +56,7 @@ public class UserController {
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
 		// IP Ȯ��		
 		String ipc = GetIpAddress.getClientIP(request);
-		System.out.println("Web browser ���� : " +ipc);
+		System.out.println("Web browser locale : " +ipc);
 		
 		model.addAttribute("ipAddress", ipc);
 		
@@ -94,7 +94,7 @@ public class UserController {
 
 
 	/*
-	 * ȸ�� ���� Controller
+	 * 회원가입
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
@@ -307,8 +307,8 @@ public class UserController {
 			String encEmail = encoder.encode(ue);
 			
 			System.out.println(encEmail);
-			String htmlContent = "<h1>�Ʒ� �ּҸ� Ŭ���Ͽ� ��й�ȣ�� �����ϼ���.</h1><br/>"
-					+ "<h3>��ũ�� ������ �� ��� ��ȣ�� �������� ������ �̸����� �ٽ� �����ؾ� �մϴ�.</h3>"
+			String htmlContent = "<h1>KWAVE DONATE 비밀번호 변경 안내 메일입니다.</h1><br/>"
+					+ "<h3>아래 링크를 통해 비밀번호 변경 페이지로 이동해주세요.</h3>"
 					+ "http://localhost:8181/kwaveweb/pwdService?bep=" 
 					+ encEmail + "&ue=" + ue;
 			try {
@@ -316,7 +316,7 @@ public class UserController {
 				
 				message.setFrom(new InternetAddress("tantosuperb@gmail.com"));
 				message.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(userEmailExist.get("USEREMAIL").toString()));
-				message.setSubject("KWAVE DONATE ��й�ȣ ���� �ȳ��Դϴ�.");
+				message.setSubject("KWAVE DONATE 비밀번호 변경");
 				message.setText(htmlContent, "UTF-8", "html");
 				
 				mailSender.send(message);

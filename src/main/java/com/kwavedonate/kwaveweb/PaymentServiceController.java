@@ -41,28 +41,28 @@ public class PaymentServiceController {
 
 	private IamportClient client;
 	
+	private String _totalAmount = "";
+	
 	@ResponseBody
-	@RequestMapping(value="insertDeliveryNotKor", method=RequestMethod.POST)
+	@RequestMapping(value="insertDelivery", method=RequestMethod.POST)
 	public HashMap<String, Object> insertDeliveryENG(
-			@RequestParam("imp_uid")String imp_uid, 
-			@RequestParam("rewardNum")String rewardNum,
-			@RequestParam("totalAmount")String totalAmount,
-			@RequestParam("note")String note,
-			@RequestParam("shippingAmount")String shippingAmount,
-			@RequestParam("shippingMethod")String shippingMethod,
-			@RequestParam("address2")String address2,
-			@RequestParam("city")String city,
-			@RequestParam("country")String country,
-			@RequestParam("region")String region ) {
-		logger.info("PC : insertDeliveryNotKor");
+			@RequestParam("imp_uid")String imp_uid,   @RequestParam("rewardNum")String rewardNum,
+			@RequestParam("note")String note,		  @RequestParam("shippingMethod")String shippingMethod,
+			@RequestParam("address2")String address2, @RequestParam("shippingAmount")String shippingAmount,
+			@RequestParam("country")String country,	  @RequestParam("city")String city,
+			@RequestParam("region")String region, @RequestParam("rewardAmount")String rewardAmount) {
 		
-
+		logger.info("PC : insertDelivery");
+		if(city.equals("kwavedonate_not_define")) {	city = "";	region = "";	}
 		Map<String, Object> payment_result = new HashMap<String, Object>();
 		payment_result.putAll(getPaymentInfo(imp_uid));
+		int IntegerTotalAmount = Integer.parseInt(_totalAmount);
+		int IntegerShippingAmount = Integer.parseInt(shippingAmount);
+		int DollarAmount = (IntegerTotalAmount-IntegerShippingAmount) / 1100;
 		
-		payment_result.put("imp_uid", imp_uid);
+		payment_result.put("totalAmount", DollarAmount);
 		payment_result.put("rewardNum", Integer.parseInt(rewardNum));
-		payment_result.put("totalAmount", Integer.parseInt(totalAmount));
+		payment_result.put("rewardAmount", Integer.parseInt(rewardAmount));
 		payment_result.put("shippingAmount", Integer.parseInt(shippingAmount));
 		payment_result.put("shippingMethod", shippingMethod);
 		payment_result.put("note", note);
@@ -78,20 +78,23 @@ public class PaymentServiceController {
 		
 		TransactionStatus status = transactionManager.getTransaction(def);
 		try {
-			System.out.println("Commit완료");
-			dao.insertPayments(payment_result);
-			dao.insertDelivery(payment_result);
 			
-			dao.updateRewardsByPayment(payment_result);
-			dao.updateCampaignsByPayment(payment_result);
-			transactionManager.commit(status);
+			if(IntegerTotalAmount == 10) {
+				dao.insertPayments(payment_result); logger.info("insertPayments 완료");
+				dao.updateCampaignsByPayment(payment_result);	logger.info("updateCampaignsByPayment 완료");
+			} else {
+				dao.insertPayments(payment_result); logger.info("insertPayments 완료");
+				dao.insertDelivery(payment_result); logger.info("insertDelivery 완료");
+				dao.updateRewardsByPayment(payment_result);	logger.info("updateRewardsByPayment 완료");
+				dao.updateCampaignsByPayment(payment_result);	logger.info("updateCampaignsByPayment 완료");
+			}
+			transactionManager.commit(status); logger.info("COMMIT COMPLETE !!");
 			returnData.put("KEY", "SUCCESS");
 			
 		} catch (Exception e) {
-			System.out.println("ROLLBACK");
 			try {
-				transactionManager.rollback(status);
-				cancelPayment(imp_uid);
+				transactionManager.rollback(status);	logger.info("ROLLBACK COMPLETE !!");
+				cancelPayment(imp_uid);	logger.info("결제 취소 완료 !!");
 			} catch(Exception ee) {
 				 System.out.println("Exception in commit or rollback : "+ee);
 			}
@@ -103,67 +106,6 @@ public class PaymentServiceController {
 		
 		return returnData;
 	}
-	
-	@ResponseBody
-	@RequestMapping(value="insertDeliveryKor", method=RequestMethod.POST)
-	public HashMap<String, Object> insertDeliveryKOR(
-			@RequestParam("imp_uid")String imp_uid,
-			@RequestParam("rewardNum")String rewardNum,
-			@RequestParam("rewardAmount")String rewardAmount,
-			@RequestParam("shippingAmount")String shippingAmount,
-			@RequestParam("shippingMethod")String shippingMethod,
-			@RequestParam("note")String note,
-			@RequestParam("country")String country,
-			@RequestParam("address2")String address2) {
-		logger.info("PC : insertDeliveryKor");
-		Map<String, Object> payment_result = new HashMap<String, Object>();
-		
-		payment_result.putAll(getPaymentInfo(imp_uid));
-		
-		payment_result.put("rewardNum", Integer.parseInt(rewardNum));
-		payment_result.put("rewardAmount", Integer.parseInt(rewardAmount));
-		payment_result.put("shippingAmount", Integer.parseInt(shippingAmount));
-		payment_result.put("shippingMethod", shippingMethod);
-		payment_result.put("note", note);
-		payment_result.put("city", "city");
-		payment_result.put("region", "region");
-		payment_result.put("country", country);
-		payment_result.put("address2", address2);
-		
-
-		HashMap<String, Object> returnData = new HashMap<String, Object>();
-		
-		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		
-		TransactionStatus status = transactionManager.getTransaction(def);
-		try {
-			System.out.println("Commit완료");
-			dao.insertPayments(payment_result);
-			dao.insertDelivery(payment_result);
-			
-			dao.updateRewardsByPayment(payment_result);
-			dao.updateCampaignsByPayment(payment_result);
-			transactionManager.commit(status);
-			returnData.put("KEY", "SUCCESS");
-			
-		} catch (Exception e) {
-			System.out.println("ROLLBACK");
-			try {
-				transactionManager.rollback(status);
-				cancelPayment(imp_uid);
-			} catch(Exception ee) {
-				 System.out.println("Exception in commit or rollback : "+ee);
-			}
-			
-			System.out.println("Exception in saveTemplatesToPCA() : "+e);
-			returnData.put("KEY", "FAIL");
-		}
-		
-		
-		return returnData;
-	}
-	
 	
 	@ResponseBody
 	@RequestMapping(value="/m_redirect", method=RequestMethod.GET)
@@ -172,6 +114,8 @@ public class PaymentServiceController {
 		String payment_uid = request.getParameter("imp_uid");
 
 		Map<String, Object> payment_result = new HashMap<String, Object>();
+		
+		
 		
 		payment_result.putAll(getPaymentInfo(payment_uid));
 		
@@ -191,17 +135,16 @@ public class PaymentServiceController {
 		
 		TransactionStatus status = transactionManager.getTransaction(def);
 		try {
-			System.out.println("try문 들어옴");
-			dao.insertPayments(payment_result);
-			dao.insertDelivery(payment_result);
-			dao.updateRewardsByPayment(payment_result);
-			dao.updateCampaignsByPayment(payment_result);
-			transactionManager.commit(status);
+			dao.insertPayments(payment_result); logger.info("insertPayments 완료");
+			dao.insertDelivery(payment_result); logger.info("insertDelivery 완료");
+			dao.updateRewardsByPayment(payment_result);	logger.info("updateRewardsByPayment 완료");
+			dao.updateCampaignsByPayment(payment_result);	logger.info("updateCampaignsByPayment 완료");
+			transactionManager.commit(status); logger.info("COMMIT COMPLETE !!");
 		} catch (Exception e) {
 			System.out.println("catch문 들어옴");
 			try {
-				transactionManager.rollback(status);
-				cancelPayment(payment_uid);
+				transactionManager.rollback(status);	logger.info("ROLLBACK COMPLETE !!");
+				cancelPayment(payment_uid);	logger.info("결제 취소 완료 !!");
 			} catch(Exception ee) {
 				 System.out.println("Exception in commit or rollback : "+ee);
 			}
@@ -222,6 +165,8 @@ public class PaymentServiceController {
 		
 		Map<String, Object> paymentInfo = new HashMap<String,Object>();
 		
+		
+		
 		paymentInfo.put("imp_uid", payment_response.getResponse().getImpUid());
 		paymentInfo.put("merchant_uid", payment_response.getResponse().getMerchantUid());
 		paymentInfo.put("userEmail", payment_response.getResponse().getBuyerEmail());
@@ -232,6 +177,7 @@ public class PaymentServiceController {
 		paymentInfo.put("totalAmount", payment_response.getResponse().getAmount().toString());
 		paymentInfo.put("address1", payment_response.getResponse().getBuyerAddr());
 		
+		_totalAmount = payment_response.getResponse().getAmount().toString();
 		
 		return paymentInfo;
 	}
