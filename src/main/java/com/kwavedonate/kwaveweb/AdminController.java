@@ -1,11 +1,31 @@
 package com.kwavedonate.kwaveweb;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.kwavedonate.kwaveweb.admin.service.AdminService;
+import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 
 @Controller
 @RequestMapping(value="admin")
 public class AdminController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	
+	@Resource(name="adminService")
+	private AdminService adminService;
 	
 	/**
 	 * 관리자 메인 controller
@@ -23,7 +43,9 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value="/manageUsers")
-	public String manageUsers() {
+	public String manageUsers(Model model) {
+		List<Map<String, Object>> allUsersList = adminService.getAllUserList();
+		model.addAttribute("allUsersList", allUsersList);
 		return "admin/manageUsersView";
 	}
 	
@@ -32,8 +54,12 @@ public class AdminController {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value="/userDetail")
-	public String userDetail() {
+	@RequestMapping(value="/userDetail", method=RequestMethod.GET)
+	public String userDetail(@RequestParam(value="userEmail") String userEmail, Model model) {
+		Map<String, Object> userDetail = adminService.getUserDetails(userEmail);
+		List<Map<String, Object>> donateList = adminService.getDonateList(userEmail);
+		model.addAttribute("userDetail", userDetail);
+		model.addAttribute("donateList", donateList);
 		return "admin/userDetailView";
 	}
 	
@@ -72,8 +98,13 @@ public class AdminController {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value="/paymentDetail")
-	public String paymentDetail() {
+	@RequestMapping(value="/paymentDetail", method=RequestMethod.GET)
+	public String paymentDetail(@RequestParam(value="impUid") String impUid, @RequestParam(value="userEmail") String userEmail, Model model) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("imp_uid", impUid);
+		param.put("userEmail", userEmail);
+		Map<String, Object> deliveryDetail = adminService.getDeliveryDetail(param);
+		model.addAttribute("deliveryDetail", deliveryDetail);
 		return "admin/paymentDetailView";
 	}
 }

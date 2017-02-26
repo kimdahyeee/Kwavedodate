@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+	<resultMap type="hashmap" id="allUsers">
+		<result property="userEmail" column="USEREMAIL" javaType="java.lang.String"/>
+		<result property="userName" column="USERNAME" javaType="java.lang.String"/>
+		<result property="userRegDate" column="USERREGDATE" javaType="java.lang.String"/>
+		<result property="isSns" column="ISSNS" javaType="java.lang.String"/>
+	</resultMap>
+	<resultMap type="map" id="userDetail">
+		<result property="userEmail" column="USEREMAIL" javaType="java.lang.String"/>
+		<result property="userName" column="USERNAME" javaType="java.lang.String"/>
+		<result property="userRegDate" column="USERREGDATE" javaType="java.lang.String"/>
+		<result property="isSns" column="ISSNS" javaType="java.lang.String"/>
+		<result property="phone" column="PHONE" javaType="java.lang.String"/>
+		<result property="userNation" column="USERNATION" javaType="java.lang.String"/>
+		<result property="zipCode" column="ZIPCODE" javaType="java.lang.String"/>
+		<result property="address1" column="ADDRESS1" javaType="java.lang.String"/>
+		<result property="address2" column="ADDRESS2" javaType="java.lang.String"/>
+		<result property="city" column="CITY" javaType="java.lang.String"/>
+		<result property="country" column="COUNTRY" javaType="java.lang.String"/>
+		<result property="region" column="REGION" javaType="java.lang.String"/>
+	</resultMap>
+	<resultMap type="hashmap" id="donateList">
+		<result property="imp_Uid" column="Pimp_Uid" javaType="java.lang.String"/>
+		<result property="totalAmount" column="PtotalAmount" javaType="java.lang.String"/>
+		<result property="receipt_url" column="Preceipt_url" javaType="java.lang.String"/>
+		<result property="paid_At" column="Ppaid_At" javaType="java.lang.String"/>
+		<result property="rewardSubject" column="RrewardSubject" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="CcampaignSubject" javaType="java.lang.String"/>
+		<result property="campaignImg" column="CcampaignImg" javaType="java.lang.String"/>
+	</resultMap>
+	<resultMap type="hashmap" id="deliveryDetail">
+		<result property="userName" column="USERNAME" javaType="java.lang.String"/>
+		<result property="userEmail" column="USEREMAIL" javaType="java.lang.String"/>
+		<result property="userNation" column="USERNATION" javaType="java.lang.String"/>
+		<result property="phone" column="PHONE" javaType="java.lang.String"/>
+		<result property="zipcode" column="ZIPCODE" javaType="java.lang.String"/>
+		<result property="address1" column="ADDRESS1" javaType="java.lang.String"/>
+		<result property="address2" column="ADDRESS2" javaType="java.lang.String"/>
+		<result property="city" column="CITY" javaType="java.lang.String"/>
+		<result property="region" column="REGION" javaType="java.lang.String"/>
+		<result property="country" column="COUNTRY" javaType="java.lang.String"/>
+		<result property="note" column="NOTE" javaType="java.lang.String"/>
+	</resultMap>
+	<select id="selectAllUser" resultMap="allUsers">
+		SELECT 
+			USEREMAIL,
+			USERNAME,
+			TO_CHAR(USERREGDATE,'YYYY-MM-DD HH24:MI') AS USERREGDATE,
+			DECODE(ISSNS, 1, 'YES', 0, 'NO') AS ISSNS
+		FROM
+			USERS
+	</select>
+	<select id="selectUserDetail" resultMap="userDetail">
+		SELECT 
+			USEREMAIL,
+			USERNAME,
+			TO_CHAR(USERREGDATE,'YYYY-MM-DD HH24:MI') AS USERREGDATE,
+			DECODE(ISSNS, 1, 'YES', 0, 'NO') AS ISSNS,
+			NVL(PHONE,'-') AS PHONE,
+			NVL(USERNATION,'-') AS USERNATION,
+			NVL(ZIPCODE,'-') AS ZIPCODE,
+			NVL(ADDRESS1,'-') AS ADDRESS1,
+			NVL(ADDRESS2,'-') AS ADDRESS2,
+			NVL(CITY,'-') AS CITY,
+			NVL(COUNTRY,'-') AS COUNTRY,
+			NVL(REGION,'-') AS REGION
+		FROM
+			USERS
+		WHERE USEREMAIL=#{userEmail}
+	</select>
+	<select id="selectDonateList" resultMap="donateList">
+		SELECT 
+			P.IMP_UID as Pimp_Uid,
+			P.TOTALAMOUNT as PtotalAmount,
+			P.RECEIPT_URL as Preceipt_url,
+			TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') as Ppaid_At,
+			R.REWARDSUBJECT as RrewardSubject,
+			CL.CAMPAIGNSUBJECT as CcampaignSubject,
+			C.CAMPAIGNIMG as CcampaignImg
+		FROM PAYMENTS P,
+			REWARDS_KO R,
+			CAMPAIGNS_KO CL,
+			Campaigns C
+		WHERE P.USEREMAIL = #{userEmail} AND P.CAMPAIGNNAME = C.CAMPAIGNNAME AND P.CAMPAIGNNAME = CL.CAMPAIGNNAME AND P.REWARDNUM = R.REWARDNUM
+	</select>
+	<select id="selectDeliveryDetail" resultMap="deliveryDetail">
+	SELECT
+	    U.USERNAME AS USERNAME,
+	    U.USEREMAIL AS USEREMAIL,
+	    NVL(U.USERNATION,'-') AS USERNATION,
+		D.PHONE AS PHONE,
+	    D.ZIPCODE AS ZIPCODE,
+	    D.ADDRESS1 AS ADDRESS1,
+	    D.ADDRESS2 AS ADDRESS2,
+	    NVL(D.CITY,'-') AS CITY,
+	    NVL(D.REGION,'-') as REGION,
+	    NVL(D.COUNTRY,'-') AS COUNTRY,
+	    NVL(D.NOTE,'-') AS NOTE
+	FROM DELIVERY D,
+		USERS U
+	WHERE D.IMP_UID=#{imp_uid} AND U.USEREMAIL = #{userEmail}
+	</select>
+</mapper>

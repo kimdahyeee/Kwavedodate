@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/htmll; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<section class="main-container">
 		<div class="container">
 			<div class="row">	
@@ -11,39 +14,39 @@
 						<tbody>
 							<tr>
 								<th>User Email</th>
-								<td>vvshinevv@naver.com</td>
+								<td>${userDetail.userEmail}</td>
 								<th>Zip Code</th>
-								<td>10333</td>
+								<td>${userDetail.zipCode}</td>
 							</tr>
 							<tr>
 								<th>User Name</th>
-								<td>최홍희</td>
+								<td>${userDetail.userName}</td>
 								<th>Address</th>
-								<td>경기도 고양시 일산동구</td>
+								<td>${userDetail.address1}</td>
 							</tr>
 							<tr>
 								<th>Is SNS</th>
-								<td>Yes</td>
+								<td>${userDetail.isSns}</td>
 								<th>Address Detail</th>
-								<td>중산동</td>
+								<td>${userDetail.address2}</td>
 							</tr>
 							<tr>
 								<th>Phone Number</th>
-								<td>010-3315-6214</td>
+								<td>${userDetail.phone}</td>
 								<th>City</th>
-								<td>-</td>
+								<td>${userDetail.city}</td>
 							</tr>
 							<tr>
 								<th>Register Date</th>
-								<td>2017.02.25 17:45</td>
+								<td>${userDetail.userRegDate}</td>
 								<th>Country</th>
-								<td>-</td>
+								<td>${userDetail.country}</td>
 							</tr>
 							<tr>
 								<th>Nation(Lang)</th>
-								<td>Korean</td>
+								<td>${userDetail.userNation}</td>
 								<th>Region</th>
-								<td>-</td>
+								<td>${userDetail.region}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -64,30 +67,22 @@
 							</tr>
 						</thead>
 						<tbody>
-								<tr>
-									<td><a href="#"><strong>imp_uid</strong></a></td>
-									<td>
-										<div class="table-header">
-											<img src="images/kim-go-eun-campaign.jpg">
-										</div>
-										<div class="table-footer"><strong>IU play with you<br>reward1</strong></div>
-									</td>
-									<td>$25</td>
-									<td>2017.02.25 17:34</td>
-									<td><a href="#"></a>보기</td>
-								</tr>
-								<tr>
-									<td><a href="#"><strong>imp_uid</strong></a></td>
-									<td>
-										<div class="table-header">
-											<img src="images/gong-you-campaign.jpg">
-										</div>
-										<div class="table-footer"><strong>IU play with you<br>reward2</strong></div>
-									</td>
-									<td>$25</td>
-									<td>2017.02.25 17:34</td>
-									<td><a href="#">보기</a></td>
-								</tr>
+							<c:if test="${fn:length(donateList) >0 }">
+								<c:forEach items="${donateList}" varStatus="status">
+									<tr>
+										<td><a href="${donateList[status.index].receipt_url }"><strong>${donateList[status.index].imp_Uid }</strong></a></td>
+										<td>
+											<div class="table-header">
+												<img src="${donateList[status.index].campaignImg }">
+											</div>
+											<div class="table-footer"><strong>${donateList[status.index].campaignSubject }<br>${donateList[status.index].rewardSubject }</strong></div>
+										</td>
+										<td>$${donateList[status.index].totalAmount }</td>
+										<td>${donateList[status.index].paid_At }</td>
+										<td><a href="paymentDetail?impUid=${donateList[status.index].imp_Uid }&userEmail=${userDetail.userEmail}">보기</a></td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

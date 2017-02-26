@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/htmll; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<section class="main-container">
 		<div class="container">
 			<div class="row">	
@@ -13,20 +16,17 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${fn:length(allUsersList) > 0}">
+								<c:forEach items="${allUsersList}" varStatus="status">
 								<tr>
-									<td>vvshinevv@naver.com</td>
-									<td>최홍희</td>
-									<td>2017.02.25 17:46</td>
-									<td>Yes</td>
-									<td><a href="#">보기</a></td>
+									<td>${allUsersList[status.index].userEmail }</td>
+									<td>${allUsersList[status.index].userName }</td>
+									<td>${allUsersList[status.index].userRegDate }</td>
+									<td>${allUsersList[status.index].isSns }</td>
+									<td><a href='<c:url value="/admin/userDetail?userEmail=${allUsersList[status.index].userEmail}"/>'>보기</a></td>
 								</tr>
-								<tr>
-									<td>vvshinevv@naver.com</td>
-									<td>소사냥</td>
-									<td>2017.02.25 17:46</td>
-									<td>No</td>
-									<td><a href="#">보기</a></td>
-								</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

@@ -19,6 +19,25 @@ public class UserDetailsVo extends User {
 	private String city;
 	private String region;
 	private String country;
+	private String userRegDate;
+	private String isSns;
+	
+	public String getIsSns() {
+		return isSns;
+	}
+
+	public void setIsSns(String isSns) {
+		this.isSns = isSns;
+	}
+
+	public String getUserRegDate() {
+		return userRegDate;
+	}
+
+	public void setUserRegDate(String userRegDate) {
+		this.userRegDate = userRegDate;
+	}
+
 	public UserDetailsVo(String username, String password, 
 			boolean enabled, 				// true
 			boolean accountNonExpired,		// true
