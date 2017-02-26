@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +24,14 @@ import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 @RequestMapping(value="/campaigns")
 public class CampaignController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(CampaignController.class);
+	
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
 	
 	/**
-	 * campaigns È­¸é
+	 * campaigns È­ï¿½ï¿½
 	 * @param model
 	 * @return
 	 */
@@ -49,7 +53,7 @@ public class CampaignController {
 			int campaignDueDate = Integer.valueOf(lists.get("campaignDueDate").toString());
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			//current campaigns Á¤º¸
+			//current campaigns ï¿½ï¿½ï¿½ï¿½
 			if(campaignDueDate >= 0){
 				if(campaignDueDate == 7){
 					map.put("campaignDueDate", "a week left");
@@ -66,7 +70,7 @@ public class CampaignController {
 				
 				currentList.add(map);
 			}else{
-				//recently campaigns Á¤º¸
+				//recently campaigns ï¿½ï¿½ï¿½ï¿½
 				map.put("campaignName", campaignName);
 				map.put("campaignSubject", campaignSubject);
 				map.put("campaignImg", campaignImg);
@@ -82,7 +86,7 @@ public class CampaignController {
 	}
 	
 	/**
-	 * campaign »ó¼¼È­¸é
+	 * campaign ï¿½ï¿½È­ï¿½ï¿½
 	 * @param campaignName
 	 * @param model
 	 * @return
@@ -116,7 +120,7 @@ public class CampaignController {
 	}
 	
 	/**
-	 * campaign detailÈ­¸é¿¡ »ðÀÔ µÉ rewards ¸ñ·Ï
+	 * campaign detailÈ­ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ rewards ï¿½ï¿½ï¿½
 	 * @param campaignName
 	 * @param model
 	 * @return

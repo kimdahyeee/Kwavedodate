@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 @Controller
 @RequestMapping(value="/payments")
 public class PaymentsController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(PaymentsController.class);
 
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
@@ -89,6 +93,8 @@ public class PaymentsController {
 		
 		return "payment";
 	}
+	
+	
 	
 	
 }
