@@ -6,8 +6,6 @@ import java.util.Map;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Service;
 
-import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
-
 
 @Service("adminService")
 public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminService{
@@ -32,7 +30,10 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 	public Map<String, Object> getDeliveryDetail(Map<String, Object> map) {
 		return getSqlSession().selectOne("admin.selectDeliveryDetail", map);
 	}
-	
-	
+
+	@Override
+	public Map<String, Object> getPaymentInfo(String imp_uid) {
+		return getSqlSession().selectOne("admin.selectPaymentInfo", imp_uid);
+	}
 	
 }

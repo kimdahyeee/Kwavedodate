@@ -1,5 +1,5 @@
-   <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    <section class="main-container">
       <div class="container">
          <div class="row">   
@@ -19,13 +19,39 @@
                   </thead>
                   <tbody>
                         <tr>
-                           <td><a href="#"><strong>imp_uid</strong></a></td>
-                           <td>$25<br>($5)</td>
-                           <td>이니시스(웹표준)</td>
-                           <td>StdpayCARDINIpayTest20170215213736802804<br>(30002091)</td>
-                           <td>NH카드<br>(일시불)</td>
-                           <td>2017.02.15 21:05:55</td>
-                           <td>결제완료<br><a href="" class="btn square btn-danger">취소하기</a></td>
+                           <td><a href="${paymentDetail.receipt_url}"><strong>${paymentDetail.imp_uid}</strong></a></td>
+                           <td>$${paymentDetail.totalAmount}<br>($${paymentDetail.shippingAmount})</td>
+                           <td>
+                           		<c:choose>
+	                           		<c:when test="${paymentDetail.imp_pgProvider == 'paypal'}">
+	                           			페이팔
+	                           		</c:when>
+	                           		<c:otherwise>
+	                           			이니시스(웹표준)
+	                           		</c:otherwise>
+                           		</c:choose>
+                           </td>
+                           <td>${paymentDetail.imp_pgTid }<br>(${paymentDetail.imp_applyNum})</td>
+                           <td>${paymentDetail.imp_cardName}<br>
+                           		<c:choose>
+	                           		<c:when test="${paymentDetail.imp_cardQuota == '0'}">
+	                           			(일시불)
+	                           		</c:when>
+	                           		<c:otherwise>
+	                           			(${paymentDetail.imp_cardQuota}개월)
+	                           		</c:otherwise>
+                           		</c:choose>
+                           </td>
+                           <td>${paymentDetail.imp_paidAt}</td>
+                           <td>
+                           		<c:choose>
+                           			<c:when test="${paymentDetail.imp_status == 'paid'}">결제완료</c:when>
+                           			<c:when test="${paymentDetail.imp_status == 'ready'}">미결제</c:when>
+                           			<c:when test="${paymentDetail.imp_status == 'cancelled'}">결제취소</c:when>
+                           			<c:when test="${paymentDetail.imp_status == 'faild'}">결제실패</c:when>
+                           		</c:choose>
+                           		<br><a href="" class="btn square btn-danger">취소하기</a>
+                      		</td>
                         </tr>
                   </tbody>
                </table>
@@ -40,7 +66,7 @@
                   <tbody>
                      <tr>
                         <th>주문명</th>
-                        <td colspan="3">IU PLAY WITH YOU TEST....</td>
+                        <td colspan="3">${paymentDetail.imp_name}</td>
                      </tr>
                      <tr>
                         <th>User Name</th>

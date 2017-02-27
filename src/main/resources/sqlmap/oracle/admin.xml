@@ -44,6 +44,11 @@
 		<result property="country" column="COUNTRY" javaType="java.lang.String"/>
 		<result property="note" column="NOTE" javaType="java.lang.String"/>
 	</resultMap>
+	<resultMap type="map" id="paymentInfo">
+		<result property="receipt_url" column="RECEIPT_URL" javaType="java.lang.String"/>
+		<result property="totalAmount" column="TOTALAMOUNT" javaType="java.lang.String"/>
+		<result property="shippingAmount" column="SHIPPINGAMOUNT" javaType="java.lang.String"/>
+	</resultMap>
 	<select id="selectAllUser" resultMap="allUsers">
 		SELECT 
 			USEREMAIL,
@@ -102,5 +107,14 @@
 	FROM DELIVERY D,
 		USERS U
 	WHERE D.IMP_UID=#{imp_uid} AND U.USEREMAIL = #{userEmail}
+	</select>
+	<select id="selectPaymentInfo" resultMap="paymentInfo">
+		SELECT
+			RECEIPT_URL,
+			TOTALAMOUNT,
+			SHIPPINGAMOUNT
+		FROM
+			PAYMENTS
+		WHERE IMP_UID=#{imp_uid}
 	</select>
 </mapper>
