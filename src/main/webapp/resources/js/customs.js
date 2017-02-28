@@ -168,7 +168,7 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
-                          alert(returnmsg(signin_welcome));//회원가입을 축하드립니다
+                          alert(signin_welcome);//회원가입을 축하드립니다
                           window.location = "http://localhost:8181/kwaveweb/login";
                        }else{
                           alert("이미 회원가입 된 이메일입니다.");

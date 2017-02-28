@@ -44,7 +44,13 @@
 							</tr>
 							<tr>
 								<th>Nation(Lang)</th>
-								<td>${userDetail.userNation}</td>
+								<td>
+								<c:choose>
+									<c:when test="${userDetail.userNation =='KOR'}">KOREAN</c:when>
+									<c:when test="${userDetail.userNation =='ENG'}">AMERICAN</c:when>
+									<c:otherwise>CHINESE</c:otherwise>
+								</c:choose>
+								</td>
 								<th>Region</th>
 								<td>${userDetail.region}</td>
 							</tr>
@@ -75,7 +81,7 @@
 											<div class="table-header">
 												<img src="${donateList[status.index].campaignImg }">
 											</div>
-											<div class="table-footer"><strong>${donateList[status.index].campaignSubject }<br>${donateList[status.index].rewardSubject }</strong></div>
+											<div class="table-footer"><strong>${donateList[status.index].campaignSubject }<br><c:if test="${not empty donateList[status.index].rewardSubject}">${donateList[status.index].rewardSubject}</c:if></strong></div>
 										</td>
 										<td>$${donateList[status.index].totalAmount }</td>
 										<td>${donateList[status.index].paid_At }</td>

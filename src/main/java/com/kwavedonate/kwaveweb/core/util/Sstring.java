@@ -4,6 +4,6 @@ public class Sstring {
 	
 	public static String REST_API_KEY = "5660065249144037";
 	
-	public static String REST_API_SECRET_KEY = "iM67Jr5CWWTR6JG43GKuS7vOflI2WcXeY4mHvsksodkuW0z0Gkvys0nIm5KiiHxhMTYiljKKx5ft5OuM";
+	public static String REST_API_SECRET_KEY = "L4TEcRjFUZZ6ZghxADdeREwC2gzdRwsDBlhNdAt7AsdzJv6k9ky0Y5C1mceeIHRk288fJBnk4ATO608f";
 	
 }

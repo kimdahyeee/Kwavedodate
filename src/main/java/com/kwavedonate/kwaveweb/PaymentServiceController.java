@@ -1,7 +1,5 @@
 package com.kwavedonate.kwaveweb;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.kwavedonate.kwaveweb.core.util.Sstring;
 import com.kwavedonate.kwaveweb.user.dao.UserDaoService;
@@ -182,9 +181,35 @@ public class PaymentServiceController {
 		return paymentInfo;
 	}
 	
+	/**
+	 * 결제 취소
+	 * @param payment_imp_uid
+	 */
+	@RequestMapping(value="paymentCancel", method=RequestMethod.GET)
+	public String paymentCancel(@RequestParam("imp_uid") String imp_uid, RequestContextHolder request){
+		DefaultTransactionDefinition dtd = new DefaultTransactionDefinition();
+		dtd.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		client = new IamportClient(Sstring.REST_API_KEY, Sstring.REST_API_SECRET_KEY);
+		TransactionStatus transStatus = transactionManager.getTransaction(dtd);
+		try{
+			dao.deletePayments(imp_uid);
+			dao.deleteDelivery(imp_uid);
+			cancelPayment(imp_uid);	logger.info("결제 취소 완료 !!");
+			transactionManager.commit(transStatus); logger.info("COMMIT COMPLETE !!");
+		}catch (Exception e) {
+			try{
+				transactionManager.rollback(transStatus);	logger.info("ROLLBACK COMPLETE !!");
+			}catch (Exception e2) {
+				System.out.println("Exception in commit or rollback : "+e2);
+			}
+		}
+		//redirect부분 구현해야함
+		return "redirect:/admin/manageUsers";
+	}
+	
 	public void cancelPayment(String payment_imp_uid) {
 		CancelData cancel_data = new CancelData(payment_imp_uid, true); //imp_uid를 통한 전액취소
 		client.cancelPaymentByImpUid(cancel_data);
 	}
-	
 }
