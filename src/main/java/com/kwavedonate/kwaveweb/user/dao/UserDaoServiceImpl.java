@@ -100,4 +100,18 @@ public class UserDaoServiceImpl extends SqlSessionDaoSupport implements UserDaoS
 	public List<Map<String, Object>> selectHistoryList(Map<String, Object> map) {
 		return getSqlSession().selectList("user.selectHistoryList", map);
 	}
+
+	@Override
+	public int deletePayments(String imp_uid) {
+		return getSqlSession().delete("user.deletePayment", imp_uid);
+	}
+
+	@Override
+	public int deleteDelivery(String imp_uid) {
+		return getSqlSession().delete("user.deleteDelivery", imp_uid);
+	}
+	
+	
+	
+	
 }
