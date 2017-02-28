@@ -1,4 +1,4 @@
-			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 			<footer id="footer" class="clearfix dark">				
 				<div class="subfooter">
 					<div class="container">
@@ -27,7 +27,7 @@
 									</div>
 
 									<label></label>
-									<p class="text-center">Copyright 2016 KWAVE D. All Rights Reserved</p>
+									<p class="text-center">Copyright � 2016 KWAVE D. All Rights Reserved</p>
 								</div>
 							</div>
 						</div>
