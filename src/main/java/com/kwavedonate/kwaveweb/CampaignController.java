@@ -29,9 +29,9 @@ public class CampaignController {
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	
-	static final int KoExchangeRate = 1100; //1달러당 1100원
-	static final int ChExchangeRate = 165; //1달러당 165위안
-	static final int DefaultMoney = 10; //기본 요금
+	static int KoExchangeRate = 1100; //1달러당 1100원
+	static int ChExchangeRate = 165; //1달러당 165위안
+	static int DefaultMoney = 10; //기본 요금
 	
 	/**
 	 * campaigns 화면

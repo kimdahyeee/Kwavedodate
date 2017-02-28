@@ -88,16 +88,6 @@ public class AdminController {
 	}
 	
 	/**
-	 * 캠페인 별 사용자 목록 controller
-	 * @param
-	 * @return
-	 */
-	@RequestMapping(value="/campaignFundingUserList")
-	public String campaignFundingUserList() {
-		return "admin/campaignFundingUserListView";
-	}
-	
-	/**
 	 * 캠페인 추가 view controller
 	 * @param
 	 * @return
@@ -105,46 +95,6 @@ public class AdminController {
 	@RequestMapping(value="/campaignAdd")
 	public String campaignAdd() {
 		return "admin/campaignAddView";
-	}
-	
-	/**
-	 * 캠페인 공통부분 변경 view controller
-	 * @param
-	 * @return
-	 */
-	@RequestMapping(value="/campaignCommonUpdate")
-	public String campaignCommonUpdate() {
-		return "admin/campaignCommonUpdateView";
-	}
-	
-	/**
-	 * 캠페인 한국어 부분 변경 view controller
-	 * @param
-	 * @return
-	 */
-	@RequestMapping(value="/campaignKoUpdate")
-	public String campaignKoUpdate() {
-		return "admin/campaignKoUpdateView";
-	}
-	
-	/**
-	 * 캠페인 영어 부분 변경 view controller
-	 * @param
-	 * @return
-	 */
-	@RequestMapping(value="/campaignEnUpdate")
-	public String campaignEnUpdate() {
-		return "admin/campaignEnUpdateView";
-	}
-	
-	/**
-	 * 캠페인 중국어 부분 변경 view controller
-	 * @param
-	 * @return
-	 */
-	@RequestMapping(value="/campaignChUpdate")
-	public String campaignChUpdate() {
-		return "admin/campaignChUpdateView";
 	}
 	
 	/**

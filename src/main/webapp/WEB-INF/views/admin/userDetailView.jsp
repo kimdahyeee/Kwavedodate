@@ -1,11 +1,10 @@
-<<<<<<< HEAD
-	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-=======
+
 <%@ page language="java" contentType="text/htmll; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
->>>>>>> d657fa0357530a4677d4cfba26755f7c7260d0e4
+
+
 	<section class="main-container">
 		<div class="container">
 			<div class="row">	
@@ -72,32 +71,6 @@
 							</tr>
 						</thead>
 						<tbody>
-<<<<<<< HEAD
-							<tr>
-								<td><a href="#"><strong>imp_uid</strong></a></td>
-								<td>
-									<div class="table-header">
-										<img src="images/kim-go-eun-campaign.jpg">
-									</div>
-									<div class="table-footer"><strong>IU play with you<br>reward1</strong></div>
-								</td>
-								<td>$25</td>
-								<td>2017.02.25 17:34</td>
-								<td><a href="#"></a>보기</td>
-							</tr>
-							<tr>
-								<td><a href="#"><strong>imp_uid</strong></a></td>
-								<td>
-									<div class="table-header">
-										<img src="images/gong-you-campaign.jpg">
-									</div>
-									<div class="table-footer"><strong>IU play with you<br>reward2</strong></div>
-								</td>
-								<td>$25</td>
-								<td>2017.02.25 17:34</td>
-								<td><a href="#">보기</a></td>
-							</tr>
-=======
 							<c:if test="${fn:length(donateList) >0 }">
 								<c:forEach items="${donateList}" varStatus="status">
 									<tr>
@@ -114,10 +87,9 @@
 									</tr>
 								</c:forEach>
 							</c:if>
->>>>>>> d657fa0357530a4677d4cfba26755f7c7260d0e4
 						</tbody>
 					</table>
 				</div>
-			</div>
 		</div>
+	</div>
 	</section>

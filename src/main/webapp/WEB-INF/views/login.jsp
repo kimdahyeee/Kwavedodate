@@ -43,6 +43,7 @@
 											</a>
 										</div>
 									</div>
+									
 									<input type="hidden" id="loginRedirect" name="loginRedirect" value="${loginRedirect}"/>
 								</form>
 							</div>
