@@ -108,6 +108,8 @@
 	FROM CAMPAIGNS_${currentLocale} CL,
 		CAMPAIGNS C
    	WHERE C.CAMPAIGNNAME = #{campaignName} AND CL.CAMPAIGNNAME = C.CAMPAIGNNAME
+   	ORDER BY
+			C.CAMPAIGNREGDATE DESC
 	</select>
 	
 	<select id="selectAllRewards" parameterType="hashmap" resultMap="allRewards">
