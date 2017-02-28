@@ -1,3 +1,5 @@
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	<section class="main-container">
 		<div class="container">
 			<div class="row">	
@@ -18,14 +20,14 @@
 									<td>최홍희</td>
 									<td>2017.02.25 17:46</td>
 									<td>Yes</td>
-									<td><a href="#">보기</a></td>
+									<td><a href="<c:url value='userDetail'/>">보기</a></td>
 								</tr>
 								<tr>
 									<td>vvshinevv@naver.com</td>
 									<td>소사냥</td>
 									<td>2017.02.25 17:46</td>
 									<td>No</td>
-									<td><a href="#">보기</a></td>
+									<td><a href="<c:url value='userDetail'/>">보기</a></td>
 								</tr>
 						</tbody>
 					</table>

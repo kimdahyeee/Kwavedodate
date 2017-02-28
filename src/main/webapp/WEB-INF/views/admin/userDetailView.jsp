@@ -1,3 +1,5 @@
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 	<section class="main-container">
 		<div class="container">
 			<div class="row">	
@@ -64,33 +66,33 @@
 							</tr>
 						</thead>
 						<tbody>
-								<tr>
-									<td><a href="#"><strong>imp_uid</strong></a></td>
-									<td>
-										<div class="table-header">
-											<img src="images/kim-go-eun-campaign.jpg">
-										</div>
-										<div class="table-footer"><strong>IU play with you<br>reward1</strong></div>
-									</td>
-									<td>$25</td>
-									<td>2017.02.25 17:34</td>
-									<td><a href="#"></a>보기</td>
-								</tr>
-								<tr>
-									<td><a href="#"><strong>imp_uid</strong></a></td>
-									<td>
-										<div class="table-header">
-											<img src="images/gong-you-campaign.jpg">
-										</div>
-										<div class="table-footer"><strong>IU play with you<br>reward2</strong></div>
-									</td>
-									<td>$25</td>
-									<td>2017.02.25 17:34</td>
-									<td><a href="#">보기</a></td>
-								</tr>
+							<tr>
+								<td><a href="#"><strong>imp_uid</strong></a></td>
+								<td>
+									<div class="table-header">
+										<img src="images/kim-go-eun-campaign.jpg">
+									</div>
+									<div class="table-footer"><strong>IU play with you<br>reward1</strong></div>
+								</td>
+								<td>$25</td>
+								<td>2017.02.25 17:34</td>
+								<td><a href="#"></a>보기</td>
+							</tr>
+							<tr>
+								<td><a href="#"><strong>imp_uid</strong></a></td>
+								<td>
+									<div class="table-header">
+										<img src="images/gong-you-campaign.jpg">
+									</div>
+									<div class="table-footer"><strong>IU play with you<br>reward2</strong></div>
+								</td>
+								<td>$25</td>
+								<td>2017.02.25 17:34</td>
+								<td><a href="#">보기</a></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
+			</div>
 		</div>
-	</div>
 	</section>

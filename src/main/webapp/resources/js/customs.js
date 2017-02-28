@@ -7,16 +7,6 @@
  */
 $(document).ready(function() {	
 	
-	/* ckEditor plug in 추가 */
-	if($("#validateAddCampaign").length>0) {
-		 CKEDITOR.replace( 'campaginKoSummary_editor' );
-		 CKEDITOR.replace( 'campaginKoContents_editor' );
-		 CKEDITOR.replace( 'campaginEnSummary_editor' );
-		 CKEDITOR.replace( 'campaginEnContents_editor' );
-		 CKEDITOR.replace( 'campaginChSummary_editor' );
-		 CKEDITOR.replace( 'campaginChContents_editor' );
-	}
-	
     /* banner custom */
     if($(".campaigns-banner").length>0) {
         if (Modernizr.touch) {
