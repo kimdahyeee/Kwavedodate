@@ -19,8 +19,6 @@
 	<script type="text/javascript" src="<c:url value='/resources/plugins/SmoothScroll.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/template.js' />"></script>
 	<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/socialLogin.js' />"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/customs.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/adminCustoms.js' />"></script>
 </body>
 </html>

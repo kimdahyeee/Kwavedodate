@@ -9,6 +9,16 @@
 						<table class="table table-colored">
 							<tbody>
 								<tr>
+									<th>Campaign Name</th>
+									<td>
+										<div class="form-group has-feedback">
+											<div class="col-sm-12">
+												<input type="text" class="form-control" id="campaignName" name="campaignName" value="" disabled required>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
 									<th>Campaign Subject</th>
 									<td>
 										<div class="form-group has-feedback">

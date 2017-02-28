@@ -13,6 +13,7 @@
 									<td colspan="5">
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
+												<!-- disabled 속성일 때 값이 NULL 값으로 넘어가는 현상 발견 -->
 												<input type="text" class="form-control" id="campaignName" name="campaignName" value="IU_Campaign" disabled required>
 											</div>
 										</div>

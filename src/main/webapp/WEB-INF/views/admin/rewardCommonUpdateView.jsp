@@ -20,15 +20,17 @@
 									</td>
 									<th rowspan="3">
 										
-										<div class="youtubeImgArea">
+										<div class="rewardImgArea">
 											Reward Img<br>
 											<label class="btn btn-primary">
-								             	사진 변경 <input type="file" style="display: none;">
-								            </label>	
+								             	사진 변경 <input type="file" id="rewardImg" name="rewardImg" style="display: none;"/>
+								            </label>
+								            <div id="uploadImgState"></div>	
 										</div>
 									</th>
 									<td rowspan="3"> 
-										<img width="300px" src="<c:url value='/resources/images/kim-go-eun-campaign.jpg'/>">
+										<img id="imgLoaded" width="300px" src="<c:url value='/resources/images/kim-go-eun-campaign.jpg'/>">
+										<div id="previewImg"></div>
 									</td>
 								</tr>
 								<tr>
@@ -46,7 +48,7 @@
 									<td>
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
-												<input type="text" class="form-control" id="rewardTotalCount" name="rewardTotalCount" value="" required/>
+												<input type="text" class="form-control" id="rewardTotalCnt" name="rewardTotalCnt" value="" required/>
 											</div>
 										</div>
 									</td>

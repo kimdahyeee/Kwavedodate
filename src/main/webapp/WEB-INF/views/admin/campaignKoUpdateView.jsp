@@ -9,6 +9,17 @@
 						<table class="table table-colored">
 							<tbody>
 								<tr>
+									<th>Campaign Name</th>
+									<td>
+										<div class="form-group has-feedback">
+											<div class="col-sm-12">
+												<!-- input type이 disabled이면 ajax에서 값을 못넘기는 현상 발생 -> hidden 값으로 넘겨줄 것-->
+												<input type="text" class="form-control" id="campaignName" name="campaignName" value="" disabled required>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
 									<th>Campaign Subject</th>
 									<td>
 										<div class="form-group has-feedback">
