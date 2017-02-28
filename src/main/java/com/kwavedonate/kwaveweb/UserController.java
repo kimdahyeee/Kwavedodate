@@ -11,6 +11,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,9 +35,8 @@ import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 
 @Controller
 public class UserController {
-
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	private String check="check";
 
@@ -55,7 +56,7 @@ public class UserController {
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
 		// IP Ȯ��		
 		String ipc = GetIpAddress.getClientIP(request);
-		System.out.println("Web browser ���� : " +ipc);
+		System.out.println("Web browser locale : " +ipc);
 		
 		model.addAttribute("ipAddress", ipc);
 		
@@ -93,7 +94,7 @@ public class UserController {
 
 
 	/*
-	 * ȸ�� ���� Controller
+	 * 회원가입
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
@@ -306,8 +307,8 @@ public class UserController {
 			String encEmail = encoder.encode(ue);
 			
 			System.out.println(encEmail);
-			String htmlContent = "<h1>�Ʒ� �ּҸ� Ŭ���Ͽ� ��й�ȣ�� �����ϼ���.</h1><br/>"
-					+ "<h3>��ũ�� ������ �� ��� ��ȣ�� �������� ������ �̸����� �ٽ� �����ؾ� �մϴ�.</h3>"
+			String htmlContent = "<h1>KWAVE DONATE 비밀번호 변경 안내 메일입니다.</h1><br/>"
+					+ "<h3>아래 링크를 통해 비밀번호 변경 페이지로 이동해주세요.</h3>"
 					+ "http://localhost:8181/kwaveweb/pwdService?bep=" 
 					+ encEmail + "&ue=" + ue;
 			try {
@@ -315,7 +316,7 @@ public class UserController {
 				
 				message.setFrom(new InternetAddress("tantosuperb@gmail.com"));
 				message.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(userEmailExist.get("USEREMAIL").toString()));
-				message.setSubject("KWAVE DONATE ��й�ȣ ���� �ȳ��Դϴ�.");
+				message.setSubject("KWAVE DONATE 비밀번호 변경");
 				message.setText(htmlContent, "UTF-8", "html");
 				
 				mailSender.send(message);
@@ -370,157 +371,7 @@ public class UserController {
 		
 	}
 	
-	/*
-	 * �������� ��Ʈ�ѷ�
-	 */
-	@ResponseBody
-	@RequestMapping(value="insertDeliveryENG", method=RequestMethod.POST)
-	public HashMap<String, Object> insertDeliveryENG(
-			@RequestParam("imp_uid")String imp_uid, @RequestParam("merchant_uid")String merchant_uid,
-			@RequestParam("userEmail")String userEmail,
-			@RequestParam("campaignName")String campaignName,
-			@RequestParam("rewardNum")String rewardNum,
-			@RequestParam("totalAmount")String totalAmount,
-			@RequestParam("note")String note,
-			@RequestParam("shippingAmount")String shippingAmount,
-			@RequestParam("shippingMethod")String shippingMethod,
-			@RequestParam("userName")String userName,
-			@RequestParam("phone")String phone,
-			@RequestParam("address1")String address1,
-			@RequestParam("address2")String address2,
-			@RequestParam("zipCode")String zipCode,
-			@RequestParam("city")String city,
-			@RequestParam("country")String country,
-			@RequestParam("region")String region ) {
-		int resultD = 0, resultP = 0;
-		System.out.println("ENG");
-		System.out.println(note);
-		
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("imp_uid", imp_uid);
-		paramMap.put("userEmail", userEmail);
-		paramMap.put("merchant_uid", merchant_uid);
-		paramMap.put("campaignName", campaignName);
-		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
-		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
-		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
-		paramMap.put("shippingMethod", shippingMethod);
-		paramMap.put("userName", userName);
-		paramMap.put("phone", phone);
-		paramMap.put("note", note);
-		paramMap.put("address1", address1);
-		paramMap.put("address2", address2);
-		paramMap.put("zipCode", zipCode);
-		paramMap.put("city", city);
-		paramMap.put("country", country);
-		paramMap.put("region", region);
-		
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		
-		/*resultD = dao.insertDelivery(paramMap);
-		resultP = dao.insertPayments(paramMap);
-		if(resultD == 1 && resultP == 1) {
-			hashmap.put("KEY", "SUCCESS");
-		}*/
-		
-		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		
-		TransactionStatus status = transactionManager.getTransaction(def);
-		try {
-			resultD = dao.insertDelivery(paramMap);
-			resultP = dao.insertPayments(paramMap);
-			if(resultD == 1 && resultP == 1) {
-				hashmap.put("KEY", "SUCCESS");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			transactionManager.rollback(status);
-			hashmap.put("KEY", "FAIL");
-			e.printStackTrace();
-		}
-		transactionManager.commit(status);
-		
-		return hashmap;
-	}
+
 	
-	@ResponseBody
-	@RequestMapping(value="insertDeliveryKOR", method=RequestMethod.POST)
-	public HashMap<String, Object> insertDeliveryKOR(
-			@RequestParam("imp_uid")String imp_uid, 
-			@RequestParam("merchant_uid")String merchant_uid, 
-			@RequestParam("receipt_url")String receipt_url,
-			@RequestParam("userEmail")String userEmail,
-			@RequestParam("campaignName")String campaignName,
-			@RequestParam("rewardNum")String rewardNum,
-			@RequestParam("rewardAmount")String rewardAmount,
-			@RequestParam("totalAmount")String totalAmount,
-			@RequestParam("shippingAmount")String shippingAmount,
-			@RequestParam("shippingMethod")String shippingMethod,
-			@RequestParam("note")String note,
-			@RequestParam("country")String country,
-			@RequestParam("phone")String phone,
-			@RequestParam("address1")String address1,
-			@RequestParam("address2")String address2,
-			@RequestParam("zipCode")String zipCode ) {
-		System.out.println("KOR");
-		int resultD = 0, resultP=0;
-		
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("imp_uid", imp_uid);
-		paramMap.put("merchant_uid", merchant_uid);
-		paramMap.put("userEmail", userEmail);
-		paramMap.put("campaignName", campaignName);
-		paramMap.put("rewardNum", Integer.parseInt(rewardNum));
-		paramMap.put("rewardAmount", Integer.parseInt(rewardAmount));
-		paramMap.put("totalAmount", Integer.parseInt(totalAmount));
-		paramMap.put("shippingAmount", Integer.parseInt(shippingAmount));
-		paramMap.put("shippingMethod", shippingMethod);
-		paramMap.put("note", note);
-		paramMap.put("city", "city");
-		paramMap.put("region", "region");
-		paramMap.put("country", country);
-		paramMap.put("phone", phone);
-		paramMap.put("address1", address1);
-		paramMap.put("address2", address2);
-		paramMap.put("zipCode", zipCode);
-		paramMap.put("receipt_url", receipt_url);
-		
-		System.out.println("imp_uid : " + receipt_url);
-		
-		
-		
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		
-		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		
-		TransactionStatus status = transactionManager.getTransaction(def);
-		try {
-			System.out.println("try문 들어옴");
-			resultP = dao.insertPayments(paramMap);
-			resultD = dao.insertDelivery(paramMap);
-			
-			dao.updateRewardsByPayment(paramMap);
-			dao.updateCampaignsByPayment(paramMap);
-			transactionManager.commit(status);
-			if(resultD == 1 && resultP == 1) {
-				hashmap.put("KEY", "SUCCESS");
-			}
-		} catch (Exception e) {
-			System.out.println("catch문 들어옴");
-			try {
-				transactionManager.rollback(status);
-			} catch(Exception ee) {
-				 System.out.println("Exception in commit or rollback : "+ee);
-			}
-			
-			System.out.println("Exception in saveTemplatesToPCA() : "+e);
-			hashmap.put("KEY", "FAIL");
-		}
-		
-		
-		return hashmap;
-	}
 
 }

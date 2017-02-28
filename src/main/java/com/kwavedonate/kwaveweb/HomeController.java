@@ -84,7 +84,6 @@ public class HomeController {
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request) {
 		logger.info("loginPage");
-		
 		return "login";
 	}
 }

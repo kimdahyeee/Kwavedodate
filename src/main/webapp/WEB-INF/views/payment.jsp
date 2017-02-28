@@ -38,7 +38,7 @@
 											<label></label>
 								
 											
-											<c:if test="${rewardNum != 0}">
+											<c:if test="${rewardNum > 0}">
 												<h3>Where should we send your stuff?</h3>
 												<label></label>
 												<div class="form-group has-feedback text-center">
@@ -76,7 +76,11 @@
 													</div>
 												</div>
 												<div class="appendArea"></div>
-												
+												<c:if test="${user.COUNTRY eq 'KR'}">
+													<input type="hidden" id="city" value="kwavedonate_not_define">
+													<input type="hidden" id="region" value="kwavedonate_not_define">
+													<input type="hidden" id="shippingMethod" value="국내배송">
+												</c:if>
 												<c:if test="${user.COUNTRY ne 'KR'}">
 													<div class="form-group has-feedback text-center cityArea">
 														<label for="inputCity" class="col-xs-3 col-sm-3">City : </label>
@@ -121,6 +125,7 @@
 
 			                                          <c:when test="${rewardNum != 0 }">
 			                                          	  <h5><strong>${reward.rewardSubject}</strong></h5>
+			                                          	  <input type="hidden" id="rewardSubject" value="${reward.rewardSubject}">
 			                                          	  <div class="separator"></div>
 				                                          <span class="text-left">Reward: </span> 
 				                                          <span class="text-right"><spring:message code="notation"/>${reward.rewardAmount}</span><br>
@@ -134,6 +139,20 @@
 				                                          <span class="text-left">Reward: </span>
 				                                          <span class="text-right"><spring:message code="notation"/>${defaultMoney}</span><br>
 				                                          <input type="hidden" id="rewardAmount" name="rewardAmount" value="${defaultMoney}"> 
+				                                          <input type="hidden" id="zipCode" value="" >
+														  <input type="hidden" id="address1" value="" >
+														  <input type="hidden" id="address2" value="" >
+														  <input type="hidden" id="city" value="" >
+														  <input type="hidden" id="country" value="">
+														  <input type="hidden" id="region" value="" >
+														  <input type="hidden" id="shippingMethod" value="" >
+														  <input type="hidden" id="note" value="reward 없음" >
+														  <input type="hidden" id="rewardAmount" value="" >
+														  <input type="hidden" id="rewardNum" value="0">
+														  <input type="hidden" id="campaignName" value="${campaignName}" >
+														  <input type="hidden" id="totalAmount" value="10" >
+														  <input type="hidden" id="rewardSubject" value="${reward.rewardSubject}">
+														  <input type="hidden" id="shippingAmount" value="0" >
 			                                          </c:otherwise>
 			                                       </c:choose>
 													<input type="hidden" id="totalAmount" name="totalAmount" value="">

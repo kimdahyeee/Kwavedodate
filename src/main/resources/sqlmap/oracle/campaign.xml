@@ -130,6 +130,4 @@
     WHERE R.CAMPAIGNNAME = #{campaignName} AND R.REWARDNUM = RL.REWARDNUM
 	</select>
 	
-	
-	
 </mapper>

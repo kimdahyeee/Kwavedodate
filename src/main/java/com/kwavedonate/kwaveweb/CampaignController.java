@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 @Controller
 @RequestMapping(value="/campaigns")
 public class CampaignController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CampaignController.class);
 	
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
@@ -52,6 +56,7 @@ public class CampaignController {
 			int campaignDueDate = Integer.valueOf(lists.get("campaignDueDate").toString());
 			
 			Map<String, Object> map = new HashMap<String, Object>();
+
 			//current campaigns list
 			if(campaignDueDate >= 0){
 				if(campaignDueDate == 7){
@@ -69,6 +74,7 @@ public class CampaignController {
 				
 				currentList.add(map);
 			}else{
+
 
 				//recently campaigns list
 				map.put("campaignName", campaignName);

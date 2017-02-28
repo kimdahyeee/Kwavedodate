@@ -808,14 +808,12 @@ $(document).ready(function() {
             	var payment_country = $("#country").val();
             	var payment_method_checked = '';
             	var payment_pg = '';
-            	
             	var payment_method = document.getElementsByName("payment_method");
                 for(var i = 0; i < payment_method.length; i++) {
                    if(payment_method[i].checked == true) {
                       payment_method_checked = payment_method[i].value;
                    }
                 }
-            	
             	
             	if(payment_method_checked == "paypal") {
             		payment_pg = 'paypal';
@@ -826,19 +824,29 @@ $(document).ready(function() {
             		IMP.init('imp57757789');
             	}
               
-               
                IMP.request_pay({
                   pg : payment_pg, // version 1.1.0부터 지원.   // inicis
                   pay_method : payment_method_checked,//payment_method_checked,
                   merchant_uid : 'merchant_' + new Date().getTime(),
-                  name : $("#campaignName").val(),
+                  name : $("#campaignName").val() + $("#rewardSubject").val(),
                   amount : $("#totalAmount").val(),
                   buyer_email : $("#userEmail").val(),
                   buyer_name : $("#userName").val(),
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
                   buyer_postcode : $("#zipCode").val(),
-                  m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+                  m_redirect_url : '172.30.1.38:8181/kwaveweb/m_redirect?'
+                	  + "note=" + $("#note")
+                	  + "&rewardNum=" + $("#rewardNum").val()
+                	  + "&rewardAmount=" + $("#rewardAmount").val()
+                	  + "&totalAmount=" + $("#totalAmount").val()
+                	  + "&shippingAmount=" + $("#shippingAmount").val()
+                	  + "&shippingMethod=" + $("#shippingMethod").val()
+                	  + "&note=" + $("#note").val()
+                	  + "&city=" + $("#city").val()
+                	  + "&region=" + $("#region").val()
+                	  + "&country=" + $("#country").val()
+                	  + "&address2=" + $("#address2").val()
                 	  
               }, function(rsp) {
                   if ( rsp.success ) {
@@ -848,75 +856,32 @@ $(document).ready(function() {
                       msg += '결제 금액 : ' + rsp.paid_amount;
                       msg += '카드 승인번호 : ' + rsp.apply_num;
 
-                   if(payment_country == "KR") {
                       $.ajax({
                                type: "POST",
-                               url: "/kwaveweb/insertDeliveryKOR",   // delivery table
+                               url: "/kwaveweb/insertDelivery",   // delivery table
                                data: {
-                                   "imp_uid" : rsp.imp_uid,
-                                   "merchant_uid" : rsp.merchant_uid,
-                                   "receipt_url" : rsp.receipt_url,
-   
-                                    "userEmail": $("#userEmail").val(),
-                                    "campaignName" : $("#campaignName").val(),
-                                    "rewardNum" : $("#rewardNum").val(),
-                                    "totalAmount" : $("#totalAmount").val(),
-                                    "shippingAmount" : $("#shippingAmount").val(),
-                                    "shippingMethod" : $("#shippingMethod").val(),
-                                    "rewardAmount" : $("#rewardAmount").val(),
-                                    
-	                                 "note" : $("#note").val(),
-	                                 "country" : $("#country").val(),
-	                                 "phone": $("#phone").val(),
-	                            	 "address1": $("#address1").val(),
-	                                 "address2": $("#address2").val(),
-	                                 "zipCode": $("#zipCode").val()
+                            	   "imp_uid" : rsp.imp_uid,
+	                               "rewardNum" : $("#rewardNum").val(),
+	                               "rewardAmount" : $("#rewardAmount").val(),
+	                               "shippingAmount" : $("#shippingAmount").val(),
+	                               "shippingMethod" : $("#shippingMethod").val(),
+	                               "note" : $("#note").val(),
+	                               "address2": $("#address2").val(),
+	                               "city" : $("#city").val(),
+	                               "country" : $("#country").val(),
+	                               "region" : $("#region").val()
 	                            },
 	                            dataType: "json",
 	                            success: function(data) {
 	                            	if(data.KEY == "SUCCESS"){
 	                            		alert("성공처리 되었습니다.")
+	                            		location.replace("/kwaveweb/myAccount");
 	                                 }else{
 	                                    alert("실패했습니다.");
 	                                 }
 	                            }
         		        	});
-    					} else {
-    						$.ajax({
-	                            type: "POST",
-	                            url: "/kwaveweb/insertDeliveryENG",	// delivery table
-	                            data: {
-	                            	 "imp_uid" : rsp.imp_uid,
-	                            	 "merchant_uid" : rsp.merchant_uid,
-	                            	 "receipt_url" : rsp.receipt_url,
-	                            	 
-	                                 "userEmail": $("#userEmail").val(),
-	                                 "campaignName" : $("#campaignName").val(),
-	                                 "rewardNum" : $("#rewardNum").val(),
-	                                 "rewardAmount" : $("#rewardAmount").val(),
-	                                 "totalAmount" : $("#totalAmount").val(),
-	                                 "shippingAmount" : $("#shippingAmount").val(),
-	                                 "shippingMethod" : $("#shippingMethod").val(),
-	                                 "note" : $("#note").val(),
-	                                 "userName": $("#userName").val(),
-	                                 "phone": $("#phone").val(),
-	                            	 "address1": $("#address1").val(),
-	                                 "address2": $("#address2").val(),
-	                                 "zipCode": $("#zipCode").val(),
-	                                 "city" : $("#city").val(),
-	                                 "country" : $("#country").val(),
-	                                 "region" : $("#region").val()
-	                            },
-	                            dataType: "json",
-	                            success: function(data) {
-	                            	if(data.KEY == "SUCCESS"){
-	                            		alert("성공처리 되었습니다.");
-	                            	}else{
-	                                    alert("실패했습니다.");
-	                                 }
-	                        	}
-	                        });
-    					}
+                  
     				} else {
     					var msg = '결제에 실패하였습니다.';
          		        msg += '에러내용 : ' + rsp.error_msg;
