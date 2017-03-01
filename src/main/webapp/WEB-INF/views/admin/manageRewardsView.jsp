@@ -17,24 +17,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>IU_Campaign</td>
-							<td>reward1</td>
-							<td>$20</td>
-							<td>150</td>
-							<td>130</td>
-							<td><a href="<c:url value='/admin/rewardDetail'/>">보기</a></td>
-							<td><a href="">삭제</a></td>
-						</tr>
-						<tr>
-							<td>IU_Campaign</td>
-							<td>reward2</td>
-							<td>$50</td>
-							<td>100</td>
-							<td>70</td>
-							<td><a href="<c:url value='/admin/rewardDetail'/>">보기</a></td>
-							<td><a href="">삭제</a></td>
-						</tr>
+						<c:forEach items="${rewards}" var="rewards">
+							<tr>
+								<td>${rewards.campaignName }</td>
+								<td>${rewards.rewardSubject }</td>
+								<td>${rewards.rewardAmount }</td>
+								<td>${rewards.rewardTotalCnt }</td>
+								<td>${rewards.rewardCurrentCnt }</td>
+								<td><a href="<c:url value='/admin/${rewards.campaignName}/manageRewards/${rewards.rewardNum}'/>">보기</a></td>
+								<td><a href="#">삭제</a></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 				<a href="<c:url value='/admin/rewardAdd'/>" class="btn square btn-danger pull-right">추가</a>

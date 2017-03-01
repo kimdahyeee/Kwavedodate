@@ -11,11 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kwavedonate.kwaveweb.admin.service.AdminService;
+import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
+import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 import com.kwavedonate.kwaveweb.core.util.Sstring;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -29,7 +32,8 @@ public class AdminController {
 	
 	@Resource(name="adminService")
 	private AdminService adminService;
-	
+	@Resource(name="campaignService")
+	private CampaignService campaignService;
 	private IamportClient iamportClient;
 	/**
 	 * 관리자 메인 controller
@@ -194,23 +198,30 @@ public class AdminController {
 	}
 	
 	/**
+	 * *****************************************************************
 	 * 리워드 관리 목록 controller
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value="/manageRewards")
-	public String manageRewards() {
-		return "admin/manageRewardsView";
-	}
-	
-	/**
-	 * 리워드 상세 보기 controller
-	 * @param
-	 * @return
-	 */
-	@RequestMapping(value="/rewardDetail")
-	public String rewardDetail() {
-		return "admin/rewardDetailView";
+	@RequestMapping(
+			value={"{campaignName}/manageRewards", "{campaignName}/manageRewards/{rewardNum}"}, 
+			method = {RequestMethod.POST, RequestMethod.GET})
+	public String manageRewards(
+			@PathVariable Map<String, String> pathVariables,
+			Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("campaignName", pathVariables.get("campaignName"));
+		map.put("currentLocale", "Ko");
+
+		if(pathVariables.containsKey("rewardNum")) {
+			
+			
+			return "admin/rewardDetailView";
+		} else {
+			List<RewardsVo> rewardsDetail = campaignService.getAllRewards(map);
+			model.addAttribute("rewards", rewardsDetail);
+			return "admin/manageRewardsView";
+		}
 	}
 	
 	/**

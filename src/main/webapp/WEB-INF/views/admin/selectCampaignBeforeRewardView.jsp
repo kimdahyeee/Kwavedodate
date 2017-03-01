@@ -18,7 +18,7 @@
 							<div class="tab-pane active" id="pill-1">
 								<div class="campaignsList">
 									<ul class="nav nav-pills nav-stacked">
-										<li><a href="<c:url value='/admin/manageRewards'/>">IU_Campaign</a></li>
+										<li><a href="<c:url value='/admin/IU_Campaign/manageRewards'/>">IU_Campaign</a></li>
 										<li><a href="<c:url value='/admin/manageRewards'/>">Gong_You_Campaign</a></li>
 										<li><a href="<c:url value='/admin/manageRewards'/>">Kim_Go_eun_Campaign</a></li>
 									</ul>
