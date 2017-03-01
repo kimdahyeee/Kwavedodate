@@ -50,7 +50,7 @@
                            			<c:when test="${paymentDetail.imp_status == 'cancelled'}">결제취소</c:when>
                            			<c:when test="${paymentDetail.imp_status == 'faild'}">결제실패</c:when>
                            		</c:choose>
-                           		<br><a href='<c:url value="/paymentCancel?imp_uid=${paymentDetail.imp_uid}"/>' class="btn square btn-danger">취소하기</a>
+                           		<br><a href='<c:url value="/paymentCancel?imp_uid=${paymentDetail.imp_uid}&userEmail=${userEmail}"/>' class="btn square btn-danger">취소하기</a>
                       		</td>
                         </tr>
                   </tbody>

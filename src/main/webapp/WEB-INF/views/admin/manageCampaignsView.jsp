@@ -1,9 +1,10 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 	<section class="main-container">
 		<div class="container">
-			<div class="row">	
+			<div class="row manageCampaigns">	
 				<div class="table-responsive" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
 					<ul class="nav nav-pills nav-justified" role="tablist">
 						<li class="active"><a href="#pill-1" role="tab" data-toggle="tab">진행 전</a></li>
@@ -28,24 +29,19 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td><a href="<c:url value='/admin/campaignDetail'/>">IU_Campaign</a></td>
-											<td>IU Play With You</td>
-											<td>3</td>
-											<td>$100</td>
-											<td>vvshinevv</td>
-											<td>2017.02.25 18:20</td>
-											<td><a href="#">삭제</a></td>
-										</tr>
-										<tr>
-											<td><a href="<c:url value='/admin/campaignDetail'/>">IU_Campaign</a></td>
-											<td>IU Play With You</td>
-											<td>3</td>
-											<td>$100</td>
-											<td>vvshinevv</td>
-											<td>2017.02.25 18:20</td>
-											<td><a href="#">삭제</a></td>
-										</tr>
+										<c:if test="${fn:length(beforeCamapaignsList) > 0}">
+											<c:forEach items="${beforeCamapaignsList}" varStatus="status">
+												<tr>
+													<td><a href="<c:url value='/admin/campaignDetail/${beforeCamapaignsList[status.index].campaignName}'/>">${beforeCamapaignsList[status.index].campaignName}</a></td>
+													<td>${beforeCamapaignsList[status.index].campaignSubject}</td>
+													<td>${beforeCamapaignsList[status.index].fundingUserCnt}</td>
+													<td>$${beforeCamapaignsList[status.index].gatherAmount}</td>
+													<td>${beforeCamapaignsList[status.index].campaignRegister}</td>
+													<td>${beforeCamapaignsList[status.index].campaignRegDate}</td>
+													<td><a href="/admin/deleteCampaigns?campaignName=${currentCampaignsList[status.index].campaignName}" onclick="return confirm('정말 삭제하시겠습니까?') ? true : false;">삭제</a></td>
+												</tr>
+											</c:forEach>
+										</c:if>
 									</tbody>
 								</table>
 							</div>
@@ -70,15 +66,19 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td><a href="<c:url value='/admin/campaignDetail'/>">GongYou_Campaign</a></td>
-											<td>IU Play With You</td>
-											<td>5</td>
-											<td>$200</td>
-											<td>vvshinevv</td>
-											<td>2017.02.25 18:20</td>
-											<td><a href="#">삭제</a></td>
-										</tr>
+										<c:if test="${fn:length(currentCampaignsList) > 0}">
+											<c:forEach items="${currentCampaignsList}" varStatus="status">
+												<tr>
+													<td><a id="campaignName" href="<c:url value='/admin/campaignDetail/${currentCampaignsList[status.index].campaignName}'/>">${currentCampaignsList[status.index].campaignName}</a></td>
+													<td>${currentCampaignsList[status.index].campaignSubject}</td>
+													<td>${currentCampaignsList[status.index].fundingUserCnt}</td>
+													<td>$${currentCampaignsList[status.index].gatherAmount}</td>
+													<td>${currentCampaignsList[status.index].campaignRegister}</td>
+													<td>${currentCampaignsList[status.index].campaignRegDate}</td>
+													<td><a href="/admin/deleteCampaigns?campaignName=${currentCampaignsList[status.index].campaignName}" onclick="return confirm('정말 삭제하시겠습니까?') ? true : false;">삭제</a></td>
+												</tr>
+											</c:forEach>
+										</c:if>
 									</tbody>
 								</table>
 							</div>
@@ -103,24 +103,19 @@
 										</tr>
 									</thead>
 									<tbody>
-											<tr>
-												<td><a href="<c:url value='/admin/campaignDetail'/>">IU_Campaign</a></td>
-												<td>IU Play With You</td>
-												<td>3</td>
-												<td>$100</td>
-												<td>vvshinevv</td>
-												<td>2017.02.25 18:20</td>
-												<td><a href="#">삭제</a></td>
-											</tr>
-											<tr>
-												<td><a href="<c:url value='/admin/campaignDetail'/>">GongYou_Campaign</a></td>
-												<td>IU Play With You</td>
-												<td>5</td>
-												<td>$200</td>
-												<td>vvshinevv</td>
-												<td>2017.02.25 18:20</td>
-												<td><a href="#">삭제</a></td>
-											</tr>
+										<c:if test="${fn:length(closedCamapaignsList) > 0}">
+											<c:forEach items="${closedCamapaignsList}" varStatus="status">
+												<tr>
+													<td><a href="<c:url value='/admin/campaignDetail/${closedCamapaignsList[status.index].campaignName}'/>">${closedCamapaignsList[status.index].campaignName}</a></td>
+													<td>${closedCamapaignsList[status.index].campaignSubject}</td>
+													<td>${closedCamapaignsList[status.index].fundingUserCnt}</td>
+													<td>$${closedCamapaignsList[status.index].gatherAmount}</td>
+													<td>${closedCamapaignsList[status.index].campaignRegister}</td>
+													<td>${closedCamapaignsList[status.index].campaignRegDate}</td>
+													<td><a href="/admin/deleteCampaigns?campaignName=${closedCamapaignsList[status.index].campaignName}" onclick="return confirm('정말 삭제하시겠습니까?') ? true : false;">삭제</a></td>
+												</tr>
+											</c:forEach>
+										</c:if>
 									</tbody>
 								</table>
 							</div>

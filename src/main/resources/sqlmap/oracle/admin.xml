@@ -49,6 +49,38 @@
 		<result property="totalAmount" column="TOTALAMOUNT" javaType="java.lang.String"/>
 		<result property="shippingAmount" column="SHIPPINGAMOUNT" javaType="java.lang.String"/>
 	</resultMap>
+	<resultMap type="hashmap" id="campaignsList">
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="fundingUserCnt" column="FUNDINGUSERCNT" javaType="java.lang.String"/>
+		<result property="gatherAmount" column="GATHERAMOUNT" javaType="java.lang.String"/>
+		<result property="campaignRegister" column="CAMPAIGNREGISTER" javaType="java.lang.String"/>
+		<result property="campaignRegDate" column="CAMPAIGNREGDATE" javaType="java.lang.String"/>
+		<result property="dueDate" column="DUEDATE" javaType="int"/>
+		<result property="launchDate" column="LAUNCHDATE" javaType="int"/>
+	</resultMap>
+	<resultMap type="hashmap" id="campaignDetail">
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="koCampaignSubject" column="KOCAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="enCmpaignSubject" column="ENCAMAPIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="chCampaignSubject" column="CHCAMAPIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="koCampaignSummary" column="KOCAMPAIGNSUMMARY" javaType="java.lang.String"/>
+		<result property="enCmpaignSummary" column="ENCAMPAIGNSUMMARY" javaType="java.lang.String"/>
+		<result property="chCampaignSummary" column="CHCAMPAIGNSUMMARY" javaType="java.lang.String"/>
+		<result property="koCampaignContents" column="KOCAMPAIGNCONTENTS" javaType="java.lang.String"/>
+		<result property="enCmpaignContents" column="ENCAMPAIGNCONTENTS" javaType="java.lang.String"/>
+		<result property="chCampaignContents" column="CHCAMPAIGNCONTENTS" javaType="java.lang.String"/>
+		<result property="fundingUserCnt" column="FUNDINGUSERCNT" javaType="java.lang.String"/>
+		<result property="gatherAmount" column="GATHERAMOUNT" javaType="java.lang.String"/>
+		<result property="campaignRegister" column="CAMPAIGNREGISTER" javaType="java.lang.String"/>
+		<result property="youtubeCode" column="YOUTUBECODE" javaType="java.lang.String"/>
+		<result property="youtubeImg" column="YOUTUBEIMG" javaType="java.lang.String"/>
+		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
+		<result property="sysToDueDate" column="SYSTODUEDATE" javaType="int"/>
+		<result property="sysToLaunchDate" column="SYSTOLAUNCHDATE" javaType="int"/>
+		<result property="dueDate" column="DUEDATE" javaType="java.lang.String"/>
+		<result property="launchDate" column="LAUNCHDATE" javaType="java.lang.String"/>
+	</resultMap>
 	<select id="selectAllUser" resultMap="allUsers">
 		SELECT 
 			USEREMAIL,
@@ -130,5 +162,52 @@
 		FROM
 			PAYMENTS
 		WHERE IMP_UID=#{imp_uid}
+	</select>
+	<select id="selectCampaignsList" resultMap="campaignsList">
+	SELECT
+		C.CAMPAIGNNAME AS CAMPAIGNNAME,
+		CK.CAMPAIGNSUBJECT AS CAMPAIGNSUBJECT,
+		C.FUNDINGUSERCNT AS FUNDINGUSERCNT,
+		C.GATHERAMOUNT AS GATHERAMOUNT,
+		C.CAMPAIGNREGISTER AS CAMPAIGNREGISTER,
+		TO_CHAR(C.CAMPAIGNREGDATE, 'YYYY-MM-DD HH24:MI') AS CAMPAIGNREGDATE,
+		TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.DUEDATE,'YYYYMMDD')) AS DUEDATE,
+		TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.LAUNCHDATE,'YYYYMMDD')) AS LAUNCHDATE
+	FROM CAMPAIGNS C,
+		 CAMPAIGNS_KO CK
+	WHERE CK.CAMPAIGNNAME = C.CAMPAIGNNAME
+	ORDER BY C.CAMPAIGNREGDATE DESC
+	</select>
+	<select id="selectCampaignDetail" resultMap="campaignDetail">
+	SELECT
+		C.CAMPAIGNNAME AS CAMPAIGNNAME,
+		KO.CAMPAIGNSUBJECT AS KOCAMPAIGNSUBJECT,
+		EN.CAMPAIGNSUBJECT AS ENCAMAPIGNSUBJECT,
+		CH.CAMPAIGNSUBJECT AS CHCAMAPIGNSUBJECT,
+		KO.CAMPAIGNSUMMARY AS KOCAMPAIGNSUMMARY,
+		EN.CAMPAIGNSUMMARY AS ENCAMPAIGNSUMMARY,
+		CH.CAMPAIGNSUMMARY AS CHCAMPAIGNSUMMARY,
+		KO.CAMPAIGNCONTENTS AS KOCAMPAIGNCONTENTS,
+		EN.CAMPAIGNCONTENTS AS ENCAMPAIGNCONTENTS,
+		CH.CAMPAIGNCONTENTS AS CHCAMPAIGNCONTENTS,
+		C.FUNDINGUSERCNT AS FUNDINGUSERCNT,
+		C.GATHERAMOUNT AS GATHERAMOUNT,
+		C.CAMPAIGNREGISTER AS CAMPAIGNREGISTER,
+		C.YOUTUBECODE AS YOUTUBECODE,
+		C.YOUTUBEIMG AS YOUTUBEIMG,
+		C.CAMPAIGNIMG AS CAMPAIGNIMG,
+		TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.DUEDATE,'YYYYMMDD')) AS SYSTODUEDATE,
+		TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.LAUNCHDATE,'YYYYMMDD')) AS SYSTOLAUNCHDATE,
+		TO_CHAR(C.DUEDATE,'YYYY-MM-DD') AS DUEDATE,
+		TO_CHAR(C.LAUNCHDATE,'YYYY-MM-DD') AS LAUNCHDATE
+	FROM CAMPAIGNS C,
+		 CAMPAIGNS_KO KO,
+		 CAMPAIGNS_EN EN, 
+		 CAMPAIGNS_CH CH
+	WHERE 
+		C.CAMPAIGNNAME= #{campaignName} AND 
+		KO.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
+		EN.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
+		CH.CAMPAIGNNAME = C.CAMPAIGNNAME
 	</select>
 </mapper>

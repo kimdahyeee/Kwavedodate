@@ -1,6 +1,7 @@
 package com.kwavedonate.kwaveweb;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,30 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value="/manageCampaigns")
-	public String manageCampaigns() {
+	public String manageCampaigns(Model model) {
+		List<Map<String, Object>> allCamapaignsList = adminService.getCampaignsList();
+		List<Map<String, Object>> beforeCamapaignsList = new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> currentCampaignsList = new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> closedCamapaignsList = new ArrayList<Map<String,Object>>();
+		
+		for(Map<String, Object> lists : allCamapaignsList){
+			int dueDate = (Integer) lists.get("dueDate");
+			int launchDate = (Integer) lists.get("launchDate");
+			
+			if(dueDate < 0 && launchDate < 0){
+				//진행전
+				beforeCamapaignsList.add(lists);
+			}else if(dueDate <=0 & launchDate >=0){
+				//진행중
+				currentCampaignsList.add(lists);
+			}else{
+				//종료
+				closedCamapaignsList.add(lists);
+			}
+		}
+		model.addAttribute("beforeCamapaignsList", beforeCamapaignsList);
+		model.addAttribute("currentCampaignsList", currentCampaignsList);
+		model.addAttribute("closedCamapaignsList", closedCamapaignsList);
 		return "admin/manageCampaignsView";
 	}
 	
@@ -86,8 +110,22 @@ public class AdminController {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value="/campaignDetail")
-	public String campaignDetail() {
+	@RequestMapping(value="/campaignDetail/{campaignName}")
+	public String campaignDetail(@PathVariable("campaignName") String campaignName, Model model) {
+		Map<String, Object> campaignDetail = adminService.getCampaignDetail(campaignName);
+		int sysToLaunchDate = (Integer)campaignDetail.get("sysToLaunchDate");
+		int sysToDueDate = (Integer)campaignDetail.get("sysToDueDate");
+		if(sysToDueDate < 0 && sysToLaunchDate < 0){
+			//진행전
+			model.addAttribute("leftDays", "진행전");
+		}else if(sysToDueDate <=0 & sysToLaunchDate >=0){
+			//진행중
+			model.addAttribute("leftDays", Math.abs(sysToDueDate));
+		}else{
+			//종료
+			model.addAttribute("leftDays", "종료");
+		}
+		model.addAttribute("campaignDetail", campaignDetail);
 		return "admin/campaignDetailView";
 	}
 	
@@ -184,6 +222,7 @@ public class AdminController {
 		
 		model.addAttribute("paymentDetail", paymentDetail);
 		model.addAttribute("deliveryDetail", deliveryDetail);
+		model.addAttribute("userEmail", userEmail);
 		return "admin/paymentDetailView";
 	}
 	
@@ -272,5 +311,13 @@ public class AdminController {
 	@RequestMapping(value="/rewardChUpdate")
 	public String rewardChUpdate() {
 		return "admin/rewardChUpdateView";
+	}
+	
+	/**
+	 * 캠페인 삭제
+	 */
+	@RequestMapping(value="deleteCampaigns", method=RequestMethod.GET)
+	public void deleteCampaign(@RequestParam("campaignName") String campaignName){
+		
 	}
 }

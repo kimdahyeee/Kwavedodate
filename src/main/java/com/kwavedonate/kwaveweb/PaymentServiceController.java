@@ -186,7 +186,7 @@ public class PaymentServiceController {
 	 * @param payment_imp_uid
 	 */
 	@RequestMapping(value="paymentCancel", method=RequestMethod.GET)
-	public String paymentCancel(@RequestParam("imp_uid") String imp_uid, RequestContextHolder request){
+	public String paymentCancel(@RequestParam("imp_uid") String imp_uid, @RequestParam("userEmail") String userEmail){
 		DefaultTransactionDefinition dtd = new DefaultTransactionDefinition();
 		dtd.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
@@ -204,8 +204,8 @@ public class PaymentServiceController {
 				System.out.println("Exception in commit or rollback : "+e2);
 			}
 		}
-		//redirect부분 구현해야함
-		return "redirect:/admin/manageUsers";
+		
+		return "redirect:/admin/userDetail?userEmail="+userEmail;
 	}
 	
 	public void cancelPayment(String payment_imp_uid) {
