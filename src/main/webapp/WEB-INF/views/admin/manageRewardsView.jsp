@@ -1,10 +1,11 @@
 	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 	
 	<section class="main-container">
 		<div class="container">
 			<div class="row">
-				<table class="table table-colored text-center">
+				<table class="table table-colored text-center manageReward">
 					<thead>
 						<tr>
 							<th>Campaign Name</th>

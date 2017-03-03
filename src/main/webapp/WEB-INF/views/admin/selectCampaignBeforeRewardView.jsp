@@ -1,6 +1,6 @@
 	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 	<section class="main-container">
 		<div class="container">
 			<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
@@ -18,9 +18,11 @@
 							<div class="tab-pane active" id="pill-1">
 								<div class="campaignsList">
 									<ul class="nav nav-pills nav-stacked">
-										<li><a href="<c:url value='/admin/IU_Campaign/manageRewards'/>">IU_Campaign</a></li>
-										<li><a href="<c:url value='/admin/manageRewards'/>">Gong_You_Campaign</a></li>
-										<li><a href="<c:url value='/admin/manageRewards'/>">Kim_Go_eun_Campaign</a></li>
+										<c:if test="${fn:length(beforeCamapaignList) > 0}">
+											<c:forEach items="${beforeCamapaignList}" varStatus="status">
+												<li><a href="<c:url value='/admin/${beforeCamapaignList[status.index].campaignName }/manageRewards'/>">${beforeCamapaignList[status.index].campaignName }</a></li>
+											</c:forEach>
+										</c:if>
 									</ul>
 								</div>
 							</div>
@@ -32,7 +34,11 @@
 							<div class="tab-pane" id="pill-2">
 								<div class="campaignsList">
 									<ul class="nav nav-pills nav-stacked">
-										<li><a href="<c:url value='/admin/manageRewards'/>">IU_Campaign</a></li>
+										<c:if test="${fn:length(currentCampaignList) > 0}">
+											<c:forEach items="${currentCampaignList}" varStatus="status">
+												<li><a href="<c:url value='/admin/${currentCampaignList[status.index].campaignName }/manageRewards'/>">${currentCampaignList[status.index].campaignName }</a></li>
+											</c:forEach>
+										</c:if>
 									</ul>
 								</div>
 							</div>
@@ -44,8 +50,11 @@
 							<div class="tab-pane" id="pill-3">
 								<div class="campaignsList">
 									<ul class="nav nav-pills nav-stacked">
-										<li><a href="<c:url value='/admin/manageRewards'/>">IU_CampaignEnd</a></li>
-										<li><a href="<c:url value='/admin/manageRewards'/>">Kim_Go_eun_CampaignEnd</a></li>
+										<c:if test="${fn:length(closedCamapaignList) > 0}">
+											<c:forEach items="${closedCamapaignList}" varStatus="status">
+												<li><a href="<c:url value='/admin/${closedCamapaignList[status.index].campaignName }/manageRewards'/>">${closedCamapaignList[status.index].campaignName }</a></li>
+											</c:forEach>
+										</c:if>
 									</ul>
 								</div>
 							</div>

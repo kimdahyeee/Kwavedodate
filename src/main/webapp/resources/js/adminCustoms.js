@@ -869,3 +869,11 @@ $(document).ready(function() {
 		}
 	}
 });
+
+if(jQuery("manageReward").length>0) {
+	$("#btnRewardDetail").click(function() {
+		alert("aa");
+	})
+}
+
+

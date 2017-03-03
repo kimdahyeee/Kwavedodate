@@ -2,12 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
+	<!-- ================================================== -->
 	<resultMap type="hashmap" id="allUsers">
 		<result property="userEmail" column="USEREMAIL" javaType="java.lang.String"/>
 		<result property="userName" column="USERNAME" javaType="java.lang.String"/>
 		<result property="userRegDate" column="USERREGDATE" javaType="java.lang.String"/>
 		<result property="isSns" column="ISSNS" javaType="java.lang.String"/>
 	</resultMap>
+	
+	<select id="selectAllUser" resultMap="allUsers">
+		SELECT 
+			USEREMAIL,
+			USERNAME,
+			TO_CHAR(USERREGDATE,'YYYY-MM-DD HH24:MI') AS USERREGDATE,
+			DECODE(ISSNS, 1, 'YES', 0, 'NO') AS ISSNS
+		FROM
+			USERS
+	</select>
+	<!-- ================================================== -->
+	
+	<!-- ================================================== -->
 	<resultMap type="map" id="userDetail">
 		<result property="userEmail" column="USEREMAIL" javaType="java.lang.String"/>
 		<result property="userName" column="USERNAME" javaType="java.lang.String"/>
@@ -22,7 +36,30 @@
 		<result property="country" column="COUNTRY" javaType="java.lang.String"/>
 		<result property="region" column="REGION" javaType="java.lang.String"/>
 	</resultMap>
-	<resultMap type="hashmap" id="donateList">
+	
+	<select id="selectUserDetail" resultMap="userDetail">
+		SELECT 
+			USEREMAIL,
+			USERNAME,
+			TO_CHAR(USERREGDATE,'YYYY-MM-DD HH24:MI') AS USERREGDATE,
+			DECODE(ISSNS, 1, 'YES', 0, 'NO') AS ISSNS,
+			NVL(PHONE,'-') AS PHONE,
+			NVL(USERNATION,'-') AS USERNATION,
+			NVL(ZIPCODE,'-') AS ZIPCODE,
+			NVL(ADDRESS1,'-') AS ADDRESS1,
+			NVL(ADDRESS2,'-') AS ADDRESS2,
+			NVL(CITY,'-') AS CITY,
+			NVL(COUNTRY,'-') AS COUNTRY,
+			NVL(REGION,'-') AS REGION
+		FROM
+			USERS
+		WHERE 
+			USEREMAIL=#{userEmail}
+	</select>
+	<!-- ================================================== -->
+	
+	<!-- ================================================== -->
+	<resultMap type="map" id="donateList">
 		<result property="imp_Uid" column="Pimp_Uid" javaType="java.lang.String"/>
 		<result property="totalAmount" column="PtotalAmount" javaType="java.lang.String"/>
 		<result property="receipt_url" column="Preceipt_url" javaType="java.lang.String"/>
@@ -31,7 +68,33 @@
 		<result property="campaignSubject" column="CcampaignSubject" javaType="java.lang.String"/>
 		<result property="campaignImg" column="CcampaignImg" javaType="java.lang.String"/>
 	</resultMap>
-	<resultMap type="hashmap" id="deliveryDetail">
+
+	<select id="selectDonateList" resultMap="donateList">
+		SELECT 
+			P.IMP_UID as Pimp_Uid,
+			P.TOTALAMOUNT as PtotalAmount,
+			P.RECEIPT_URL as Preceipt_url,
+			TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') as Ppaid_At,
+			CASE 
+		        WHEN 
+		        	P.REWARDNUM = 0 THEN ''
+		        ELSE (SELECT RK.REWARDSUBJECT FROM REWARDS_KO RK WHERE P.REWARDNUM = RK.REWARDNUM) 
+		    END RrewardSubject,
+			CL.CAMPAIGNSUBJECT as CcampaignSubject,
+			C.CAMPAIGNIMG as CcampaignImg
+		FROM 
+			PAYMENTS P,
+			CAMPAIGNS_KO CL,
+			Campaigns C
+		WHERE 
+			P.USEREMAIL = #{userEmail} AND 
+			P.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
+			P.CAMPAIGNNAME = CL.CAMPAIGNNAME
+	</select>
+	<!-- ================================================== -->
+	
+	<!-- ================================================== -->
+	<resultMap type="map" id="deliveryDetail">
 		<result property="userName" column="USERNAME" javaType="java.lang.String"/>
 		<result property="userEmail" column="USEREMAIL" javaType="java.lang.String"/>
 		<result property="userNation" column="USERNATION" javaType="java.lang.String"/>
@@ -44,12 +107,50 @@
 		<result property="country" column="COUNTRY" javaType="java.lang.String"/>
 		<result property="note" column="NOTE" javaType="java.lang.String"/>
 	</resultMap>
+	
+	<select id="selectDeliveryDetail" resultMap="deliveryDetail">
+		SELECT
+		    U.USERNAME AS USERNAME,
+		    U.USEREMAIL AS USEREMAIL,
+		    NVL(U.USERNATION,'-') AS USERNATION,
+			D.PHONE AS PHONE,
+		    D.ZIPCODE AS ZIPCODE,
+		    D.ADDRESS1 AS ADDRESS1,
+		    D.ADDRESS2 AS ADDRESS2,
+		    NVL(D.CITY,'-') AS CITY,
+		    NVL(D.REGION,'-') as REGION,
+		    NVL(D.COUNTRY,'-') AS COUNTRY,
+		    NVL(D.NOTE,'-') AS NOTE
+		FROM 
+			DELIVERY D,
+			USERS U
+		WHERE 
+			D.IMP_UID=#{imp_uid} AND 
+			U.USEREMAIL = #{userEmail}
+	</select>
+	<!-- ================================================== -->
+	
+	<!-- ================================================== -->
 	<resultMap type="map" id="paymentInfo">
 		<result property="receipt_url" column="RECEIPT_URL" javaType="java.lang.String"/>
 		<result property="totalAmount" column="TOTALAMOUNT" javaType="java.lang.String"/>
 		<result property="shippingAmount" column="SHIPPINGAMOUNT" javaType="java.lang.String"/>
 	</resultMap>
-	<resultMap type="hashmap" id="campaignsList">
+	
+	<select id="selectPaymentInfo" resultMap="paymentInfo">
+		SELECT
+			RECEIPT_URL,
+			TOTALAMOUNT,
+			SHIPPINGAMOUNT
+		FROM
+			PAYMENTS
+		WHERE 
+			IMP_UID=#{imp_uid}
+	</select>
+	<!-- ================================================== -->
+	
+	<!-- ================================================== -->
+	<resultMap type="map" id="campaignsList">
 		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
 		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
 		<result property="fundingUserCnt" column="FUNDINGUSERCNT" javaType="java.lang.String"/>
@@ -59,7 +160,29 @@
 		<result property="dueDate" column="DUEDATE" javaType="int"/>
 		<result property="launchDate" column="LAUNCHDATE" javaType="int"/>
 	</resultMap>
-	<resultMap type="hashmap" id="campaignDetail">
+	
+	<select id="selectCampaignsList" resultMap="campaignsList">
+		SELECT
+			C.CAMPAIGNNAME AS CAMPAIGNNAME,
+			CK.CAMPAIGNSUBJECT AS CAMPAIGNSUBJECT,
+			C.FUNDINGUSERCNT AS FUNDINGUSERCNT,
+			C.GATHERAMOUNT AS GATHERAMOUNT,
+			C.CAMPAIGNREGISTER AS CAMPAIGNREGISTER,
+			TO_CHAR(C.CAMPAIGNREGDATE, 'YYYY-MM-DD HH24:MI') AS CAMPAIGNREGDATE,
+			TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.DUEDATE,'YYYYMMDD')) AS DUEDATE,
+			TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.LAUNCHDATE,'YYYYMMDD')) AS LAUNCHDATE
+		FROM 
+			CAMPAIGNS C,
+			CAMPAIGNS_KO CK
+		WHERE 
+			CK.CAMPAIGNNAME = C.CAMPAIGNNAME
+		ORDER BY 
+			C.CAMPAIGNREGDATE DESC
+	</select>
+	<!-- ================================================== -->
+	
+	<!-- ================================================== -->
+	<resultMap type="map" id="campaignDetail">
 		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
 		<result property="koCampaignSubject" column="KOCAMPAIGNSUBJECT" javaType="java.lang.String"/>
 		<result property="enCmpaignSubject" column="ENCAMAPIGNSUBJECT" javaType="java.lang.String"/>
@@ -81,133 +204,79 @@
 		<result property="dueDate" column="DUEDATE" javaType="java.lang.String"/>
 		<result property="launchDate" column="LAUNCHDATE" javaType="java.lang.String"/>
 	</resultMap>
-	<select id="selectAllUser" resultMap="allUsers">
-		SELECT 
-			USEREMAIL,
-			USERNAME,
-			TO_CHAR(USERREGDATE,'YYYY-MM-DD HH24:MI') AS USERREGDATE,
-			DECODE(ISSNS, 1, 'YES', 0, 'NO') AS ISSNS
-		FROM
-			USERS
-	</select>
-	<select id="selectUserDetail" resultMap="userDetail">
-		SELECT 
-			USEREMAIL,
-			USERNAME,
-			TO_CHAR(USERREGDATE,'YYYY-MM-DD HH24:MI') AS USERREGDATE,
-			DECODE(ISSNS, 1, 'YES', 0, 'NO') AS ISSNS,
-			NVL(PHONE,'-') AS PHONE,
-			NVL(USERNATION,'-') AS USERNATION,
-			NVL(ZIPCODE,'-') AS ZIPCODE,
-			NVL(ADDRESS1,'-') AS ADDRESS1,
-			NVL(ADDRESS2,'-') AS ADDRESS2,
-			NVL(CITY,'-') AS CITY,
-			NVL(COUNTRY,'-') AS COUNTRY,
-			NVL(REGION,'-') AS REGION
-		FROM
-			USERS
-		WHERE USEREMAIL=#{userEmail}
-	</select>
-	<select id="selectDonateList" resultMap="donateList">
-		SELECT 
-			P.IMP_UID as Pimp_Uid,
-			P.TOTALAMOUNT as PtotalAmount,
-			P.RECEIPT_URL as Preceipt_url,
-			TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') as Ppaid_At,
-			CASE 
-		        WHEN 
-		        	P.REWARDNUM = 0 THEN ''
-		        ELSE ( 
-		        	SELECT 
-		        		RK.REWARDSUBJECT 
-		        	FROM 
-		        		REWARDS_KO RK 
-		        	WHERE 
-		        		P.REWARDNUM = RK.REWARDNUM
-		    	) 
-		    END RrewardSubject,
-			CL.CAMPAIGNSUBJECT as CcampaignSubject,
-			C.CAMPAIGNIMG as CcampaignImg
-		FROM 
-			PAYMENTS P,
-			CAMPAIGNS_KO CL,
-			Campaigns C
-		WHERE 
-			P.USEREMAIL = #{userEmail} AND 
-			P.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
-			P.CAMPAIGNNAME = CL.CAMPAIGNNAME
-	</select>
-	<select id="selectDeliveryDetail" resultMap="deliveryDetail">
-	SELECT
-	    U.USERNAME AS USERNAME,
-	    U.USEREMAIL AS USEREMAIL,
-	    NVL(U.USERNATION,'-') AS USERNATION,
-		D.PHONE AS PHONE,
-	    D.ZIPCODE AS ZIPCODE,
-	    D.ADDRESS1 AS ADDRESS1,
-	    D.ADDRESS2 AS ADDRESS2,
-	    NVL(D.CITY,'-') AS CITY,
-	    NVL(D.REGION,'-') as REGION,
-	    NVL(D.COUNTRY,'-') AS COUNTRY,
-	    NVL(D.NOTE,'-') AS NOTE
-	FROM DELIVERY D,
-		USERS U
-	WHERE D.IMP_UID=#{imp_uid} AND U.USEREMAIL = #{userEmail}
-	</select>
-	<select id="selectPaymentInfo" resultMap="paymentInfo">
-		SELECT
-			RECEIPT_URL,
-			TOTALAMOUNT,
-			SHIPPINGAMOUNT
-		FROM
-			PAYMENTS
-		WHERE IMP_UID=#{imp_uid}
-	</select>
-	<select id="selectCampaignsList" resultMap="campaignsList">
-	SELECT
-		C.CAMPAIGNNAME AS CAMPAIGNNAME,
-		CK.CAMPAIGNSUBJECT AS CAMPAIGNSUBJECT,
-		C.FUNDINGUSERCNT AS FUNDINGUSERCNT,
-		C.GATHERAMOUNT AS GATHERAMOUNT,
-		C.CAMPAIGNREGISTER AS CAMPAIGNREGISTER,
-		TO_CHAR(C.CAMPAIGNREGDATE, 'YYYY-MM-DD HH24:MI') AS CAMPAIGNREGDATE,
-		TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.DUEDATE,'YYYYMMDD')) AS DUEDATE,
-		TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.LAUNCHDATE,'YYYYMMDD')) AS LAUNCHDATE
-	FROM CAMPAIGNS C,
-		 CAMPAIGNS_KO CK
-	WHERE CK.CAMPAIGNNAME = C.CAMPAIGNNAME
-	ORDER BY C.CAMPAIGNREGDATE DESC
-	</select>
+	
 	<select id="selectCampaignDetail" resultMap="campaignDetail">
-	SELECT
-		C.CAMPAIGNNAME AS CAMPAIGNNAME,
-		KO.CAMPAIGNSUBJECT AS KOCAMPAIGNSUBJECT,
-		EN.CAMPAIGNSUBJECT AS ENCAMAPIGNSUBJECT,
-		CH.CAMPAIGNSUBJECT AS CHCAMAPIGNSUBJECT,
-		KO.CAMPAIGNSUMMARY AS KOCAMPAIGNSUMMARY,
-		EN.CAMPAIGNSUMMARY AS ENCAMPAIGNSUMMARY,
-		CH.CAMPAIGNSUMMARY AS CHCAMPAIGNSUMMARY,
-		KO.CAMPAIGNCONTENTS AS KOCAMPAIGNCONTENTS,
-		EN.CAMPAIGNCONTENTS AS ENCAMPAIGNCONTENTS,
-		CH.CAMPAIGNCONTENTS AS CHCAMPAIGNCONTENTS,
-		C.FUNDINGUSERCNT AS FUNDINGUSERCNT,
-		C.GATHERAMOUNT AS GATHERAMOUNT,
-		C.CAMPAIGNREGISTER AS CAMPAIGNREGISTER,
-		C.YOUTUBECODE AS YOUTUBECODE,
-		C.YOUTUBEIMG AS YOUTUBEIMG,
-		C.CAMPAIGNIMG AS CAMPAIGNIMG,
-		TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.DUEDATE,'YYYYMMDD')) AS SYSTODUEDATE,
-		TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.LAUNCHDATE,'YYYYMMDD')) AS SYSTOLAUNCHDATE,
-		TO_CHAR(C.DUEDATE,'YYYY-MM-DD') AS DUEDATE,
-		TO_CHAR(C.LAUNCHDATE,'YYYY-MM-DD') AS LAUNCHDATE
-	FROM CAMPAIGNS C,
-		 CAMPAIGNS_KO KO,
-		 CAMPAIGNS_EN EN, 
-		 CAMPAIGNS_CH CH
-	WHERE 
-		C.CAMPAIGNNAME= #{campaignName} AND 
-		KO.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
-		EN.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
-		CH.CAMPAIGNNAME = C.CAMPAIGNNAME
+		SELECT
+			C.CAMPAIGNNAME AS CAMPAIGNNAME,
+			KO.CAMPAIGNSUBJECT AS KOCAMPAIGNSUBJECT,
+			EN.CAMPAIGNSUBJECT AS ENCAMAPIGNSUBJECT,
+			CH.CAMPAIGNSUBJECT AS CHCAMAPIGNSUBJECT,
+			KO.CAMPAIGNSUMMARY AS KOCAMPAIGNSUMMARY,
+			EN.CAMPAIGNSUMMARY AS ENCAMPAIGNSUMMARY,
+			CH.CAMPAIGNSUMMARY AS CHCAMPAIGNSUMMARY,
+			KO.CAMPAIGNCONTENTS AS KOCAMPAIGNCONTENTS,
+			EN.CAMPAIGNCONTENTS AS ENCAMPAIGNCONTENTS,
+			CH.CAMPAIGNCONTENTS AS CHCAMPAIGNCONTENTS,
+			C.FUNDINGUSERCNT AS FUNDINGUSERCNT,
+			C.GATHERAMOUNT AS GATHERAMOUNT,
+			C.CAMPAIGNREGISTER AS CAMPAIGNREGISTER,
+			C.YOUTUBECODE AS YOUTUBECODE,
+			C.YOUTUBEIMG AS YOUTUBEIMG,
+			C.CAMPAIGNIMG AS CAMPAIGNIMG,
+			TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.DUEDATE,'YYYYMMDD')) AS SYSTODUEDATE,
+			TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'))-TO_DATE(TO_CHAR(C.LAUNCHDATE,'YYYYMMDD')) AS SYSTOLAUNCHDATE,
+			TO_CHAR(C.DUEDATE,'YYYY-MM-DD') AS DUEDATE,
+			TO_CHAR(C.LAUNCHDATE,'YYYY-MM-DD') AS LAUNCHDATE
+		FROM CAMPAIGNS C,
+			 CAMPAIGNS_KO KO,
+			 CAMPAIGNS_EN EN, 
+			 CAMPAIGNS_CH CH
+		WHERE 
+			C.CAMPAIGNNAME= #{campaignName} AND 
+			KO.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
+			EN.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
+			CH.CAMPAIGNNAME = C.CAMPAIGNNAME
 	</select>
+	
+	<!-- ================================================== -->
+	
+	<!-- ================================================== -->
+	<resultMap type="map" id="mulLanguageRewardDetail">
+		<result property="rewardAmount" column="REWARDAMOUNT" javaType="java.lang.String"/>
+		<result property="rewardTotalCnt" column="REWARDTOTALCNT" javaType="java.lang.String"/>
+		<result property="rewardCurrentCnt" column="REWARDCURRENTCNT" javaType="java.lang.String"/>
+		<result property="rewardImg" column="REWARDIMG" javaType="java.lang.String"/>
+		<result property="koRewardSubject" column="KOREWARDSUBJECT" javaType="java.lang.String"/>
+		<result property="koRewardContents" column="KOREWARDCONTENTS" javaType="java.lang.String"/>
+		<result property="enRewardSubject" column="ENREWARDSUBJECT" javaType="java.lang.String"/>
+		<result property="enRewardContents" column="ENREWARDCONTENTS" javaType="java.lang.String"/>
+		<result property="chRewardSubject" column="CHREWARDSUBJECT" javaType="java.lang.String"/>
+		<result property="chRewardContents" column="CHREWARDCONTENTS" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<select id="selectMulLanguageRewardDetail" resultMap="mulLanguageRewardDetail">
+		SELECT 
+		    R.REWARDAMOUNT,
+		    R.REWARDTOTALCNT,
+		    R.REWARDCURRENTCNT,
+		    R.REWARDIMG,
+		    RK.REWARDSUBJECT AS KOREWARDSUBJECT,
+		    RK.REWARDCONTENTS AS KOREWARDCONTENTS,
+		    RE.REWARDSUBJECT AS ENREWARDSUBJECT,
+		    RE.REWARDCONTENTS AS ENREWARDCONTENTS,
+		    RC.REWARDSUBJECT AS CHREWARDSUBJECT,
+		    RC.REWARDCONTENTS AS CHREWARDCONTENTS
+		FROM
+		    REWARDS R,
+		    REWARDS_KO RK,
+		    REWARDS_EN RE,
+		    REWARDS_CH RC
+		WHERE
+		    R.CAMPAIGNNAME = #{campaignName} AND
+		    R.REWARDNUM = #{rewardNum} AND
+		    RK.REWARDNUM = #{rewardNum} AND
+		    RE.REWARDNUM = #{rewardNum} AND
+		    RC.REWARDNUM = #{rewardNum}
+	</select>
+	<!-- ================================================== -->
 </mapper>

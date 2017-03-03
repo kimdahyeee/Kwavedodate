@@ -21,20 +21,20 @@
 								<td>IU_Campaign</td>
 								<th rowspan="4">Reward Img</th>
 								<td rowspan="4"> 
-									<img width="250px" src="<c:url value='/resources/images/kim-go-eun-campaign.jpg'/>">
+									<img width="250px" src="<c:url value='${reward.rewardImg }'/>">
 								</td>
 							</tr>
 							<tr>
 								<th>Reward Amount</th>
-								<td>$30</td>
+								<td>${reward.rewardAmount }</td>
 							</tr>
 							<tr>
 								<th>Reward Current Count</th>
-								<td>80</td>
+								<td>${reward.rewardCurrentCnt }</td>
 							</tr>
 							<tr>
 								<th>Reward Total Count</th>
-								<td>100</td>
+								<td>${reward.rewardTotalCnt }</td>
 							</tr>
 						</tbody>
 					</table>
@@ -49,15 +49,11 @@
 							<tbody>
 								<tr>
 									<th>Reward Subject</th>
-									<td>
-										<!-- #Campaign Subject 내용 -->
-									</td>
+									<td>${reward.koRewardSubject }</td>
 								</tr>
 								<tr>
-									<th>Reward Summary</th>
-									<td>
-										<!-- #Campaign Summary 내용 -->
-									</td>
+									<th>Reward Contents</th>
+									<td>${reward.koRewardContents }</td>
 								</tr>
 							</tbody>
 						</table>
@@ -73,15 +69,11 @@
 							<tbody>
 								<tr>
 									<th>Reward Subject</th>
-									<td>
-										<!-- #Campaign Subject 내용 -->
-									</td>
+									<td>${reward.enRewardSubject }</td>
 								</tr>
 								<tr>
-									<th>Reward Summary</th>
-									<td>
-										<!-- #Campaign Summary 내용 -->
-									</td>
+									<th>Reward Contents</th>
+									<td>${reward.enRewardContents }</td>
 								</tr>
 							</tbody>
 						</table>
@@ -98,15 +90,11 @@
 							<tbody>
 								<tr>
 									<th>Reward Subject</th>
-									<td>
-										<!-- #Campaign Subject 내용 -->
-									</td>
+									<td>${reward.chRewardSubject }</td>
 								</tr>
 								<tr>
-									<th>Reward Summary</th>
-									<td>
-										<!-- #Campaign Summary 내용 -->
-									</td>
+									<th>Reward Contents</th>
+									<td>${reward.chRewardContents }</td>
 								</tr>
 							</tbody>
 						</table>

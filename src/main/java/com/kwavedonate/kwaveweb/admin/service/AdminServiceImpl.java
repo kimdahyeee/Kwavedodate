@@ -45,6 +45,10 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 	public Map<String, Object> getCampaignDetail(String campaignName) {
 		return getSqlSession().selectOne("admin.selectCampaignDetail", campaignName);
 	}
-	
-	
+
+	@Override
+	public Map<String, Object> getMulLanguageRewardDetail(Map<String, Object> map) {
+		return getSqlSession().selectOne("admin.selectMulLanguageRewardDetail", map);
+	}
+
 }
