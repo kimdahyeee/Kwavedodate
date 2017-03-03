@@ -38,6 +38,11 @@ public class AdminController {
 	private CampaignService campaignService;
 	private IamportClient iamportClient;
 	
+	
+	@RequestMapping(value="/choosePageView")
+	public String choosePageView() {
+		return "admin/choosePageView";
+	}
 	/**
 	 * 관리자 메인 controller
 	 * @param

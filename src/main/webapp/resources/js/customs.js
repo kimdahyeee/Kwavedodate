@@ -246,6 +246,8 @@ $(document).ready(function() {
                        //성공 시 데이터 처리 
                         if(data.KEY=="SUCCESS") {
                               location.replace(data.RETURNURI);
+                        } else if(data.KEY=="SUCCESS_ADMIN") {
+                        	  location.replace(data.RETURNURI);
                         } else {
                            alert("로그인 실패");
                            location.href="/kwaveweb/login";
