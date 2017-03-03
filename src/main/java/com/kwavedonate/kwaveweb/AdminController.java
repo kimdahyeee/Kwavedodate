@@ -2,7 +2,6 @@ package com.kwavedonate.kwaveweb;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kwavedonate.kwaveweb.admin.service.AdminService;
+import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
+import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
+import com.kwavedonate.kwaveweb.core.util.SeparateCampaignsByDate;
 import com.kwavedonate.kwaveweb.core.util.Sstring;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -31,7 +34,10 @@ public class AdminController {
 	@Resource(name="adminService")
 	private AdminService adminService;
 	
+	@Resource(name="campaignService")
+	private CampaignService campaignService;
 	private IamportClient iamportClient;
+	
 	/**
 	 * 관리자 메인 controller
 	 * @param
@@ -74,18 +80,54 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value="/manageCampaigns")
-	public String manageCampaigns() {
+	public String manageCampaigns(Model model) {
+		List<Map<String, Object>> allCamapaignList = adminService.getCampaignsList();
+		
+		SeparateCampaignsByDate separateCampaignsByDate = new SeparateCampaignsByDate(allCamapaignList);
+		separateCampaignsByDate.separate();
+		
+		model.addAttribute("beforeCamapaignList", separateCampaignsByDate.beforeCamapaignList);
+		model.addAttribute("currentCampaignList", separateCampaignsByDate.currentCampaignList);
+		model.addAttribute("closedCamapaignList", separateCampaignsByDate.closedCamapaignList);
+		
 		return "admin/manageCampaignsView";
 	}
-	
+
 	/**
 	 * 캠페인 상세 보기 controller
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value="/campaignDetail")
-	public String campaignDetail() {
+	@RequestMapping(value="/campaignDetail/{campaignName}")
+	public String campaignDetail(@PathVariable("campaignName") String campaignName, Model model) {
+		Map<String, Object> campaignDetail = adminService.getCampaignDetail(campaignName);
+		
+		int sysToLaunchDate = (Integer)campaignDetail.get("sysToLaunchDate");
+		int sysToDueDate = (Integer)campaignDetail.get("sysToDueDate");
+		if(sysToDueDate < 0 && sysToLaunchDate < 0){
+			//진행전
+			model.addAttribute("leftDays", "진행전");
+		}else if(sysToDueDate <=0 & sysToLaunchDate >=0){
+			//진행중
+			model.addAttribute("leftDays", Math.abs(sysToDueDate));
+		}else{
+			//종료
+			model.addAttribute("leftDays", "종료");
+		}
+		
+		model.addAttribute("campaignDetail", campaignDetail);
+		
 		return "admin/campaignDetailView";
+	}
+	
+	/**
+	 * 캠페인 별 사용자 목록 controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/campaignFundingUserList")
+	public String campaignFundingUserList() {
+		return "admin/campaignFundingUserListView";
 	}
 	
 	/**
@@ -96,6 +138,46 @@ public class AdminController {
 	@RequestMapping(value="/campaignAdd")
 	public String campaignAdd() {
 		return "admin/campaignAddView";
+	}
+	
+	/**
+	 * 캠페인 공통부분 변경 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/campaignCommonUpdate")
+	public String campaignCommonUpdate() {
+		return "admin/campaignCommonUpdateView";
+	}
+	
+	/**
+	 * 캠페인 한국어 부분 변경 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/campaignKoUpdate")
+	public String campaignKoUpdate() {
+		return "admin/campaignKoUpdateView";
+	}
+	
+	/**
+	 * 캠페인 영어 부분 변경 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/campaignEnUpdate")
+	public String campaignEnUpdate() {
+		return "admin/campaignEnUpdateView";
+	}
+	
+	/**
+	 * 캠페인 중국어 부분 변경 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/campaignChUpdate")
+	public String campaignChUpdate() {
+		return "admin/campaignChUpdateView";
 	}
 	
 	/**
@@ -110,7 +192,7 @@ public class AdminController {
 		param.put("userEmail", userEmail);
 		Map<String, Object> deliveryDetail = adminService.getDeliveryDetail(param);
 		Map<String, Object> paymentInfo = adminService.getPaymentInfo(impUid);
-		
+	
 		//iamport 정보
 		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		iamportClient = new IamportClient(Sstring.REST_API_KEY, Sstring.REST_API_SECRET_KEY);
@@ -131,7 +213,119 @@ public class AdminController {
 		
 		model.addAttribute("paymentDetail", paymentDetail);
 		model.addAttribute("deliveryDetail", deliveryDetail);
+		model.addAttribute("userEmail", userEmail);
+		
 		return "admin/paymentDetailView";
 	}
 	
+	/**
+	 * 리워드 선택 이전 캠페인 선택 controller
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/selectCampaignBeforeReward")
+	public String selectCampaignBeforeReward(Model model) {
+		List<Map<String, Object>> allCamapaignList = adminService.getCampaignsList();
+		SeparateCampaignsByDate separateCampaignsByDate = new SeparateCampaignsByDate(allCamapaignList);
+		separateCampaignsByDate.separate();
+		model.addAttribute("beforeCamapaignList", separateCampaignsByDate.beforeCamapaignList);
+		model.addAttribute("currentCampaignList", separateCampaignsByDate.currentCampaignList);
+		model.addAttribute("closedCamapaignList", separateCampaignsByDate.closedCamapaignList);
+		
+		return "admin/selectCampaignBeforeRewardView";
+	}
+	
+	/**
+	 * 리워드 관리 목록
+	 * @param campaignName
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="{campaignName}/manageRewards")
+	public String manageRewards(@PathVariable("campaignName") String campaignName, Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("campaignName", campaignName); map.put("currentLocale", "Ko");
+
+		List<RewardsVo> rewardsDetail = campaignService.getAllRewards(map);
+		model.addAttribute("rewards", rewardsDetail);
+
+		return "admin/manageRewardsView";
+	}
+	
+	/**
+	 * 리워드 상세 보기
+	 * @param pathVariables
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="{campaignName}/manageRewards/{rewardNum}")
+	public String rewardDetail(@PathVariable Map<String, String> pathVariables, Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("campaignName", pathVariables.get("campaignName"));
+		map.put("rewardNum", pathVariables.get("rewardNum"));
+		
+		Map<String, Object> rewardDetail = adminService.getMulLanguageRewardDetail(map);
+		model.addAttribute("reward", rewardDetail);
+		
+		return "admin/rewardDetailView";
+	}
+	
+	/**
+	 * 리워드 추가 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/rewardAdd")
+	public String rewardAdd() {
+		
+		return "admin/rewardAddView";
+	}
+	
+	/**
+	 * 리워드 공통 부분 수정 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/rewardCommonUpdate")
+	public String rewardCommonUpdate() {
+		return "admin/rewardCommonUpdateView";
+	}
+	
+	/**
+	 * 리워드 한국어 부분 수정 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/rewardKoUpdate")
+	public String rewardKoUpdate() {
+		return "admin/rewardKoUpdateView";
+	}
+	
+	/**
+	 * 리워드 영어 부분 수정 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/rewardEnUpdate")
+	public String rewardEnUpdate() {
+		return "admin/rewardEnUpdateView";
+	}
+	
+	/**
+	 * 리워드 중국어 부분 수정 view controller
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value="/rewardChUpdate")
+	public String rewardChUpdate() {
+		return "admin/rewardChUpdateView";
+	}
+	
+	/**
+	 * 캠페인 삭제
+	 */
+	@RequestMapping(value="deleteCampaign", method=RequestMethod.GET)
+	public void deleteCampaign(@RequestParam("campaignName") String campaignName){
+		
+	}
 }

@@ -1,6 +1,8 @@
+
 <%@ page language="java" contentType="text/htmll; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 	<section class="main-container">
 		<div class="container">
 			<div class="row">	
@@ -44,7 +46,13 @@
 							</tr>
 							<tr>
 								<th>Nation(Lang)</th>
-								<td>${userDetail.userNation}</td>
+								<td>
+								<c:choose>
+									<c:when test="${userDetail.userNation =='KOR'}">KOREAN</c:when>
+									<c:when test="${userDetail.userNation =='ENG'}">AMERICAN</c:when>
+									<c:otherwise>CHINESE</c:otherwise>
+								</c:choose>
+								</td>
 								<th>Region</th>
 								<td>${userDetail.region}</td>
 							</tr>
@@ -75,7 +83,7 @@
 											<div class="table-header">
 												<img src="${donateList[status.index].campaignImg }">
 											</div>
-											<div class="table-footer"><strong>${donateList[status.index].campaignSubject }<br>${donateList[status.index].rewardSubject }</strong></div>
+											<div class="table-footer"><strong>${donateList[status.index].campaignSubject }<br><c:if test="${not empty donateList[status.index].rewardSubject}">${donateList[status.index].rewardSubject}</c:if></strong></div>
 										</td>
 										<td>$${donateList[status.index].totalAmount }</td>
 										<td>${donateList[status.index].paid_At }</td>
@@ -86,6 +94,6 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
 		</div>
-	</div>
 	</section>

@@ -42,7 +42,7 @@
 					<li><a href="<c:url value='/admin/main'/>">Home</a></li>
 					<li><a href="<c:url value='/admin/manageUsers'/>">Manage Users</a></li>
 					<li><a href="<c:url value='/admin/manageCampaigns'/>">Manage Campaigns</a></li>
-					<li><a href="<c:url value='/admin/manageRewards'/>">Manage Rewards</a></li>
+					<li><a href="<c:url value='/admin/selectCampaignBeforeReward'/>">Manage Rewards</a></li>
 				 </ul>
 			</div>
 		</header>

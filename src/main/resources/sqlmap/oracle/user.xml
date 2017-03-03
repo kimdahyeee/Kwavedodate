@@ -78,7 +78,7 @@
 
 	<select id="selectUserAccount" resultType="map">
 		SELECT
-		userEmail, username, usernation, phone, zipcode, address1, address2, city,
+		userEmail, username, usernation, phone, zipcode, address1, address2, city, isSns,
 		region, country
 		FROM users
 		WHERE userEmail = #{username}
@@ -114,18 +114,20 @@
 	
 	<select id="selectHistoryList" resultType="hashmap">
 	SELECT 
-		P.IMP_UID as Pimp_Uid,
-		P.TOTALAMOUNT as PtotalAmount,
-		P.RECEIPT_URL as Preceipt_url,
-		TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') as Ppaid_At,
-		R.REWARDSUBJECT as RrewardSubject,
-		CL.CAMPAIGNSUBJECT as CcampaignSubject,
-		C.CAMPAIGNIMG as CcampaignImg
+		P.IMP_UID AS PIMP_UID,
+		P.TOTALAMOUNT AS PTOTALAMOUNT,
+		P.RECEIPT_URL AS PRECEIPT_URL,
+		TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') AS PPAID_AT,
+		CASE 
+        	WHEN P.REWARDNUM = 0 THEN ''
+        	ELSE (SELECT RL.REWARDSUBJECT FROM REWARDS_${currentLocale} RL WHERE P.REWARDNUM = RL.REWARDNUM)
+    	END RREWARDSUBJECT,
+		CL.CAMPAIGNSUBJECT as CCAMPAIGNSUBJECT,
+		C.CAMPAIGNIMG as CCAMPAIGNIMG
 	FROM PAYMENTS P,
-		REWARDS_${currentLocale} R,
 		CAMPAIGNS_${currentLocale} CL,
-		Campaigns c
-	WHERE P.USEREMAIL = #{userEmail} AND P.CAMPAIGNNAME = C.CAMPAIGNNAME AND P.CAMPAIGNNAME = CL.CAMPAIGNNAME AND P.REWARDNUM = R.REWARDNUM
+		CAMPAIGNS C
+	WHERE P.USEREMAIL = #{userEmail} AND P.CAMPAIGNNAME = C.CAMPAIGNNAME AND P.CAMPAIGNNAME = CL.CAMPAIGNNAME
 	</select>
 	
 	<update id="updateRewardsByPayment">
@@ -141,4 +143,11 @@
 	WHERE campaignName = #{campaignName}
 	</update>
 	
+	<delete id="deletePayment">
+		DELETE FROM PAYMENTS WHERE IMP_UID = #{imp_uid}
+	</delete>
+	
+	<delete id="deleteDelivery">
+		DELETE FROM DELIVERY WHERE IMP_UID = #{imp_uid}
+	</delete>
 </mapper>

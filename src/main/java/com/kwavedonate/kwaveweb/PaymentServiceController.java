@@ -181,9 +181,35 @@ public class PaymentServiceController {
 		return paymentInfo;
 	}
 	
+	/**
+	 * 결제 취소
+	 * @param payment_imp_uid
+	 */
+	@RequestMapping(value="paymentCancel", method=RequestMethod.GET)
+	public String paymentCancel(@RequestParam("imp_uid") String imp_uid, @RequestParam("userEmail") String userEmail){
+		DefaultTransactionDefinition dtd = new DefaultTransactionDefinition();
+		dtd.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		client = new IamportClient(Sstring.REST_API_KEY, Sstring.REST_API_SECRET_KEY);
+		TransactionStatus transStatus = transactionManager.getTransaction(dtd);
+		try{
+			dao.deletePayments(imp_uid);
+			dao.deleteDelivery(imp_uid);
+			cancelPayment(imp_uid);	logger.info("결제 취소 완료 !!");
+			transactionManager.commit(transStatus); logger.info("COMMIT COMPLETE !!");
+		}catch (Exception e) {
+			try{
+				transactionManager.rollback(transStatus);	logger.info("ROLLBACK COMPLETE !!");
+			}catch (Exception e2) {
+				System.out.println("Exception in commit or rollback : "+e2);
+			}
+		}
+		
+		return "redirect:/admin/userDetail?userEmail="+userEmail;
+	}
+	
 	public void cancelPayment(String payment_imp_uid) {
 		CancelData cancel_data = new CancelData(payment_imp_uid, true); //imp_uid를 통한 전액취소
 		client.cancelPaymentByImpUid(cancel_data);
 	}
-	
 }

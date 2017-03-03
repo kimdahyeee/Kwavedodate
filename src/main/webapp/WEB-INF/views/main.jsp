@@ -28,7 +28,9 @@
 								<div class="col-sm-6">
 									<div class="image-box style-2 mb-20 bordered light-gray-bg">
 										<div class="overlay-container overlay-visible">
-											<span class="campaign-badge"><i>${campaignsList[status.index].campaignDueDate}</i></span>
+											<span class="campaign-badge">
+												<i>${campaignsList[status.index].campaignDueDate}</i>
+											</span>
 											<img src="${campaignsList[status.index].campaignImg}" />
 											<a class="overlay-link" href="<c:url value='/campaigns/${campaignsList[status.index].campaignName}' />"></a>
 										</div>
@@ -85,7 +87,6 @@
 			        <div class="swiper-button-next"><img src="resources/images/arrow-right.png"></div>
 			        <div class="swiper-button-prev"><img src="resources/images/arrow-left.png"></div>
 			    </div>
-				
 			</section>
 			<div class="clearfix"></div>
 

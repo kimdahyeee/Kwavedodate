@@ -50,7 +50,7 @@
                            			<c:when test="${paymentDetail.imp_status == 'cancelled'}">결제취소</c:when>
                            			<c:when test="${paymentDetail.imp_status == 'faild'}">결제실패</c:when>
                            		</c:choose>
-                           		<br><a href="" class="btn square btn-danger">취소하기</a>
+                           		<br><a href='<c:url value="/paymentCancel?imp_uid=${paymentDetail.imp_uid}&userEmail=${userEmail}"/>' class="btn square btn-danger">취소하기</a>
                       		</td>
                         </tr>
                   </tbody>
@@ -89,7 +89,13 @@
                      </tr>
                      <tr>
                         <th>Nation(Lang)</th>
-                        <td>${deliveryDetail.userNation}</td>
+                        <td>
+	                        <c:choose>
+								<c:when test="${deliveryDetail.userNation =='KOR'}">KOREAN</c:when>
+								<c:when test="${deliveryDetail.userNation =='ENG'}">AMERICAN</c:when>
+								<c:otherwise>CHINESE</c:otherwise>
+							</c:choose>
+						</td>
                         <th>City</th>
                         <td>${deliveryDetail.city}</td>
                      </tr>

@@ -7,16 +7,6 @@
  */
 $(document).ready(function() {	
 	
-	/* ckEditor plug in 추가 */
-	if($("#validateAddCampaign").length>0) {
-		 CKEDITOR.replace( 'campaginKoSummary_editor' );
-		 CKEDITOR.replace( 'campaginKoContents_editor' );
-		 CKEDITOR.replace( 'campaginEnSummary_editor' );
-		 CKEDITOR.replace( 'campaginEnContents_editor' );
-		 CKEDITOR.replace( 'campaginChSummary_editor' );
-		 CKEDITOR.replace( 'campaginChContents_editor' );
-	}
-	
     /* banner custom */
     if($(".campaigns-banner").length>0) {
         if (Modernizr.touch) {
@@ -169,7 +159,7 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
-                          alert(returnmsg(signin_welcome));//회원가입을 축하드립니다
+                          alert(signin_welcome);//회원가입을 축하드립니다
                           window.location = "http://localhost:8181/kwaveweb/login";
                        }else{
                           alert("이미 회원가입 된 이메일입니다.");

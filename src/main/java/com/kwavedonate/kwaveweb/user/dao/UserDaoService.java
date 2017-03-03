@@ -32,4 +32,7 @@ public interface UserDaoService {
 	public int updateRewardsByPayment(Map<String, Object> paramMap);
 	
 	public List<Map<String, Object>> selectHistoryList(Map<String, Object> map);
+	
+	public int deletePayments(String imp_uid);
+	public int deleteDelivery(String imp_uid);
 }
