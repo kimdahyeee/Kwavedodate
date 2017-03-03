@@ -40,7 +40,7 @@
 			<security:concurrency-control max-sessions="1" expired-url="/"/>
 		</security:session-management>
 		<security:logout 
-			delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" 
+			 delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" 
 			 logout-success-url="/" 
 			 logout-url="/logout" 
 			 invalidate-session="true"/>

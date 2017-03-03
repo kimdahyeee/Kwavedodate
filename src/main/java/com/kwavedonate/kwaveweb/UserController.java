@@ -1,5 +1,7 @@
 package com.kwavedonate.kwaveweb;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -9,6 +11,7 @@ import javax.annotation.Resource;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -54,11 +57,12 @@ public class UserController {
 	 */
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
-		// IP Ȯ��		
-		String ipc = GetIpAddress.getClientIP(request);
-		System.out.println("Web browser locale : " +ipc);
 		
-		model.addAttribute("ipAddress", ipc);
+		String webBrowserLocale = GetIpAddress.getClientIP(request);
+		if(webBrowserLocale.equals("ko")) model.addAttribute("location", "ENG");
+		else if (webBrowserLocale.equals("en")) model.addAttribute("location", "KOR");
+		else if (webBrowserLocale.equals("ch")) model.addAttribute("location", "CHI");
+		else model.addAttribute("location", "KOR");
 		
 		return "signin";
 	}
@@ -99,9 +103,9 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
 	public HashMap<String, Object> insertUser(HttpServletRequest request, @RequestParam("userEmail") String userEmail,
-			@RequestParam("userPassword") String userPassword, @RequestParam("userName") String userName) {
+			@RequestParam("userPassword") String userPassword, @RequestParam("userName") String userName,
+			@RequestParam("location")String location) {
 		
-		String ipc = GetIpAddress.getClientIP(request);
 		String dbpw = encoder.encode(userPassword);
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
@@ -110,12 +114,15 @@ public class UserController {
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("userPassword", dbpw);
 		paramMap.put("userName", userName);
-		if(ipc.equals("en")) {
-			paramMap.put("userNation", "ENG");
-		} else if(ipc.equals("ko")) {
+		if(location.equals("KOR")) {
 			paramMap.put("userNation", "KOR");
+			paramMap.put("authority", "ROLE_USER_KOR");
+		} else if(location.equals("ENG")) {
+			paramMap.put("userNation", "ENG");
+			paramMap.put("authority", "ROLE_USER_ENG");
 		} else {
 			paramMap.put("userNation", "CHI");
+			paramMap.put("authority", "ROLE_USER_CHI");
 		}
 		int result;
 
@@ -295,14 +302,20 @@ public class UserController {
 		return hashmap;
 	}
 	
-	// userEmail�� ��ȣȭ, ��ȣȭ�� ����ؾ���, ����� bcrypt��ȣȭ ������ ��ȣȭ�� ������� ����. �񱳸� ����
+	// userEmail
 	@ResponseBody
 	@RequestMapping(value="/sendLink", method=RequestMethod.POST)
-	public Map<String, Object> sendLink (@RequestParam("userEmail")String userEmail) {
+	public Map<String, Object> sendLink (HttpServletResponse response,@RequestParam("userEmail")String userEmail)
+		throws Exception{
+		
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("utf-8");
+
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		Map<String, Object> userEmailExist = dao.selectEmail(userEmail);
-	
-		if (userEmailExist != null) {
+		userEmailExist.putAll(dao.selectIsSns(userEmail));
+		if (userEmailExist.get("USEREMAIL") != null && userEmailExist.get("ISSNS").toString().equals("0")) {
+			
 			String ue = userEmailExist.get("USEREMAIL").toString();
 			String encEmail = encoder.encode(ue);
 			

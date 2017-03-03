@@ -1,6 +1,5 @@
 package com.kwavedonate.kwaveweb;
 
-import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.Map;

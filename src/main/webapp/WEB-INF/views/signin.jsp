@@ -36,6 +36,7 @@
 											<input type="checkbox" id="signInAgreement" name="signInAgreement" required>Agreement <a href="#">privacy policy</a> and <a href="#">term of use</a>
 										</label>
 									</div>	
+									<input type="hidden" id="location" value="${location}">
 									<div class="form-group">
 										<div class="col-sm-12">							
 											<button type="submit" class="btn square btn-danger" style="width: 100%;">Sign In <i class="fa fa-user"></i></button>

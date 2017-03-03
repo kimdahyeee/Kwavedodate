@@ -163,7 +163,8 @@ $(document).ready(function() {
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val(),
-                        "userName": $("#userName").val()
+                        "userName": $("#userName").val(),
+                        "location" : $("#location").val()
                     },
                     dataType: "json",
                     success: function(data) {
@@ -301,9 +302,11 @@ $(document).ready(function() {
 
     // 비밀번호 찾기 validation
     if($("#validateFindPasswordSend").length>0) {
+
         $("#validateFindPasswordSend").validate({
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
+            	wrapWindowByMask();
                 $.ajax({
                     type: "POST",
                     url: "/kwaveweb/sendLink",
@@ -313,11 +316,13 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
+                    	    closeWindowByMask();
                             alert("메일이 전송되었습니다.");
-                            window.location = "http://localhost:8181/kwaveweb/";
+                            window.location = "/kwaveweb/";
                          }else{
+                        	closeWindowByMask();
                             alert("메일을 확인해주세요.");
-                            window.location = "http://localhost:8181/kwaveweb/";
+                            window.location = "/kwaveweb/findPassword";
                          }
                     }
                 });
@@ -983,6 +988,46 @@ $(document).ready(function() {
     	});
     }
 });
+
+function wrapWindowByMask() {
+    //화면의 높이와 너비를 구한다.
+    var maskHeight = $(document).height(); 
+    var maskWidth = window.document.body.clientWidth;
+     
+    var mask = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+    var loadingImg = '';
+     
+    loadingImg += "<div id='loadingImg' style='position:absolute; left:50%; top:40%; display:none; z-index:10000;'>";
+    loadingImg += " <img src='resources/images/viewLoading.gif'/>";
+    loadingImg += "</div>";  
+ 
+    //화면에 레이어 추가
+    $('body')
+        .append(mask)
+        .append(loadingImg)
+       
+    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+    $('#mask').css({
+            'width' : maskWidth
+            , 'height': maskHeight
+            , 'opacity' : '0.3'
+    }); 
+ 
+    //마스크 표시
+    $('#mask').show();   
+ 
+    //로딩중 이미지 표시
+    $('#loadingImg').show();
+}
+
+
+
+function closeWindowByMask() {
+    $('#mask, #loadingImg').hide();
+    $('#mask, #loadingImg').remove();  
+}
+
+
 
 
 /*
