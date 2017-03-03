@@ -824,7 +824,7 @@ $(document).ready(function() {
             	
             	if(payment_method_checked == "paypal") {
             		payment_pg = 'paypal';
-            		IMP.init('imp09350031');
+            		IMP.init('imp57757789');
             		payment_method = 'card';
             	} else {
             		payment_pg = 'inicis';
@@ -842,8 +842,9 @@ $(document).ready(function() {
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
                   buyer_postcode : $("#zipCode").val(),
-                  m_redirect_url : '172.30.1.38:8181/kwaveweb/m_redirect?'
-                	  + "note=" + $("#note")
+                  m_redirect_url : 'localhost:8181/kwaveweb/m_redirect?'
+                	  + "campaignName=" + $("#campaignName").val()
+                	  + "&note=" + $("#note").val()
                 	  + "&rewardNum=" + $("#rewardNum").val()
                 	  + "&rewardAmount=" + $("#rewardAmount").val()
                 	  + "&totalAmount=" + $("#totalAmount").val()
@@ -868,6 +869,7 @@ $(document).ready(function() {
                                url: "/kwaveweb/insertDelivery",   // delivery table
                                data: {
                             	   "imp_uid" : rsp.imp_uid,
+                            	   "campaignName" : $("#campaignName").val(),
 	                               "rewardNum" : $("#rewardNum").val(),
 	                               "rewardAmount" : $("#rewardAmount").val(),
 	                               "shippingAmount" : $("#shippingAmount").val(),
