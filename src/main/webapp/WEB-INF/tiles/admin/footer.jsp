@@ -1,7 +1,7 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 
 	<!-- page-wrapper end -->
-	<script type="text/javascript" src="<c:url value='/resources/plugins/jquery.min.js' />"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="<c:url value='/resources/bootstrap/js/bootstrap.min.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/plugins/modernizr.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/plugins/rs-plugin/js/jquery.themepunch.tools.min.js' />"></script>

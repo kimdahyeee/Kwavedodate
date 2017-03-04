@@ -12,4 +12,5 @@ public interface AdminService {
 	public List<Map<String, Object>> getCampaignsList();
 	public Map<String, Object> getCampaignDetail(String campaignName);
 	public Map<String, Object> getMulLanguageRewardDetail(Map<String, Object> map);
+	public int insertReward(Map<String, Object> map);
 }

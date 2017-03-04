@@ -4,7 +4,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-					<form class="form-horizontal" id="validateRewardAdd" method="post">
+					<form class="form-horizontal" id="validateRewardAdd" method="post" enctype="multipart/form-data">
 						<h3>공통 부분</h3>
 						<table class="table table-colored">
 							<tbody>
@@ -14,7 +14,7 @@
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
 												<!-- disabled 속성일 때 값이 NULL 값으로 넘어가는 현상 발견 -->
-												<input type="text" class="form-control" id="campaignName" name="campaignName" value="IU_Campaign" disabled required>
+												<input type="text" class="form-control" id="campaignName" name="campaignName" value="Gongyou_Campaign" disabled required>
 											</div>
 										</div>
 									</td>
@@ -32,7 +32,7 @@
 									<td>
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
-												<input type="text" class="form-control" id="rewardCount" name="rewardCount" placeholder="Reward Count"  required>
+												<input type="text" class="form-control" id="rewardTotalCnt" name=rewardTotalCnt placeholder="Reward Count"  required>
 											</div>
 										</div>
 									</td>

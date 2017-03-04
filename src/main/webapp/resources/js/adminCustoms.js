@@ -488,27 +488,28 @@ $(document).ready(function() {
     
     // 리워드 추가 validation
     if($("#validateRewardAdd").length>0) {
+    	var formData  = new FormData($("#validateRewardAdd"));
         $("#validateRewardAdd").validate({
         	submitHandler: function(form) {   
+        		formData.append("campaignName", $("#campaignName").val());
+        		formData.append("rewardAmount", $("#rewardAmount").val());
+        		formData.append("rewardTotalCnt", $("#rewardTotalCnt").val());
+        		formData.append("rewardImg", $("input[name=rewardImg]")[0].files[0]);
+        		formData.append("rewardKoSubject", $("#rewardKoSubject").val());
+        		formData.append("rewardKoContents_editor", CKEDITOR.instances['rewardKoContents_editor'].getData());
+        		formData.append("rewardEnSubject", $("#rewardEnSubject").val());
+        		formData.append("rewardEnContents_editor",CKEDITOR.instances['rewardEnContents_editor'].getData());
+        		formData.append("rewardChSubject", $("#rewardChSubject").val());
+        		formData.append("rewardChContents_editor", CKEDITOR.instances['rewardChContents_editor'].getData());
                 $.ajax({
                     type: "POST",
-                    url: "", 
-                    data: {
-                    	"campaignName": $("#campaignName").val(),
-                    	"rewardAmount": $("#rewardAmount").val(),
-                        "rewardTotalCnt": $("#rewardTotalCnt").val(),
-                        "rewardImg": $("#rewardImg").val(),
-                        "rewardKoSubject": $("#rewardKoSubject").val(),
-                        "rewardKoContents_editor": CKEDITOR.instances['rewardKoContents_editor'].getData(),
-                        "rewardEnSubject": $("#rewardEnSubject").val(),
-                        "rewardEnContents_editor": CKEDITOR.instances['rewardEnContents_editor'].getData(),
-                        "rewardChSubject": $("#rewardChSubject").val(),
-                        "rewardChContents_editor": CKEDITOR.instances['rewardChContents_editor'].getData()
-                    },
+                    url: "/kwaveweb/admin/insertReward", 
+                    contentType: false, // ajax 파일 전송 시 꼭 필요!!
+                    processData: false, // ajax 파일 전송 시 꼭 필요!!
+                    data: formData,
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리
-                    	
+                    	// 성공 시 view 처리 해줘야 됨!
                     }
                 });
             },
@@ -602,7 +603,6 @@ $(document).ready(function() {
     
     // 리워드(공통부분) update validation
     if($("#validateRewardCommonUpdate").length>0) {
-    	
     	//사진 변경 시 미리 보기
 		var previewImg = document.getElementById('previewImg');
 		var rewardImg = document.getElementById('rewardImg');
@@ -869,11 +869,5 @@ $(document).ready(function() {
 		}
 	}
 });
-
-if(jQuery("manageReward").length>0) {
-	$("#btnRewardDetail").click(function() {
-		alert("aa");
-	})
-}
 
 

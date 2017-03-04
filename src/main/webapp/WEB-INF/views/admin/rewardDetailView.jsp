@@ -18,7 +18,7 @@
 						<tbody>
 							<tr>
 								<th>Campaign Name</th>
-								<td>IU_Campaign</td>
+								<td><c:url value='${reward.campaignName }'/></td>
 								<th rowspan="4">Reward Img</th>
 								<td rowspan="4"> 
 									<img width="250px" src="<c:url value='${reward.rewardImg }'/>">

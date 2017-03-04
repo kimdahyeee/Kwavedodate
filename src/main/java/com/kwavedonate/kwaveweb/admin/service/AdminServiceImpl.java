@@ -51,4 +51,16 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 		return getSqlSession().selectOne("admin.selectMulLanguageRewardDetail", map);
 	}
 
+	@Override
+	public int insertReward(Map<String, Object> map) {
+		try  {
+			getSqlSession().insert("admin.insertReward", map);
+			map.put("idx", map.get("idx"));
+			return getSqlSession().insert("admin.insertMulLanguageReward", map);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
 }

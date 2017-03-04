@@ -51,6 +51,13 @@
 	
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
 	
+	<!-- 파일 업로드 처리 -->
+	<!-- MultipartResolver 설정 -->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="100000000" />
+        <beans:property name="maxInMemorySize" value="100000000" />
+    </beans:bean>
+
 	<!-- 다국어 처리 -->
 	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<beans:property name="defaultEncoding" value="UTF-8"/>
@@ -65,5 +72,5 @@
 	    <beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 	    <beans:property name="paramName" value="lang" />
 	    </beans:bean>
-    </interceptors>	 
+    </interceptors>
 </beans:beans>

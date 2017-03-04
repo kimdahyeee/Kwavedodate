@@ -242,6 +242,7 @@
 	
 	<!-- ================================================== -->
 	<resultMap type="map" id="mulLanguageRewardDetail">
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
 		<result property="rewardAmount" column="REWARDAMOUNT" javaType="java.lang.String"/>
 		<result property="rewardTotalCnt" column="REWARDTOTALCNT" javaType="java.lang.String"/>
 		<result property="rewardCurrentCnt" column="REWARDCURRENTCNT" javaType="java.lang.String"/>
@@ -256,10 +257,11 @@
 	
 	<select id="selectMulLanguageRewardDetail" resultMap="mulLanguageRewardDetail">
 		SELECT 
-		    R.REWARDAMOUNT,
-		    R.REWARDTOTALCNT,
-		    R.REWARDCURRENTCNT,
-		    R.REWARDIMG,
+			R.CAMPAIGNNAME AS CAMPAIGNNAME,
+		    R.REWARDAMOUNT AS REWARDAMOUNT,
+		    R.REWARDTOTALCNT AS REWARDTOTALCNT,
+		    R.REWARDCURRENTCNT AS REWARDCURRENTCNT,
+		    R.REWARDIMG AS REWARDIMG,
 		    RK.REWARDSUBJECT AS KOREWARDSUBJECT,
 		    RK.REWARDCONTENTS AS KOREWARDCONTENTS,
 		    RE.REWARDSUBJECT AS ENREWARDSUBJECT,
@@ -279,4 +281,30 @@
 		    RC.REWARDNUM = #{rewardNum}
 	</select>
 	<!-- ================================================== -->
+	
+	
+	<!-- ================================================== -->
+	<insert id="insertReward" parameterType="hashmap">
+		INSERT  INTO 
+			REWARDS 
+		VALUES(
+			SEQ_REWARDS.NEXTVAL, 
+			#{campaignName}, 
+			#{rewardAmount, jdbcType=INTEGER}, 
+			#{rewardTotalCnt, jdbcType=INTEGER}, 
+			#{rewardCurrentCnt, jdbcType=INTEGER}, 
+			#{rewardImg})
+			<selectKey keyProperty="idx" resultType="int" order="AFTER">
+				SELECT SEQ_REWARDS.CURRVAL FROM DUAL
+			</selectKey>
+	</insert>
+	<insert id="insertMulLanguageReward">
+		INSERT ALL
+			INTO REWARDS_KO VALUES(#{idx} , #{rewardKoSubject}, #{rewardKoContents_editor})
+			INTO REWARDS_EN VALUES(#{idx} , #{rewardEnSubject}, #{rewardEnContents_editor})
+			INTO REWARDS_CH VALUES(#{idx} , #{rewardChSubject}, #{rewardChContents_editor})
+		SELECT * FROM DUAL
+	</insert>
+	<!-- ================================================== -->
+	
 </mapper>

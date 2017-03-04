@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kwavedonate.kwaveweb.admin.service.AdminService;
 import com.kwavedonate.kwaveweb.campaign.service.CampaignService;
 import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
+import com.kwavedonate.kwaveweb.core.util.FileUtils;
 import com.kwavedonate.kwaveweb.core.util.SeparateCampaignsByDate;
 import com.kwavedonate.kwaveweb.core.util.Sstring;
 import com.siot.IamportRestClient.IamportClient;
@@ -30,10 +33,11 @@ import com.siot.IamportRestClient.response.Payment;
 public class AdminController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	private static final String contextPath = "http://localhost:8181/kwaveweb/resources/uploads/";
 	
 	@Resource(name="adminService")
 	private AdminService adminService;
-	
+
 	@Resource(name="campaignService")
 	private CampaignService campaignService;
 	private IamportClient iamportClient;
@@ -47,7 +51,7 @@ public class AdminController {
 	public String adminMain(){
 		return "admin/mainView";
 	}
-		
+	
 	/**
 	 * 유저 관리 목록 controller
 	 * @param
@@ -277,10 +281,34 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/rewardAdd")
 	public String rewardAdd() {
-		
 		return "admin/rewardAddView";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/insertReward", method=RequestMethod.POST)
+	public HashMap<String, Object> insertReward(
+			HttpServletRequest httpServletRequest,
+			@RequestParam Map<String, Object> map
+			) {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		
+		FileUtils fileUtils = new FileUtils(httpServletRequest);
+		List<String> listFile = fileUtils.parseInsertFileInfo();
+		map.put("rewardAmount", Integer.valueOf(map.get("rewardAmount").toString()));
+		map.put("rewardTotalCnt", Integer.valueOf(map.get("rewardTotalCnt").toString()));
+		System.out.println("rewardTotalCnt: " + Integer.valueOf(map.get("rewardTotalCnt").toString()));
+		
+		map.put("rewardCurrentCnt", Integer.valueOf(map.get("rewardTotalCnt").toString()));
+		map.put("rewardImg", listFile.get(0));
+		
+		int result = adminService.insertReward(map);
+		System.out.println("result: " + result);
+		
+		//AJAX 처리해줘야됨!!
+		return null;
+	}
+
+
 	/**
 	 * 리워드 공통 부분 수정 view controller
 	 * @param
