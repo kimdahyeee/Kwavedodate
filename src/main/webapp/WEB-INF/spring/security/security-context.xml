@@ -17,13 +17,13 @@
 		<security:intercept-url 
 			pattern="/signin" access="isAnonymous()"/>
 		<security:intercept-url 
-			pattern="/admin/**" access="isAnonymous()"/>
+			pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TESTER')"/>
 		<security:intercept-url 
 			pattern="/user/**" 
-			access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI', 'ROLE_ADMIN')"/>
-		<security:intercept-url 
+			access="hasAnyRole('ROLE_USER', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_USER_CHI', 'ROLE_ADMIN', 'ROLE_TESTER')"/>
+		<security:intercept-url
 			pattern="/payments/**" 
-			access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_USER_KOR', 'ROLE_USER_ENG')"/>
+			access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_USER_KOR', 'ROLE_USER_ENG', 'ROLE_TESTER')"/>
 		<security:intercept-url 
 			pattern="/**" access="permitAll"/>
 		<!-- custom 로그인 폼 -->
@@ -40,7 +40,7 @@
 			<security:concurrency-control max-sessions="1" expired-url="/"/>
 		</security:session-management>
 		<security:logout 
-			delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" 
+			 delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" 
 			 logout-success-url="/" 
 			 logout-url="/logout" 
 			 invalidate-session="true"/>

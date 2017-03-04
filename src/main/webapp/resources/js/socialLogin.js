@@ -27,6 +27,7 @@ $(document).ready(function(){
 	$("#facebookLoginBtn").click(function(event){
 		FB.getLoginStatus(function(response) {
 			 FB.login(function(response) {
+				 
 			  if (response.status === 'connected') {
 			    console.log(response.authResponse.accessToken);
 			    FB.api('/me', {fields: 'name,email'}, function(user){
@@ -44,6 +45,7 @@ $(document).ready(function(){
 		                    dataType: "json",
 		                    success: function(data) {
 		                       if(data.KEY == "SUCCESS"){
+		                    	   wrapWindowByMask();
 		                    	   //처음 페이스북 로그인시
 		                    	   $.ajax({
 		                           	type: "POST",
@@ -57,12 +59,14 @@ $(document).ready(function(){
 		                               	//성공 시 데이터 처리 
 		                                   if(data.KEY=="SUCCESS") {
 		                                      if((document.refferer)=="localhost:8181/kwaveweb/login") {
+		                                    	  closeWindowByMask();
 		                                         location.href="/kwaveweb/";
 		                                      }
 		                                      else {
 		                                         location.replace(document.referrer);
 		                                      }
 		                                   } else {
+		                                	   closeWindowByMask();
 		                                      alert("로그인 실패");
 		                                      location.href="/kwaveweb/login";
 		                                   }
@@ -83,5 +87,44 @@ $(document).ready(function(){
 		});
 	});
 });
+
+function wrapWindowByMask() {
+    //화면의 높이와 너비를 구한다.
+    var maskHeight = $(document).height(); 
+    var maskWidth = window.document.body.clientWidth;
+     
+    var mask = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+    var loadingImg = '';
+     
+    loadingImg += "<div id='loadingImg' style='position:absolute; left:50%; top:40%; display:none; z-index:10000;'>";
+    loadingImg += " <img src='resources/images/viewLoading.gif'/>";
+    loadingImg += "</div>";  
+ 
+    //화면에 레이어 추가
+    $('body')
+        .append(mask)
+        .append(loadingImg)
+       
+    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+    $('#mask').css({
+            'width' : maskWidth
+            , 'height': maskHeight
+            , 'opacity' : '0.3'
+    }); 
+ 
+    //마스크 표시
+    $('#mask').show();   
+ 
+    //로딩중 이미지 표시
+    $('#loadingImg').show();
+}
+
+
+
+function closeWindowByMask() {
+    $('#mask, #loadingImg').hide();
+    $('#mask, #loadingImg').remove();  
+}
+
 
 

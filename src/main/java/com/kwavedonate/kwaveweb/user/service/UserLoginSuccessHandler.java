@@ -24,14 +24,25 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication a)
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		
+		UserDetailsVo userdetails = (UserDetailsVo) auth.getPrincipal();
 		ObjectMapper om = new ObjectMapper(); 
+		String userauth = userdetails.getAuthorities().toString();
 		Map<String, Object> map = new HashMap<String, Object>(); 
-		map.put("KEY", "SUCCESS"); 
-		map.put("RETURNURI", getReturnUrl(request, response)+getReturnLang(a));
+		System.out.println(userauth);
+		if(userauth.equals("[ROLE_ADMIN]") || userauth.equals("[ROLE_TESTER]")) {
+			System.out.println("ROLE_ADMIN, ROLE_TESTER");
+			map.put("KEY","SUCCESS_ADMIN");
+			map.put("RETURNURI", "/kwaveweb/admin/choosePageView");
+		} else {
+			map.put("KEY", "SUCCESS"); 
+			map.put("RETURNURI", getReturnUrl(request, response)+getReturnLang(auth));
+		}
+		
+		
 		String jsonString = om.writeValueAsString(map); 
 		OutputStream out = response.getOutputStream(); 
 		out.write(jsonString.getBytes());

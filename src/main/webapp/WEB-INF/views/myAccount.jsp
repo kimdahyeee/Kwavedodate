@@ -178,12 +178,12 @@
 													<input type="hidden" id="country_hidden" value='${user.COUNTRY}'/>
 													<select class="form-control" id="country" name="country"> 
 														<option value="">==== Choose ====l</option>	
-		                                                <option value="BR">Brazil</option>	
-		                                                <option value="CN">China</option>
-		                                                <option value="HK">Hong Kong</option>
-		                                                <option value="JP">Japan</option>
-		                                                <option value="KR">Korea</option>
-		                                                <option value="US">United States</option>
+		                                                <option value="Brazil">Brazil</option>	
+		                                                <option value="China">China</option>
+		                                                <option value="HongKong">Hong Kong</option>
+		                                                <option value="Japan">Japan</option>
+		                                                <option value="Korea">Korea</option>
+		                                                <option value="United States">United States</option>
 													</select>
 												</div>
 											</div>

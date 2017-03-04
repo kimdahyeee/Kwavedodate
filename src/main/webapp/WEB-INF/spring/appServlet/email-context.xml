@@ -8,13 +8,13 @@
 	<!-- 메일보내기 -->
 	
 	<bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com"/>
-		<property name="port" value="587"/>
-		<property name="username" value="vvshinevv@kwavedonate.com"/>
-		<property name="password" value="y1271039396*"/>
+		<property name="host" value="${email.host}"/>
+		<property name="port" value="${email.port}"/>
+		<property name="username" value="${email.id}"/>
+		<property name="password" value="${email.password}"/>
 		<property name="javaMailProperties">
 			<props>
-				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.transport.protocol">${email.protocol}</prop>
 				<prop key="mail.smtp.auth">true</prop>
 				<prop key="mail.smtp.starttls.enable">true</prop>
 				<prop key="mail.debug">true</prop>
