@@ -1,6 +1,12 @@
+			<%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
+			<%@ page import="java.util.Locale" %>
 			<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 			<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 			<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+			<%
+				Locale currentLocale = LocaleContextHolder.getLocale();
+			%>
+			
 			<section class="main-container campaign-perks">
 				<div class="container">
 					<div class="row">
@@ -46,12 +52,12 @@
 													<div class="col-xs-9 col-sm-9">
 														<input type="hidden" id="countryVal" value="${user.COUNTRY}"/>
 														<select class="form-control" id="country" name="country" required> 
-			                                                <option value="BR">Brazil</option>
-			                                                <option value="CN">China</option>
-			                                                <option value="HK">Hong Kong</option>
-			                                                <option value="JP">Japan</option>
-			                                                <option value="KR">Korea</option>
-			                                                <option value="US">United States</option>
+			                                                <option value="Brazil">Brazil</option>
+			                                                <option value="China">China</option>
+			                                                <option value="HongKong">Hong Kong</option>
+			                                                <option value="Japan">Japan</option>
+			                                                <option value="Korea">Korea</option>
+			                                                <option value="United States">United States</option>
 														</select>
 													</div>
 												</div>
@@ -128,7 +134,7 @@
 			                                          	  <input type="hidden" id="rewardSubject" value="${reward.rewardSubject}">
 			                                          	  <div class="separator"></div>
 				                                          <span class="text-left">Reward: </span> 
-				                                          <span class="text-right"><spring:message code="notation"/>${reward.rewardAmount}</span><br>
+				                                          <span class="text-right rewardAmountArea"><spring:message code="notation"/>${reward.rewardAmount}</span><br>
 				                                          <span class="text-left">Shipping: </span>
 				                                          <span class="text-right shippingAmountArea"></span><br>
 				                                          <span class="text-left">Total:</span>
@@ -136,8 +142,8 @@
 				                                          <input type="hidden" id="rewardAmount" name="rewardAmount" value="${reward.rewardAmount}"/>
 			                                          </c:when>
 			                                          <c:otherwise>
-				                                          <span class="text-left">Reward: </span>
-				                                          <span class="text-right"><spring:message code="notation"/>${defaultMoney}</span><br>
+				                                          <span class="text-left">Total : </span>
+				                                          <span class="text-right totalAmountArea"><spring:message code="notation"/>${defaultMoney}</span><br>
 				                                          <input type="hidden" id="rewardAmount" name="rewardAmount" value="${defaultMoney}"> 
 				                                          <input type="hidden" id="zipCode" value="" >
 														  <input type="hidden" id="address1" value="" >
@@ -163,16 +169,15 @@
 											</div>
 										</div>
 										<div class="style-2 mb-20 ph-20 bordered text-center paymentMethodArea">
-											<div id="paymentMethodKOR">
-												<span class="text-left"><input type="radio" name="payment_method" id="payment_method_card" value="card" required checked/> Card</span>
-												<span><input type="radio" name="payment_method" id="payment_method_trans" value="trans" required/> Trans</span>
-												<span class="text-right"><input type="radio" name="payment_method" id="payment_method_phone" value="phone" required/> Phone</span>
+											<div id="paymentMethod">
+												<span><input type="radio" name="payment_method" id="payment_method_card" value="card" required/> Card</span><span class="paymentCardArea"></span><br/>
+												<span><input type="radio" name="payment_method" id="payment_method_trans" value="trans" required/> Trans</span><span class="paymentTransArea"></span><br/>
+												<span><input type="radio" name="payment_method" id="payment_method_phone" value="phone" required/> Phone</span><span class="paymentPhoneArea"></span><br/>
+												<span><input type="radio" name="payment_method" id="payment_method_paypal" value="paypal" required> Paypal</span><span class="paymentPaypalArea"></span><br/>
 											</div>
-											<div id="paymentMethodGlobal">
-												<span><input type="radio" name="payment_method" id="payment_method_paypal" value="paypal" checked required> Paypal</span>
-											</div>	
 
 										</div>
+										<input type="hidden" id="currentLocale" value="<%=currentLocale%>">
 										<button type="submit" class="btn btn-lg btn-danger" style="width: 100%"><strong>Submit payment</strong></button>
 									</div>
 								</div>

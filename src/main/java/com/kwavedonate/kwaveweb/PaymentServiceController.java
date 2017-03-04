@@ -2,6 +2,7 @@ package com.kwavedonate.kwaveweb;
 
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -42,6 +44,8 @@ public class PaymentServiceController {
 	
 	private String _totalAmount = "";
 	
+	private Locale currentLocale = LocaleContextHolder.getLocale();
+	
 	@ResponseBody
 	@RequestMapping(value="insertDelivery", method=RequestMethod.POST)
 	public HashMap<String, Object> insertDeliveryENG( @RequestParam("campaignName")String campaignName,
@@ -55,15 +59,23 @@ public class PaymentServiceController {
 		if(city.equals("kwavedonate_not_define")) {	city = "";	region = "";	}
 		Map<String, Object> payment_result = new HashMap<String, Object>();
 		payment_result.putAll(getPaymentInfo(imp_uid));
+		
 		int IntegerTotalAmount = Integer.parseInt(_totalAmount);
 		int IntegerShippingAmount = Integer.parseInt(shippingAmount);
-		int DollarAmount = (IntegerTotalAmount-IntegerShippingAmount) / 1100;
+		int DollarAmount = IntegerTotalAmount-IntegerShippingAmount;
+		int shippingAmount_ = Integer.parseInt(shippingAmount);
+		int rewardAmount_ = Integer.parseInt(rewardAmount);
+		if(shippingAmount_ != 0 &&(shippingAmount_ % 1100) == 0) {
+			DollarAmount = (IntegerTotalAmount-IntegerShippingAmount) / 1100;
+			shippingAmount_ = shippingAmount_/ 1100;
+			rewardAmount_ = rewardAmount_ / 1100;
+		}
 		
 		payment_result.put("campaignName", campaignName);
 		payment_result.put("totalAmount", DollarAmount);
 		payment_result.put("rewardNum", Integer.parseInt(rewardNum));
-		payment_result.put("rewardAmount", Integer.parseInt(rewardAmount));
-		payment_result.put("shippingAmount", Integer.parseInt(shippingAmount));
+		payment_result.put("rewardAmount", rewardAmount_);
+		payment_result.put("shippingAmount", shippingAmount_);
 		payment_result.put("shippingMethod", shippingMethod);
 		payment_result.put("note", note);
 		payment_result.put("address2", address2);
@@ -119,14 +131,23 @@ public class PaymentServiceController {
 
 			payment_result.putAll(getPaymentInfo(payment_uid));
 			int IntegerTotalAmount = Integer.parseInt(_totalAmount);
-			int DollarAmount = (IntegerTotalAmount-IntegerShippingAmount) / 1100;
+			int DollarAmount = (IntegerTotalAmount-IntegerShippingAmount);
+			int shippingAmount_ = Integer.parseInt(request.getParameter("shippingAmount"));
+			int rewardAmount_ = Integer.parseInt(request.getParameter("rewardAmount"));
+			
+			if(shippingAmount_ != 0 &&(shippingAmount_ % 1100) == 0) {
+				DollarAmount = (IntegerTotalAmount-IntegerShippingAmount) / 1100;
+				shippingAmount_ = shippingAmount_/1100;
+				rewardAmount_ = rewardAmount_/1100;
+			}
+			
 			
 			payment_result.put("campaignName", request.getParameter("campaignName"));
 			payment_result.put("totalAmount", DollarAmount);
 			payment_result.put("rewardNum", Integer.parseInt(request.getParameter("rewardNum")));
-			payment_result.put("rewardAmount", Integer.parseInt(request.getParameter("rewardAmount")));
-			payment_result.put("shippingAmount", Integer.parseInt(request.getParameter("shippingAmount")));
-			payment_result.put("shippingMethod", request.getParameter("shippingMethod"));
+			payment_result.put("rewardAmount", rewardAmount_);
+			payment_result.put("shippingAmount", shippingAmount_);
+			payment_result.put("shippingMethod", "TEST"/*request.getParameter("shippingMethod")*/);
 			payment_result.put("note", request.getParameter("note"));
 			payment_result.put("city", "city");
 			payment_result.put("region", "region");
@@ -165,7 +186,7 @@ public class PaymentServiceController {
 			}
 			
 		
-			return "/kwaveweb/";
+			return "redirect:/myAccount";
 		} else {
 			return "/kwaveweb/common/error/throwble";
 		}
