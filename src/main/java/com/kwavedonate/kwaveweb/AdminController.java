@@ -219,6 +219,7 @@ public class AdminController {
 		paymentDetail.put("receipt_url", paymentInfo.get("receipt_url"));
 		paymentDetail.put("totalAmount", paymentInfo.get("totalAmount"));
 		paymentDetail.put("shippingAmount", paymentInfo.get("shippingAmount"));
+		paymentDetail.put("rewardNum", paymentInfo.get("rewardNum"));
 		
 		model.addAttribute("paymentDetail", paymentDetail);
 		model.addAttribute("deliveryDetail", deliveryDetail);
@@ -358,7 +359,14 @@ public class AdminController {
 	 * 캠페인 삭제
 	 */
 	@RequestMapping(value="deleteCampaign", method=RequestMethod.GET)
-	public void deleteCampaign(@RequestParam("campaignName") String campaignName){
-		
+	public String deleteCampaign(@RequestParam("campaignName") String campaignName){
+		adminService.deleteCampaign(campaignName);
+		return "redirect:/admin/manageCampaigns";
+	}
+	
+	@RequestMapping(value="{campaignName}/manageRewards/{rewardNum}/deleteReward", method=RequestMethod.GET)
+	public String deleteReward(@PathVariable Map<String, String> pathVariables){
+		adminService.deleteReward(pathVariables.get("rewardNum"));
+		return "redirect:/admin/" + pathVariables.get("campaignName") +"/manageRewards";
 	}
 }

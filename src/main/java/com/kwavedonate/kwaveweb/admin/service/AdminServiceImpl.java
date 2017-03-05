@@ -63,4 +63,15 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 		}
 	}
 
+	@Override
+	public int deleteCampaign(String campaignName) {
+		return getSqlSession().delete("admin.deleteCampaign", campaignName);
+	}
+
+	@Override
+	public int deleteReward(String rewardNum) {
+		return getSqlSession().delete("admin.deleteReward", rewardNum);
+	}
+
+	
 }

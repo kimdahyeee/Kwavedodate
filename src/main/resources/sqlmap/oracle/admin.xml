@@ -135,13 +135,15 @@
 		<result property="receipt_url" column="RECEIPT_URL" javaType="java.lang.String"/>
 		<result property="totalAmount" column="TOTALAMOUNT" javaType="java.lang.String"/>
 		<result property="shippingAmount" column="SHIPPINGAMOUNT" javaType="java.lang.String"/>
+		<result property="rewardNum" column="REWARDNUM" javaType="java.lang.String"/>
 	</resultMap>
 	
 	<select id="selectPaymentInfo" resultMap="paymentInfo">
 		SELECT
 			RECEIPT_URL,
 			TOTALAMOUNT,
-			SHIPPINGAMOUNT
+			SHIPPINGAMOUNT,
+			REWARDNUM
 		FROM
 			PAYMENTS
 		WHERE 
@@ -307,4 +309,11 @@
 	</insert>
 	<!-- ================================================== -->
 	
+	<delete id="deleteCampaign">
+		DELETE FROM CAMPAIGNS WHERE CAMPAIGNNAME = #{campaignName}
+	</delete>
+	
+	<delete id="deleteReward">
+		DELETE FROM REWARDS WHERE REWARDNUM = #{rewardNum}
+	</delete>
 </mapper>

@@ -35,4 +35,7 @@ public interface UserDaoService {
 	
 	public int deletePayments(String imp_uid);
 	public int deleteDelivery(String imp_uid);
+	public int updateRewardsByPaymentPlus(String rewardNum);
+	public int updateCampaignsByPaymentMinus(String imp_uid);
+	
 }
