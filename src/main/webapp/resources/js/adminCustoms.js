@@ -40,34 +40,38 @@ $(document).ready(function() {
 	
     // 캠페인 추가 validation
     if($("#validateCampaignAdd").length>0) {
-    	
+    	var campaignFormData = new FormData($("#validateCampaignAdd"));
         $("#validateCampaignAdd").validate({
         	submitHandler: function(form) {   
+        		campaignFormData.append("campaignName", $("#campaignName").val());
+        		campaignFormData.append("launchDate", $("#launchDate").val());
+        		campaignFormData.append("dueDate", $("#dueDate").val());
+        		campaignFormData.append("youtubeCode", $("#youtubeCode").val());
+        		campaignFormData.append("campaignImg", $("input[name=campaignImg]")[0].files[0]);
+        		campaignFormData.append("youtubeImg", $("input[name=youtubeImg]")[0].files[0]);
+        		campaignFormData.append("campaignKoSubject", $("#campaignKoSubject").val());
+        		campaignFormData.append("campaginKoSummary_editor", CKEDITOR.instances['campaginKoSummary_editor'].getData());
+        		campaignFormData.append("campaginKoContents_editor", CKEDITOR.instances['campaginKoContents_editor'].getData());
+        		campaignFormData.append("campaignEnSubject", $("#campaignEnSubject").val());
+        		campaignFormData.append("campaginEnSummary_editor", CKEDITOR.instances['campaginEnSummary_editor'].getData());
+        		campaignFormData.append("campaginEnContents_editor", CKEDITOR.instances['campaginEnContents_editor'].getData());
+        		campaignFormData.append("campaignChSubject", $("#campaignChSubject").val());
+        		campaignFormData.append("campaginChSummary_editor", CKEDITOR.instances['campaginChSummary_editor'].getData());
+        		campaignFormData.append("campaginChContents_editor", CKEDITOR.instances['campaginChContents_editor'].getData());
                 $.ajax({
                     type: "POST",
-                    url: "", 
-                    data: {
-                        "campaignName": $("#campaignName").val(),
-                        "launchDate": $("#launchDate").val(),
-                        "dueDate": $("#dueDate").val(),
-                        "youtubeCode": $("#youtubeCode").val(),
-                        "campaignImg": $("#campaignImg").val(),
-                        "youtubeImg": $("#youtubeImg").val(),
-                        "campaignRegister": $("#campaignRegister").val(),
-                        "campaignKoSubject": $("#campaignKoSubject").val(),
-                        "campaginKoSummary_editor": CKEDITOR.instances['campaginKoSummary_editor'].getData(),
-                        "campaginKoContents_editor": CKEDITOR.instances['campaginKoContents_editor'].getData(),
-                        "campaignEnSubject": $("#campaignEnSubject").val(),
-                        "campaginEnSummary_editor": CKEDITOR.instances['campaginEnSummary_editor'].getData(),
-                        "campaginEnContents_editor": CKEDITOR.instances['campaginEnContents_editor'].getData(),
-                        "campaignChSubject": $("#campaignChSubject").val(),
-                        "campaginChSummary_editor": CKEDITOR.instances['campaginChSummary_editor'].getData(),
-                        "campaginChContents_editor": CKEDITOR.instances['campaginChContents_editor'].getData()
-                    },
+                    url: "/kwaveweb/admin/insertCampaign", 
+                    contentType: false,
+                    processData: false,
+                    data:campaignFormData,
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리
-                    	
+                    	if(data.KEY == "SUCCESS"){
+                           alert("캠페인이 저장되었습니다.");
+                           location.href = "http://localhost:8181/kwaveweb/admin/manageCampaigns";
+                         }else{
+                            alert("캠페인이 저장이 실패했습니다.");
+                         }
                     }
                 });
             },

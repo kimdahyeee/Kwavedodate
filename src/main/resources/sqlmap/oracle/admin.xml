@@ -309,6 +309,30 @@
 	</insert>
 	<!-- ================================================== -->
 	
+	<insert id="insertCampaign">
+	INSERT INTO 
+		CAMPAIGNS
+	VALUES(
+		#{campaignName}, 
+		0, 
+		0, 
+		TO_DATE(#{launchDate},'YYYY-MM-DD'),
+		TO_DATE(#{dueDate},'YYYY-MM-DD'),
+		#{youtubeCode}, 
+		#{youtubeImg}, 
+		#{campaignImg}, 
+		#{campaignRegister}, 
+		SYSDATE)
+	</insert>
+	
+	<insert id="insertMulLanguageCampaign">
+	INSERT ALL
+		INTO campaigns_KO VALUES(#{campaignName}, #{campaignKoSubject}, #{campaginKoSummary_editor}, #{campaginKoContents_editor})
+		INTO campaigns_EN VALUES(#{campaignName}, #{campaignEnSubject}, #{campaginEnSummary_editor}, #{campaginEnContents_editor})
+		INTO campaigns_CH VALUES(#{campaignName}, #{campaignChSubject}, #{campaginChSummary_editor}, #{campaginChContents_editor})
+	SELECT * FROM DUAL
+	</insert>
+	
 	<delete id="deleteCampaign">
 		DELETE FROM CAMPAIGNS WHERE CAMPAIGNNAME = #{campaignName}
 	</delete>

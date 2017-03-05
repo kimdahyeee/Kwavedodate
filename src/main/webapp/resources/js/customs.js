@@ -476,7 +476,7 @@ $(document).ready(function() {
                     success: function(data) {
                         //성공 시 데이터 처리 
                     	if(data.KEY == "SUCCESS"){
-                            alert(msg2); //회원정보수정이 완료되었습니다.
+                           alert(msg2); //회원정보수정이 완료되었습니다.
                            location.href = "http://localhost:8181/kwaveweb/myAccount";
                            
                          }else{

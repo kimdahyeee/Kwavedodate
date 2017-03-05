@@ -2,6 +2,7 @@ package com.kwavedonate.kwaveweb;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import com.kwavedonate.kwaveweb.campaign.vo.RewardsVo;
 import com.kwavedonate.kwaveweb.core.util.FileUtils;
 import com.kwavedonate.kwaveweb.core.util.SeparateCampaignsByDate;
 import com.kwavedonate.kwaveweb.core.util.Sstring;
+import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
@@ -314,6 +317,34 @@ public class AdminController {
 		return null;
 	}
 
+	/**
+	 * 캠페인 등록
+	 * @param request
+	 * @param map
+	 * @param auth
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/insertCampaign", method=RequestMethod.POST)
+	public HashMap<String, String> insertCampaign(HttpServletRequest request, @RequestParam Map<String, Object> map, Authentication auth){
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		UserDetailsVo user = (UserDetailsVo) auth.getPrincipal();
+		FileUtils fileUtils = new FileUtils(request);
+		List<String> listFile = fileUtils.parseInsertFileInfo();
+		map.put("campaignImg", contextPath + listFile.get(0));
+		map.put("youtubeImg", contextPath + listFile.get(1));
+		map.put("campaignRegister", user.getUsername().toString());
+		
+		int result = adminService.insertCampaign(map);
+		System.out.println("result" + result);
+		if(result == 1){
+			responseMap.put("KEY", "SUCCESS");
+		}else{
+			responseMap.put("KEY", "FAIL");
+		}
+		
+		return responseMap;
+	}
 
 	/**
 	 * 리워드 공통 부분 수정 view controller
