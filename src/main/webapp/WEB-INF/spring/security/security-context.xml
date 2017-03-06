@@ -29,29 +29,35 @@
 		<!-- custom 로그인 폼 -->
 		<security:form-login 
 			login-page="/login"
-			username-parameter="userEmail"
-			password-parameter="userPassword"
+			username-parameter="username"
+			password-parameter="password"
 			login-processing-url="/j_spring_security_check"
 			authentication-success-handler-ref="userLoginSuccessHandler"
 			authentication-failure-handler-ref="userLoginFailureHandler"
 			always-use-default-target="false"/>
-
 		<security:session-management>
 			<security:concurrency-control max-sessions="1" expired-url="/"/>
 		</security:session-management>
 		<security:logout 
 			 delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" 
-			 logout-success-url="/" 
-			 logout-url="/logout" 
-			 invalidate-session="true"/>
+			 logout-success-url="/login?logout"
+			 logout-url="/logout"/>
+			 
 		<security:access-denied-handler ref="userDeniedHandler"/>
 		<!-- 자동로그인 (Remember-me) -->
-		<security:remember-me remember-me-parameter="_spring_security_remember_me" key="keykeykey" token-validity-seconds="2419200"/>
+		<security:remember-me 
+			remember-me-parameter="remember_me"
+			key="keykeykey" 
+			token-validity-seconds="2419200"
+			use-secure-cookie="false"
+			/>
 	</security:http>
-	
+
 	<bean id="userService" class="com.kwavedonate.kwaveweb.user.service.UserAuthenticationService">
 		<constructor-arg name="sqlSession" ref="sqlSession"/>
 	</bean>
+	
+	
 	
 	<bean id="userDeniedHandler" class="com.kwavedonate.kwaveweb.user.service.UserDeniedHandler"/>
 	<bean id="userLoginSuccessHandler" class="com.kwavedonate.kwaveweb.user.service.UserLoginSuccessHandler"/>
