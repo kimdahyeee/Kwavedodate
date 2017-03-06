@@ -26,7 +26,7 @@
 								<td>${rewards.rewardTotalCnt }</td>
 								<td>${rewards.rewardCurrentCnt }</td>
 								<td><a href="<c:url value='/admin/${rewards.campaignName}/manageRewards/${rewards.rewardNum}'/>">보기</a></td>
-								<td><a href="<c:url value='/admin/${rewards.campaignName}/manageRewards/${rewards.rewardNum}/deleteReward'/>">삭제</a></td>
+								<td><a href="<c:url value='/admin/${rewards.campaignName}/manageRewards/${rewards.rewardNum}/deleteReward'/>" onclick="return confirm('정말 삭제하시겠습니까?') ? true : false;">삭제</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

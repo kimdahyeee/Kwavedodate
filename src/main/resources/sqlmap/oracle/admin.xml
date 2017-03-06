@@ -334,6 +334,27 @@
 		    REWARDNUM = #{rewardNum, jdbcType=INTEGER}
 	</select>
 	<!-- ================================================== -->
+	<resultMap type="hashmap" id="campaignCommonDetail">
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="campaignRegister" column="CAMPAIGNREGISTER" javaType="java.lang.String"/>
+		<result property="launchDate" column="LAUNCHDATE" javaType="java.lang.String"/>
+		<result property="dueDate" column="DUEDATE" javaType="java.lang.String"/>
+		<result property="youtubeCode" column="YOUTUBECODE" javaType="java.lang.String"/>
+		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
+		<result property="youtubeImg" column="YOUTUBEIMG" javaType="java.lang.String"/>
+	</resultMap>
+	<select id="selectCampaignCommonDetail" resultMap="campaignCommonDetail">
+	SELECT
+		CAMPAIGNNAME,
+		CAMPAIGNREGISTER,
+		TO_CHAR(LAUNCHDATE, 'YYYY-MM-DD') AS LAUNCHDATE,
+		TO_CHAR(DUEDATE, 'YYYY-MM-DD') AS DUEDATE,
+		YOUTUBECODE,
+		CAMPAIGNIMG,
+		YOUTUBEIMG
+	FROM CAMPAIGNS
+	WHERE CAMPAIGNNAME = #{campaignName}
+	</select>
 	<!-- ================================================== -->
 	<update id="updateRewardCommonDetail">
 		UPDATE
@@ -347,7 +368,19 @@
 			REWARDNUM = #{rewardNum}
 	</update>
 	<!-- ================================================== -->
-	
+	<update id="updateCampaignCommonDetail">
+	UPDATE
+		CAMPAIGNS
+	SET
+	    CAMPAIGNREGISTER = #{campaignRegister},
+	    LAUNCHDATE = TO_DATE(#{launchDate},'YYYY-MM-DD'),
+	    DUEDATE = TO_DATE(#{dueDate},'YYYY-MM-DD'),
+	    YOUTUBECODE = #{youtubeCode},
+	    CAMPAIGNIMG = #{campaignImg},
+	    YOUTUBEIMG = #{youtubeImg}
+	WHERE
+		CAMPAIGNNAME = #{campaignName}
+	</update>
 	<!-- ================================================== -->
 	<resultMap type="map" id="childRewardDetail">
 		<result property="rewardNum" column="REWARDNUM" javaType="int"/>
@@ -408,4 +441,41 @@
 	<delete id="deleteReward">
 		DELETE FROM REWARDS WHERE REWARDNUM = #{rewardNum}
 	</delete>
+	
+	<resultMap type="hashmap" id="fundingUsers">
+		<result property="userEmail" column="USEREMAIL" javaType="java.lang.String"/>
+		<result property="rewardSubject" column="REWARDSUBJECT" javaType="java.lang.String"/>
+		<result property="totalAmount" column="TOTALAMOUNT" javaType="java.lang.String"/>
+		<result property="paid_at" column="PAID_AT" javaType="java.lang.String"/>
+		<result property="imp_uid" column="IMP_UID" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<select id="selectFundingUserList" resultMap="fundingUsers">
+	SELECT
+		P.USEREMAIL AS USEREMAIL,
+		CASE 
+			WHEN P.REWARDNUM = 0 THEN ''
+			ELSE (SELECT RK.REWARDSUBJECT FROM REWARDS_KO RK WHERE P.REWARDNUM = RK.REWARDNUM) 
+		END REWARDSUBJECT,
+		P.TOTALAMOUNT AS TOTALAMOUNT,
+		TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') AS PAID_AT,
+		P.IMP_UID AS IMP_UID
+	FROM PAYMENTS P
+	WHERE CAMPAIGNNAME = #{campaignName}
+	</select>
+	<resultMap type="hashmap" id="campaignChildDetail">
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="campaignSummary" column="CAMPAIGNSUMMARY" javaType="java.lang.String"/>
+		<result property="campaignContents" column="CAMPAIGNCONTENTS" javaType="java.lang.String"/>
+	</resultMap>
+	<select id="selectCampaignChildDetail" resultMap="campaignChildDetail">
+	SELECT
+		CAMPAIGNNAME,
+		CAMPAIGNSUBJECT,
+		CAMPAIGNSUMMARY,
+		CAMPAIGNCONTENTS
+	FROM Campaigns_${locale}
+	WHERE CAMPAIGNNAME = #{campaignName}
+	</select>
 </mapper>

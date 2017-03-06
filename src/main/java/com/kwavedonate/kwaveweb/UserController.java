@@ -35,7 +35,8 @@ public class UserController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
-	private String check="check";
+	private Map<String, Object> emailCheck = new HashMap<String, Object>();
+	private int mailCount = 0;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -295,33 +296,38 @@ public class UserController {
 
 		return hashmap;
 	}
+
 	
 	// userEmail
 	@ResponseBody
 	@RequestMapping(value="/sendLink", method=RequestMethod.POST)
-	public Map<String, Object> sendLink (HttpServletResponse response,@RequestParam("userEmail")String userEmail)
-		throws Exception{
+	public Map<String, Object> sendLink (HttpServletResponse response, @RequestParam("userEmail")String userEmail) throws Exception{
 		
 		response.setContentType("text/html; charset=UTF-8");
 		response.setCharacterEncoding("utf-8");
-
 		HashMap<String, Object> result = new HashMap<String, Object>();
+		
 		Map<String, Object> userEmailExist = dao.selectEmail(userEmail);
 		userEmailExist.putAll(dao.selectIsSns(userEmail));
+		
 		if (userEmailExist.get("USEREMAIL") != null && userEmailExist.get("ISSNS").toString().equals("0")) {
 			
-			String ue = userEmailExist.get("USEREMAIL").toString();
-			String encEmail = encoder.encode(ue);
+			String mUserEmail = userEmailExist.get("USEREMAIL").toString();
+			String encEmail = encoder.encode(mUserEmail + String.valueOf(mailCount));
+			
+			emailCheck.put("userEmail", mUserEmail);
+			emailCheck.put("encoding" + mUserEmail, encEmail);
 			
 			System.out.println(encEmail);
-			String htmlContent = "<h1>KWAVE DONATE 비밀번호 변경 안내 메일입니다.</h1><br/>"
+			String htmlContent = "" 
+					+"<h1>KWAVE DONATE 비밀번호 변경 안내 메일입니다.</h1><br/>"
 					+ "<h3>아래 링크를 통해 비밀번호 변경 페이지로 이동해주세요.</h3>"
-					+ "http://localhost:8181/kwaveweb/pwdService?bep=" 
-					+ encEmail + "&ue=" + ue;
+					+ "http://localhost:8181/kwaveweb/pwdService?bep=" + encEmail.toString();
+			
 			try {
 				MimeMessage message = mailSender.createMimeMessage();
 				
-				message.setFrom(new InternetAddress("tantosuperb@gmail.com"));
+				message.setFrom(new InternetAddress("lewis320@kwavedonate.com"));
 				message.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(userEmailExist.get("USEREMAIL").toString()));
 				message.setSubject("KWAVE DONATE 비밀번호 변경");
 				message.setText(htmlContent, "UTF-8", "html");
@@ -341,22 +347,24 @@ public class UserController {
 	@RequestMapping(value="/pwdService", method=RequestMethod.GET)
 	public String pwdService(HttpServletRequest request, Model model) {
 
-		String bep = request.getParameter("bep").toString();
-		String ue = request.getParameter("ue").toString();
-		
-		if (!(check.equals(bep))) {
-			model.addAttribute("ue", ue);
-			check = bep;
-			if(encoder.matches(ue, bep)) {
+		try {
+			String bep = request.getParameter("bep").toString();
+			boolean bEmailCheck; 
+			bEmailCheck = encoder.matches(emailCheck.get("userEmail").toString() + String.valueOf(mailCount), bep);
+			if (bEmailCheck) {
+				model.addAttribute("ue", emailCheck.get("userEmail").toString());
+				emailCheck.clear();
+				mailCount += 1;
 				return "pwdService";
-				
 			} else {
-				System.out.println("�ȵǳ�");
 				return "/errorPage";
 			}
-		} else {
+		} catch (Exception e) {
+			// TODO: handle exception
 			return "/errorPage";
 		}
+
+	
 	}
 	
 	@ResponseBody

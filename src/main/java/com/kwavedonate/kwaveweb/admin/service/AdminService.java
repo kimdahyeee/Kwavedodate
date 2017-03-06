@@ -19,8 +19,12 @@ public interface AdminService {
 	public RewardCommonVo getRewardCommonDetail(int rewardNum);
 	public int updateRewardCommonDetail(Map<String, Object> map);
 	public Map<String, Object> getRewardChildDetail(Map<String, Object> map);
+	public Map<String, Object> getCampaignCommonDetail(String campaignName);
 	public int updateRewardChildDetail(Map<String, Object> map);
 	public int insertCampaign(Map<String, Object> map);
 	public int deleteCampaign(String campaignName);
 	public int deleteReward(String rewardNum);
+	public List<Map<String, Object>> getFundingUserList(String campaignName);
+	public int updateCampaignCommonDetail(Map<String, Object> map);
+	public Map<String, Object> getCampaignChildDetail(Map<String, Object> map);
 }

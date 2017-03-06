@@ -9,9 +9,9 @@
 						<!-- 공통부분 part -->
 						<!-- ======= -->
 						<h4>Gather Amount: $${campaignDetail.gatherAmount}</h4>
-						<h4><a href="<c:url value='/admin/campaignFundingUserList'/>">Funding User Count: ${campaignDetail.fundingUserCnt}</a></h4>
+						<h4><a href="<c:url value='/admin/campaignDetail/${campaignDetail.campaignName}/fundingUserList'/>">Funding User Count: ${campaignDetail.fundingUserCnt}</a></h4>
 						
-						<a href="<c:url value='campaignCommonUpdate'/>" class="btn square btn-danger">공통부분 수정</a>
+						<a href="<c:url value='/admin/campaignDetail/${campaignDetail.campaignName}/campaignCommonDetail'/>" class="btn square btn-danger">공통부분 수정</a>
 						<table class="table table-colored">
 							<tbody>
 								<tr>
@@ -51,7 +51,7 @@
 						<!-- 한국어 Part -->
 						<!-- ======= -->
 						<div class="tab-pane active" id="pill-1">
-							<a href="<c:url value='campaignKoUpdate'/>" class="btn square btn-danger">수정(한국어)</a>
+							<a href="<c:url value='/admin/campaignDetail/${campaignDetail.campaignName}/campaignKoDetail'/>" class="btn square btn-danger">수정(한국어)</a>
 							<table class="table table-colored">
 								<tbody>
 									<tr>
@@ -85,7 +85,7 @@
 						<!-- 영어 Part -->
 						<!-- ====== -->
 						<div class="tab-pane" id="pill-2">
-							<a href="<c:url value='campaignEnUpdate'/>" class="btn square btn-danger">수정(영어)</a>
+							<a href="<c:url value='/admin/campaignDetail/${campaignDetail.campaignName}/campaignEnDetail'/>" class="btn square btn-danger">수정(영어)</a>
 							<table class="table table-colored">
 								<tbody>
 									<tr>
@@ -120,7 +120,7 @@
 						<!-- 중국어 Part -->
 						<!-- ====== -->
 						<div class="tab-pane" id="pill-3">
-							<a href="<c:url value='campaignChUpdate'/>" class="btn square btn-danger">수정(중국어)</a>
+							<a href="<c:url value='/admin/campaignDetail/${campaignDetail.campaignName}/campaignChDetail'/>" class="btn square btn-danger">수정(중국어)</a>
 							<table class="table table-colored">
 								<tbody>
 									<tr>

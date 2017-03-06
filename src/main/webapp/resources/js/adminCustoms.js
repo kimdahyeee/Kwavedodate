@@ -197,24 +197,40 @@
     
     // 캠페인(공통부분) update validation
     if($("#validateCampaignCommonUpdate").length>0) {
+    	var campaignFormData = new FormData($("#validateCampaignCommonUpdate"));
+    	/***************사진 미리보기******************/
+		var previewCampaignImg = document.getElementById('previewCampaignImg');
+		var previewYoutubeImg = document.getElementById('previewYoutubeImg');
+		var campaignImgFile = document.getElementById('campaignImgFile');
+		var youtubeImgFile = document.getElementById('youtubeImgFile');
+		checkFileReader();
+		loadPreviewImg(previewCampaignImg, campaignImgFile);
+		loadPreviewImg(previewYoutubeImg, youtubeImgFile);
+		/***************사진 미리보기 끝****************/
         $("#validateCampaignCommonUpdate").validate({
         	submitHandler: function(form) {   
+        		campaignFormData.append("campaignName", $("#campaignName").val());
+        		campaignFormData.append("launchDate", $("#launchDate").val());
+        		campaignFormData.append("dueDate", $("#dueDate").val());
+        		campaignFormData.append("youtubeCode", $("#youtubeCode").val());
+        		campaignFormData.append("campaignImg", $("#campaignImg").val());
+        		campaignFormData.append("campaignImgFile", $("input[name=campaignImgFile]")[0].files[0]);
+        		campaignFormData.append("youtubeImg", $("#youtubeImg").val());
+        		campaignFormData.append("youtubeImgFile", $("input[name=youtubeImgFile]")[0].files[0]);
                 $.ajax({
                     type: "POST",
-                    url: "", 
-                    data: {
-                        "campaignName": $("#campaignName").val(),
-                        "launchDate": $("#launchDate").val(),
-                        "dueDate": $("#dueDate").val(),
-                        "youtubeCode": $("#youtubeCode").val(),
-                        "campaignImg": $("#campaignImg").val(),
-                        "youtubeImg": $("#youtubeImg").val(),
-                        "campaignRegister": $("#campaignRegister").val(),
-                    },
+                    url: "/kwaveweb/admin/updateCommonCampaign", 
+                    contentType: false,
+                    processData: false,
+                    data:campaignFormData,
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리
-                    	
+                    	if(data.KEY == "SUCCESS"){
+                           alert($("#campaignName").val() +"캠페인이 수정되었습니다.");
+                           location.href = "http://localhost:8181/kwaveweb/admin/campaignDetail/" + $("#campaignName").val();
+                         }else{
+                            alert("캠페인이 저장이 실패했습니다.");
+                         }
                     }
                 });
             },
@@ -753,7 +769,13 @@
 	function loadPreviewImg(previewImg, fileTypeInputTag) {
 		fileTypeInputTag.onchange = function (e) {
 			e.preventDefault();
-			$('#imgLoaded').hide();
+			if(($('#campaignImgLoaded').length > 0) && (fileTypeInputTag == document.getElementById('campaignImgFile'))){
+				$('#campaignImgLoaded').hide();
+			} else if(($('#imgLoaded').length > 0) && (fileTypeInputTag == document.getElementById('rewardImgFile')) ){
+				$('#imgLoaded').hide();
+			} else {
+				$('#youtubeImgLoaded').hide();
+			}
 			
 			var file = fileTypeInputTag.files[0];
 			var reader = new FileReader();
