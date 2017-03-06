@@ -13,7 +13,7 @@
 										<td>
 											<div class="form-group has-feedback">
 												<div class="col-sm-12">
-													<input type="text" class="form-control" id="campaignName" name="campaignName" placeholder="Campaign Name" value="IU_Campaign" required>
+													<input type="text" class="form-control" id="campaignName" name="campaignName" placeholder="Campaign Name" value="${campaignCommaonDetail.campaignName}" disabled>
 												</div>
 											</div>
 										</td>
@@ -24,7 +24,7 @@
 										<td>
 											<div class="form-group has-feedback">
 												<div class="col-sm-12">
-													<input type="text" class="form-control" id="campaignRegister" name="campaignRegister"  value="vvshinevv@naver.com" disabled>
+													<input type="text" class="form-control" id="campaignRegister" name="campaignRegister"  value="${campaignCommaonDetail.campaignRegister}" disabled>
 												</div>
 											</div>
 										</td>
@@ -34,7 +34,7 @@
 										<td>
 											<div class="form-group has-feedback">
 												<div class="col-sm-12">
-													<input type="date" class="form-control" id="launchDate" name="launchDate" value="2017-02-25" required>
+													<input type="date" class="form-control" id="launchDate" name="launchDate" value="${campaignCommaonDetail.launchDate}" required>
 												</div>
 											</div>
 										</td>
@@ -44,7 +44,7 @@
 										<td>
 											<div class="form-group has-feedback">
 												<div class="col-sm-12">
-													<input type="date" class="form-control" id="dueDate" name="dueDate" value="2017-03-05" required>
+													<input type="date" class="form-control" id="dueDate" name="dueDate" value="${campaignCommaonDetail.dueDate}" required>
 												</div>
 											</div>
 										</td>
@@ -54,7 +54,7 @@
 										<td>
 											<div class="form-group has-feedback">
 												<div class="col-sm-12">
-													<input type="text" class="form-control" id="youtubeCode" name="youtubeCode" placeholder="youtubeCode" value="MhQKe-aERsU" required>
+													<input type="text" class="form-control" id="youtubeCode" name="youtubeCode" placeholder="youtubeCode" value="${campaignCommaonDetail.youtubeCode}" required>
 												</div>
 											</div>
 										</td>
@@ -64,23 +64,28 @@
 											<div class="campaignImgArea">
 												Campaign Img<br>
 												<label class="btn btn-primary">
-									             	사진 변경 <input type="file" style="display: none;">
+									             	사진 변경 <input type="file" id="campaignImgFile" name="campaignImgFile" style="display: none;"/>
 									            </label>
+									            <div id="uploadImgState"></div>	
 											</div>
 										</th>
-										<td>
-											<img src="<c:url value='/resources/images/kim-go-eun-campaign.jpg'/>">
+										<td rowspan="3"> 
+											<img id="campaignImgLoaded" width="300px" src="${campaignCommaonDetail.campaignImg}">
+											<input type="hidden" id="campaignImg" name="campaignImg" value="${campaignCommaonDetail.campaignImg}"/>
+											<div id="previewCampaignImg"></div>
 										</td>
 										<th>
 											<div class="youtubeImgArea">
 												Youtube Img<br>
 												<label class="btn btn-primary">
-									             	사진 변경 <input type="file" style="display: none;">
-									            </label>	
+									             	사진 변경 <input type="file" id="youtubeImgFile" name="youtubeImgFile" style="display: none;"/>
+									            </label>
 											</div>
 										</th>
-										<td>
-											<img src="<c:url value='/resources/images/oh-yeon-campaign.jpg'/>">
+										<td rowspan="3"> 
+											<img id="youtubeImgLoaded" width="300px" src="${campaignCommaonDetail.youtubeImg}">
+											<input type="hidden" id="youtubeImg" name="youtubeImg" value="${campaignCommaonDetail.youtubeImg}"/>
+											<div id="previewYoutubeImg"></div>
 										</td>
 									</tr>
 								</tbody>

@@ -14,7 +14,8 @@
 									<td>
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
-												<input type="text" class="form-control" id="campaignName" name="campaignName" value="IU_Campaign" disabled required>
+												<input type="hidden" id="rewardNum" name="rewardNum" value="${rewardCommon.rewardNum }"/>
+												<input type="text" class="form-control" id="campaignName" name="campaignName" value="${rewardCommon.campaignName }" disabled required>
 											</div>
 										</div>
 									</td>
@@ -23,13 +24,14 @@
 										<div class="rewardImgArea">
 											Reward Img<br>
 											<label class="btn btn-primary">
-								             	사진 변경 <input type="file" id="rewardImg" name="rewardImg" style="display: none;"/>
+								             	사진 변경 <input type="file" id="rewardImgFile" name="rewardImgFile" style="display: none;"/>
 								            </label>
 								            <div id="uploadImgState"></div>	
 										</div>
 									</th>
 									<td rowspan="3"> 
-										<img id="imgLoaded" width="300px" src="<c:url value='/resources/images/kim-go-eun-campaign.jpg'/>">
+										<img id="imgLoaded" width="300px" src="<c:url value='${rewardCommon.rewardImg }'/>">
+										<input type="hidden" id="rewardImg" name="rewardImg" value="${rewardCommon.rewardImg }"/>
 										<div id="previewImg"></div>
 									</td>
 								</tr>
@@ -38,7 +40,17 @@
 									<td>
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
-												<input type="text" class="form-control" id="rewardAmount" name="rewardAmount" value="" required>
+												<input type="text" class="form-control" id="rewardAmount" name="rewardAmount" value="${rewardCommon.rewardAmount }" required>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>Reward Current Count</th>
+									<td>
+										<div class="form-group has-feedback">
+											<div class="col-sm-12">
+												<input type="text" class="form-control" id="rewardCurrentCnt" name="rewardCurrentCnt" value="${rewardCommon.rewardCurrentCnt }" required>
 											</div>
 										</div>
 									</td>
@@ -48,7 +60,7 @@
 									<td>
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
-												<input type="text" class="form-control" id="rewardTotalCnt" name="rewardTotalCnt" value="" required/>
+												<input type="text" class="form-control" id="rewardTotalCnt" name="rewardTotalCnt" value="${rewardCommon.rewardTotalCnt }" required/>
 											</div>
 										</div>
 									</td>

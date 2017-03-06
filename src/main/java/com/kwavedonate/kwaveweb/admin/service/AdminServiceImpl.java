@@ -6,6 +6,8 @@ import java.util.Map;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Service;
 
+import com.kwavedonate.kwaveweb.campaign.vo.RewardCommonVo;
+
 
 @Service("adminService")
 public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminService{
@@ -56,11 +58,76 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 		try  {
 			getSqlSession().insert("admin.insertReward", map);
 			map.put("idx", map.get("idx"));
-			return getSqlSession().insert("admin.insertMulLanguageReward", map);
+			getSqlSession().insert("admin.insertMulLanguageReward", map);
+			return 1;
 		} catch(Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
 	}
 
+	@Override
+	public RewardCommonVo getRewardCommonDetail(int rewardNum) {
+		return getSqlSession().selectOne("admin.selectCommonRewardDetail", rewardNum);
+	}
+
+	@Override
+	public int updateRewardCommonDetail(Map<String, Object> map) {
+		System.out.println("rewardNum In AdminServiceImpl" + map.get("rewardNum"));
+		return getSqlSession().update("admin.updateRewardCommonDetail", map);
+	}
+
+	@Override
+	public Map<String, Object> getRewardChildDetail(Map<String, Object> map) {
+		return  getSqlSession().selectOne("admin.selectChildRewardDetail", map);
+	}
+
+	@Override
+	public int updateRewardChildDetail(Map<String, Object> map) {
+		return getSqlSession().update("admin.updateRewardChildDetail", map);
+	}
+	
+	
+	@Override
+	public Map<String, Object> getCampaignCommonDetail(String campaignName) {
+		return getSqlSession().selectOne("admin.selectCampaignCommonDetail", campaignName);
+	}
+
+	public int insertCampaign(Map<String, Object> map) {
+		try  {
+			getSqlSession().insert("admin.insertCampaign", map);
+			getSqlSession().insert("admin.insertMulLanguageCampaign", map);
+			return 1;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public int deleteCampaign(String campaignName) {
+		return getSqlSession().delete("admin.deleteCampaign", campaignName);
+	}
+
+	@Override
+	public int deleteReward(String rewardNum) {
+		return getSqlSession().delete("admin.deleteReward", rewardNum);
+	}
+
+	@Override
+	public List<Map<String, Object>> getFundingUserList(String campaignName) {
+		return getSqlSession().selectList("admin.selectFundingUserList", campaignName);
+	}
+
+	@Override
+	public int updateCampaignCommonDetail(Map<String, Object> map) {
+		return getSqlSession().update("admin.updateCampaignCommonDetail", map);
+	}
+
+	@Override
+	public Map<String, Object> getCampaignChildDetail(Map<String, Object> map) {
+		return getSqlSession().selectOne("admin.selectCampaignChildDetail", map);
+	}
+
+	 
 }

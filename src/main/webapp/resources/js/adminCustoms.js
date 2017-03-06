@@ -1,4 +1,4 @@
-$(document).ready(function() {	
+ $(document).ready(function() {	
 	
 	/* 캠페인 ckEditor plug in 추가 */
 	if($("#validateCampaignAdd").length>0) {
@@ -28,46 +28,46 @@ $(document).ready(function() {
 		 CKEDITOR.replace( 'rewardEnContents_editor' );
 		 CKEDITOR.replace( 'rewardChContents_editor' );
 	}
-	if($("#validateRewardKoUpdate").length>0){
-		 CKEDITOR.replace( 'rewardKoContents_editor' );
-	}
-	if($("#validateRewardEnUpdate").length>0){
-		 CKEDITOR.replace( 'rewardEnContents_editor' );
-	}
-	if($("#validateRewardChUpdate").length>0){
-		 CKEDITOR.replace( 'rewardChContents_editor' );
+	if($("#validateRewardChildUpdate").length>0){
+		 CKEDITOR.replace( 'rewardContents_editor', {
+			 filebrowserImageUploadUrl: '/kwaveweb/admin/ckEditorImageUpload'
+		 });
 	}
 	
     // 캠페인 추가 validation
     if($("#validateCampaignAdd").length>0) {
-    	
+    	var campaignFormData = new FormData($("#validateCampaignAdd"));
         $("#validateCampaignAdd").validate({
         	submitHandler: function(form) {   
+        		campaignFormData.append("campaignName", $("#campaignName").val());
+        		campaignFormData.append("launchDate", $("#launchDate").val());
+        		campaignFormData.append("dueDate", $("#dueDate").val());
+        		campaignFormData.append("youtubeCode", $("#youtubeCode").val());
+        		campaignFormData.append("campaignImg", $("input[name=campaignImg]")[0].files[0]);
+        		campaignFormData.append("youtubeImg", $("input[name=youtubeImg]")[0].files[0]);
+        		campaignFormData.append("campaignKoSubject", $("#campaignKoSubject").val());
+        		campaignFormData.append("campaginKoSummary_editor", CKEDITOR.instances['campaginKoSummary_editor'].getData());
+        		campaignFormData.append("campaginKoContents_editor", CKEDITOR.instances['campaginKoContents_editor'].getData());
+        		campaignFormData.append("campaignEnSubject", $("#campaignEnSubject").val());
+        		campaignFormData.append("campaginEnSummary_editor", CKEDITOR.instances['campaginEnSummary_editor'].getData());
+        		campaignFormData.append("campaginEnContents_editor", CKEDITOR.instances['campaginEnContents_editor'].getData());
+        		campaignFormData.append("campaignChSubject", $("#campaignChSubject").val());
+        		campaignFormData.append("campaginChSummary_editor", CKEDITOR.instances['campaginChSummary_editor'].getData());
+        		campaignFormData.append("campaginChContents_editor", CKEDITOR.instances['campaginChContents_editor'].getData());
                 $.ajax({
                     type: "POST",
-                    url: "", 
-                    data: {
-                        "campaignName": $("#campaignName").val(),
-                        "launchDate": $("#launchDate").val(),
-                        "dueDate": $("#dueDate").val(),
-                        "youtubeCode": $("#youtubeCode").val(),
-                        "campaignImg": $("#campaignImg").val(),
-                        "youtubeImg": $("#youtubeImg").val(),
-                        "campaignRegister": $("#campaignRegister").val(),
-                        "campaignKoSubject": $("#campaignKoSubject").val(),
-                        "campaginKoSummary_editor": CKEDITOR.instances['campaginKoSummary_editor'].getData(),
-                        "campaginKoContents_editor": CKEDITOR.instances['campaginKoContents_editor'].getData(),
-                        "campaignEnSubject": $("#campaignEnSubject").val(),
-                        "campaginEnSummary_editor": CKEDITOR.instances['campaginEnSummary_editor'].getData(),
-                        "campaginEnContents_editor": CKEDITOR.instances['campaginEnContents_editor'].getData(),
-                        "campaignChSubject": $("#campaignChSubject").val(),
-                        "campaginChSummary_editor": CKEDITOR.instances['campaginChSummary_editor'].getData(),
-                        "campaginChContents_editor": CKEDITOR.instances['campaginChContents_editor'].getData()
-                    },
+                    url: "/kwaveweb/admin/insertCampaign", 
+                    contentType: false,
+                    processData: false,
+                    data:campaignFormData,
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리
-                    	
+                    	if(data.KEY == "SUCCESS"){
+                           alert("캠페인이 저장되었습니다.");
+                           location.href = "http://localhost:8181/kwaveweb/admin/manageCampaigns";
+                         }else{
+                            alert("캠페인이 저장이 실패했습니다.");
+                         }
                     }
                 });
             },
@@ -197,24 +197,40 @@ $(document).ready(function() {
     
     // 캠페인(공통부분) update validation
     if($("#validateCampaignCommonUpdate").length>0) {
+    	var campaignFormData = new FormData($("#validateCampaignCommonUpdate"));
+    	/***************사진 미리보기******************/
+		var previewCampaignImg = document.getElementById('previewCampaignImg');
+		var previewYoutubeImg = document.getElementById('previewYoutubeImg');
+		var campaignImgFile = document.getElementById('campaignImgFile');
+		var youtubeImgFile = document.getElementById('youtubeImgFile');
+		checkFileReader();
+		loadPreviewImg(previewCampaignImg, campaignImgFile);
+		loadPreviewImg(previewYoutubeImg, youtubeImgFile);
+		/***************사진 미리보기 끝****************/
         $("#validateCampaignCommonUpdate").validate({
         	submitHandler: function(form) {   
+        		campaignFormData.append("campaignName", $("#campaignName").val());
+        		campaignFormData.append("launchDate", $("#launchDate").val());
+        		campaignFormData.append("dueDate", $("#dueDate").val());
+        		campaignFormData.append("youtubeCode", $("#youtubeCode").val());
+        		campaignFormData.append("campaignImg", $("#campaignImg").val());
+        		campaignFormData.append("campaignImgFile", $("input[name=campaignImgFile]")[0].files[0]);
+        		campaignFormData.append("youtubeImg", $("#youtubeImg").val());
+        		campaignFormData.append("youtubeImgFile", $("input[name=youtubeImgFile]")[0].files[0]);
                 $.ajax({
                     type: "POST",
-                    url: "", 
-                    data: {
-                        "campaignName": $("#campaignName").val(),
-                        "launchDate": $("#launchDate").val(),
-                        "dueDate": $("#dueDate").val(),
-                        "youtubeCode": $("#youtubeCode").val(),
-                        "campaignImg": $("#campaignImg").val(),
-                        "youtubeImg": $("#youtubeImg").val(),
-                        "campaignRegister": $("#campaignRegister").val(),
-                    },
+                    url: "/kwaveweb/admin/updateCommonCampaign", 
+                    contentType: false,
+                    processData: false,
+                    data:campaignFormData,
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리
-                    	
+                    	if(data.KEY == "SUCCESS"){
+                           alert($("#campaignName").val() +"캠페인이 수정되었습니다.");
+                           location.href = "http://localhost:8181/kwaveweb/admin/campaignDetail/" + $("#campaignName").val();
+                         }else{
+                            alert("캠페인이 저장이 실패했습니다.");
+                         }
                     }
                 });
             },
@@ -494,6 +510,7 @@ $(document).ready(function() {
         		formData.append("campaignName", $("#campaignName").val());
         		formData.append("rewardAmount", $("#rewardAmount").val());
         		formData.append("rewardTotalCnt", $("#rewardTotalCnt").val());
+        		formData.append("rewardCurrentCnt", $("#rewardTotalCnt").val());
         		formData.append("rewardImg", $("input[name=rewardImg]")[0].files[0]);
         		formData.append("rewardKoSubject", $("#rewardKoSubject").val());
         		formData.append("rewardKoContents_editor", CKEDITOR.instances['rewardKoContents_editor'].getData());
@@ -509,7 +526,12 @@ $(document).ready(function() {
                     data: formData,
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리 해줘야 됨!
+                    	if(data.key == "success") {
+                    		alert($("#campaignName").val() + "의 리워드가 등록되었습니다.");
+                    		window.location = "/kwaveweb/admin/"+ $("#campaignName").val() +"/manageRewards";
+                    	} else {
+                    		alert("리워드 등록에 실패하였습니다. 다시 시도해주세요.");
+                    	}
                     }
                 });
             },
@@ -603,28 +625,37 @@ $(document).ready(function() {
     
     // 리워드(공통부분) update validation
     if($("#validateRewardCommonUpdate").length>0) {
-    	//사진 변경 시 미리 보기
+    	var formData  = new FormData($("#validateRewardCommonUpdate"));
+    	/***************사진 미리보기******************/
 		var previewImg = document.getElementById('previewImg');
-		var rewardImg = document.getElementById('rewardImg');
+		var rewardImg = document.getElementById('rewardImgFile');
 		checkFileReader();
 		loadPreviewImg(previewImg, rewardImg);
-    	
+		/***************사진 미리보기 끝****************/
+		
         $("#validateRewardCommonUpdate").validate({
         	submitHandler: function(form) {   
+        		formData.append("rewardNum", $("#rewardNum").val());
+        		formData.append("campaignName", $("#campaignName").val());
+        		formData.append("rewardAmount", $("#rewardAmount").val());
+        		formData.append("rewardTotalCnt", $("#rewardTotalCnt").val());
+        		formData.append("rewardCurrentCnt", $("#rewardCurrentCnt").val());
+        		formData.append("rewardImg", $("#rewardImg").val());
+        		formData.append("rewardImgFile", $("input[name=rewardImgFile]")[0].files[0]);
                 $.ajax({
                     type: "POST",
-                    url: "", 
-                    data: {
-                    	"campaignName": $("#campaignName").val(),
-                    	"rewardAmount": $("#rewardAmount").val(),
-                        "rewardTotalCnt": $("#rewardTotalCnt").val(),
-                        "rewardCurrentCnt": $("#rewardTotalCnt").val(), // 삽입 시 total cnt = cur cnt
-                        "rewardImg": $("#rewardImg").val()
-                    },
+                    url: "/kwaveweb/admin/updateCommonReward", 
+                    contentType: false, // ajax 파일 전송 시 꼭 필요!!
+                    processData: false, // ajax 파일 전송 시 꼭 필요!!
+                    data: formData,
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리
-                    	
+                    	if(data.key == "success") {
+                    		alert($("#campaignName").val() + "의 리워드가 변경되었습니다.");
+                    		window.location = "/kwaveweb/admin/"+ $("#campaignName").val() +"/manageRewards/" + $("#rewardNum").val();
+                    	} else {
+                    		alert("리워드 변경에 실패하였습니다. 다시 시도해주세요.");
+                    	}
                     }
                 });
             },
@@ -644,8 +675,8 @@ $(document).ready(function() {
                 rewardTotalCnt: {
                     required: true
                 },
-                rewardImg: {
-                    required: true
+                rewardCurrentCnt: {
+                	required: true
                 }
             },
             messages: {
@@ -658,8 +689,8 @@ $(document).ready(function() {
                 rewardTotalCnt: {
                     required: "리워드 수량을 입력해 주세요."
                 },
-                rewardImg: {
-                    required: "리워드 이미지를 입력해 주세요."
+                rewardCurrentCnt: {
+                	required: "리워드 현재 남은 수량을 입력해 주세요."
                 }
             },
             errorElement: "span",
@@ -674,21 +705,27 @@ $(document).ready(function() {
         });
     }
     
-    // 리워드(한국어) update validation
-    if($("#validateRewardKoUpdate").length>0) {
-        $("#validateRewardKoUpdate").validate({
+    // 리워드 자식 테이블(언어) update validation
+    if($("#validateRewardChildUpdate").length>0) {
+        $("#validateRewardChildUpdate").validate({
         	submitHandler: function(form) {   
                 $.ajax({
                     type: "POST",
-                    url: "", 
+                    url: "/kwaveweb/admin/updateRewardChild", 
                     data: {
-                        // + rewardNum 값
-                    	"rewardKoSubject": $("#rewardKoSubject").val(),
-                        "rewardKoContents_editor": CKEDITOR.instances['rewardKoContents_editor'].getData()
+                        "rewardNum": $("#rewardNum").val(),
+                        "locale": $("#locale").val(),
+                    	"rewardSubject": $("#rewardSubject").val(),
+                        "rewardContents_editor": CKEDITOR.instances['rewardContents_editor'].getData()
                     },
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리
+                    	if(data.key == "success") {
+                    		alert("리워드(언어) 내용이 변경되었습니다.");
+                    		window.location = "/kwaveweb/admin/"+ $("#campaignName").val() +"/manageRewards/" + $("#rewardNum").val();
+                    	} else {
+                    		alert("리워드(언어) 변경에 실패하였습니다. 다시 시도해주세요.");
+                    	}
                     }
                 });
             },
@@ -699,129 +736,21 @@ $(document).ready(function() {
             onclick: false,
             ignore: [],
             rules: {
-                rewardKoSubject: {
+                rewardSubject: {
                     required: true
                 },
-                rewardKoContents_editor: {
+                rewardContents_editor: {
                 	required: function() {
-                        CKEDITOR.instances.rewardKoContents_editor.updateElement();
+                        CKEDITOR.instances.rewardContents_editor.updateElement();
                     }
                 }
             },
             messages: {
-                rewardKoSubject: {
-                    required: "리워드(한국어) 제목을 입력해 주세요."
+                rewardSubject: {
+                    required: "리워드 제목을 입력해 주세요."
                 },
-                rewardKoContents_editor: {
-                    required: "리워드(한국어) 내용을 입력해 주세요."
-                }
-            },
-            errorElement: "span",
-            highlight: function (element) {
-                $(element).parent().removeClass("has-success").addClass("has-error");
-                $(element).siblings("label").addClass("hide");
-            },
-            success: function (element) {
-                $(element).parent().removeClass("has-error").addClass("has-success");
-                $(element).siblings("label").removeClass("hide");
-            }
-        });
-    }
-    
-    // 리워드(영어) update validation
-    if($("#validateRewardEnUpdate").length>0) {
-        $("#validateRewardEnUpdate").validate({
-        	submitHandler: function(form) {   
-                $.ajax({
-                    type: "POST",
-                    url: "", 
-                    data: {
-                        // + rewardNum value
-                    	"rewardEnSubject": $("#rewardEnSubject").val(),
-                        "rewardEnContents_editor": CKEDITOR.instances['rewardEnContents_editor'].getData()
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                    	// 성공 시 view 처리
-                    }
-                });
-            },
-            errorPlacement: function(error, element) {  
-                error.appendTo(element.parent());  
-            },
-            onkeyup: false,
-            onclick: false,
-            ignore: [],
-            rules: {
-                rewardEnSubject: {
-                    required: true
-                },
-                rewardEnContents_editor: {
-                	required: function() {
-                        CKEDITOR.instances.rewardEnContents_editor.updateElement();
-                    }
-                }
-            },
-            messages: {
-                rewardEnSubject: {
-                    required: "리워드(영어) 제목을 입력해 주세요."
-                },
-                rewardEnSubject: {
-                    required: "리워드(영어) 내용을 입력해 주세요."
-                }
-            },
-            errorElement: "span",
-            highlight: function (element) {
-                $(element).parent().removeClass("has-success").addClass("has-error");
-                $(element).siblings("label").addClass("hide");
-            },
-            success: function (element) {
-                $(element).parent().removeClass("has-error").addClass("has-success");
-                $(element).siblings("label").removeClass("hide");
-            }
-        });
-    }
-    
-    // 리워드(중국어) update validation
-    if($("#validateRewardChUpdate").length>0) {
-        $("#validateRewardChUpdate").validate({
-        	submitHandler: function(form) {   
-                $.ajax({
-                    type: "POST",
-                    url: "", 
-                    data: {
-                        // + rewardNum 값
-                    	"rewardChSubject": $("#rewardChSubject").val(),
-                        "rewardChContents_editor": CKEDITOR.instances['rewardChContents_editor'].getData()
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                    	// 성공 시 view 처리
-                    }
-                });
-            },
-            errorPlacement: function(error, element) {  
-                error.appendTo(element.parent());  
-            },
-            onkeyup: false,
-            onclick: false,
-            ignore: [],
-            rules: {
-                rewardChSubject: {
-                    required: true
-                },
-                rewardChContents_editor: {
-                	required: function() {
-                        CKEDITOR.instances.rewardChContents_editor.updateElement();
-                    }
-                }
-            },
-            messages: {
-                rewardChSubject: {
-                    required: "리워드(중국어) 제목을 입력해 주세요."
-                },
-                rewardChContents_editor: {
-                    required: "리워드(중국어) 내용을 입력해 주세요."
+                rewardContents_editor: {
+                    required: "리워드 내용을 입력해 주세요."
                 }
             },
             errorElement: "span",
@@ -840,7 +769,13 @@ $(document).ready(function() {
 	function loadPreviewImg(previewImg, fileTypeInputTag) {
 		fileTypeInputTag.onchange = function (e) {
 			e.preventDefault();
-			$('#imgLoaded').hide();
+			if(($('#campaignImgLoaded').length > 0) && (fileTypeInputTag == document.getElementById('campaignImgFile'))){
+				$('#campaignImgLoaded').hide();
+			} else if(($('#imgLoaded').length > 0) && (fileTypeInputTag == document.getElementById('rewardImgFile')) ){
+				$('#imgLoaded').hide();
+			} else {
+				$('#youtubeImgLoaded').hide();
+			}
 			
 			var file = fileTypeInputTag.files[0];
 			var reader = new FileReader();
@@ -848,9 +783,7 @@ $(document).ready(function() {
 			reader.onload = function (event) {
 				var img = new Image();
 				img.src = event.target.result;
-				if (img.width > 300) {
-					img.width = 300;
-				}
+				img.width = 250;
 				previewImg.innerHTML = '';
 				previewImg.appendChild(img);
 			};

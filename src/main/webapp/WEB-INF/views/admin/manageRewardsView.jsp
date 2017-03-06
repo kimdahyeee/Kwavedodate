@@ -26,12 +26,12 @@
 								<td>${rewards.rewardTotalCnt }</td>
 								<td>${rewards.rewardCurrentCnt }</td>
 								<td><a href="<c:url value='/admin/${rewards.campaignName}/manageRewards/${rewards.rewardNum}'/>">보기</a></td>
-								<td><a href="#">삭제</a></td>
+								<td><a href="<c:url value='/admin/${rewards.campaignName}/manageRewards/${rewards.rewardNum}/deleteReward'/>" onclick="return confirm('정말 삭제하시겠습니까?') ? true : false;">삭제</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-				<a href="<c:url value='/admin/rewardAdd'/>" class="btn square btn-danger pull-right">추가</a>
+				<a href="<c:url value='/admin/${campaignName }/rewardAdd'/>" class="btn square btn-danger pull-right">추가</a>
 			</div>
 		</div>
 	</section>

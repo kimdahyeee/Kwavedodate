@@ -13,7 +13,8 @@
 				<div class="tab-content clear-style">
 					<!-- 공통부분 part -->
 					<!-- ======= -->
-					<a href="<c:url value='rewardCommonUpdate'/>" class="btn square btn-danger">공통부분 수정</a>
+					<a href="<c:url value='/admin/${reward.campaignName }/rewardCommonUpdate/${reward.rewardNum }'/>" class="btn square btn-danger">공통부분 수정</a>
+					
 					<table class="table table-colored">
 						<tbody>
 							<tr>
@@ -44,7 +45,7 @@
 					<!-- 한국어 Part -->
 					<!-- ======= -->
 					<div class="tab-pane active" id="pill-1">
-						<a href="<c:url value='rewardKoUpdate'/>" class="btn square btn-danger">수정(한국어)</a>
+						<a href="<c:url value='/admin/${reward.campaignName }/rewards_ko/${reward.rewardNum }'/>" class="btn square btn-danger">수정(한국어)</a>
 						<table class="table table-colored">
 							<tbody>
 								<tr>
@@ -64,7 +65,7 @@
 					<!-- 영어 Part -->
 					<!-- ====== -->
 					<div class="tab-pane" id="pill-2">
-						<a href="<c:url value='rewardEnUpdate'/>" class="btn square btn-danger">수정(영어)</a>
+						<a href="<c:url value='/admin/${reward.campaignName }/rewards_en/${reward.rewardNum }'/>" class="btn square btn-danger">수정(영어)</a>
 						<table class="table table-colored">
 							<tbody>
 								<tr>
@@ -85,7 +86,7 @@
 					<!-- 중국어 Part -->
 					<!-- ====== -->
 					<div class="tab-pane" id="pill-3">
-						<a href="<c:url value='rewardChUpdate'/>" class="btn square btn-danger">수정(중국어)</a>
+						<a href="<c:url value='/admin/${reward.campaignName }/rewards_ch/${reward.rewardNum }'/>" class="btn square btn-danger">수정(중국어)</a>
 						<table class="table table-colored">
 							<tbody>
 								<tr>

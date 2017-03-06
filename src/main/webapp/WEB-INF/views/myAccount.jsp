@@ -151,7 +151,7 @@
 							<div class="col-xs-8 col-sm-9">
 								<p><c:choose>
 									<c:when test="${user.USERNATION =='KOR'}">KOREAN</c:when>
-									<c:when test="${user.USERNATION =='ENG'}">AMERICAN</c:when>
+									<c:when test="${user.USERNATION =='ENG'}">ENGLISH</c:when>
 									<c:otherwise>CHINESE</c:otherwise>
 								</c:choose></p>
 							</div>

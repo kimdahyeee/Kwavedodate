@@ -91,9 +91,13 @@
 		RL.REWARDSUBJECT as REWARDSUBJECT,
 		R.REWARDIMG as REWARDIMG,
 		R.REWARDAMOUNT as REWARDAMOUNT
-	FROM REWARDS_${currentLocale} RL,
+	FROM 
+		REWARDS_${currentLocale} RL,
 		REWARDS R
-	WHERE R.REWARDNUM=#{rewardNum} AND R.CAMPAIGNNAME=#{campaignName} AND R.REWARDNUM = RL.REWARDNUM
+	WHERE 
+		R.REWARDNUM=#{rewardNum} AND 
+		R.CAMPAIGNNAME=#{campaignName} AND 
+		R.REWARDNUM = RL.REWARDNUM
 	</select>
 	
 	<select id="detailCampaigns" parameterType="hashmap" resultMap="allCampaings">
@@ -110,9 +114,12 @@
 		C.YOUTUBEIMG as cYoutubeImg,
 		C.CAMPAIGNIMG as cImg,
 		TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as cDueToSys
-	FROM CAMPAIGNS_${currentLocale} CL,
+	FROM 
+		CAMPAIGNS_${currentLocale} CL,
 		CAMPAIGNS C
-   	WHERE C.CAMPAIGNNAME = #{campaignName} AND CL.CAMPAIGNNAME = C.CAMPAIGNNAME
+   	WHERE 
+   		C.CAMPAIGNNAME = #{campaignName} AND 
+   		CL.CAMPAIGNNAME = C.CAMPAIGNNAME
 	</select>
 	
 	<select id="selectAllRewards" parameterType="hashmap" resultMap="allRewards">
@@ -125,9 +132,12 @@
 		RL.REWARDSUBJECT as rSubject,
 		RL.REWARDCONTENTS as RLontents,
 		R.REWARDIMG as rImg
-	FROM REWARDS_${currentLocale} RL,
+	FROM 
+		REWARDS_${currentLocale} RL,
 		REWARDS R
-    WHERE R.CAMPAIGNNAME = #{campaignName} AND R.REWARDNUM = RL.REWARDNUM
+    WHERE 
+    	R.CAMPAIGNNAME = #{campaignName} AND 
+    	R.REWARDNUM = RL.REWARDNUM
 	</select>
 	
 </mapper>
