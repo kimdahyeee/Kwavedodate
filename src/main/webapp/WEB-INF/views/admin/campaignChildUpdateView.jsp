@@ -5,7 +5,14 @@
 			<div class="row">
 				<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
 					<form class="form-horizontal" id="validateCampaignKoUpdate" method="post">
-						<h3>한국어 부분 수정</h3>
+					<input type="hidden" id="locale" name="locale" value="${locale }"/>
+						<h3>캠페인
+							<c:choose>
+								<c:when test="${locale eq 'ko'}">한국어</c:when>
+								<c:when test="${locale eq 'en'}">영어</c:when>
+								<c:when test="${locale eq 'ch'}">중국어</c:when>
+							</c:choose> 
+						부분 수정</h3>
 						<table class="table table-colored">
 							<tbody>
 								<tr>
@@ -14,7 +21,7 @@
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
 												<!-- input type이 disabled이면 ajax에서 값을 못넘기는 현상 발생 -> hidden 값으로 넘겨줄 것-->
-												<input type="text" class="form-control" id="campaignName" name="campaignName" value="" disabled required>
+												<input type="text" class="form-control" id="campaignName" name="campaignName" value="${campaignChildDetail.campaignName}" disabled required>
 											</div>
 										</div>
 									</td>
@@ -24,7 +31,7 @@
 									<td>
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
-												<input type="text" class="form-control" id="campaignKoSubject" name="campaignKoSubject" placeholder="campaignSubject" value="" required>
+												<input type="text" class="form-control" id="campaignKoSubject" name="campaignKoSubject" placeholder="campaignSubject" value="${campaignChildDetail.campaignSubject}" required>
 											</div>
 										</div>
 									</td>
@@ -32,13 +39,13 @@
 								<tr>
 									<th>Campaign Summary</th>
 									<td>
-										<textarea id="campaginKoSummary_editor" name="campaginKoSummary_editor"></textarea>
+										<textarea id="campaginKoSummary_editor" name="campaginKoSummary_editor">${campaignChildDetail.campaignSummary}</textarea>
 									</td>
 								</tr>
 								<tr>
 									<th>Campaign Contents</th>
 									<td>
-										<textarea id="campaginKoContents_editor" name="campaginKoContents_editor"></textarea>
+										<textarea id="campaginKoContents_editor" name="campaginKoContents_editor">${campaignChildDetail.campaignContents}</textarea>
 									</td>
 								</tr>
 							</tbody>

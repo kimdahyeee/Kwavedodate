@@ -139,8 +139,11 @@ public class AdminController {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value="/campaignFundingUserList")
-	public String campaignFundingUserList() {
+	@RequestMapping(value="/campaignDetail/{campaignName}/fundingUserList")
+	public String campaignFundingUserList(@PathVariable("campaignName") String campaignName, Model model) {
+		List<Map<String, Object>> fundingUserList = adminService.getFundingUserList(campaignName);
+		model.addAttribute("campaignName", campaignName);
+		model.addAttribute("fundingUserList", fundingUserList);
 		return "admin/campaignFundingUserListView";
 	}
 	
@@ -159,39 +162,53 @@ public class AdminController {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value="/campaignCommonUpdate")
-	public String campaignCommonUpdate() {
+	@RequestMapping(value="/campaignDetail/{campaignName}/campaignCommonDetail")
+	public String campaignCommonUpdateView(@PathVariable("campaignName") String campaignName, Model model) {
+		Map<String, Object> campaignCommaonDetail = adminService.getCampaignCommonDetail(campaignName);
+		model.addAttribute("campaignCommaonDetail", campaignCommaonDetail);
 		return "admin/campaignCommonUpdateView";
 	}
 	
 	/**
-	 * 캠페인 한국어 부분 변경 view controller
-	 * @param
+	 * 캠페인 공통부분 변경
+	 * @param map
+	 * @param request
+	 * @param auth
 	 * @return
 	 */
-	@RequestMapping(value="/campaignKoUpdate")
-	public String campaignKoUpdate() {
-		return "admin/campaignKoUpdateView";
+	@ResponseBody
+	@RequestMapping(value="/updateCommonCampaign", method=RequestMethod.POST)
+	public HashMap<String, String> updateCommonCampaign(@RequestParam Map<String, Object> map, HttpServletRequest request, Authentication auth){
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		UserDetailsVo user = (UserDetailsVo) auth.getPrincipal();
+		FileUtils fileUtils = new FileUtils(request);
+		List<String> listFile = fileUtils.parseInsertFileInfo();
+		map.put("campaignImg", contextPath + listFile.get(0));
+		map.put("youtubeImg", contextPath + listFile.get(1));
+		map.put("campaignRegister", user.getUsername().toString());
+		
+		if(adminService.updateCampaignCommonDetail(map) == 1){
+			responseMap.put("KEY", "SUCCESS");
+		}else{
+			responseMap.put("KEY", "FAIL");
+		}
+		return responseMap;
 	}
 	
 	/**
-	 * 캠페인 영어 부분 변경 view controller
+	 * 캠페인  자식 테이블 부분(언어) 변경
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value="/campaignEnUpdate")
-	public String campaignEnUpdate() {
-		return "admin/campaignEnUpdateView";
-	}
-	
-	/**
-	 * 캠페인 중국어 부분 변경 view controller
-	 * @param
-	 * @return
-	 */
-	@RequestMapping(value="/campaignChUpdate")
-	public String campaignChUpdate() {
-		return "admin/campaignChUpdateView";
+	@RequestMapping(value="/campaignDetail/{campaignName}/campaign{locale}Detail")
+	public String campaignKoUpdate(@PathVariable("campaignName") String campaignName, @PathVariable("locale") String locale, Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("locale", locale);
+		map.put("campaignName", campaignName);
+		
+		model.addAttribute("campaignChildDetail", adminService.getCampaignChildDetail(map));
+		model.addAttribute("locale", locale);
+		return "admin/campaignChildUpdateView";
 	}
 	
 	/**

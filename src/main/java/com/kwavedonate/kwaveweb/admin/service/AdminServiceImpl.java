@@ -87,6 +87,12 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 		return getSqlSession().update("admin.updateRewardChildDetail", map);
 	}
 	
+	
+	@Override
+	public Map<String, Object> getCampaignCommonDetail(String campaignName) {
+		return getSqlSession().selectOne("admin.selectCampaignCommonDetail", campaignName);
+	}
+
 	public int insertCampaign(Map<String, Object> map) {
 		try  {
 			getSqlSession().insert("admin.insertCampaign", map);
@@ -108,5 +114,20 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 		return getSqlSession().delete("admin.deleteReward", rewardNum);
 	}
 
-	
+	@Override
+	public List<Map<String, Object>> getFundingUserList(String campaignName) {
+		return getSqlSession().selectList("admin.selectFundingUserList", campaignName);
+	}
+
+	@Override
+	public int updateCampaignCommonDetail(Map<String, Object> map) {
+		return getSqlSession().update("admin.updateCampaignCommonDetail", map);
+	}
+
+	@Override
+	public Map<String, Object> getCampaignChildDetail(Map<String, Object> map) {
+		return getSqlSession().selectOne("admin.selectCampaignChildDetail", map);
+	}
+
+	 
 }
