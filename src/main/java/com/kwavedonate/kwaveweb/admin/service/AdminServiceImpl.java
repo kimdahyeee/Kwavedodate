@@ -87,5 +87,26 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 		return getSqlSession().update("admin.updateRewardChildDetail", map);
 	}
 	
+	public int insertCampaign(Map<String, Object> map) {
+		try  {
+			getSqlSession().insert("admin.insertCampaign", map);
+			getSqlSession().insert("admin.insertMulLanguageCampaign", map);
+			return 1;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public int deleteCampaign(String campaignName) {
+		return getSqlSession().delete("admin.deleteCampaign", campaignName);
+	}
+
+	@Override
+	public int deleteReward(String rewardNum) {
+		return getSqlSession().delete("admin.deleteReward", rewardNum);
+	}
+
 	
 }

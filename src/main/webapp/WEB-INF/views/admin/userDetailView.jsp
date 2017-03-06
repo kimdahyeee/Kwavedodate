@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/htmll; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -49,7 +48,7 @@
 								<td>
 								<c:choose>
 									<c:when test="${userDetail.userNation =='KOR'}">KOREAN</c:when>
-									<c:when test="${userDetail.userNation =='ENG'}">AMERICAN</c:when>
+									<c:when test="${userDetail.userNation =='ENG'}">ENGLISH</c:when>
 									<c:otherwise>CHINESE</c:otherwise>
 								</c:choose>
 								</td>

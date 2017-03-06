@@ -158,4 +158,17 @@
 	<delete id="deleteDelivery">
 		DELETE FROM DELIVERY WHERE IMP_UID = #{imp_uid}
 	</delete>
+	
+	<update id="updateRewardsByPaymentPlus">
+	UPDATE REWARDS
+	SET REWARDCURRENTCNT = REWARDCURRENTCNT + 1
+	WHERE REWARDNUM = #{rewardNum}
+	</update>
+	
+	<update id="updateCampaignsByPaymentMinus">
+	UPDATE CAMPAIGNS
+	SET GATHERAMOUNT = GATHERAMOUNT - (SELECT TOTALAMOUNT FROM PAYMENTS WHERE IMP_UID = #{imp_uid}),
+		FUNDINGUSERCNT = FUNDINGUSERCNT - 1
+	WHERE CAMPAIGNNAME = (SELECT CAMPAIGNNAME FROM PAYMENTS WHERE IMP_UID = #{imp_uid})
+	</update>
 </mapper>

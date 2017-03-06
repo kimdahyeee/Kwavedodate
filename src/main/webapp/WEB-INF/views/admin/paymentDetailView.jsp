@@ -32,7 +32,7 @@
                            		</c:choose>
                            </td>
                            <td>${paymentDetail.imp_pgTid }<br>(${paymentDetail.imp_applyNum})</td>
-                           <td>${paymentDetail.imp_cardName}<br>
+                           <td><c:if test="${paymentDetail.imp_pgProvider != 'paypal'}">${paymentDetail.imp_cardName}<br></c:if>
                            		<c:choose>
 	                           		<c:when test="${paymentDetail.imp_cardQuota == '0'}">
 	                           			(일시불)
@@ -50,7 +50,7 @@
                            			<c:when test="${paymentDetail.imp_status == 'cancelled'}">결제취소</c:when>
                            			<c:when test="${paymentDetail.imp_status == 'faild'}">결제실패</c:when>
                            		</c:choose>
-                           		<br><a href='<c:url value="/paymentCancel?imp_uid=${paymentDetail.imp_uid}&userEmail=${userEmail}"/>' class="btn square btn-danger">취소하기</a>
+                           		<br><a href='<c:url value="/paymentCancel?imp_uid=${paymentDetail.imp_uid}&userEmail=${userEmail}&rewardNum=${paymentDetail.rewardNum}"/>' class="btn square btn-danger" onclick="return confirm('정말 취소하시겠습니까?') ? true : false;">취소하기</a>
                       		</td>
                         </tr>
                   </tbody>
@@ -92,7 +92,7 @@
                         <td>
 	                        <c:choose>
 								<c:when test="${deliveryDetail.userNation =='KOR'}">KOREAN</c:when>
-								<c:when test="${deliveryDetail.userNation =='ENG'}">AMERICAN</c:when>
+								<c:when test="${deliveryDetail.userNation =='ENG'}">ENGLISH</c:when>
 								<c:otherwise>CHINESE</c:otherwise>
 							</c:choose>
 						</td>

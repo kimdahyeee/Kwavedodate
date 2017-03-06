@@ -4,7 +4,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-					<form class="form-horizontal" id="validateCampaignAdd">
+					<form class="form-horizontal" id="validateCampaignAdd" method="post" enctype="multipart/form-data">
 						<h3>공통 부분</h3>
 						<table class="table table-colored">
 							<tbody>

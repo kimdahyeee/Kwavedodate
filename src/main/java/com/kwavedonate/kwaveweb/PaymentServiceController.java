@@ -228,16 +228,20 @@ public class PaymentServiceController {
 	 * @param payment_imp_uid
 	 */
 	@RequestMapping(value="paymentCancel", method=RequestMethod.GET)
-	public String paymentCancel(@RequestParam("imp_uid") String imp_uid, @RequestParam("userEmail") String userEmail){
+	public String paymentCancel(@RequestParam("imp_uid") String imp_uid, @RequestParam("userEmail") String userEmail, @RequestParam("rewardNum") String rewardNum){
 		DefaultTransactionDefinition dtd = new DefaultTransactionDefinition();
 		dtd.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		client = new IamportClient(Sstring.REST_API_KEY, Sstring.REST_API_SECRET_KEY);
 		TransactionStatus transStatus = transactionManager.getTransaction(dtd);
 		try{
+			if(!rewardNum.equals("0")){
+				dao.updateRewardsByPaymentPlus(rewardNum);
+			}
+			//dao.updateCampaignsByPaymentMinus(imp_uid); //이부분 현재 에러
 			dao.deletePayments(imp_uid);
 			dao.deleteDelivery(imp_uid);
-			cancelPayment(imp_uid);	logger.info("결제 취소 완료 !!");
+			cancelPayment(imp_uid); logger.info("결제 취소 완료 !!");
 			transactionManager.commit(transStatus); logger.info("COMMIT COMPLETE !!");
 		}catch (Exception e) {
 			try{
@@ -247,7 +251,7 @@ public class PaymentServiceController {
 			}
 		}
 		
-		return "redirect:/admin/userDetail?userEmail="+userEmail;
+		return "redirect:/admin/userDetail?userEmail=" + userEmail;
 	}
 	
 	public void cancelPayment(String payment_imp_uid) {

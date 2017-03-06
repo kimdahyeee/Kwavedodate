@@ -135,13 +135,15 @@
 		<result property="receipt_url" column="RECEIPT_URL" javaType="java.lang.String"/>
 		<result property="totalAmount" column="TOTALAMOUNT" javaType="java.lang.String"/>
 		<result property="shippingAmount" column="SHIPPINGAMOUNT" javaType="java.lang.String"/>
+		<result property="rewardNum" column="REWARDNUM" javaType="java.lang.String"/>
 	</resultMap>
 	
 	<select id="selectPaymentInfo" resultMap="paymentInfo">
 		SELECT
 			RECEIPT_URL,
 			TOTALAMOUNT,
-			SHIPPINGAMOUNT
+			SHIPPINGAMOUNT,
+			REWARDNUM
 		FROM
 			PAYMENTS
 		WHERE 
@@ -307,7 +309,7 @@
 		SELECT * FROM DUAL
 	</insert>
 	<!-- ================================================== -->
-	
+
 	<!-- ================================================== -->
 	<resultMap type="com.kwavedonate.kwaveweb.campaign.vo.RewardCommonVo" id="commonRewardDetail">
 		<result property="rewardNum" column="REWARDNUM" javaType="int"/>
@@ -375,4 +377,35 @@
 			REWARDNUM = #{rewardNum, jdbcType=INTEGER}
 	</update>
 	<!-- ================================================== -->	
+	<insert id="insertCampaign">
+	INSERT INTO 
+		CAMPAIGNS
+	VALUES(
+		#{campaignName}, 
+		0, 
+		0, 
+		TO_DATE(#{launchDate},'YYYY-MM-DD'),
+		TO_DATE(#{dueDate},'YYYY-MM-DD'),
+		#{youtubeCode}, 
+		#{youtubeImg}, 
+		#{campaignImg}, 
+		#{campaignRegister}, 
+		SYSDATE)
+	</insert>
+	
+	<insert id="insertMulLanguageCampaign">
+	INSERT ALL
+		INTO campaigns_KO VALUES(#{campaignName}, #{campaignKoSubject}, #{campaginKoSummary_editor}, #{campaginKoContents_editor})
+		INTO campaigns_EN VALUES(#{campaignName}, #{campaignEnSubject}, #{campaginEnSummary_editor}, #{campaginEnContents_editor})
+		INTO campaigns_CH VALUES(#{campaignName}, #{campaignChSubject}, #{campaginChSummary_editor}, #{campaginChContents_editor})
+	SELECT * FROM DUAL
+	</insert>
+	
+	<delete id="deleteCampaign">
+		DELETE FROM CAMPAIGNS WHERE CAMPAIGNNAME = #{campaignName}
+	</delete>
+	
+	<delete id="deleteReward">
+		DELETE FROM REWARDS WHERE REWARDNUM = #{rewardNum}
+	</delete>
 </mapper>
