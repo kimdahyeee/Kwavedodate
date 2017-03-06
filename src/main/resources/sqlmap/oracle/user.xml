@@ -24,28 +24,36 @@
 	<select id="selectIsSns" resultType="hashmap">
 		SELECT 
 		  ISSNS
-		FROM USERS
-		WHERE USEREMAIL = #{userEmail}
+		FROM 
+			USERS
+		WHERE 
+			USEREMAIL = #{userEmail}
 	</select>
 	
 	<update id="modifyUser">
-		update users
-		set userName = #{userName},
-		phone = #{phone},
-		userNation = #{userNation},
-		authority = #{authority}
-		where userEmail = #{userEmail}
+		update 
+			users
+		set 
+			userName = #{userName},
+			phone = #{phone},
+			userNation = #{userNation},
+			authority = #{authority}
+		where 
+			userEmail = #{userEmail}
 	</update>
 
 	<update id="modifyAddress">
-		update users
-		set zipCode = #{zipCode},
-		address1 = #{address1},
-		address2 = #{address2},
-		city = #{city},
-		region = #{region},
-		country = #{country}
-		where userEmail = #{userEmail}
+		update 
+			users
+		set 
+			zipCode = #{zipCode},
+			address1 = #{address1},
+			address2 = #{address2},
+			city = #{city},
+			region = #{region},
+			country = #{country}
+		where 
+			userEmail = #{userEmail}
 	</update>
 	
 	<select id="selectEmail" resultType="map">

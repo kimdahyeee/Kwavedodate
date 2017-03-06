@@ -1,7 +1,13 @@
 package com.kwavedonate.kwaveweb.core.util;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,13 +21,12 @@ public class FileUtils {
 	private HttpServletRequest httpServletRequest;
 	private String rootPath;
 	private String filePath;
-	
 	public FileUtils() { }
 	
 	public FileUtils(HttpServletRequest httpServletRequest) {
 		this.httpServletRequest = httpServletRequest;
-		this.rootPath = httpServletRequest.getSession().getServletContext().getRealPath("\\");
-		this.filePath = "resources\\upload\\";
+		this.rootPath = httpServletRequest.getSession().getServletContext().getRealPath("/resources/uploads/");
+		this.filePath = "";
 	}
     
     public List<String> parseInsertFileInfo() {
@@ -42,28 +47,94 @@ public class FileUtils {
         if(!file.exists()){
             file.mkdirs();
         }
-         
-        while(iterator.hasNext()){
-            multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-            if(multipartFile.isEmpty() == false){
-                originalFileName = multipartFile.getOriginalFilename();
-                originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-                storedFileName = CommonUtils.getRandomString() + originalFileExtension;
-                
-	            System.out.println("name : "+multipartFile.getName());
-	            System.out.println("filename : "+multipartFile.getOriginalFilename());
-	            System.out.println("size : "+multipartFile.getSize());
-	          
-                file = new File(storagePath + storedFileName);
-                
-                try {
-                	 multipartFile.transferTo(file); 
-                } catch(Exception e) {
-                	e.printStackTrace();;
+        
+        if(iterator.hasNext()) {
+        	// 파일이 있는 경우
+        	while(iterator.hasNext()){
+                multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+                if(multipartFile.isEmpty() == false){
+                    originalFileName = multipartFile.getOriginalFilename();
+                    originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                    storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+                    
+                    file = new File(storagePath + "/" + storedFileName);
+                    System.out.println("file 저장되는 곳 : "+storagePath + "/" + storedFileName);
+                    try {
+                    	 multipartFile.transferTo(file); 
+                    } catch(Exception e) {
+                    	e.printStackTrace();;
+                    }
+                    fileList.add(storedFileName);
                 }
-                fileList.add(storedFileName);
             }
+        } else {
+        	// 파일이 없는 경우는 수정사항에서 밖에 없음
+            // 파일 validation을 javascript에서 거치기 때문임...
+        	String[] urlParsingResult;
+        	if(httpServletRequest.getParameter("rewardImg") != null) {
+        		urlParsingResult = httpServletRequest.getParameter("rewardImg").split("/");
+        		System.out.println(urlParsingResult[urlParsingResult.length -1]);
+        		fileList.add(urlParsingResult[urlParsingResult.length -1]);
+        	}
+        	
+        	if((httpServletRequest.getParameter("campaignImg") != null) && (httpServletRequest.getParameter("youtubeImg") != null)) {
+        		urlParsingResult = httpServletRequest.getParameter("campaignImg").split("/");
+        		fileList.add(urlParsingResult[urlParsingResult.length -1]);
+        		urlParsingResult = httpServletRequest.getParameter("youtubeImg").split("/");
+        		fileList.add(urlParsingResult[urlParsingResult.length -1]);
+        	}
         }
         return fileList;
+    }
+    
+    public HashMap<String, String> ckEditorImageUpload() throws UnsupportedEncodingException {
+    	String storagePath = rootPath + filePath;
+    	System.out.println("storagePath : " + storagePath);
+    	
+    	MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)httpServletRequest;
+    	Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+    	httpServletRequest.setCharacterEncoding("utf-8");        
+
+    	MultipartFile multipartFile = null;
+    	String originalFileName = null;
+        String originalFileExtension = null;
+        String storedFileName = null;
+         
+    	OutputStream out = null;
+        PrintWriter printWriter = null;
+       
+        while(iterator.hasNext()){
+        	multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+        	if(multipartFile.isEmpty() == false){
+        		try{
+        			byte[] bytes = multipartFile.getBytes();
+        			originalFileName = multipartFile.getOriginalFilename();
+                    originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                    storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+
+                    out = new FileOutputStream(new File(storagePath + "/" + storedFileName));
+                    out.write(bytes);
+                    
+//                    String callback = httpServletRequest.getParameter("CKEditorFuncNum");
+                    System.out.println("CKEditorFuncNum : " + httpServletRequest.getParameter("CKEditorFuncNum"));
+//                    printWriter = httpServletResponse.getWriter();
+//         
+//                    printWriter.println("<script type='text/javascript'>"
+//                    		+ "window.parent.CKEDITOR.tools.callFunction("
+//                            + callback
+//                            + ",'"
+//                            + storagePath + "/" + storedFileName
+//                            + "', '이미지를 업로드 하였습니다.'"
+//                            + ")</script>");
+//                    printWriter.flush();
+                }
+        		catch(IOException e){e.printStackTrace();} 
+        		finally {
+                    try { if (out != null) { out.close();} if (printWriter != null) { printWriter.close(); }} 
+                    catch (IOException e) {e.printStackTrace();}
+                }
+        	}
+        }
+        return null;
     }
 }

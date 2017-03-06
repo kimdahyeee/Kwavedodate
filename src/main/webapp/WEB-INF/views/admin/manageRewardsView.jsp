@@ -31,7 +31,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<a href="<c:url value='/admin/rewardAdd'/>" class="btn square btn-danger pull-right">추가</a>
+				<a href="<c:url value='/admin/${campaignName }/rewardAdd'/>" class="btn square btn-danger pull-right">추가</a>
 			</div>
 		</div>
 	</section>

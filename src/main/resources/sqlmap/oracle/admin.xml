@@ -242,10 +242,11 @@
 	
 	<!-- ================================================== -->
 	<resultMap type="map" id="mulLanguageRewardDetail">
+		<result property="rewardNum" column="REWARDNUM" javaType="int"/>
 		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
-		<result property="rewardAmount" column="REWARDAMOUNT" javaType="java.lang.String"/>
-		<result property="rewardTotalCnt" column="REWARDTOTALCNT" javaType="java.lang.String"/>
-		<result property="rewardCurrentCnt" column="REWARDCURRENTCNT" javaType="java.lang.String"/>
+		<result property="rewardAmount" column="REWARDAMOUNT" javaType="int"/>
+		<result property="rewardTotalCnt" column="REWARDTOTALCNT" javaType="int"/>
+		<result property="rewardCurrentCnt" column="REWARDCURRENTCNT" javaType="int"/>
 		<result property="rewardImg" column="REWARDIMG" javaType="java.lang.String"/>
 		<result property="koRewardSubject" column="KOREWARDSUBJECT" javaType="java.lang.String"/>
 		<result property="koRewardContents" column="KOREWARDCONTENTS" javaType="java.lang.String"/>
@@ -257,6 +258,7 @@
 	
 	<select id="selectMulLanguageRewardDetail" resultMap="mulLanguageRewardDetail">
 		SELECT 
+			R.REWARDNUM AS REWARDNUM,
 			R.CAMPAIGNNAME AS CAMPAIGNNAME,
 		    R.REWARDAMOUNT AS REWARDAMOUNT,
 		    R.REWARDTOTALCNT AS REWARDTOTALCNT,
@@ -275,14 +277,13 @@
 		    REWARDS_CH RC
 		WHERE
 		    R.CAMPAIGNNAME = #{campaignName} AND
-		    R.REWARDNUM = #{rewardNum} AND
-		    RK.REWARDNUM = #{rewardNum} AND
-		    RE.REWARDNUM = #{rewardNum} AND
-		    RC.REWARDNUM = #{rewardNum}
+		    R.REWARDNUM = #{rewardNum, jdbcType=INTEGER} AND
+		    RK.REWARDNUM = #{rewardNum, jdbcType=INTEGER} AND
+		    RE.REWARDNUM = #{rewardNum, jdbcType=INTEGER} AND
+		    RC.REWARDNUM = #{rewardNum, jdbcType=INTEGER}
 	</select>
 	<!-- ================================================== -->
-	
-	
+		
 	<!-- ================================================== -->
 	<insert id="insertReward" parameterType="hashmap">
 		INSERT  INTO 
@@ -307,4 +308,71 @@
 	</insert>
 	<!-- ================================================== -->
 	
+	<!-- ================================================== -->
+	<resultMap type="com.kwavedonate.kwaveweb.campaign.vo.RewardCommonVo" id="commonRewardDetail">
+		<result property="rewardNum" column="REWARDNUM" javaType="int"/>
+		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
+		<result property="rewardAmount" column="REWARDAMOUNT" javaType="int"/>
+		<result property="rewardTotalCnt" column="REWARDTOTALCNT" javaType="int"/>
+		<result property="rewardCurrentCnt" column="REWARDCURRENTCNT" javaType="int"/>
+		<result property="rewardImg" column="REWARDIMG" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<select id="selectCommonRewardDetail" resultMap="commonRewardDetail">
+		SELECT
+		    REWARDNUM,
+		    CAMPAIGNNAME,
+		    REWARDAMOUNT,
+		    REWARDTOTALCNT,
+		    REWARDCURRENTCNT,
+		    REWARDIMG
+		FROM
+		    REWARDS
+		WHERE
+		    REWARDNUM = #{rewardNum, jdbcType=INTEGER}
+	</select>
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+	<update id="updateRewardCommonDetail">
+		UPDATE
+			REWARDS
+		SET
+			REWARDAMOUNT = #{rewardAmount, jdbcType=INTEGER},
+			REWARDTOTALCNT = #{rewardTotalCnt, jdbcType=INTEGER},
+			REWARDCURRENTCNT = #{rewardCurrentCnt, jdbcType=INTEGER},
+			REWARDIMG = #{rewardImg}
+		WHERE
+			REWARDNUM = #{rewardNum}
+	</update>
+	<!-- ================================================== -->
+	
+	<!-- ================================================== -->
+	<resultMap type="map" id="childRewardDetail">
+		<result property="rewardNum" column="REWARDNUM" javaType="int"/>
+		<result property="rewardSubject" column="REWARDSUBJECT" javaType="java.lang.String"/>
+		<result property="rewardContents" column="REWARDCONTENTS" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<select id="selectChildRewardDetail" resultMap="childRewardDetail">
+		SELECT
+			REWARDNUM,
+			REWARDSUBJECT,
+			REWARDCONTENTS
+		FROM
+			REWARDS_${locale}
+		WHERE
+			REWARDNUM = #{rewardNum, jdbcType=INTEGER}
+	</select>
+	<!-- ================================================== -->	
+	<!-- ================================================== -->	
+	<update id="updateRewardChildDetail">
+		UPDATE
+			REWARDS_${locale}
+		SET
+			REWARDSUBJECT = #{rewardSubject},
+			REWARDCONTENTS = #{rewardContents_editor}
+		WHERE
+			REWARDNUM = #{rewardNum, jdbcType=INTEGER}
+	</update>
+	<!-- ================================================== -->	
 </mapper>
