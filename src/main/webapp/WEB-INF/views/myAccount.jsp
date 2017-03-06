@@ -58,8 +58,12 @@
 									</c:if>
 								</tbody>
 							</table>
+							<c:if test="${fn:length(historyList) eq 0}">
+								<div class="space-top"></div>
+							</c:if>
 						</div>
 					</div>
+					
 					<!-- ====== -->
 
 					<!-- #YOUR INFO -->

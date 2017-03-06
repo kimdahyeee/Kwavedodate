@@ -3,9 +3,7 @@
 			<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 			<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 			<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-			<%
-				Locale currentLocale = LocaleContextHolder.getLocale();
-			%>
+			<%Locale currentLocale = LocaleContextHolder.getLocale();%>
 			
 			<section class="main-container campaign-perks">
 				<div class="container">
@@ -168,12 +166,13 @@
 												</div>
 											</div>
 										</div>
-										<div class="style-2 mb-20 ph-20 bordered text-center paymentMethodArea">
+										<div class="style-2 mb-20 ph-20 bordered paymentMethodArea">
 											<div id="paymentMethod">
-												<span><input type="radio" name="payment_method" id="payment_method_card" value="card" required/> Card</span><span class="paymentCardArea"></span><br/>
-												<span><input type="radio" name="payment_method" id="payment_method_trans" value="trans" required/> Trans</span><span class="paymentTransArea"></span><br/>
-												<span><input type="radio" name="payment_method" id="payment_method_phone" value="phone" required/> Phone</span><span class="paymentPhoneArea"></span><br/>
-												<span><input type="radio" name="payment_method" id="payment_method_paypal" value="paypal" required> Paypal</span><span class="paymentPaypalArea"></span><br/>
+												<span><input type="radio" name="payment_method" id="payment_method_card" value="card" required/></span> Card<span class="paymentCardArea"></span><br>
+												<span><input type="radio" name="payment_method" id="payment_method_trans" value="trans" required/></span> Trans<span class="paymentTransArea"></span><br>
+												<span><input type="radio" name="payment_method" id="payment_method_phone" value="phone" required/> </span>Phone <span class="paymentPhoneArea"></span><br>
+												<span><input type="radio" name="payment_method" id="payment_method_paypal" value="paypal" required></span> Paypal<span class="paymentPaypalArea"></span><br/>													
+											
 											</div>
 
 										</div>

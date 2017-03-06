@@ -29,8 +29,8 @@
 		 CKEDITOR.replace( 'rewardChContents_editor' );
 	}
 	if($("#validateRewardChildUpdate").length>0){
-		 CKEDITOR.replace( 'rewardContents_editor', {
-			 filebrowserImageUploadUrl: '/kwaveweb/admin/ckEditorImageUpload'
+		 CKEDITOR.replace( "rewardContents_editor", {
+			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
 		 });
 	}
 	
@@ -64,7 +64,7 @@
                     success: function(data) {
                     	if(data.KEY == "SUCCESS"){
                            alert("캠페인이 저장되었습니다.");
-                           location.href = "http://localhost:8181/kwaveweb/admin/manageCampaigns";
+                           location.href = "/kwaveweb/admin/manageCampaigns";
                          }else{
                             alert("캠페인이 저장이 실패했습니다.");
                          }
