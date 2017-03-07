@@ -52,8 +52,8 @@ public class UserController {
 	 */
 	@RequestMapping(value="/signin", method=RequestMethod.GET)
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
-		
 		String webBrowserLocale = GetIpAddress.getClientIP(request);
+		logger.info("singin" + webBrowserLocale);
 		if(webBrowserLocale.equals("ko")) model.addAttribute("location", "ENG");
 		else if (webBrowserLocale.equals("en")) model.addAttribute("location", "KOR");
 		else if (webBrowserLocale.equals("ch")) model.addAttribute("location", "CHI");

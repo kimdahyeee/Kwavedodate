@@ -646,12 +646,16 @@ $(document).ready(function() {
     // ui 변경 사항
     if($("#validatePaymentInfo").length>0) {
     	// 배송비 값 설정 5, 10, 15, 20, 8, 25 달러 환율
+    	const sAmountKR = 5, sAmountBR = 10, sAmountCN = 15, sAmountHK = 20, sAmountJP = 8, sAmountUS = 25;
+    	const sCountryKR = 1100, sCountryCN = 165, sCountryEN = 1;
+    	const sMethodKR = "국내배송", sMethod = "EMS";
+    	
     	var pageLocale = $("#currentLocale").val();
-    	var sAmountKR = 5, sAmountBR = 10, sAmountCN = 15, sAmountHK = 20, sAmountJP = 8, sAmountUS = 25;
-    	var sCountryKR = 1100, sCountryEN = 1, sCountryCN = 165;
-    	var sMethodKR = "국내배송", sMethod = "EMS";
-    	var rewardAmount = $("#rewardAmount").val();
-		
+    	var rewardAmount = parseInt($("#rewardAmount").val());
+
+    	$("#country").val($("#countryVal").val()).attr("selected", "selected");
+    	var dCountry = $("#country").val();
+    	
 		var cityTag = "" +
 				"<div class='form-group has-feedback text-center cityArea'>" +
 					"<label for='inputCity' class='col-xs-3 col-sm-3'>City : </label>" +
@@ -668,213 +672,99 @@ $(document).ready(function() {
 				"</div>";
 		
 		var paymentMethod = "" +
-		"<div id='paymentMethod'>" +
-			"<span><input type='radio' name='payment_method' id='payment_method_card' value='card' required/> Card</span><br><span class='paymentCardArea'></span>" +
-			"<span><input type='radio' name='payment_method' id='payment_method_trans' value='trans' required/> Trans</span><br><span class='paymentTransArea'></span>" +
-			"<span><input type='radio' name='payment_method' id='payment_method_phone' value='phone' required/> Phone</span><br><span class='paymentPhoneArea'</span>" +
-			"<span><input type='radio' name='payment_method' id='payment_method_paypal' value='paypal' required> Paypal</span><span class='paymentPaypalArea'></span>" +
-		"</div>";
-    	var rewardAmount = $("#rewardAmount").val();
-    	$("#country").val($("#countryVal").val()).attr("selected", "selected");	
-    	var dCountry = $("#country").val();
+				"<div id='paymentMethod'>" +
+					"<span><input type='radio' name='payment_method' id='payment_method_card' value='card' required/> Card</span><br><span class='paymentCardArea'></span>" +
+					"<span><input type='radio' name='payment_method' id='payment_method_trans' value='trans' required/> Trans</span><br><span class='paymentTransArea'></span>" +
+					"<span><input type='radio' name='payment_method' id='payment_method_phone' value='phone' required/> Phone</span><br><span class='paymentPhoneArea'</span>" +
+					"<span><input type='radio' name='payment_method' id='payment_method_paypal' value='paypal' required> Paypal</span><span class='paymentPaypalArea'></span>" +
+				"</div>";
+		
     	// payment 첫 Loading 시
-    	// ===============
-
-    	 function shippingAmountFunc(sAmount, sCountry, sMethod) {
+    	function shippingAmountFunc(sAmount, sCountry, sMethod) {
+    		 var cRewardAmount = rewardAmount;
+    		 var cTotalAmount = rewardAmount + sAmount;
     		 
-    		 	var cRewardAmount = rewardAmount;
-    		 	if ($("#country").val() == "Korea") {
-    		 		$("#city").val("");
-    				$("#region").val("");
-    				
-    				
-    				$("div").remove(".cityArea");
-    				$("div").remove(".regionArea");
-    		 	}
-    		 	if (pageLocale == "ko") {
-    		 		
-    		 		cRewardAmount = cRewardAmount/ 1100;
-    		 		//$("#rewardAmount").val(rewardAmount);
-    		 	} else if (pageLocale == "ch") {
-    		 		cRewardAmount = cRewardAmount/ 165;
-    		 		//$("#rewardAmount").val(cRewardAmount);
-    		 	} else {
-    		 		cRewardAmount = cRewardAmount;
-    		 		//$("#rewardAmount").val(cRewardAmount);
-    		 	}
-    		 	
-    		 	$(".rewardAmountArea").text(notation + rewardAmount
-    		 			+ "  ($" + cRewardAmount + ")" );
-    			$(".shippingAmountArea").text(notation + sAmount*sCountry
-    					+ "  ($" + sAmount + ")");
-    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + parseInt(sAmount*sCountry))
-    					+ "  ($" + parseInt(parseInt(cRewardAmount) + parseInt(sAmount)) + ")" );
-    			
-    			
-    			$("#shippingMethod").val(sMethod);
-    			
-    			$("#shippingAmount").val(sAmount*sCountry);
-    			if (pageLocale == "ko") {
-    				$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmount)*1100));
-    				$(".paymentPaypalArea").text("  ($"+  $("#totalAmount").val()/1100 + ")");
-    				$(".paymentTransArea").text("  ("+ notation + $("#totalAmount").val()+ ")");
-    				$(".paymentCardArea").text("  (" + notation + $("#totalAmount").val()+ ")");
-    				$(".paymentPhoneArea").text("  (" + notation + $("#totalAmount").val()+ ")");
-    				
-    			} else {
-    				$("#totalAmount").val(parseInt(parseInt(cRewardAmount) + parseInt(sAmount)));
-    				$(".paymentPaypalArea").text("  ($" + $("#totalAmount").val() + ")");
-    				$(".paymentTransArea").text("  (\u20A9"+  $("#totalAmount").val()*1100+ ")");
-    				$(".paymentCardArea").text("  (\u20A9" + $("#totalAmount").val()*1100+ ")");
-    				$(".paymentPhoneArea").text("  (\u20A9" + $("#totalAmount").val()*1100+ ")");
-    			}
-    			
+			 $("#shippingMethod").val(sMethod);
+			 $("#shippingAmount").val(sAmount);
+			 $("#totalAmount").val(cTotalAmount);
+			 
+    		 if ($("#country").val() == "Korea") {
+		 		 $("#city").val("");		$("div").remove(".cityArea");
+				 $("#region").val("");		$("div").remove(".regionArea");
+		 	 }
+    		 
+		 	 if (pageLocale == "ko")		cRewardAmount = cRewardAmount*1100;
+		 	 else if (pageLocale == "ch")	cRewardAmount = cRewardAmount*165;
+		  	 else 							cRewardAmount = cRewardAmount;
 
-    		}
+		 	 $(".rewardAmountArea").text(notation + rewardAmount*sCountry + "  ($" + rewardAmount + ")" );
+		 	 $(".shippingAmountArea").text(notation + sAmount*sCountry + "  ($" + sAmount + ")");
+			 $(".totalAmountArea").text(notation + cTotalAmount*sCountry + "  ($" + cTotalAmount + ")" );
+
+			 if (pageLocale == "ko") {
+				$(".paymentPaypalArea").text("  ($"+  cTotalAmount + ")");
+				$(".paymentTransArea").text("  ("+ notation + $("#totalAmount").val()*1100 + ")");
+				$(".paymentCardArea").text("  (" + notation + $("#totalAmount").val()*1100 + ")");
+				$(".paymentPhoneArea").text("  (" + notation + $("#totalAmount").val()*1100 + ")");
+				
+			} else {
+				$(".paymentPaypalArea").text("  ($" + cTotalAmount + ")");
+				$(".paymentTransArea").text("  (\u20A9"+ cTotalAmount*1100+ ")");
+				$(".paymentCardArea").text("  (\u20A9" + cTotalAmount*1100+ ")");
+				$(".paymentPhoneArea").text("  (\u20A9" + cTotalAmount*1100+ ")");
+			}
+		}
+    	// reward가 있는 경우
     	if($("#rewardNum").val() != 0) {
-    		if(pageLocale == "ko") {
-    			var sCountry = sCountryKR;
-    			if(dCountry == "Korea") {
-    				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
-    			} else if (dCountry == "China") {
-    				shippingAmountFunc(sAmountCN, sCountry, sMethod);
-    			} else if (dCountry == "HongKong") {
-    				shippingAmountFunc(sAmountHK, sCountry, sMethod);
-    			} else if (dCountry == "Japan") {
-    				shippingAmountFunc(sAmountJP, sCountry, sMethod);
-    			} else if (dCountry == "United States") {
-    				shippingAmountFunc(sAmountUS, sCountry, sMethod);
-    			} else if (dCountry == "Brazil") {
-    				shippingAmountFunc(sAmountBR, sCountry, sMethod);
-    			}
-    		} else if(pageLocale == "en") {
-    			var sCountry = sCountryEN;
-    			if(dCountry == "Korea") {
-    				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
-    			} else if (dCountry == "China") {
-    				shippingAmountFunc(sAmountCN, sCountry, sMethod);
-    			} else if (dCountry == "HongKong") {
-    				shippingAmountFunc(sAmountHK, sCountry, sMethod);
-    			} else if (dCountry == "Japan") {
-    				shippingAmountFunc(sAmountJP, sCountry, sMethod);
-    			} else if (dCountry == "United States") {
-    				shippingAmountFunc(sAmountUS, sCountry, sMethod);
-    			} else if (dCountry == "Brazil") {
-    				shippingAmountFunc(sAmountBR, sCountry, sMethod);
-    			}
-    		} else if(pageLocale == "ch") {
-    			var sCountry = sCountryCN;
-    			if(dCountry == "Korea") {
-    				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
-    			} else if (dCountry == "China") {
-    				shippingAmountFunc(sAmountCN, sCountry, sMethod);
-    			} else if (dCountry == "HongKong") {
-    				shippingAmountFunc(sAmountHK, sCountry, sMethod);
-    			} else if (dCountry == "Japan") {
-    				shippingAmountFunc(sAmountJP, sCountry, sMethod);
-    			} else if (dCountry == "United States") {
-    				shippingAmountFunc(sAmountUS, sCountry, sMethod);
-    			} else if (dCountry == "Brazil") {
-    				shippingAmountFunc(sAmountBR, sCountry, sMethod);
-    			}
+    		if(pageLocale == "ko") {					var sCountry = sCountryKR;
+    			
+    			if(dCountry == "Korea") 				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
+    			else if (dCountry == "China") 			shippingAmountFunc(sAmountCN, sCountry, sMethod);
+    			else if (dCountry == "HongKong")		shippingAmountFunc(sAmountHK, sCountry, sMethod);
+    			else if (dCountry == "Japan") 			shippingAmountFunc(sAmountJP, sCountry, sMethod);
+    			else if (dCountry == "United States") 	shippingAmountFunc(sAmountUS, sCountry, sMethod);
+    			else if (dCountry == "Brazil") 			shippingAmountFunc(sAmountBR, sCountry, sMethod);
+    		} 
+    		else if(pageLocale == "en") {				var sCountry = sCountryEN;
+    			
+    			if(dCountry == "Korea") 				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
+    			else if (dCountry == "China") 			shippingAmountFunc(sAmountCN, sCountry, sMethod);
+    			else if (dCountry == "HongKong") 		shippingAmountFunc(sAmountHK, sCountry, sMethod);
+    			else if (dCountry == "Japan") 			shippingAmountFunc(sAmountJP, sCountry, sMethod);
+    			else if (dCountry == "United States") 	shippingAmountFunc(sAmountUS, sCountry, sMethod);
+    			else if (dCountry == "Brazil") 			shippingAmountFunc(sAmountBR, sCountry, sMethod);
+    		} 
+    		else if(pageLocale == "ch") {				var sCountry = sCountryCN;
+    			
+    			if(dCountry == "Korea") 				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
+    			else if (dCountry == "China")     		shippingAmountFunc(sAmountCN, sCountry, sMethod);
+    			else if (dCountry == "HongKong")     	shippingAmountFunc(sAmountHK, sCountry, sMethod);
+    			else if (dCountry == "Japan")     		shippingAmountFunc(sAmountJP, sCountry, sMethod);
+    			else if (dCountry == "United States")	shippingAmountFunc(sAmountUS, sCountry, sMethod);
+    			else if (dCountry == "Brazil")     		shippingAmountFunc(sAmountBR, sCountry, sMethod);
     		}
-    	} else {
-    		// $10인 경우 값 설정 처리 
+    	} 
+    	// reward가 없는 경우
+    	else {
     		$("#shippingAmount").val("0");
-    		if(pageLocale == "ko") {
-    			$(".totalAmountArea").text(notation + "11000" + "  ($10)" );
-    			$("#totalAmount").val("11000");
-    		} else if (pageLocale == "ch") {
-    			$(".totalAmountArea").text(notation + "1650" + "  ($10)" );
-    			$("#totalAmount").val("10");
-    		} else if (pageLocale == "en") {
-    			$(".totalAmountArea").text(notation + "10" + "  ($10)" );
-    			$("#totalAmount").val("10");
-    		}
+    		$("#totalAmount").val("10");
+    		if(pageLocale == "ko") 			$(".totalAmountArea").text(notation + "11000" + "  ($10)" );
+    		else if (pageLocale == "ch") 	$(".totalAmountArea").text(notation + "1650" + "  ($10)" );
+    		else if (pageLocale == "en")	$(".totalAmountArea").text(notation + "10" + "  ($10)" );
     	}
-    	// ===============
     	
     	// 국가 변경 시
-    	// ===============
-
 		$("#country").change(function() {
-	    	var rewardAmount = $("#rewardAmount").val();
-			var cityTag = "" +
-					"<div class='form-group has-feedback text-center cityArea'>" +
-						"<label for='inputCity' class='col-xs-3 col-sm-3'>City : </label>" +
-						"<div class='col-xs-9 col-sm-9'>" +
-							"<input type='text' class='form-control' id='city' name='city' placeholder='City' value='' required>" +
-							"</div>" +
-					"</div>";
-			var regionTag = "" +
-					"<div class='form-group has-feedback text-center regionArea'>" +
-						"<label for='inputCity' class='col-xs-3 col-sm-3'>Region : </label>" +
-						"<div class='col-xs-9 col-sm-9'>" +
-							"<input type='text' class='form-control' id='region' name='region' placeholder='Region' value='' required>" +
-							"</div>" +
-					"</div>";
-			
-			var paymentMethod = "" +
-					"<div id='paymentMethod'>" +
-						"<span><input type='radio' name='payment_method' id='payment_method_card' value='card' required/> Card</span><br><span class='paymentCardArea'></span>" +
-						"<span><input type='radio' name='payment_method' id='payment_method_trans' value='trans' required/> Trans</span><br><span class='paymentTransArea'></span>" +
-						"<span><input type='radio' name='payment_method' id='payment_method_phone' value='phone' required/> Phone</span><br><span class='paymentPhoneArea'</span>" +
-						"<span><input type='radio' name='payment_method' id='payment_method_paypal' value='paypal' required> Paypal</span><span class='paymentPaypalArea'></span>" +
-					"</div>";
-			
 			function shippingAmountChangeFunc(sAmount, sCountry, sMethod) {
-				var cRewardAmount = rewardAmount;
+				shippingAmountFunc(sAmount, sCountry, sMethod);				
     		 	
-    		 	if (pageLocale == "ko") {
-    		 		cRewardAmount = cRewardAmount/1100;
-    		 	} else if (pageLocale == "ch") {
-    		 		cRewardAmount = cRewardAmount/165;
-    		 	} else {
-    		 		cRewardAmount = cRewardAmount;
-    		 	}
-				
-				if ($("#country").val() == "Korea") {
-					$("#city").val("");
-    				$("#region").val("");
-    				
-    				
-    				$("div").remove(".cityArea");
-    				$("div").remove(".regionArea");
-    		
-				}
 				if(!($(".cityArea").length>0 && $(".regionArea").length>0) && !($("#country").val() == "Korea")) {
 					$(".appendArea").append(cityTag);
 					$(".appendArea").append(regionTag);
-					$("#shippingMethod").val("EMS");
+					$("#shippingMethod").val(sMethod);
 				} else {
-					$("#shippingMethod").val("국내배송");
+					$("#shippingMethod").val(sMethod);
 				}
-				
-				$(".rewardAmountArea").text(notation + rewardAmount
-    		 			+ "  ($" + cRewardAmount + ")" );
-    			$(".shippingAmountArea").text(notation + sAmount*sCountry
-    					+ "  ($" + sAmount + ")");
-    			$(".totalAmountArea").text(notation + parseInt(parseInt(rewardAmount) + parseInt(sAmount*sCountry))
-    					+ "  ($" + parseInt(parseInt(cRewardAmount) + parseInt(sAmount)) + ")" );
-    		
-				$("#shippingAmount").val(sAmount*sCountry);
-				
-				if (pageLocale == "ko") {
-    				$("#totalAmount").val(parseInt(parseInt(rewardAmount) + parseInt(sAmount)*1100));
-    				$(".paymentPaypalArea").text("  ($"+  $("#totalAmount").val()/1100 + ")");
-    				$(".paymentTransArea").text("  ("+ notation + $("#totalAmount").val()+ ")");
-    				$(".paymentCardArea").text("  (" + notation + $("#totalAmount").val()+ ")");
-    				$(".paymentPhoneArea").text("  (" + notation + $("#totalAmount").val()+ ")");
-    				
-    			} else {
-    				$("#totalAmount").val(parseInt(parseInt(cRewardAmount) + parseInt(sAmount)));
-    				$(".paymentPaypalArea").text("  ($" + $("#totalAmount").val() + ")");
-    				$(".paymentTransArea").text("  (\u20A9"+  $("#totalAmount").val()*1100+ ")");
-    				$(".paymentCardArea").text("  (\u20A9" + $("#totalAmount").val()*1100+ ")");
-    				$(".paymentPhoneArea").text("  (\u20A9" + $("#totalAmount").val()*1100+ ")");
-    			}
-				
-				$("#shippingMethod").val(sMethod);
 			}
 			if(pageLocale == "ko") {
     			var sCountry = sCountryKR;
@@ -932,6 +822,7 @@ $(document).ready(function() {
         $("#validatePaymentInfo").validate({
             submitHandler: function(form) {  
             	var payment_country = $("#country").val();
+            	var totalAmount = $("#totalAmount").val();
             	var payment_method_checked = '';
             	var payment_pg = '';
             	var payment_method = document.getElementsByName("payment_method");
@@ -947,6 +838,7 @@ $(document).ready(function() {
             		payment_method = 'card';
             	} else {
             		payment_pg = 'inicis';
+            		totalAmount = totalAmount * 1100;
             		IMP.init('imp57757789');
             	}
               
@@ -955,7 +847,7 @@ $(document).ready(function() {
                   pay_method : payment_method_checked,//payment_method_checked,
                   merchant_uid : 'merchant_' + new Date().getTime(),
                   name : $("#campaignName").val() + $("#rewardSubject").val(),
-                  amount : $("#totalAmount").val(),
+                  amount : totalAmount,
                   buyer_email : $("#userEmail").val(),
                   buyer_name : $("#userName").val(),
                   buyer_tel : $("#phone").val(),

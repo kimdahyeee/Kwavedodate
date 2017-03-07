@@ -210,7 +210,7 @@ public class PaymentServiceController {
 		paymentInfo.put("totalAmount", payment_response.getResponse().getAmount().toString());
 		paymentInfo.put("address1", payment_response.getResponse().getBuyerAddr());
 		if(payment_response.getResponse().getReceiptUrl() == null) {
-			paymentInfo.put("receipt_url", "영수증이 없음..");
+			paymentInfo.put("receipt_url", "");
 		} else {
 			paymentInfo.put("receipt_url", payment_response.getResponse().getReceiptUrl());
 		}

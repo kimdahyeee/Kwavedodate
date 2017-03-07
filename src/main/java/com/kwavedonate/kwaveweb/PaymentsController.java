@@ -130,18 +130,6 @@ public class PaymentsController {
 		map.put("campaignName", campaignName);
 		map.put("rewardNum", rewardNum);
 		Map<String, Object> rewardMap = campaignService.getRewards(map);
-		
-		int amount = Integer.valueOf(rewardMap.get("rewardAmount").toString());
-		if(currentLocale.toString().equals("en")){
-			rewardMap.put("rewardAmount", String.valueOf(amount));
-		}else if(currentLocale.toString().equals("ch")){
-			amount = amount * ChExchangeRate;
-			rewardMap.put("rewardAmount", String.valueOf(amount));
-		}else{
-			amount = amount * KoExchangeRate;
-			rewardMap.put("rewardAmount", String.valueOf(amount));
-		}
-		
 		model.addAttribute("user", user);
 		model.addAttribute("campaignName", campaignName);
 		model.addAttribute("rewardNum", rewardNum);
