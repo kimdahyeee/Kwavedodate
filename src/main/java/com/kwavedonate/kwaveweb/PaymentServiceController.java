@@ -235,7 +235,7 @@ public class PaymentServiceController {
 			if(!rewardNum.equals("0")){
 				dao.updateRewardsByPaymentPlus(rewardNum);
 			}
-			//dao.updateCampaignsByPaymentMinus(imp_uid); //이부분 현재 에러
+			dao.updateCampaignsByPaymentMinus(imp_uid);
 			dao.deletePayments(imp_uid);
 			dao.deleteDelivery(imp_uid);
 			cancelPayment(imp_uid); logger.info("결제 취소 완료 !!");

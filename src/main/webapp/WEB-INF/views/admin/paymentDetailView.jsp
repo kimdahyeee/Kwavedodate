@@ -19,7 +19,12 @@
                   </thead>
                   <tbody>
                         <tr>
-                           <td><a href="${paymentDetail.receipt_url}"><strong>${paymentDetail.imp_uid}</strong></a></td>
+                           <td>
+                           <c:choose>
+                           		<c:when test="${not empty paymentDetail.receipt_url}"><a href="${paymentDetail.receipt_url}"><strong>${paymentDetail.imp_uid}</strong></a></c:when>
+                           		<c:otherwise><strong>${paymentDetail.imp_uid}</strong></c:otherwise>
+                           </c:choose>
+                           </td>
                            <td>$${paymentDetail.totalAmount}<br>($${paymentDetail.shippingAmount})</td>
                            <td>
                            		<c:choose>

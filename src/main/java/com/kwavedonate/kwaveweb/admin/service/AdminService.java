@@ -27,4 +27,5 @@ public interface AdminService {
 	public List<Map<String, Object>> getFundingUserList(String campaignName);
 	public int updateCampaignCommonDetail(Map<String, Object> map);
 	public Map<String, Object> getCampaignChildDetail(Map<String, Object> map);
+	public int updateCampaignChild(Map<String, Object> map);
 }

@@ -47,13 +47,13 @@
 								<tr>
 									<th>Campaign Img</th>
 									<td colspan="5">
-										<input type="file" id="campaignImg" name="campaignImg"/>
+										<input type="file" id="campaignImgFile" name="campaignImgFile"/>
 									</td>
 								</tr>
 								<tr>
 									<th>Youtube Img</th>
 									<td colspan="5">
-										<input type="file" type="file" id="youtubeImg" name="youtubeImg"/>
+										<input type="file" type="file" id="youtubeImgFile" name="youtubeImgFile"/>
 									</td>
 								</tr>
 							</tbody>
