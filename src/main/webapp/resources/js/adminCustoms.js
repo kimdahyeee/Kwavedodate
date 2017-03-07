@@ -35,8 +35,8 @@
         		campaignFormData.append("launchDate", $("#launchDate").val());
         		campaignFormData.append("dueDate", $("#dueDate").val());
         		campaignFormData.append("youtubeCode", $("#youtubeCode").val());
-        		campaignFormData.append("campaignImg", $("input[name=campaignImg]")[0].files[0]);
-        		campaignFormData.append("youtubeImg", $("input[name=youtubeImg]")[0].files[0]);
+        		campaignFormData.append("campaignImgFile", $("input[name=campaignImgFile]")[0].files[0]);
+        		campaignFormData.append("youtubeImgFile", $("input[name=youtubeImgFile]")[0].files[0]);
         		campaignFormData.append("campaignKoSubject", $("#campaignKoSubject").val());
         		campaignFormData.append("campaginKoSummary_editor", CKEDITOR.instances['campaginKoSummary_editor'].getData());
         		campaignFormData.append("campaginKoContents_editor", CKEDITOR.instances['campaginKoContents_editor'].getData());
@@ -368,7 +368,7 @@
         		formData.append("rewardAmount", $("#rewardAmount").val());
         		formData.append("rewardTotalCnt", $("#rewardTotalCnt").val());
         		formData.append("rewardCurrentCnt", $("#rewardTotalCnt").val());
-        		formData.append("rewardImg", $("input[name=rewardImg]")[0].files[0]);
+        		formData.append("rewardImgFile", $("input[name=rewardImgFile]")[0].files[0]);
         		formData.append("rewardKoSubject", $("#rewardKoSubject").val());
         		formData.append("rewardKoContents_editor", CKEDITOR.instances['rewardKoContents_editor'].getData());
         		formData.append("rewardEnSubject", $("#rewardEnSubject").val());

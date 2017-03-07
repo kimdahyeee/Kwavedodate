@@ -38,7 +38,7 @@
 									</td>
 									<th>Reward  Img</th>
 									<td colspan="4">
-										<input type="file" id="rewardImg" name="rewardImg" />
+										<input type="file" id="rewardImgFile" name="rewardImgFile" />
 									</td>
 								</tr>
 								

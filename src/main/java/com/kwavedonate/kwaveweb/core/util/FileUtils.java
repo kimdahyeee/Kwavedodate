@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,20 +30,19 @@ public class FileUtils {
 		this.filePath = "";
 	}
     
-    public List<String> parseInsertFileInfo() {
+    public Map<String, String> parseInsertFileInfo() {
     	String storagePath = rootPath + filePath;
     	System.out.println("storagePath : " + storagePath);
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)httpServletRequest;
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-         
         MultipartFile multipartFile = null;
         String originalFileName = null;
         String originalFileExtension = null;
         String storedFileName = null;
 
         // 파일이 여러개인 경우 업로드
-        List<String> fileList = new ArrayList<String>();
-
+        Map<String, String> fileList = new HashMap<String, String>();
+        String[] urlParsingResult;
         File file = new File(storagePath);
         if(!file.exists()){
             file.mkdirs();
@@ -52,11 +52,11 @@ public class FileUtils {
         	// 파일이 있는 경우
         	while(iterator.hasNext()){
                 multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+                String fileName = multipartFile.getName();
                 if(multipartFile.isEmpty() == false){
                     originalFileName = multipartFile.getOriginalFilename();
                     originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                     storedFileName = CommonUtils.getRandomString() + originalFileExtension;
-                    
                     file = new File(storagePath + "/" + storedFileName);
                     System.out.println("file 저장되는 곳 : "+storagePath + "/" + storedFileName);
                     try {
@@ -64,26 +64,38 @@ public class FileUtils {
                     } catch(Exception e) {
                     	e.printStackTrace();;
                     }
-                    fileList.add(storedFileName);
+                    fileList.put(fileName, storedFileName);
                 }
             }
         } else {
         	// 파일이 없는 경우는 수정사항에서 밖에 없음
             // 파일 validation을 javascript에서 거치기 때문임...
-        	String[] urlParsingResult;
-        	if(httpServletRequest.getParameter("rewardImg") != null) {
-        		urlParsingResult = httpServletRequest.getParameter("rewardImg").split("/");
+        	
+        	if(httpServletRequest.getParameter("rewardImgFile") != null) {
+        		urlParsingResult = httpServletRequest.getParameter("rewardImgFile").split("/");
         		System.out.println(urlParsingResult[urlParsingResult.length -1]);
-        		fileList.add(urlParsingResult[urlParsingResult.length -1]);
+        		fileList.put("rewardImgFile", urlParsingResult[urlParsingResult.length -1]);
         	}
         	
-        	if((httpServletRequest.getParameter("campaignImg") != null) && (httpServletRequest.getParameter("youtubeImg") != null)) {
+        	if((httpServletRequest.getParameter("campaignImgFile") != null) && (httpServletRequest.getParameter("youtubeImgFile") != null)) {
         		urlParsingResult = httpServletRequest.getParameter("campaignImg").split("/");
-        		fileList.add(urlParsingResult[urlParsingResult.length -1]);
+        		fileList.put("campaignImgFile", urlParsingResult[urlParsingResult.length -1]);
         		urlParsingResult = httpServletRequest.getParameter("youtubeImg").split("/");
-        		fileList.add(urlParsingResult[urlParsingResult.length -1]);
+        		fileList.put("youtubeImgFile", urlParsingResult[urlParsingResult.length -1]);
         	}
         }
+        
+        if(httpServletRequest.getParameter("rewardImgFile") == null){
+        	if(fileList.get("campaignImgFile") == null){
+        		System.out.println("dddddd:" + httpServletRequest.getParameter("campaignImg"));
+	        	urlParsingResult = httpServletRequest.getParameter("campaignImg").split("/");
+	    		fileList.put("campaignImgFile", urlParsingResult[urlParsingResult.length -1]);
+	        }if(fileList.get("youtubeImgFile") == null){
+	        	urlParsingResult = httpServletRequest.getParameter("youtubeImg").split("/");
+	    		fileList.put("youtubeImgFile", urlParsingResult[urlParsingResult.length -1]);
+	        }
+        }
+        
         return fileList;
     }
     

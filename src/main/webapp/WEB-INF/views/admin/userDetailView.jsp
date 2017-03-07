@@ -77,7 +77,11 @@
 							<c:if test="${fn:length(donateList) >0 }">
 								<c:forEach items="${donateList}" varStatus="status">
 									<tr>
-										<td><a href="${donateList[status.index].receipt_url }"><strong>${donateList[status.index].imp_Uid }</strong></a></td>
+										<td>
+										<c:choose>
+	                           				<c:when test="${not empty donateList[status.index].receipt_url}"><a href="${donateList[status.index].receipt_url}"><strong>${donateList[status.index].imp_Uid}</strong></a></c:when>
+			                           		<c:otherwise><strong>${donateList[status.index].imp_Uid}</strong></c:otherwise>
+			                           	</c:choose>
 										<td>
 											<div class="table-header">
 												<img src="${donateList[status.index].campaignImg }">

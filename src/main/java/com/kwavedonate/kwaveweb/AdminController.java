@@ -182,9 +182,10 @@ public class AdminController {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		UserDetailsVo user = (UserDetailsVo) auth.getPrincipal();
 		FileUtils fileUtils = new FileUtils(request);
-		List<String> listFile = fileUtils.parseInsertFileInfo();
-		map.put("campaignImg", contextPath + listFile.get(0));
-		map.put("youtubeImg", contextPath + listFile.get(1));
+		Map<String, String> listFile = fileUtils.parseInsertFileInfo();
+		
+		map.put("campaignImg", contextPath + listFile.get("campaignImgFile"));
+		map.put("youtubeImg", contextPath + listFile.get("youtubeImgFile"));
 		map.put("campaignRegister", user.getUsername().toString());
 		
 		if(adminService.updateCampaignCommonDetail(map) == 1){
@@ -196,7 +197,7 @@ public class AdminController {
 	}
 	
 	/**
-	 * 캠페인  자식 테이블 부분(언어) 변경 View
+	 * 캠페인  자식 테이블 부분(언어) 수정  View
 	 * @param
 	 * @return
 	 */
@@ -211,6 +212,11 @@ public class AdminController {
 		return "admin/campaignChildUpdateView";
 	}
 	
+	/**
+	 * 캠페인 자식(언어별) 수정
+	 * @param map
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/updateChildCampaign", method=RequestMethod.POST)
 	public HashMap<String, String> updateChildCampaign(@RequestParam Map<String, Object> map){
@@ -333,8 +339,8 @@ public class AdminController {
 	public HashMap<String, Object> insertReward(HttpServletRequest httpServletRequest, @RequestParam Map<String, Object> map) {
 		HashMap<String, Object> responseMap = new HashMap<String, Object>(); int result;
 		FileUtils fileUtils = new FileUtils(httpServletRequest);
-		List<String> listFile = fileUtils.parseInsertFileInfo();
-		map.put("rewardImg", contextPath + listFile.get(0));
+		Map<String, String> listFile = fileUtils.parseInsertFileInfo();
+		map.put("rewardImg", contextPath + listFile.get("rewardImgFile"));
 		
 		try { result = adminService.insertReward(map); } 
 		catch(Exception e) { result = 0; e.printStackTrace(); }
@@ -358,9 +364,12 @@ public class AdminController {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		UserDetailsVo user = (UserDetailsVo) auth.getPrincipal();
 		FileUtils fileUtils = new FileUtils(request);
-		List<String> listFile = fileUtils.parseInsertFileInfo();
-		map.put("campaignImg", contextPath + listFile.get(0));
-		map.put("youtubeImg", contextPath + listFile.get(1));
+		Map<String, String> listFile = fileUtils.parseInsertFileInfo();
+		System.out.println(listFile.get("campaignImgFile"));
+		System.out.println("youtubeImgFile" +listFile.get("youtubeImgFile"));
+		
+		map.put("campaignImg", contextPath + listFile.get("campaignImgFile"));
+		map.put("youtubeImg", contextPath + listFile.get("youtubeImgFile"));
 		map.put("campaignRegister", user.getUsername().toString());
 		
 		int result = adminService.insertCampaign(map);
@@ -400,8 +409,8 @@ public class AdminController {
 	public HashMap<String, Object> updateCommonReward(HttpServletRequest httpServletRequest, @RequestParam Map<String, Object> map) {
 		HashMap<String, Object> responseMap = new HashMap<String, Object>(); int result;
 		FileUtils fileUtils = new FileUtils(httpServletRequest);
-		List<String> listFile = fileUtils.parseInsertFileInfo();
-		map.put("rewardImg", contextPath + listFile.get(0)); // rewardImg 이름을 저장
+		Map<String, String> listFile = fileUtils.parseInsertFileInfo();
+		map.put("rewardImg", contextPath + listFile.get("rewardImgFile")); // rewardImg 이름을 저장
 		
 		try { result = adminService.updateRewardCommonDetail(map); } 
 		catch(Exception e) { result = 0; e.printStackTrace(); }
@@ -415,7 +424,7 @@ public class AdminController {
 		System.out.println("rewardAmount: " + Integer.valueOf(map.get("rewardAmount").toString()));
 		System.out.println("rewardTotalCnt: " + Integer.valueOf(map.get("rewardTotalCnt").toString()));
 		System.out.println("rewardCurrentCnt: " + Integer.valueOf(map.get("rewardCurrentCnt").toString()));
-		System.out.println("rewardImg: " + contextPath + listFile.get(0));
+		System.out.println("rewardImg: " + contextPath + listFile.get("rewardImgFile"));
 		System.out.println("============================================");
 		
 		return responseMap;

@@ -1,7 +1,7 @@
 /* Theme Name: KWAVE D Web Service
  * Author: Kim Da Hye
  * Author URI: http://kwavedonate.com
- * Author e-mail: dahye4321@naver.com
+ * Author e-mail: dahye432111@kwavedonate.com
  * Created: Jan 2017
  * File Description: Custom scripts
  */
@@ -51,29 +51,22 @@ $(document).ready(function(){
 		                           	type: "POST",
 		                               url: "/kwaveweb/j_spring_security_check",
 		                               data: {
-		                                   "userEmail": user.email,
-		                                   "userPassword":user.email+user.name+"1@#$@#!$$$#@"
+		                                   "username": user.email,
+		                                   "password":user.email+user.name+"1@#$@#!$$$#@"
 		                               },
 		                               dataType: "json",
 		                               success: function(data) {
 		                               	//성공 시 데이터 처리 
-		                                   if(data.KEY=="SUCCESS") {
-		                                      if((document.refferer)=="localhost:8181/kwaveweb/login") {
-		                                    	  closeWindowByMask();
-		                                         location.href="/kwaveweb/";
-		                                      }
-		                                      else {
-		                                         location.replace(document.referrer);
-		                                      }
-		                                   } else {
-		                                	   closeWindowByMask();
-		                                      alert("로그인 실패");
-		                                      location.href="/kwaveweb/login";
-		                                   }
+		                            	   if(data.KEY=="SUCCESS") {
+		                                       	location.replace(data.RETURNURI);
+		                            	   } else if(data.KEY=="SUCCESS_ADMIN") {
+		                                 	  	location.replace(data.RETURNURI);
+		                            	   } else {
+		                            		   alert("로그인 실패");
+		                            		   location.href="/kwaveweb/login?fail";
+		                            	   }
 		                                }
 		                            });
-		                    	  // $.post("/kwaveweb/j_spring_security_check", {"userEmail" : user.email, "userPassword" : user.email+user.name+"1@#$@#!$$$#@"});
-		                    	   //location.href="/kwaveweb/";
 		                       }else{
    		                          alert("이미 회원가입 된 이메일입니다.");
    		                          location.replace("/kwaveweb/login");
