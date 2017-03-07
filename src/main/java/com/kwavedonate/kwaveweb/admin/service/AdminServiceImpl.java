@@ -129,5 +129,10 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 		return getSqlSession().selectOne("admin.selectCampaignChildDetail", map);
 	}
 
+	@Override
+	public int updateCampaignChild(Map<String, Object> map) {
+		return getSqlSession().update("admin.updateCampaignChildDetail", map);
+	}
+
 	 
 }

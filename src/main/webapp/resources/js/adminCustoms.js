@@ -9,17 +9,9 @@
 		 CKEDITOR.replace( 'campaginChSummary_editor' );
 		 CKEDITOR.replace( 'campaginChContents_editor' );
 	}
-	if($("#validateCampaignKoUpdate").length>0){
-		 CKEDITOR.replace( 'campaginKoSummary_editor' );
-		 CKEDITOR.replace( 'campaginKoContents_editor' );
-	}
-	if($("#validateCampaignEnUpdate").length>0){
-		 CKEDITOR.replace( 'campaginEnSummary_editor' );
-		 CKEDITOR.replace( 'campaginEnContents_editor' );
-	}
-	if($("#validateCampaignChUpdate").length>0){
-		 CKEDITOR.replace( 'campaginChSummary_editor' );
-		 CKEDITOR.replace( 'campaginChContents_editor' );
+	if($("#validateCampaignChildUpdate").length>0){
+		 CKEDITOR.replace( 'campaignSummary_editor' );
+		 CKEDITOR.replace( 'campaignContents_editor' );
 	}
 	
 	/* 리워드 ckEditor plug in 추가  */
@@ -292,23 +284,28 @@
         });
     }
     
-    // 캠페인(한국어) update validation
-    if($("#validateCampaignKoUpdate").length>0) {
-        $("#validateCampaignKoUpdate").validate({
+    // 캠페인 자식 (언어별로) update validation
+    if($("#validateCampaignChildUpdate").length>0) {
+        $("#validateCampaignChildUpdate").validate({
         	submitHandler: function(form) {   
                 $.ajax({
                     type: "POST",
-                    url: "", 
+                    url: "/kwaveweb/admin/updateChildCampaign", 
                     data: {
+                    	"locale": $("#locale").val(),
                     	"campaignName": $("#campaignName").val(),
-                        "campaignKoSubject": $("#campaignKoSubject").val(),
-                        "campaginKoSummary_editor": CKEDITOR.instances['campaginKoSummary_editor'].getData(),
-                        "campaginKoContents_editor": CKEDITOR.instances['campaginKoContents_editor'].getData()
+                        "campaignSubject": $("#campaignSubject").val(),
+                        "campaignSummary_editor": CKEDITOR.instances['campaignSummary_editor'].getData(),
+                        "campaignContents_editor": CKEDITOR.instances['campaignContents_editor'].getData()
                     },
                     dataType: "json",
                     success: function(data) {
-                    	// 성공 시 view 처리
-                    	
+                    	if(data.KEY == "SUCCESS") {
+                    		alert("캠페인(" + $("#locale").val() +") 내용이 변경되었습니다.");
+                    		window.location = "/kwaveweb/admin/campaignDetail/"+ $("#campaignName").val();
+                    	} else {
+                    		alert("캠페인(" + $("#locale").val() +") 변경에 실패하였습니다. 다시 시도해주세요.");
+                    	}
                     }
                 });
             },
@@ -322,17 +319,17 @@
             	campaignName: {
                     required: true
                 },
-                campaignKoSubject: {
+                campaignSubject: {
                     required: true
                 },
-                campaginKoSummary_editor: {
+                campaginSummary_editor: {
                 	required: function() {
-                        CKEDITOR.instances.campaginKoSummary_editor.updateElement();
+                        CKEDITOR.instances.campaignSummary_editor.updateElement();
                     }
                 },
-                campaginKoContents_editor: {
+                campaignContents_editor: {
                 	required: function() {
-                        CKEDITOR.instances.campaginKoContents_editor.updateElement();
+                        CKEDITOR.instances.campaignContents_editor.updateElement();
                     }
                 }
             },
@@ -340,154 +337,14 @@
             	campaignName: {
                     required: "캠페인 이름을 입력해 주세요."
                 },
-                campaignKoSubject: {
-                    required: "캠페인(한국어) 요약 내용을 입력해주세요."
+                campaignSubject: {
+                    required: "캠페인 제목을 입력해주세요."
                 },
-                campaginKoSummary_editor: {
-                    required: "캠페인(한국어) 요약 내용을 입력해주세요."
+                campaignSummary_editor: {
+                    required: "캠페인 요약 내용을 입력해주세요."
                 },
-                campaginKoContents_editor: {
+                campaignContents_editor: {
                     required: "캠페인(한국어) 상세 내용을 입력해주세요."
-                }
-            },
-            errorElement: "span",
-            highlight: function (element) {
-                $(element).parent().removeClass("has-success").addClass("has-error");
-                $(element).siblings("label").addClass("hide");
-            },
-            success: function (element) {
-                $(element).parent().removeClass("has-error").addClass("has-success");
-                $(element).siblings("label").removeClass("hide");
-            }
-        });
-    }
-    
-    // 캠페인(영어) update validation
-    if($("#validateCampaignEnUpdate").length>0) {
-        $("#validateCampaignEnUpdate").validate({
-        	submitHandler: function(form) {   
-                $.ajax({
-                    type: "POST",
-                    url: "", 
-                    data: {
-                    	"campaignName": $("#campaignName").val(),
-                        "campaignEnSubject": $("#campaignEnSubject").val(),
-                        "campaginEnSummary_editor": CKEDITOR.instances['campaginEnSummary_editor'].getData(),
-                        "campaginEnContents_editor": CKEDITOR.instances['campaginEnContents_editor'].getData()
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                    	// 성공 시 view 처리
-                    	
-                    }
-                });
-            },
-            errorPlacement: function(error, element) {  
-                error.appendTo(element.parent());  
-            },
-            onkeyup: false,
-            onclick: false,
-            ignore: [],
-            rules: {
-            	campaignName: {
-                    required: true
-                },
-                campaignEnSubject: {
-                    required: true
-                },
-                campaginEnSummary_editor: {
-                	required: function() {
-                        CKEDITOR.instances.campaginEnSummary_editor.updateElement();
-                    }
-                },
-                campaginEnContents_editor: {
-                	required: function() {
-                        CKEDITOR.instances.campaginEnContents_editor.updateElement();
-                    }
-                }
-            },
-            messages: {
-            	campaignName: {
-                    required: "캠페인 이름을 입력해 주세요."
-                },
-                campaignEnSubject: {
-                    required: "캠페인(영어) 요약 내용을 입력해주세요."
-                },
-                campaginEnSummary_editor: {
-                    required: "캠페인(영어) 요약 내용을 입력해주세요."
-                },
-                campaginEnContents_editor: {
-                    required: "캠페인(영어) 상세 내용을 입력해주세요."
-                }
-            },
-            errorElement: "span",
-            highlight: function (element) {
-                $(element).parent().removeClass("has-success").addClass("has-error");
-                $(element).siblings("label").addClass("hide");
-            },
-            success: function (element) {
-                $(element).parent().removeClass("has-error").addClass("has-success");
-                $(element).siblings("label").removeClass("hide");
-            }
-        });
-    }
-       
-    // 캠페인(중국어) update validation
-    if($("#validateCampaignChUpdate").length>0) {
-        $("#validateCampaignChUpdate").validate({
-        	submitHandler: function(form) {   
-                $.ajax({
-                    type: "POST",
-                    url: "", 
-                    data: {
-                    	"campaignName": $("#campaignName").val(),
-                        "campaignChSubject": $("#campaignChSubject").val(),
-                        "campaginChSummary_editor": CKEDITOR.instances['campaginChSummary_editor'].getData(),
-                        "campaginChContents_editor": CKEDITOR.instances['campaginChContents_editor'].getData()
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                    	// 성공 시 view 처리
-                    	
-                    }
-                });
-            },
-            errorPlacement: function(error, element) {  
-                error.appendTo(element.parent());  
-            },
-            onkeyup: false,
-            onclick: false,
-            ignore: [],
-            rules: {
-            	campaignName: {
-                    required: true
-                },
-                campaignChSubject: {
-                    required: true
-                },
-                campaginChSummary_editor: {
-                	required: function() {
-                        CKEDITOR.instances.campaginChSummary_editor.updateElement();
-                    }
-                },
-                campaginChContents_editor: {
-                	required: function() {
-                        CKEDITOR.instances.campaginChContents_editor.updateElement();
-                    }
-                }
-            },
-            messages: {
-            	campaignName: {
-                    required: "캠페인 이름을 입력해 주세요."
-                },
-                campaignChSubject: {
-                    required: "캠페인(중국어) 요약 내용을 입력해주세요."
-                },
-                campaginChSummary_editor: {
-                    required: "캠페인(중국어) 요약 내용을 입력해주세요."
-                },
-                campaginChContents_editor: {
-                    required: "캠페인(중국어) 상세 내용을 입력해주세요."
                 }
             },
             errorElement: "span",

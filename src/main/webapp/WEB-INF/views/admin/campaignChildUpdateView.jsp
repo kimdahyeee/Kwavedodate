@@ -4,13 +4,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-					<form class="form-horizontal" id="validateCampaignKoUpdate" method="post">
+					<form class="form-horizontal" id="validateCampaignChildUpdate" method="post">
 					<input type="hidden" id="locale" name="locale" value="${locale }"/>
 						<h3>캠페인
 							<c:choose>
-								<c:when test="${locale eq 'ko'}">한국어</c:when>
-								<c:when test="${locale eq 'en'}">영어</c:when>
-								<c:when test="${locale eq 'ch'}">중국어</c:when>
+								<c:when test="${locale eq 'Ko'}">한국어</c:when>
+								<c:when test="${locale eq 'En'}">영어</c:when>
+								<c:when test="${locale eq 'Ch'}">중국어</c:when>
 							</c:choose> 
 						부분 수정</h3>
 						<table class="table table-colored">
@@ -31,7 +31,7 @@
 									<td>
 										<div class="form-group has-feedback">
 											<div class="col-sm-12">
-												<input type="text" class="form-control" id="campaignKoSubject" name="campaignKoSubject" placeholder="campaignSubject" value="${campaignChildDetail.campaignSubject}" required>
+												<input type="text" class="form-control" id="campaignSubject" name="campaignSubject" placeholder="campaignSubject" value="${campaignChildDetail.campaignSubject}" required>
 											</div>
 										</div>
 									</td>
@@ -39,13 +39,13 @@
 								<tr>
 									<th>Campaign Summary</th>
 									<td>
-										<textarea id="campaginKoSummary_editor" name="campaginKoSummary_editor">${campaignChildDetail.campaignSummary}</textarea>
+										<textarea id="campaignSummary_editor" name="campaignSummary_editor">${campaignChildDetail.campaignSummary}</textarea>
 									</td>
 								</tr>
 								<tr>
 									<th>Campaign Contents</th>
 									<td>
-										<textarea id="campaginKoContents_editor" name="campaginKoContents_editor">${campaignChildDetail.campaignContents}</textarea>
+										<textarea id="campaignContents_editor" name="campaignContents_editor">${campaignChildDetail.campaignContents}</textarea>
 									</td>
 								</tr>
 							</tbody>

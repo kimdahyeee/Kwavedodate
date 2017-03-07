@@ -409,6 +409,16 @@
 		WHERE
 			REWARDNUM = #{rewardNum, jdbcType=INTEGER}
 	</update>
+	<update id="updateCampaignChildDetail">
+		UPDATE
+			CAMPAIGNS_${locale}
+		SET
+			CAMPAIGNSUBJECT = #{campaignSubject},
+			CAMPAIGNSUMMARY = #{campaignSummary_editor},
+			CAMPAIGNCONTENTS = #{campaignContents_editor}
+		WHERE
+			CAMPAIGNNAME = #{campaignName}
+	</update>
 	<!-- ================================================== -->	
 	<insert id="insertCampaign">
 	INSERT INTO 

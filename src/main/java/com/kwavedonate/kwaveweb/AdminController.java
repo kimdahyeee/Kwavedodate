@@ -196,12 +196,12 @@ public class AdminController {
 	}
 	
 	/**
-	 * 캠페인  자식 테이블 부분(언어) 변경
+	 * 캠페인  자식 테이블 부분(언어) 변경 View
 	 * @param
 	 * @return
 	 */
 	@RequestMapping(value="/campaignDetail/{campaignName}/campaign{locale}Detail")
-	public String campaignKoUpdate(@PathVariable("campaignName") String campaignName, @PathVariable("locale") String locale, Model model) {
+	public String campaignUpdateView(@PathVariable("campaignName") String campaignName, @PathVariable("locale") String locale, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("locale", locale);
 		map.put("campaignName", campaignName);
@@ -209,6 +209,18 @@ public class AdminController {
 		model.addAttribute("campaignChildDetail", adminService.getCampaignChildDetail(map));
 		model.addAttribute("locale", locale);
 		return "admin/campaignChildUpdateView";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/updateChildCampaign", method=RequestMethod.POST)
+	public HashMap<String, String> updateChildCampaign(@RequestParam Map<String, Object> map){
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		if(adminService.updateCampaignChild(map) == 1){
+			responseMap.put("KEY", "SUCCESS");
+		}else{
+			responseMap.put("KEY", "FAIL");
+		}
+		return responseMap;
 	}
 	
 	/**
