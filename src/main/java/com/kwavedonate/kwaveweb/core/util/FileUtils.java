@@ -25,7 +25,7 @@ public class FileUtils {
 	
 	public FileUtils(HttpServletRequest httpServletRequest) {
 		this.httpServletRequest = httpServletRequest;
-		this.rootPath = httpServletRequest.getSession().getServletContext().getRealPath("/resources/uploads/");
+		this.rootPath = httpServletRequest.getSession().getServletContext().getRealPath("/resources/uploads");
 		this.filePath = "";
 	}
     
@@ -91,6 +91,7 @@ public class FileUtils {
     	String storagePath = rootPath + filePath;
     	System.out.println("storagePath : " + storagePath);
     	
+    	HashMap<String, String> responseMap = new HashMap<String, String>();
     	MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)httpServletRequest;
     	Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
     	httpServletRequest.setCharacterEncoding("utf-8");        
@@ -111,22 +112,10 @@ public class FileUtils {
         			originalFileName = multipartFile.getOriginalFilename();
                     originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                     storedFileName = CommonUtils.getRandomString() + originalFileExtension;
-
-                    out = new FileOutputStream(new File(storagePath + "/" + storedFileName));
-                    out.write(bytes);
-                    
-//                    String callback = httpServletRequest.getParameter("CKEditorFuncNum");
-                    System.out.println("CKEditorFuncNum : " + httpServletRequest.getParameter("CKEditorFuncNum"));
-//                    printWriter = httpServletResponse.getWriter();
-//         
-//                    printWriter.println("<script type='text/javascript'>"
-//                    		+ "window.parent.CKEDITOR.tools.callFunction("
-//                            + callback
-//                            + ",'"
-//                            + storagePath + "/" + storedFileName
-//                            + "', '이미지를 업로드 하였습니다.'"
-//                            + ")</script>");
-//                    printWriter.flush();
+                    out = new FileOutputStream(new File(storagePath +"/" + storedFileName)); out.write(bytes);
+                   
+                    responseMap.put("CKEditorFuncNum", httpServletRequest.getParameter("CKEditorFuncNum"));
+                    responseMap.put("storagePath", storagePath + "/" + storedFileName);
                 }
         		catch(IOException e){e.printStackTrace();} 
         		finally {
@@ -135,6 +124,6 @@ public class FileUtils {
                 }
         	}
         }
-        return null;
+        return responseMap;
     }
 }

@@ -18,7 +18,9 @@ public class CommonErrorController {
 	public String throwble(HttpServletRequest request, Model model) {
 		logger.info("throwable");
 		pageErrorLog(request);
-		model.addAttribute("msg", "예외가 발생하였습니다.");
+		model.addAttribute("errCode", "500");
+		model.addAttribute("errSubejct", "Internal Server Error");
+		model.addAttribute("msg", "A generic error message, given when an unexpected condition was encountered and no more specific message is suitable.");
 		return "error";
 	}
 	
@@ -26,7 +28,9 @@ public class CommonErrorController {
 	public String exception(HttpServletRequest request, Model model) {
 		logger.info("exception");
 		pageErrorLog(request);
-		model.addAttribute("msg", "예외가 발생하였습니다.");
+		model.addAttribute("errCode", "500");
+		model.addAttribute("errSubejct", "Internal Server Error");
+		model.addAttribute("msg", "A generic error message, given when an unexpected condition was encountered and no more specific message is suitable.");
 		return "error";
 	}
 	
@@ -34,7 +38,9 @@ public class CommonErrorController {
 	public String pageError400(HttpServletRequest request, Model model) {
 		logger.info("page error code 400");
 		pageErrorLog(request);
-		model.addAttribute("msg", "잘못된 요청입니다.");
+		model.addAttribute("errCode", "400");
+		model.addAttribute("errSubejct", "Bad Request");
+		model.addAttribute("msg", "The server cannot or will not process the request due to an apparent client error.");
 		return "error";
 	}
 	
@@ -42,7 +48,9 @@ public class CommonErrorController {
 	public String pageError403(HttpServletRequest request, Model model) {
 		logger.info("page error code 403");
 		pageErrorLog(request);
-		model.addAttribute("msg", "접근이 금지되었습니다.");
+		model.addAttribute("errCode", "403");
+		model.addAttribute("errSubejct", "Forbidden");
+		model.addAttribute("msg", "The request was valid, but the server is refusing action. The user might not have the necessary permissions for a resource.");
 		return "error";
 	}
 	
@@ -50,7 +58,9 @@ public class CommonErrorController {
 	public String pageError404(HttpServletRequest request, Model model) {
 		logger.info("page error code 404");
 		pageErrorLog(request);
-		model.addAttribute("msg", "요청하신 페이지는 존재하지 않습니다.");
+		model.addAttribute("errCode", "404");
+		model.addAttribute("errSubejct", "Page Not Found");
+		model.addAttribute("msg", "The requested URL was not found on this server. Make sure that the Web site address displayed in the address bar of your browser is spelled and formatted correctly.");
 		return "error";
 	}
 	
@@ -58,7 +68,9 @@ public class CommonErrorController {
 	public String pageError405(HttpServletRequest request, Model model) {
 		logger.info("page error code 405");
 		pageErrorLog(request);
-		model.addAttribute("msg", "요청하신 메소드가 허용되지 않습니다.");
+		model.addAttribute("errCode", "405");
+		model.addAttribute("errSubejct", "Method Not Allowed");
+		model.addAttribute("msg", "A request method is not supported for the requested resource; for example, a GET request on a form that requires data to be presented via POST, or a PUT request on a read-only resource.");
 		return "error";
 	}
 	
@@ -66,7 +78,9 @@ public class CommonErrorController {
 	public String pageError500(HttpServletRequest request, Model model) {
 		logger.info("page error code 500");
 		pageErrorLog(request);
-		model.addAttribute("msg", "서버에 오류가 발생하였습니다.");
+		model.addAttribute("errCode", "500");
+		model.addAttribute("errSubejct", "Internal Server Error");
+		model.addAttribute("msg", "A generic error message, given when an unexpected condition was encountered and no more specific message is suitable.");
 		return "error";
 	}
 	
@@ -74,12 +88,12 @@ public class CommonErrorController {
 	public String pageError503(HttpServletRequest request, Model model) {
 		logger.info("page error code 503");
 		pageErrorLog(request);
-		model.addAttribute("msg", "서비스를 사용할 수 없습니다.");
+		model.addAttribute("errCode", "503");
+		model.addAttribute("errSubejct", "Service Unavailable");
+		model.addAttribute("msg", "The server is currently unavailable (because it is overloaded or down for maintenance). Generally, this is a temporary state.");
 		return "error";
 	}
-	
-	
-	
+
 	private void pageErrorLog(HttpServletRequest request) {
 		logger.info("status_code : " + request.getAttribute("javax.servlet.error.status_code"));
 		logger.info("exception_type : " + request.getAttribute("javax.servlet.error.exception_type"));

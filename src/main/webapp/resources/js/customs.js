@@ -238,8 +238,9 @@ $(document).ready(function() {
                    type: "POST",
                     url: "/kwaveweb/j_spring_security_check",
                     data: {
-                        "userEmail": $("#userEmail").val(),
-                        "userPassword":$("#userPassword").val()
+                        "username": $("#userEmail").val(),
+                        "password":$("#userPassword").val(),
+                        "remember_me" : $("#remember_me").val()
                     },
                     dataType: "json",
                     success: function(data) {
@@ -250,7 +251,7 @@ $(document).ready(function() {
                         	  location.replace(data.RETURNURI);
                         } else {
                            alert("로그인 실패");
-                           location.href="/kwaveweb/login";
+                           location.href="/kwaveweb/login?fail";
                         }
                      }
                  });
@@ -294,8 +295,8 @@ $(document).ready(function() {
 
     // 비밀번호 찾기 validation
     if($("#validateFindPasswordSend").length>0) {
-
         $("#validateFindPasswordSend").validate({
+    		
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
             	wrapWindowByMask();
@@ -1188,6 +1189,9 @@ if(jQuery("#player").length > 0){
 	        $('.campaign-badge').hide();
 	    });
 	});
+	
+	
+
 	
 	
 }

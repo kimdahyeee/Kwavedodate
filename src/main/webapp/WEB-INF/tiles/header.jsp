@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
-<%@include file="/WEB-INF/views/language.jsp"%>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -42,7 +41,7 @@
 	<body class="no-trans transparent-header">	
 		<div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
 		
-		<div class="page-wrapper">
+
 			<div class="header-container">
 				<header class="header fixed clearfix dark">
 					<div class="container">

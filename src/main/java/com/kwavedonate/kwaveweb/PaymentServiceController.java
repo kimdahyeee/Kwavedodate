@@ -2,7 +2,6 @@ package com.kwavedonate.kwaveweb;
 
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -44,7 +42,6 @@ public class PaymentServiceController {
 	
 	private String _totalAmount = "";
 	
-	private Locale currentLocale = LocaleContextHolder.getLocale();
 	
 	@ResponseBody
 	@RequestMapping(value="insertDelivery", method=RequestMethod.POST)

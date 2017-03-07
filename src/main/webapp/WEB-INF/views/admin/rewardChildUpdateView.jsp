@@ -8,6 +8,7 @@
 						<input type="hidden" id="campaignName" name="campaignName" value="${campaignName }"/>
 						<input type="hidden" id="rewardNum" name="rewardNum" value="${rewardChildDetail.rewardNum }"/>
 						<input type="hidden" id="locale" name="locale" value="${locale }"/>
+						
 						<h3>리워드 
 							<c:choose>
 								<c:when test="${locale eq 'ko'}">한국어</c:when>
