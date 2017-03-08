@@ -38,7 +38,7 @@ import com.siot.IamportRestClient.response.Payment;
 public class AdminController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-	private static final String contextPath = "http://localhost:8181/kwaveweb/resources/uploads/";
+	private static final String contextPath = "http://13.124.5.135:8181/kwaveweb/resources/uploads/";
 	
 	@Resource(name="adminService")
 	private AdminService adminService;

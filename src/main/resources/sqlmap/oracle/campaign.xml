@@ -6,7 +6,7 @@
 		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
 		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
 		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
-		<result property="campaignDueDate" column="DUEDATE" javaType="java.lang.String"/>
+		<result property="campaignDueDate" column="DUEDATE"/>
 	</resultMap>
 	
 	<resultMap id="campaignsList" type="hashmap">

@@ -160,7 +160,7 @@ $(document).ready(function() {
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
                           alert(signin_welcome);//회원가입을 축하드립니다
-                          window.location = "http://localhost:8181/kwaveweb/login";
+                          window.location = "/kwaveweb/login";
                        }else{
                           alert("이미 회원가입 된 이메일입니다.");
                           
@@ -366,10 +366,10 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                        if(data.KEY == "SUCCESS"){
                             alert("비밀번호가 변경되었습니다.");
-                            window.location = "http://localhost:8181/kwaveweb/myAccount";
+                            window.location = "/kwaveweb/myAccount";
                          }else{
                             alert("비밀번호를 확인해주세요.");
-                            window.location = "http://localhost:8181/kwaveweb/myAccount";
+                            window.location = "/kwaveweb/myAccount";
                          }
                     }
                 });
@@ -478,7 +478,7 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                     	if(data.KEY == "SUCCESS"){
                            alert(msg2); //회원정보수정이 완료되었습니다.
-                           location.href = "http://localhost:8181/kwaveweb/myAccount";
+                           location.href = "/kwaveweb/myAccount";
                            
                          }else{
                             alert("회원정보수정이 실패했습니다.");
@@ -547,7 +547,7 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                        if(data.KEY == "SUCCESS"){
                             alert("비밀 번호가 변경되었습니다. 로그인 해주세요.");
-                           location.href = "http://localhost:8181/kwaveweb/login";
+                           location.href = "/kwaveweb/login";
                            
                          }else{
                             alert("실패");
@@ -615,7 +615,7 @@ $(document).ready(function() {
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
                             alert("주소지 정보 수정이 완료되었습니다.");
-                            location.href = "http://localhost:8181/kwaveweb/myAccount";
+                            location.href = "/kwaveweb/myAccount";
                          }else{
                             alert("주소지 정보 수정이 실패했습니다.");
                          }
@@ -853,7 +853,7 @@ $(document).ready(function() {
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
                   buyer_postcode : $("#zipCode").val(),
-                  m_redirect_url : 'localhost:8181/kwaveweb/m_redirect?'
+                  m_redirect_url : 'http://13.124.5.135:8181/kwaveweb/m_redirect?'
                 	  + "campaignName=" + $("#campaignName").val()
                 	  + "&note=" + $("#note").val()
                 	  + "&rewardNum=" + $("#rewardNum").val()

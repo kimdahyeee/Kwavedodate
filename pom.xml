@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.kwavedonate</groupId>
 	<artifactId>kwaveweb</artifactId>
-	<name>KwaveDonate</name>
+	<name>kwaveweb</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
