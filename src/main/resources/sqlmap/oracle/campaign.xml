@@ -6,7 +6,7 @@
 		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
 		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
 		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
-		<result property="campaignDueDate" column="DUEDATE"/>
+		<result property="campaignDueDate" column="DUEDATE" javaType="int"/>
 	</resultMap>
 	
 	<resultMap id="campaignsList" type="hashmap">
@@ -54,14 +54,14 @@
 			C.CAMPAIGNNAME as CAMPAIGNNAME,
 			CL.CAMPAIGNSUBJECT as CAMPAIGNSUBJECT,
 			C.CAMPAIGNIMG as CAMPAIGNIMG,
-			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'),'YYYYMMDD')-TO_DATE(to_char(SYSDATE,'YYYYMMDD'),'YYYYMMDD') as DUEDATE
 		FROM 
 			CAMPAIGNS_${currentLocale} CL,
 			CAMPAIGNS C
 		WHERE 
 			ROWNUM <= 4 AND 
-			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD')) >= TO_DATE(to_char(SYSDATE,'YYYYMMDD')) AND
-		 	C.LAUNCHDATE <= SYSDATE AND 
+			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'),'YYYYMMDD') >= TO_DATE(to_char(SYSDATE,'YYYYMMDD'),'YYYYMMDD') AND
+		 	to_char(C.LAUNCHDATE,'YYYYMMDD') <= to_char(SYSDATE,'YYYYMMDD') AND 
 		 	CL.CAMPAIGNNAME = C.CAMPAIGNNAME
 		ORDER BY
 			C.CAMPAIGNREGDATE DESC
@@ -74,7 +74,7 @@
 			C.CAMPAIGNNAME as CAMPAIGNNAME,
 			CL.CAMPAIGNSUBJECT as CAMPAIGNSUBJECT,
 			C.CAMPAIGNIMG as CAMPAIGNIMG,
-			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'),'YYYYMMDD')-TO_DATE(to_char(SYSDATE,'YYYYMMDD'),'YYYYMMDD') as DUEDATE
 		FROM 
 			CAMPAIGNS_${currentLocale} CL,
 			CAMPAIGNS C
@@ -113,7 +113,7 @@
 		C.YOUTUBECODE as cYoutubeCode,
 		C.YOUTUBEIMG as cYoutubeImg,
 		C.CAMPAIGNIMG as cImg,
-		TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as cDueToSys
+		TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'),'YYYYMMDD')-TO_DATE(to_char(SYSDATE,'YYYYMMDD'),'YYYYMMDD') as cDueToSys
 	FROM 
 		CAMPAIGNS_${currentLocale} CL,
 		CAMPAIGNS C
