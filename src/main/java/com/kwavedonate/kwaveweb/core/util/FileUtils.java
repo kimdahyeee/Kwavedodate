@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +70,7 @@ public class FileUtils {
             // 파일 validation을 javascript에서 거치기 때문임...
         	
         	if(httpServletRequest.getParameter("rewardImgFile") != null) {
-        		urlParsingResult = httpServletRequest.getParameter("rewardImgFile").split("/");
+        		urlParsingResult = httpServletRequest.getParameter("rewardImg").split("/");
         		System.out.println(urlParsingResult[urlParsingResult.length -1]);
         		fileList.put("rewardImgFile", urlParsingResult[urlParsingResult.length -1]);
         	}
@@ -85,7 +83,7 @@ public class FileUtils {
         	}
         }
         
-        if(httpServletRequest.getParameter("rewardImgFile") == null){
+        if(fileList.get("rewardImgFile") == null){
         	if(fileList.get("campaignImgFile") == null){
         		System.out.println("dddddd:" + httpServletRequest.getParameter("campaignImg"));
 	        	urlParsingResult = httpServletRequest.getParameter("campaignImg").split("/");
@@ -127,6 +125,9 @@ public class FileUtils {
                     out = new FileOutputStream(new File(storagePath +"/" + storedFileName)); out.write(bytes);
                    
                     responseMap.put("CKEditorFuncNum", httpServletRequest.getParameter("CKEditorFuncNum"));
+                    System.out.println("=============================");
+                    System.out.println(storagePath + "/" + storedFileName);
+                    System.out.println("=============================");
                     responseMap.put("storagePath", storagePath + "/" + storedFileName);
                 }
         		catch(IOException e){e.printStackTrace();} 
