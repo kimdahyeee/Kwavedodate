@@ -93,6 +93,7 @@ public class AdminServiceImpl extends SqlSessionDaoSupport implements AdminServi
 		return getSqlSession().selectOne("admin.selectCampaignCommonDetail", campaignName);
 	}
 
+	@Override
 	public int insertCampaign(Map<String, Object> map) {
 		try  {
 			getSqlSession().insert("admin.insertCampaign", map);

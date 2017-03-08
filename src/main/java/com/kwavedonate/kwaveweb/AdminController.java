@@ -1,6 +1,7 @@
 package com.kwavedonate.kwaveweb;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -312,7 +313,7 @@ public class AdminController {
 	@RequestMapping(value="{campaignName}/manageRewards/{rewardNum}")
 	public String rewardDetail(@PathVariable Map<String, Object> pathVariables, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("campaignName", (String)pathVariables.get("campaignName"));
+		map.put("campaignName", pathVariables.get("campaignName"));
 		map.put("rewardNum", Integer.valueOf((String)pathVariables.get("rewardNum")));
 		System.out.println("rewardNum: " + Integer.valueOf((String)pathVariables.get("rewardNum")));
 		
@@ -488,7 +489,7 @@ public class AdminController {
 	@RequestMapping(value="/ckEditorImageUpload", method=RequestMethod.POST)
 	public void ckEditorImageUpload(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Model model) throws IOException {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
-		//PrintWriter printWriter = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 		
 		httpServletResponse.setCharacterEncoding("utf-8");
 		httpServletResponse.setContentType("text/html;charset=utf-8");
@@ -497,16 +498,16 @@ public class AdminController {
 		responseMap = fileUtils.ckEditorImageUpload();
 		System.out.println("CKEditorFuncNum: " + responseMap.get("CKEditorFuncNum"));
 		System.out.println("storagePath: " + responseMap.get("storagePath"));
-//		TODO: 일단 파일이 올라가긴 하는데 이게 경로 문제 때문에 받아오질 못함.. local로 작성을 하게되니까... 
-//		서버에 실제로 올린다음에 http:// url로 테스트 해봐야됨		
-//		printWriter.println(""
-//				+ "<script src='https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js'></script>"
-//				+ "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
-//                + responseMap.get("CKEditorFuncNum")
-//                + ",'"
-//                + responseMap.get("storagePath")
-//                + "','Success'"
-//                + ")</script>");
-//        printWriter.flush();
+		//TODO: 일단 파일이 올라가긴 하는데 이게 경로 문제 때문에 받아오질 못함.. local로 작성을 하게되니까... 
+		//서버에 실제로 올린다음에 http:// url로 테스트 해봐야됨		
+		printWriter.println(""
+				+ "<script src='https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js'></script>"
+				+ "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
+                + responseMap.get("CKEditorFuncNum")
+                + ",'"
+                + responseMap.get("storagePath")
+                + "','Success'"
+                + ")</script>");
+        printWriter.flush();
 	}
 }
