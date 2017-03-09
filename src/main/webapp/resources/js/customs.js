@@ -160,7 +160,7 @@ $(document).ready(function() {
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
                           alert(signin_welcome);//회원가입을 축하드립니다
-                          window.location = "/kwaveweb/login";
+                          location.replace("/kwaveweb/login");
                        }else{
                           alert("이미 회원가입 된 이메일입니다.");
                           
@@ -251,7 +251,7 @@ $(document).ready(function() {
                         	  location.replace(data.RETURNURI);
                         } else {
                            alert("로그인 실패");
-                           location.href="/kwaveweb/login?fail";
+                           location.replace("/kwaveweb/login?fail");
                         }
                      }
                  });
@@ -311,11 +311,11 @@ $(document).ready(function() {
                        if(data.KEY == "SUCCESS"){
                     	    closeWindowByMask();
                             alert("메일이 전송되었습니다.");
-                            window.location = "/kwaveweb/";
+                            location.replace("/kwaveweb/");
                          }else{
                         	closeWindowByMask();
                             alert("메일을 확인해주세요.");
-                            window.location = "/kwaveweb/findPassword";
+                            location.replace("/kwaveweb/findPassword");
                          }
                     }
                 });
@@ -366,10 +366,10 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                        if(data.KEY == "SUCCESS"){
                             alert("비밀번호가 변경되었습니다.");
-                            window.location = "/kwaveweb/myAccount";
+                            location.replace("/kwaveweb/myAccount");
                          }else{
                             alert("비밀번호를 확인해주세요.");
-                            window.location = "/kwaveweb/myAccount";
+                            location.replace("/kwaveweb/myAccount");
                          }
                     }
                 });
@@ -478,7 +478,7 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                     	if(data.KEY == "SUCCESS"){
                            alert(msg2); //회원정보수정이 완료되었습니다.
-                           location.href = "/kwaveweb/myAccount";
+                           location.replace("/kwaveweb/myAccount");
                            
                          }else{
                             alert("회원정보수정이 실패했습니다.");
@@ -547,7 +547,7 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                        if(data.KEY == "SUCCESS"){
                             alert("비밀 번호가 변경되었습니다. 로그인 해주세요.");
-                           location.href = "/kwaveweb/login";
+                            location.replace("/kwaveweb/login");
                            
                          }else{
                             alert("실패");
@@ -615,7 +615,7 @@ $(document).ready(function() {
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
                             alert("주소지 정보 수정이 완료되었습니다.");
-                            location.href = "/kwaveweb/myAccount";
+                            location.replace("/kwaveweb/myAccount");
                          }else{
                             alert("주소지 정보 수정이 실패했습니다.");
                          }
@@ -895,7 +895,7 @@ $(document).ready(function() {
 	                            success: function(data) {
 	                            	if(data.KEY == "SUCCESS"){
 	                            		alert("성공처리 되었습니다.")
-	                            		location.replace("/kwaveweb/myAccount");
+	                            		location.replace("/kwaveweb/completePayment");
 	                                 }else{
 	                                    alert("실패했습니다.");
 	                                 }

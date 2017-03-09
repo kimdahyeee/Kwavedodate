@@ -219,7 +219,7 @@
                     success: function(data) {
                     	if(data.KEY == "SUCCESS"){
                            alert($("#campaignName").val() +"캠페인이 수정되었습니다.");
-                           location.href = "http://localhost:8181/kwaveweb/admin/campaignDetail/" + $("#campaignName").val();
+                           location.href = "http://13.124.5.135:8181/kwaveweb/admin/campaignDetail/" + $("#campaignName").val();
                          }else{
                             alert("캠페인이 저장이 실패했습니다.");
                          }

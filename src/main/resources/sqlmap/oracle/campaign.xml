@@ -6,7 +6,7 @@
 		<result property="campaignName" column="CAMPAIGNNAME" javaType="java.lang.String"/>
 		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
 		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
-		<result property="campaignDueDate" column="DUEDATE"/>
+		<result property="campaignDueDate" column="DUEDATE" javaType="java.lang.String"/>
 	</resultMap>
 	
 	<resultMap id="campaignsList" type="hashmap">
@@ -54,7 +54,7 @@
 			C.CAMPAIGNNAME as CAMPAIGNNAME,
 			CL.CAMPAIGNSUBJECT as CAMPAIGNSUBJECT,
 			C.CAMPAIGNIMG as CAMPAIGNIMG,
-			TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD')) as DUEDATE
+			TO_CHAR(TO_DATE(to_char(C.DUEDATE,'YYYYMMDD'))-TO_DATE(to_char(SYSDATE,'YYYYMMDD'))) as DUEDATE
 		FROM 
 			CAMPAIGNS_${currentLocale} CL,
 			CAMPAIGNS C

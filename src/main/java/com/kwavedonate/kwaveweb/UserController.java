@@ -322,7 +322,7 @@ public class UserController {
 			String htmlContent = "" 
 					+"<h1>KWAVE DONATE 비밀번호 변경 안내 메일입니다.</h1><br/>"
 					+ "<h3>아래 링크를 통해 비밀번호 변경 페이지로 이동해주세요.</h3>"
-					+ "http://localhost:8181/kwaveweb/pwdService?bep=" + encEmail.toString();
+					+ "http://13.124.5.135:8181/kwaveweb/pwdService?bep=" + encEmail.toString();
 			
 			try {
 				MimeMessage message = mailSender.createMimeMessage();
