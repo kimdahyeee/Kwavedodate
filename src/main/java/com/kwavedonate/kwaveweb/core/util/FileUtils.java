@@ -1,7 +1,6 @@
 package com.kwavedonate.kwaveweb.core.util;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -110,7 +109,7 @@ public class FileUtils {
     	String originalFileName = null;
         String originalFileExtension = null;
         String storedFileName = null;
-         
+        File file = new File(storagePath);
     	OutputStream out = null;
         PrintWriter printWriter = null;
        
@@ -118,19 +117,26 @@ public class FileUtils {
         	multipartFile = multipartHttpServletRequest.getFile(iterator.next());
         	if(multipartFile.isEmpty() == false){
         		try{
-        			byte[] bytes = multipartFile.getBytes();
+        			//byte[] bytes = multipartFile.getBytes();
         			originalFileName = multipartFile.getOriginalFilename();
                     originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                     storedFileName = CommonUtils.getRandomString() + originalFileExtension;
-                    out = new FileOutputStream(new File(storagePath +"/" + storedFileName)); out.write(bytes);
-                   
+                    file = new File(storagePath + "/" + storedFileName);
+                    
+                    //out = new FileOutputStream(new File(storagePath +"/" + storedFileName)); out.write(bytes);
+                    try {
+                   	 multipartFile.transferTo(file); 
+                   } catch(Exception e) {
+                   	e.printStackTrace();;
+                   }
+                    
                     responseMap.put("CKEditorFuncNum", httpServletRequest.getParameter("CKEditorFuncNum"));
                     System.out.println("=============================");
                     System.out.println(storagePath + "/" + storedFileName);
                     System.out.println("=============================");
-                    responseMap.put("storagePath", storagePath + "/" + storedFileName);
+                    responseMap.put("storagePath", storedFileName);
                 }
-        		catch(IOException e){e.printStackTrace();} 
+        		catch(Exception e){e.printStackTrace();} 
         		finally {
                     try { if (out != null) { out.close();} if (printWriter != null) { printWriter.close(); }} 
                     catch (IOException e) {e.printStackTrace();}

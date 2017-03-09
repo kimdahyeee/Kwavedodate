@@ -1080,10 +1080,19 @@ if(jQuery("#player").length > 0){
 	        $('#play_img').hide();
 	        $('.campaign-badge').hide();
 	    });
-	});
-	
-	
-
-	
-	
+	});	
 }
+
+document.getElementById("hCampaigns").onclick = function() {
+	location.href="/kwaveweb/campaigns";
+};
+
+document.getElementById("hKorean").onclick = function() {
+	location.href="?lang=ko";
+};
+
+document.getElementById("hEnlgish").onclick = function() {
+	location.href="?lang=en";
+};
+
+
