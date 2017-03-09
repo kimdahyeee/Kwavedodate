@@ -46,34 +46,35 @@
 				<header class="header fixed clearfix dark">
 					<div class="container">
 						<div class="row">
+						<!-- 핸드폰일때 -->
 							<div class="col-md-3">
 								<div class="header-left clearfix">
-									<div class="header-dropdown-buttons text-center visible-xs">
-										<div class="btn-group dropdown hidden-lg hidden-md hidden-sm circle small">
+									<div class="header-dropdown-buttons text-center hidden-lg hidden-md hidden-sm circle small">
+										<div class="btn-group dropdown">
 											<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
 												<i class="fa fa-bars" aria-hidden="true"></i>
 											</button>
 											<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-												<li>
-													<a href="<c:url value='/campaigns'/>">Campaigns</a>
+												<li id="hCampaigns">
+													<a href="">Campaigns</a>
 												</li>
-												<li>
+												<li id="hAboutUs">
 													<a href="<c:url value='/aboutUs'/>">About Us</a>
 												</li>
 												<sec:authorize access="isAnonymous()">
-														<li>
+														<li id="hLogin">
 															<a href="<c:url value='/login'/>">Log in</a>
 														</li>
 												</sec:authorize>
 										
 												<sec:authorize access="isAuthenticated()">
-													<li class="">
+													<li id="hMyAccount">
 														<a href="<c:url value='/myAccount'/>">My account</a>
 													</li>
 												</sec:authorize>
-												<a href="<c:url value='?lang=ko'/>" class="btn btn-default btn-sm">Korean</a>
-												<a href="<c:url value='?lang=en'/>" class="btn btn-default btn-sm">English</a>
-												<a href="<c:url value='?lang=ch'/>" class="btn btn-default btn-sm">Chinese</a>
+												<a id="hKorean" href="#" class="btn btn-default btn-sm">Korean</a>
+												<a id="hEnlgish" href="#" class="btn btn-default btn-sm">English</a>
+												<a id="hChinese" href="<c:url value='?lang=ch'/>" class="btn btn-default btn-sm">Chinese</a>
 											</ul>
 										</div>
 									</div>
@@ -82,7 +83,7 @@
 									</div>
 								</div>
 							</div>
-
+							<!-- 넓은 화면일때 -->
 							<div class="col-md-9">
 								<div class="header-right clearfix">
 									<div class="main-navigation animated with-dropdown-buttons"> 
@@ -105,13 +106,13 @@
 															<a href="<c:url value='/aboutUs'/>">About Us</a>
 														</li>
 														<sec:authorize access="isAnonymous()">
-														<li class="">
+														<li>
 															<a href="<c:url value='/login'/>">Log in</a>
 														</li>
 														</sec:authorize>
 												
 														<sec:authorize access="isAuthenticated()">
-															<li class="">
+															<li>
 																<a href="<c:url value='/myAccount'/>">My account</a>
 															</li>
 														</sec:authorize>

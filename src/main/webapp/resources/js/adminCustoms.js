@@ -2,28 +2,34 @@
 	
 	/* 캠페인 ckEditor plug in 추가 */
 	if($("#validateCampaignAdd").length>0) {
-		 CKEDITOR.replace( 'campaginKoSummary_editor' );
-		 CKEDITOR.replace( 'campaginKoContents_editor' );
-		 CKEDITOR.replace( 'campaginEnSummary_editor' );
-		 CKEDITOR.replace( 'campaginEnContents_editor' );
-		 CKEDITOR.replace( 'campaginChSummary_editor' );
-		 CKEDITOR.replace( 'campaginChContents_editor' );
+		 CKEDITOR.replace( "campaginKoSummary_editor" );
+		 CKEDITOR.replace( "campaginKoContents_editor", {
+			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
+		 });
+		 CKEDITOR.replace( "campaginEnSummary_editor" );
+		 CKEDITOR.replace( "campaginEnContents_editor", {
+			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
+		 });
+		 CKEDITOR.replace( "campaginChSummary_editor" );
+		 CKEDITOR.replace( "campaginChContents_editor", {
+			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
+		 });
 	}
 	if($("#validateCampaignChildUpdate").length>0){
-		 CKEDITOR.replace( 'campaignSummary_editor' );
-		 CKEDITOR.replace( 'campaignContents_editor' );
+		 CKEDITOR.replace( "campaignSummary_editor" );
+		 CKEDITOR.replace( "campaignContents_editor", {
+			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
+		 });
 	}
 	
 	/* 리워드 ckEditor plug in 추가  */
 	if($("#validateRewardAdd").length>0){
-		 CKEDITOR.replace( 'rewardKoContents_editor' );
-		 CKEDITOR.replace( 'rewardEnContents_editor' );
-		 CKEDITOR.replace( 'rewardChContents_editor' );
+		 CKEDITOR.replace( "rewardKoContents_editor" );
+		 CKEDITOR.replace( "rewardEnContents_editor" );
+		 CKEDITOR.replace( "rewardChContents_editor" );
 	}
 	if($("#validateRewardChildUpdate").length>0){
-		 CKEDITOR.replace( "rewardContents_editor", {
-			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
-		 });
+		 CKEDITOR.replace( "rewardContents_editor");
 	}
 	
     // 캠페인 추가 validation

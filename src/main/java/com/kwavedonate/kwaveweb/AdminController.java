@@ -505,8 +505,8 @@ public class AdminController {
 				+ "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
                 + responseMap.get("CKEditorFuncNum")
                 + ",'"
-                + responseMap.get("storagePath")
-                + "','Success'"
+                + contextPath +responseMap.get("storagePath")
+                + "','Success to Upload.'"
                 + ")</script>");
         printWriter.flush();
 	}
