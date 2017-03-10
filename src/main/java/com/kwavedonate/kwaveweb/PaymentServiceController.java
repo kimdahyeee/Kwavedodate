@@ -183,14 +183,17 @@ public class PaymentServiceController {
 			}
 			
 		
-			return "redirect:/myAccount";
+			return "redirect:/completePayment";
 		} else {
 			return "/kwaveweb/common/error/throwble";
 		}
 		
 	}
 	
-	
+	@RequestMapping(value="/completePayment")
+	public String completePayment() {
+		return "completePayment";
+	}
 	
 	public Map<String, Object> getPaymentInfo(String payment_imp_uid) {
 		
