@@ -13,7 +13,7 @@
 												<th>Campaigns</th>
 												<th>Amount</th>
 												<th>Date</th>
-												<th>Track Delivery</th>
+												
 											</tr>
 										</thead>
 										<tbody>
@@ -30,7 +30,7 @@
 												</td>
 												<td>$200</td>
 												<td>2017-01-26 20:28</td>
-												<td class="yet">Yet</td>
+												
 											</tr>
 											
 										</tbody>
@@ -41,7 +41,7 @@
 						<div class="col-md-10 col-md-offset-1 text-center">
 							<a href="/kwaveweb/" type="submit" class="btn square btn-danger">Home </a>
 							<label></label>
-							<a href="myAccount" type="submit" class="btn square btn-danger">History </a>
+							<a href="/myAccount" type="submit" class="btn square btn-danger">History </a>
 						</div>
 						
 					</div>

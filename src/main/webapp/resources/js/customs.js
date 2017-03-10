@@ -548,9 +548,8 @@ $(document).ready(function() {
                        if(data.KEY == "SUCCESS"){
                             alert("비밀 번호가 변경되었습니다. 로그인 해주세요.");
                            location.href = "/kwaveweb/login";
-                           
                          }else{
-                            alert("실패");
+                            alert("비밀번호 변경 실패하였습니다.");
                          }
                     }
                 });
@@ -897,7 +896,7 @@ $(document).ready(function() {
 	                            		alert("성공처리 되었습니다.")
 	                            		location.replace("/kwaveweb/myAccount");
 	                                 }else{
-	                                    alert("실패했습니다.");
+	                                    alert("결제에 실패했습니다. 다시 시도해주세요.");
 	                                 }
 	                            }
         		        	});
