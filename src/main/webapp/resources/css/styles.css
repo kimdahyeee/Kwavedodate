@@ -6245,7 +6245,7 @@ header.full-width .animated.main-navigation .dropdown-menu .open .dropdown-menu.
   border-color: #0c9ec7;
 }
 .header-dropdown-buttons .btn-group .dropdown-menu {
-  z-index: 103;
+  z-index: 99999;
   padding: 20px;
   min-width: 280px;
   margin-top: 18px;

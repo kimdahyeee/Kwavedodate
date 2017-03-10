@@ -39,7 +39,7 @@ import com.siot.IamportRestClient.response.Payment;
 public class AdminController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-	private static final String contextPath = "http://13.124.5.135:8181/kwaveweb/resources/uploads/";
+	private static final String contextPath = "http://13.124.66.223:8181/kwaveweb/resources/uploads/";
 	
 	@Resource(name="adminService")
 	private AdminService adminService;
@@ -242,8 +242,7 @@ public class AdminController {
 		param.put("userEmail", userEmail);
 		Map<String, Object> deliveryDetail = adminService.getDeliveryDetail(param);
 		Map<String, Object> paymentInfo = adminService.getPaymentInfo(impUid);
-	
-		//iamport 정보
+
 		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		iamportClient = new IamportClient(Sstring.REST_API_KEY, Sstring.REST_API_SECRET_KEY);
 		IamportResponse<Payment> payment_response = iamportClient.paymentByImpUid(impUid);
@@ -411,22 +410,13 @@ public class AdminController {
 		HashMap<String, Object> responseMap = new HashMap<String, Object>(); int result;
 		FileUtils fileUtils = new FileUtils(httpServletRequest);
 		Map<String, String> listFile = fileUtils.parseInsertFileInfo();
-		map.put("rewardImg", contextPath + listFile.get("rewardImgFile")); // rewardImg 이름을 저장
+		map.put("rewardImg", contextPath + listFile.get("rewardImgFile"));
 		
 		try { result = adminService.updateRewardCommonDetail(map); } 
 		catch(Exception e) { result = 0; e.printStackTrace(); }
 		
 		if (result == 1) { responseMap.put("key", "success"); } 
 		else { responseMap.put("key", "fail"); }
-		
-		System.out.println("============================================");
-		System.out.println("campaignName: " + map.get("campaignName"));
-		System.out.println("rewardNum: " + Integer.valueOf(map.get("rewardNum").toString()));
-		System.out.println("rewardAmount: " + Integer.valueOf(map.get("rewardAmount").toString()));
-		System.out.println("rewardTotalCnt: " + Integer.valueOf(map.get("rewardTotalCnt").toString()));
-		System.out.println("rewardCurrentCnt: " + Integer.valueOf(map.get("rewardCurrentCnt").toString()));
-		System.out.println("rewardImg: " + contextPath + listFile.get("rewardImgFile"));
-		System.out.println("============================================");
 		
 		return responseMap;
 	}
@@ -473,6 +463,8 @@ public class AdminController {
 	
 	/**
 	 * 캠페인 삭제
+	 * @param campaignName
+	 * @return
 	 */
 	@RequestMapping(value="deleteCampaign", method=RequestMethod.GET)
 	public String deleteCampaign(@RequestParam("campaignName") String campaignName){
@@ -498,8 +490,7 @@ public class AdminController {
 		responseMap = fileUtils.ckEditorImageUpload();
 		System.out.println("CKEditorFuncNum: " + responseMap.get("CKEditorFuncNum"));
 		System.out.println("storagePath: " + responseMap.get("storagePath"));
-		//TODO: 일단 파일이 올라가긴 하는데 이게 경로 문제 때문에 받아오질 못함.. local로 작성을 하게되니까... 
-		//서버에 실제로 올린다음에 http:// url로 테스트 해봐야됨		
+	
 		printWriter.println(""
 				+ "<script src='https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js'></script>"
 				+ "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("

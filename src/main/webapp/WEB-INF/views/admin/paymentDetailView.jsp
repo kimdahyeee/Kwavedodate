@@ -21,7 +21,7 @@
                         <tr>
                            <td>
                            <c:choose>
-                           		<c:when test="${not empty paymentDetail.receipt_url}"><a href="${paymentDetail.receipt_url}"><strong>${paymentDetail.imp_uid}</strong></a></c:when>
+                           		<c:when test="${not empty paymentDetail.receipt_url}"><a href="${paymentDetail.receipt_url}" onclick="window.open(this.href, 'popup', 'popup');return false;" target="_blank"><strong>${paymentDetail.imp_uid}</strong></a></c:when>
                            		<c:otherwise><strong>${paymentDetail.imp_uid}</strong></c:otherwise>
                            </c:choose>
                            </td>

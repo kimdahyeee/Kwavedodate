@@ -121,22 +121,60 @@
 	</insert>
 	
 	<select id="selectHistoryList" resultType="hashmap">
-	SELECT 
-		P.IMP_UID AS PIMP_UID,
-		P.TOTALAMOUNT AS PTOTALAMOUNT,
-		P.RECEIPT_URL AS PRECEIPT_URL,
-		TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') AS PPAID_AT,
-		CASE 
-        	WHEN P.REWARDNUM = 0 THEN ''
-        	ELSE (SELECT RL.REWARDSUBJECT FROM REWARDS_${currentLocale} RL WHERE P.REWARDNUM = RL.REWARDNUM)
-    	END RREWARDSUBJECT,
-		CL.CAMPAIGNSUBJECT as CCAMPAIGNSUBJECT,
-		C.CAMPAIGNIMG as CCAMPAIGNIMG
-	FROM PAYMENTS P,
-		CAMPAIGNS_${currentLocale} CL,
-		CAMPAIGNS C
-	WHERE P.USEREMAIL = #{userEmail} AND P.CAMPAIGNNAME = C.CAMPAIGNNAME AND P.CAMPAIGNNAME = CL.CAMPAIGNNAME
+		SELECT 
+			P.IMP_UID AS PIMP_UID,
+			P.TOTALAMOUNT AS PTOTALAMOUNT,
+			P.RECEIPT_URL AS PRECEIPT_URL,
+			TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') AS PPAID_AT,
+			CASE 
+	        	WHEN P.REWARDNUM = 0 THEN ''
+	        	ELSE (SELECT RL.REWARDSUBJECT FROM REWARDS_${currentLocale} RL WHERE P.REWARDNUM = RL.REWARDNUM)
+	    	END RREWARDSUBJECT,
+			CL.CAMPAIGNSUBJECT as CCAMPAIGNSUBJECT,
+			C.CAMPAIGNIMG as CCAMPAIGNIMG
+		FROM 
+			PAYMENTS P,
+			CAMPAIGNS_${currentLocale} CL,
+			CAMPAIGNS C
+		WHERE 
+			P.USEREMAIL = #{userEmail} AND 
+			P.CAMPAIGNNAME = C.CAMPAIGNNAME AND 
+			P.CAMPAIGNNAME = CL.CAMPAIGNNAME
 	</select>
+	
+	<!-- ================================================== -->
+	<resultMap type="map" id="completePaymentInfo">
+		<result property="imp_uid" column="IMP_UID" javaType="java.lang.String"/>
+		<result property="totalAmount" column="TOTALAMOUNT" javaType="java.lang.String"/>
+		<result property="receipt_url" column="RECEIPT_URL" javaType="java.lang.String"/>
+		<result property="paid_at" column="PAID_AT" javaType="java.lang.String"/>
+		<result property="campaignImg" column="CAMPAIGNIMG" javaType="java.lang.String"/>
+		<result property="campaignSubject" column="CAMPAIGNSUBJECT" javaType="java.lang.String"/>
+		<result property="rewardSubject" column="REWARDSUBJECT" javaType="java.lang.String"/>		
+	</resultMap>
+	<select id="selectCompletePaymentInfo" resultMap="completePaymentInfo">
+		SELECT 
+		    P.IMP_UID AS IMP_UID,
+		    P.TOTALAMOUNT AS TOTALAMOUNT,
+		    P.RECEIPT_URL AS RECEIPT_URL,
+		    TO_CHAR(P.PAID_AT,'YYYY-MM-DD HH24:MI') AS PAID_AT, 
+		    C.CAMPAIGNIMG AS CAMPAIGNIMG, 
+		    CL.CAMPAIGNSUBJECT AS CAMPAIGNSUBJECT, 
+		    CASE
+		        WHEN P.REWARDNUM = 0 THEN ''
+		        ELSE (SELECT RL.REWARDSUBJECT FROM REWARDS_${locale} RL WHERE P.REWARDNUM = RL.REWARDNUM)
+		    END REWARDSUBJECT
+		FROM
+		    PAYMENTS P,
+		    CAMPAIGNS C,
+		    CAMPAIGNS_${locale} CL
+		WHERE
+		    P.IMP_UID = #{imp_uid} AND
+		    P.CAMPAIGNNAME = C.CAMPAIGNNAME AND
+		    P.CAMPAIGNNAME = CL.CAMPAIGNNAME
+	</select>
+	<!-- ================================================== -->
+	
 	
 	<update id="updateRewardsByPayment">
 	UPDATE rewards

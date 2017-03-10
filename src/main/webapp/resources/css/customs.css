@@ -113,7 +113,7 @@ textarea {
 
 .header-dropdown-buttons .btn-group .dropdown-menu {
   text-align: center;
-  z-index: 103;
+  z-index: 99999;
   padding: 5px;
   min-width: 235px;
   margin-top: 10px;

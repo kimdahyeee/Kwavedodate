@@ -2,6 +2,7 @@ package com.kwavedonate.kwaveweb;
 
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -10,11 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -111,8 +114,6 @@ public class PaymentServiceController {
 			System.out.println("Exception in saveTemplatesToPCA() : "+e);
 			returnData.put("KEY", "FAIL");
 		}
-		
-		
 		return returnData;
 	}
 	
@@ -121,6 +122,7 @@ public class PaymentServiceController {
 
 		String payment_uid = request.getParameter("imp_uid");
 		String payment_success = request.getParameter("imp_success");
+		String campaignName = request.getParameter("campaignName");
 		if(payment_success.equals("true")) {
 			int IntegerShippingAmount = Integer.parseInt(request.getParameter("shippingAmount"));
 			
@@ -181,9 +183,7 @@ public class PaymentServiceController {
 				
 				System.out.println("Exception in saveTemplatesToPCA() : "+e);
 			}
-			
-		
-			return "redirect:/completePayment";
+			return "redirect:/completePayment?imp_uid=" + payment_uid;
 		} else {
 			return "/kwaveweb/common/error/throwble";
 		}
@@ -191,7 +191,11 @@ public class PaymentServiceController {
 	}
 	
 	@RequestMapping(value="/completePayment")
-	public String completePayment() {
+	public String completePayment(@RequestParam Map<String, Object> map, Model model) {
+		Locale currentLocale = LocaleContextHolder.getLocale();
+		map.put("locale", currentLocale);
+		
+		model.addAttribute("completePaymentInfo", dao.selectCompletePaymentInfo(map));
 		return "completePayment";
 	}
 	
@@ -201,9 +205,7 @@ public class PaymentServiceController {
 		IamportResponse<Payment> payment_response = client.paymentByImpUid(payment_imp_uid);
 		
 		Map<String, Object> paymentInfo = new HashMap<String,Object>();
-		
-		
-		
+
 		paymentInfo.put("imp_uid", payment_response.getResponse().getImpUid());
 		paymentInfo.put("merchant_uid", payment_response.getResponse().getMerchantUid());
 		paymentInfo.put("userEmail", payment_response.getResponse().getBuyerEmail());
@@ -217,7 +219,6 @@ public class PaymentServiceController {
 		} else {
 			paymentInfo.put("receipt_url", payment_response.getResponse().getReceiptUrl());
 		}
-		
 		_totalAmount = payment_response.getResponse().getAmount().toString();
 		
 		return paymentInfo;

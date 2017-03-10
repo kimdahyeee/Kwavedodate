@@ -42,6 +42,7 @@ public class HomeController {
 	public String main(Model model, Locale loc) {
 		
 		Locale currentLocale = LocaleContextHolder.getLocale();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("currentLocale", currentLocale);
 		List<Map<String, Object>> campaignsList = campaignService.getMainCampaignsList(map);
