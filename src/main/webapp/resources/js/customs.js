@@ -648,7 +648,7 @@ $(document).ready(function() {
     	// 배송비 값 설정 5, 10, 15, 20, 8, 25 달러 환율
     	const sAmountKR = 5, sAmountBR = 10, sAmountCN = 15, sAmountHK = 20, sAmountJP = 8, sAmountUS = 25;
     	const sCountryKR = 1100, sCountryCN = 165, sCountryEN = 1;
-    	const sMethodKR = "국내배송", sMethod = "EMS";
+    	const sMethodKR = "국내배송", sMethodNKR = "EMS";
     	
     	var pageLocale = $("#currentLocale").val();
     	var rewardAmount = parseInt($("#rewardAmount").val());
@@ -678,19 +678,17 @@ $(document).ready(function() {
 					"<span><input type='radio' name='payment_method' id='payment_method_phone' value='phone' required/> Phone</span><br><span class='paymentPhoneArea'</span>" +
 					"<span><input type='radio' name='payment_method' id='payment_method_paypal' value='paypal' required> Paypal</span><span class='paymentPaypalArea'></span>" +
 				"</div>";
-		
     	// payment 첫 Loading 시
     	function shippingAmountFunc(sAmount, sCountry, sMethod) {
     		 var cRewardAmount = rewardAmount;
     		 var cTotalAmount = rewardAmount + sAmount;
-    		 
-			 $("#shippingMethod").val(sMethod);
+    		 $("#shippingMethod").val(sMethod);
+    		 $("#shippingMethodVal").val(sMethod);
 			 $("#shippingAmount").val(sAmount);
 			 $("#totalAmount").val(cTotalAmount);
-			 
     		 if ($("#country").val() == "Korea") {
-		 		 $("#city").val("");		$("div").remove(".cityArea");
-				 $("#region").val("");		$("div").remove(".regionArea");
+    			 $("div").remove(".regionArea");		$("div").remove(".cityArea");
+				 $("#region").val("");					$("#city").val("");				 
 		 	 }
     		 
 		 	 if (pageLocale == "ko")		cRewardAmount = cRewardAmount*1100;
@@ -714,34 +712,48 @@ $(document).ready(function() {
 				$(".paymentPhoneArea").text("  (\u20A9" + cTotalAmount*1100+ ")");
 			}
 		}
+    	
+    	function shippingAmountChangeFunc(sAmount, sCountry, sMethod) {
+			shippingAmountFunc(sAmount, sCountry, sMethod);				
+		 	
+			if(!($(".cityArea").length>0 && $(".regionArea").length>0) && !($("#country").val() == "Korea")) {
+				$(".appendArea").append(cityTag);
+				$(".appendArea").append(regionTag);
+				/*$("#shippingMethod").val(sMethod);
+				$(".shippingMethod").text(sMethod);
+			} else {
+				$("#shippingMethod").val(sMethod);
+				$(".shippingMethod").text(sMethod);*/
+			}
+		}
     	// reward가 있는 경우
     	if($("#rewardNum").val() != 0) {
     		if(pageLocale == "ko") {					var sCountry = sCountryKR;
     			
     			if(dCountry == "Korea") 				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
-    			else if (dCountry == "China") 			shippingAmountFunc(sAmountCN, sCountry, sMethod);
-    			else if (dCountry == "HongKong")		shippingAmountFunc(sAmountHK, sCountry, sMethod);
-    			else if (dCountry == "Japan") 			shippingAmountFunc(sAmountJP, sCountry, sMethod);
-    			else if (dCountry == "United States") 	shippingAmountFunc(sAmountUS, sCountry, sMethod);
-    			else if (dCountry == "Brazil") 			shippingAmountFunc(sAmountBR, sCountry, sMethod);
+    			else if (dCountry == "China") 			shippingAmountFunc(sAmountCN, sCountry, sMethodNKR);
+    			else if (dCountry == "HongKong")		shippingAmountFunc(sAmountHK, sCountry, sMethodNKR);
+    			else if (dCountry == "Japan") 			shippingAmountFunc(sAmountJP, sCountry, sMethodNKR);
+    			else if (dCountry == "United States") 	shippingAmountFunc(sAmountUS, sCountry, sMethodNKR);
+    			else if (dCountry == "Brazil") 			shippingAmountFunc(sAmountBR, sCountry, sMethodNKR);
     		} 
     		else if(pageLocale == "en") {				var sCountry = sCountryEN;
     			
     			if(dCountry == "Korea") 				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
-    			else if (dCountry == "China") 			shippingAmountFunc(sAmountCN, sCountry, sMethod);
-    			else if (dCountry == "HongKong") 		shippingAmountFunc(sAmountHK, sCountry, sMethod);
-    			else if (dCountry == "Japan") 			shippingAmountFunc(sAmountJP, sCountry, sMethod);
-    			else if (dCountry == "United States") 	shippingAmountFunc(sAmountUS, sCountry, sMethod);
-    			else if (dCountry == "Brazil") 			shippingAmountFunc(sAmountBR, sCountry, sMethod);
+    			else if (dCountry == "China") 			shippingAmountFunc(sAmountCN, sCountry, sMethodNKR);
+    			else if (dCountry == "HongKong") 		shippingAmountFunc(sAmountHK, sCountry, sMethodNKR);
+    			else if (dCountry == "Japan") 			shippingAmountFunc(sAmountJP, sCountry, sMethodNKR);
+    			else if (dCountry == "United States") 	shippingAmountFunc(sAmountUS, sCountry, sMethodNKR);
+    			else if (dCountry == "Brazil") 			shippingAmountFunc(sAmountBR, sCountry, sMethodNKR);
     		} 
     		else if(pageLocale == "ch") {				var sCountry = sCountryCN;
     			
     			if(dCountry == "Korea") 				shippingAmountFunc(sAmountKR, sCountry, sMethodKR);
-    			else if (dCountry == "China")     		shippingAmountFunc(sAmountCN, sCountry, sMethod);
-    			else if (dCountry == "HongKong")     	shippingAmountFunc(sAmountHK, sCountry, sMethod);
-    			else if (dCountry == "Japan")     		shippingAmountFunc(sAmountJP, sCountry, sMethod);
-    			else if (dCountry == "United States")	shippingAmountFunc(sAmountUS, sCountry, sMethod);
-    			else if (dCountry == "Brazil")     		shippingAmountFunc(sAmountBR, sCountry, sMethod);
+    			else if (dCountry == "China")     		shippingAmountFunc(sAmountCN, sCountry, sMethodNKR);
+    			else if (dCountry == "HongKong")     	shippingAmountFunc(sAmountHK, sCountry, sMethodNKR);
+    			else if (dCountry == "Japan")     		shippingAmountFunc(sAmountJP, sCountry, sMethodNKR);
+    			else if (dCountry == "United States")	shippingAmountFunc(sAmountUS, sCountry, sMethodNKR);
+    			else if (dCountry == "Brazil")     		shippingAmountFunc(sAmountBR, sCountry, sMethodNKR);
     		}
     	} 
     	// reward가 없는 경우
@@ -755,61 +767,51 @@ $(document).ready(function() {
     	
     	// 국가 변경 시
 		$("#country").change(function() {
-			function shippingAmountChangeFunc(sAmount, sCountry, sMethod) {
-				shippingAmountFunc(sAmount, sCountry, sMethod);				
-    		 	
-				if(!($(".cityArea").length>0 && $(".regionArea").length>0) && !($("#country").val() == "Korea")) {
-					$(".appendArea").append(cityTag);
-					$(".appendArea").append(regionTag);
-					$("#shippingMethod").val(sMethod);
-				} else {
-					$("#shippingMethod").val(sMethod);
-				}
-			}
+			
 			if(pageLocale == "ko") {
     			var sCountry = sCountryKR;
     			if($("#country").val() == "Korea") {
     				shippingAmountChangeFunc(sAmountKR, sCountry,sMethodKR);
     			} else if ($("#country").val() == "China") {
-    				shippingAmountChangeFunc(sAmountCN, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountCN, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "HongKong") {
-    				shippingAmountChangeFunc(sAmountHK, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountHK, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "Japan") {
-    				shippingAmountChangeFunc(sAmountJP, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountJP, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "United States") {
-    				shippingAmountChangeFunc(sAmountUS, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountUS, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "Brazil") {
-    				shippingAmountChangeFunc(sAmountBR, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountBR, sCountry,sMethodNKR);
     			}
     		} else if(pageLocale == "en") {
     			var sCountry = sCountryEN;
     			if($("#country").val() == "Korea") {
     				shippingAmountChangeFunc(sAmountKR, sCountry,sMethodKR);
     			} else if ($("#country").val() == "China") {
-    				shippingAmountChangeFunc(sAmountCN, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountCN, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "HongKong") {
-    				shippingAmountChangeFunc(sAmountHK, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountHK, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "Japan") {
-    				shippingAmountChangeFunc(sAmountJP, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountJP, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "United States") {
-    				shippingAmountChangeFunc(sAmountUS, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountUS, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "Brazil") {
-    				shippingAmountChangeFunc(sAmountBR, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountBR, sCountry,sMethodNKR);
     			}
     		} else if(pageLocale == "ch") {
     			var sCountry = sCountryCN;
     			if($("#country").val() == "Korea") {
     				shippingAmountChangeFunc(sAmountKR, sCountry,sMethodKR);
     			} else if ($("#country").val() == "China") {
-    				shippingAmountChangeFunc(sAmountCN, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountCN, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "HongKong") {
-    				shippingAmountChangeFunc(sAmountHK, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountHK, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "Japan") {
-    				shippingAmountChangeFunc(sAmountJP, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountJP, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "United States") {
-    				shippingAmountChangeFunc(sAmountUS, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountUS, sCountry,sMethodNKR);
     			} else if ($("#country").val() == "Brazil") {
-    				shippingAmountChangeFunc(sAmountBR, sCountry,sMethod);
+    				shippingAmountChangeFunc(sAmountBR, sCountry,sMethodNKR);
     			}
     		}
 		});
@@ -877,7 +879,7 @@ $(document).ready(function() {
 
                       $.ajax({
                                type: "POST",
-                               url: "/insertDelivery",   // delivery table
+                               url: "/kwaveweb/insertDelivery",   // delivery table
                                data: {
                             	   "imp_uid" : rsp.imp_uid,
                             	   "campaignName" : $("#campaignName").val(),

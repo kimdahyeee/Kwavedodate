@@ -100,9 +100,10 @@
 													</div>
 												</c:if>
 												<div class="form-group has-feedback text-center">
-													<label for="inputShippingMethod" class="col-xs-3 col-sm-3">Shipping Method : </label>
+													<label for="inputShippingMethod" class="col-xs-3 col-sm-3">ShippingMethod : </label>
 													<div class="col-xs-9 col-sm-9">
-														<input type="text" class="form-control" id="shippingMethod" name="shippingMethod" placeholder="Shipping Method" value="EMS" required disabled>
+														<input type="hidden" class="form-control shippingMethod" id="shippingMethod" name="shippingMethod" value="EMS" required disabled>
+														<input type="text" class="form-control shippingMethod" id="shippingMethodVal" name="shippingMethod" value="EMS" required disabled>
 													</div>
 												</div>
 												<div class="form-group has-feedback text-center">
