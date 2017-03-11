@@ -149,7 +149,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/insertUser", 
+                    url: "/insertUser", 
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val(),
@@ -160,7 +160,7 @@ $(document).ready(function() {
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
                           alert(signin_welcome);//회원가입을 축하드립니다
-                          location.replace("/kwaveweb/login");
+                          location.replace("/login");
                        }else{
                           alert("이미 회원가입 된 이메일입니다.");
                           
@@ -251,7 +251,7 @@ $(document).ready(function() {
                         	  location.replace(data.RETURNURI);
                         } else {
                            alert("로그인 실패");
-                           location.replace("/kwaveweb/login?fail");
+                           location.replace("/login?fail");
                         }
                      }
                  });
@@ -302,7 +302,7 @@ $(document).ready(function() {
             	wrapWindowByMask();
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/sendLink",
+                    url: "/sendLink",
                     data: {
                         "userEmail": $("#userEmail").val()
                     },
@@ -311,11 +311,11 @@ $(document).ready(function() {
                        if(data.KEY == "SUCCESS"){
                     	    closeWindowByMask();
                             alert("메일이 전송되었습니다.");
-                            location.replace("/kwaveweb/");
+                            location.replace("/");
                          }else{
                         	closeWindowByMask();
                             alert("메일을 확인해주세요.");
-                            location.replace("/kwaveweb/findPassword");
+                            location.replace("/findPassword");
                          }
                     }
                 });
@@ -356,7 +356,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/modifyPassword",
+                    url: "/modifyPassword",
                     data: {
                         "currentPassword": $("#currentPassword").val(),
                         "newPassword": $("#newPassword").val()
@@ -366,10 +366,10 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                        if(data.KEY == "SUCCESS"){
                             alert("비밀번호가 변경되었습니다.");
-                            location.replace("/kwaveweb/myAccount");
+                            location.replace("/myAccount");
                          }else{
                             alert("비밀번호를 확인해주세요.");
-                            location.replace("/kwaveweb/myAccount");
+                            location.replace("/myAccount");
                          }
                     }
                 });
@@ -466,7 +466,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/modifyUser",
+                    url: "/modifyUser",
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userName": $("#userName").val(),
@@ -478,7 +478,7 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                     	if(data.KEY == "SUCCESS"){
                            alert(msg2); //회원정보수정이 완료되었습니다.
-                           location.replace("/kwaveweb/myAccount");
+                           location.replace("/myAccount");
                            
                          }else{
                             alert("회원정보수정이 실패했습니다.");
@@ -537,7 +537,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/pwdmodifyService",
+                    url: "/pwdmodifyService",
                     data: {
                        "userEmail" : $("#userEmail").val(),
                         "userPassword": $("#newPassword").val()
@@ -547,7 +547,7 @@ $(document).ready(function() {
                         //성공 시 데이터 처리 
                        if(data.KEY == "SUCCESS"){
                             alert("비밀 번호가 변경되었습니다. 로그인 해주세요.");
-                            location.replace("/kwaveweb/login");
+                            location.replace("/login");
                            
                          }else{
                             alert("실패");
@@ -602,7 +602,7 @@ $(document).ready(function() {
                 // Iamport 결제 모듈 연동
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/modifyAddress",
+                    url: "/modifyAddress",
                     data: {
                         "address1": $("#address1").val(),
                          "address2": $("#address2").val(),
@@ -615,7 +615,7 @@ $(document).ready(function() {
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
                             alert("주소지 정보 수정이 완료되었습니다.");
-                            location.replace("/kwaveweb/myAccount");
+                            location.replace("/myAccount");
                          }else{
                             alert("주소지 정보 수정이 실패했습니다.");
                          }
@@ -853,7 +853,7 @@ $(document).ready(function() {
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
                   buyer_postcode : $("#zipCode").val(),
-                  m_redirect_url : 'http://13.124.5.135:8181/kwaveweb/m_redirect?'
+                  m_redirect_url : 'http://13.124.5.135:8181/m_redirect?'
                 	  + "campaignName=" + $("#campaignName").val()
                 	  + "&note=" + $("#note").val()
                 	  + "&rewardNum=" + $("#rewardNum").val()
@@ -877,7 +877,7 @@ $(document).ready(function() {
 
                       $.ajax({
                                type: "POST",
-                               url: "/kwaveweb/insertDelivery",   // delivery table
+                               url: "/insertDelivery",   // delivery table
                                data: {
                             	   "imp_uid" : rsp.imp_uid,
                             	   "campaignName" : $("#campaignName").val(),
@@ -895,7 +895,7 @@ $(document).ready(function() {
 	                            success: function(data) {
 	                            	if(data.KEY == "SUCCESS"){
 	                            		alert("성공처리 되었습니다.")
-	                            		location.replace("/kwaveweb/completePayment");
+	                            		location.replace("/completePayment");
 	                                 }else{
 	                                    alert("실패했습니다.");
 	                                 }
@@ -1084,7 +1084,7 @@ if(jQuery("#player").length > 0){
 }
 
 document.getElementById("hCampaigns").onclick = function() {
-	location.href="/kwaveweb/campaigns";
+	location.href="/campaigns";
 };
 
 document.getElementById("hKorean").onclick = function() {
