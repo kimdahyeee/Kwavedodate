@@ -1,3 +1,4 @@
+
 /* T/* Theme Name: KWAVE D Web Service
  * Author: Choi Hong Hee(Adler)
  * Author URI: http://kwavedonate.com
@@ -683,7 +684,7 @@ $(document).ready(function() {
     	function shippingAmountFunc(sAmount, sCountry, sMethod) {
     		 var cRewardAmount = rewardAmount;
     		 var cTotalAmount = rewardAmount + sAmount;
-    		 
+    		 alert(sMethod);
 			 $("#shippingMethod").val(sMethod);
 			 $("#shippingAmount").val(sAmount);
 			 $("#totalAmount").val(cTotalAmount);

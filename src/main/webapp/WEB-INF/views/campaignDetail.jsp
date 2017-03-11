@@ -117,7 +117,7 @@
 			<div class="campaignEnterNow-mobile-fixed">
 				<div class="countdown"></div>
 				<div class="text-center">
-					<a href="#" class="btn btn-lg btn-danger campaign-enter-btn" style="width: 80%"> Enter Now </a>
+					<a href="<c:url value='/payments/${details.campaignName}/rewards'/>" class="btn btn-lg btn-danger campaign-enter-btn" style="width: 80%"> Enter Now </a>
 				</div>
 			</div>
 			</c:if>
