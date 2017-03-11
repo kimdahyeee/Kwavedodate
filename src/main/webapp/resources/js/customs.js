@@ -853,8 +853,8 @@ $(document).ready(function() {
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
                   buyer_postcode : $("#zipCode").val(),
-                  m_redirect_url : 'http://13.124.5.135:8181/m_redirect?'
-//                m_redirect_url : 'http://13.124.66.223:8181/kwaveweb/m_redirect?'
+//                  m_redirect_url : 'http://13.124.5.135:8181/m_redirect?'
+                  m_redirect_url : 'http://13.124.66.223:8181/kwaveweb/m_redirect?'
                 	  + "campaignName=" + $("#campaignName").val()
                 	  + "&note=" + $("#note").val()
                 	  + "&rewardNum=" + $("#rewardNum").val()
@@ -878,7 +878,7 @@ $(document).ready(function() {
 
                       $.ajax({
                                type: "POST",
-                               url: "/insertDelivery",   // delivery table
+                               url: "/kwaveweb/insertDelivery",   // delivery table
                                data: {
                             	   "imp_uid" : rsp.imp_uid,
                             	   "campaignName" : $("#campaignName").val(),
