@@ -1,5 +1,5 @@
 			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-			<section class="main-container">
+			<section id="campaignDetailView" class="main-container">
 				<div class="container">
 				<input type="hidden" value="${details.youtubeCode}" id="youtube_code"/>
 				<input type="hidden" value="${details.dueDate}" id="dueDate" />

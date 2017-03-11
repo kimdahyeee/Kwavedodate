@@ -29,8 +29,9 @@
 									<div class="form-group">
 										<div class="col-sm-12">							
 											<button type="submit" class="btn square btn-danger" style="width: 100%;">Log In <i class="fa fa-user"></i></button>
-											<a class="btn square btn-gray-transparent" href="signin" style="width: 49%;">Sign In</a>
-											<a class="btn square btn-gray-transparent" href="findPassword" style="width: 50%;">Find password</a>
+											<a class="btn square btn-gray-transparent col-md-6 col-xs-6 col-lg-6" href="signin">Sign In</a>
+											
+											<a class="btn square btn-gray-transparent col-md-6 col-xs-6 col-lg-6" href="findPassword">Find password</a>
 										</div>
 									</div>
 
