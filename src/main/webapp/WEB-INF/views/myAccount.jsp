@@ -42,7 +42,12 @@
 									<c:if test="${fn:length(historyList) > 0}">
 										<c:forEach items="${historyList}" var="historyLists" begin="0" end="${fn:length(historyList)}" step="1" varStatus="status">
 											<tr>
-												<td><a href="${historyList[status.index].PRECEIPT_URL}">${historyList[status.index].PIMP_UID}</a></td>
+												<td>
+													<c:choose>
+				                           				<c:when test="${not empty historyList[status.index].PRECEIPT_URL}"><a href="${completePaymentInfo.receipt_url}" onclick="window.open(this.href, 'popup', 'popup');return false;" target="_blank"><strong>${historyList[status.index].PIMP_UID}</strong></a></c:when>
+						                           		<c:otherwise><strong>${historyList[status.index].PIMP_UID}</strong></c:otherwise>
+						                           	</c:choose>
+												</td>
 												<td>
 													<div class="table-header">
 														<img src="${historyList[status.index].CCAMPAIGNIMG}">

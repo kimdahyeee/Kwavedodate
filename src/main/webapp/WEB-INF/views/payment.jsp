@@ -80,12 +80,13 @@
 													</div>
 												</div>
 												<div class="appendArea"></div>
-												<c:if test="${user.COUNTRY eq 'KR'}">
+												<c:if test="${user.COUNTRY eq 'Korea'}">
 													<input type="hidden" id="city" value="kwavedonate_not_define">
+													kwavedonate_not_define
 													<input type="hidden" id="region" value="kwavedonate_not_define">
 													<input type="hidden" id="shippingMethod" value="국내배송">
 												</c:if>
-												<c:if test="${user.COUNTRY ne 'KR'}">
+												<c:if test="${user.COUNTRY ne 'Korea'}">
 													<div class="form-group has-feedback text-center cityArea">
 														<label for="inputCity" class="col-xs-3 col-sm-3">City : </label>
 														<div class="col-xs-9 col-sm-9">
@@ -126,7 +127,6 @@
 												<div class="reward-detail">
 													<input type="hidden" id="rewardNum" value="${rewardNum}"/>
 													<c:choose>
-
 			                                          <c:when test="${rewardNum != 0 }">
 			                                          	  <h5><strong>${reward.rewardSubject}</strong></h5>
 			                                          	  <input type="hidden" id="rewardSubject" value="${reward.rewardSubject}">
@@ -150,7 +150,7 @@
 														  <input type="hidden" id="country" value="">
 														  <input type="hidden" id="region" value="" >
 														  <input type="hidden" id="shippingMethod" value="" >
-														  <input type="hidden" id="note" value="reward 없음" >
+														  <input type="hidden" id="note" value="" >
 														  <input type="hidden" id="rewardAmount" value="" >
 														  <input type="hidden" id="rewardNum" value="0">
 														  <input type="hidden" id="campaignName" value="${campaignName}" >
@@ -168,7 +168,7 @@
 										</div>
 										<div class="style-2 mb-20 ph-20 bordered paymentMethodArea">
 											<div id="paymentMethod">
-												<span><input type="radio" name="payment_method" id="payment_method_card" value="card" required/></span> Card<span class="paymentCardArea"></span><br>
+												<span><input type="radio" name="payment_method" id="payment_method_card" value="card" checked required/></span> Card<span class="paymentCardArea"></span><br>
 												<span><input type="radio" name="payment_method" id="payment_method_trans" value="trans" required/></span> Trans<span class="paymentTransArea"></span><br>
 												<span><input type="radio" name="payment_method" id="payment_method_phone" value="phone" required/> </span>Phone <span class="paymentPhoneArea"></span><br>
 												<span><input type="radio" name="payment_method" id="payment_method_paypal" value="paypal" required></span> Paypal<span class="paymentPaypalArea"></span><br/>													

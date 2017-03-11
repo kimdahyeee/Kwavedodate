@@ -54,28 +54,30 @@
 											<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
 												<i class="fa fa-bars" aria-hidden="true"></i>
 											</button>
+											
 											<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-												<li id="hCampaigns">
-													<a href="">Campaigns</a>
+												<li>
+													<a href="<c:url value='/campaigns'/>">Campaigns</a>
 												</li>
-												<li id="hAboutUs">
+												<li>
 													<a href="<c:url value='/aboutUs'/>">About Us</a>
 												</li>
 												<sec:authorize access="isAnonymous()">
-														<li id="hLogin">
-															<a href="<c:url value='/login'/>">Log in</a>
-														</li>
+													<li>
+														<a href="<c:url value='/login'/>">Log in</a>
+													</li>
 												</sec:authorize>
 										
 												<sec:authorize access="isAuthenticated()">
-													<li id="hMyAccount">
+													<li>
 														<a href="<c:url value='/myAccount'/>">My account</a>
 													</li>
 												</sec:authorize>
-												<a id="hKorean" href="#" class="btn btn-default btn-sm">Korean</a>
-												<a id="hEnlgish" href="#" class="btn btn-default btn-sm">English</a>
-												<a id="hChinese" href="<c:url value='?lang=ch'/>" class="btn btn-default btn-sm">Chinese</a>
+												<a href="<c:url value='?lang=ko'/>" class="btn btn-default btn-sm">Korean</a>
+												<a href="<c:url value='?lang=en'/>" class="btn btn-default btn-sm">English</a>
+												<a href="<c:url value='?lang=ch'/>" class="btn btn-default btn-sm">Chinese</a>
 											</ul>
+											
 										</div>
 									</div>
 									<div id="logo" class="logo">

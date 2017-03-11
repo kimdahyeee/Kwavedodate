@@ -37,5 +37,6 @@ public interface UserDaoService {
 	public int deleteDelivery(String imp_uid);
 	public int updateRewardsByPaymentPlus(String rewardNum);
 	public int updateCampaignsByPaymentMinus(String imp_uid);
+	public Map<String, Object> selectCompletePaymentInfo(Map<String, Object> map);
 	
 }

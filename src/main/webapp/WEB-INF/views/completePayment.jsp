@@ -1,3 +1,6 @@
+			<%@ page language="java" contentType="text/htmll; charset=UTF-8" pageEncoding="UTF-8"%>
+			<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 			<section class="main-container">
 				<div class="container">
 					<div class="row">
@@ -13,26 +16,29 @@
 												<th>Campaigns</th>
 												<th>Amount</th>
 												<th>Date</th>
-												<th>Track Delivery</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<!-- 영수증 조회 페이지로 href -->
-												<td><a href="#">imp_404382851169</a></td>
+												<td>
+													<c:choose>
+				                           				<c:when test="${not empty completePaymentInfo.receipt_url}"><a href="${completePaymentInfo.receipt_url}" onclick="window.open(this.href, 'popup', 'popup');return false;" target="_blank"><strong>${completePaymentInfo.imp_uid}</strong></a></c:when>
+						                           		<c:otherwise><strong>${completePaymentInfo.imp_uid}</strong></c:otherwise>
+						                           	</c:choose>
+												</td>
 												<td>
 													<div class="table-header">
-														<img src="resources/images/oh-yeon-campaign.jpg">
+														<img src="${completePaymentInfo.campaignImg }">
 													</div>
 													<div class="table-footer">
-														projectName/rewardName
+														${completePaymentInfo.campaignSubject }<br/>
+														${completePaymentInfo.rewardSubject }
 													</div>
 												</td>
-												<td>$200</td>
-												<td>2017-01-26 20:28</td>
-												<td class="yet">Yet</td>
+												<td>$${completePaymentInfo.totalAmount }</td>
+												<td>${completePaymentInfo.paid_at }</td>
 											</tr>
-											
 										</tbody>
 									</table>
 								</div>
@@ -41,9 +47,8 @@
 						<div class="col-md-10 col-md-offset-1 text-center">
 							<a href="/kwaveweb/" type="submit" class="btn square btn-danger">Home </a>
 							<label></label>
-							<a href="myAccount" type="submit" class="btn square btn-danger">History </a>
+							<a href="/myAccount" type="submit" class="btn square btn-danger">History </a>
 						</div>
-						
 					</div>
 				</div>
 				

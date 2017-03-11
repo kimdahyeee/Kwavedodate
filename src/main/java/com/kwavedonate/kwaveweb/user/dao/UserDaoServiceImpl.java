@@ -107,6 +107,11 @@ public class UserDaoServiceImpl extends SqlSessionDaoSupport implements UserDaoS
 	public int updateCampaignsByPaymentMinus(String imp_uid) {
 		return getSqlSession().update("user.updateCampaignsByPaymentMinus", imp_uid);
 	}
+
+	@Override
+	public Map<String, Object> selectCompletePaymentInfo(Map<String, Object> map) {
+		return getSqlSession().selectOne("user.selectCompletePaymentInfo", map);
+	}
 	
 	
 }
