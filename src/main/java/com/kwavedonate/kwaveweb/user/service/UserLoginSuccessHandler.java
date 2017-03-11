@@ -36,7 +36,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		if(userauth.equals("[ROLE_ADMIN]") || userauth.equals("[ROLE_TESTER]")) {
 			System.out.println("ROLE_ADMIN, ROLE_TESTER");
 			map.put("KEY","SUCCESS_ADMIN");
-			map.put("RETURNURI", "/kwaveweb/admin/choosePageView");
+			map.put("RETURNURI", "/admin/choosePageView");
 		} else {
 			map.put("KEY", "SUCCESS"); 
 			map.put("RETURNURI", getReturnUrl(request, response)+getReturnLang(auth));

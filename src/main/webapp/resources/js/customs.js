@@ -853,8 +853,7 @@ $(document).ready(function() {
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
                   buyer_postcode : $("#zipCode").val(),
-                  m_redirect_url : 'http://13.124.5.135:8181/m_redirect?'
-//                m_redirect_url : 'http://13.124.66.223:8181/kwaveweb/m_redirect?'
+                  m_redirect_url : 'http://13.124.66.223:8181/m_redirect?'
                 	  + "campaignName=" + $("#campaignName").val()
                 	  + "&note=" + $("#note").val()
                 	  + "&rewardNum=" + $("#rewardNum").val()
@@ -896,7 +895,7 @@ $(document).ready(function() {
 	                            success: function(data) {
 	                            	if(data.KEY == "SUCCESS"){
 	                            		alert("성공처리 되었습니다.")
-	                            		location.replace("/kwaveweb/completePayment?imp_uid=" + rsp.imp_uid);
+	                            		location.replace("/completePayment?imp_uid=" + rsp.imp_uid);
 	                                 }else{
 	                                    alert("결제에 실패했습니다. 다시 시도해주세요.");
 	                                 }
