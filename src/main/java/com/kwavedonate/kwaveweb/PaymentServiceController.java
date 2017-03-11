@@ -53,10 +53,10 @@ public class PaymentServiceController {
 			@RequestParam("note")String note,		  @RequestParam("shippingMethod")String shippingMethod,
 			@RequestParam("address2")String address2, @RequestParam("shippingAmount")String shippingAmount,
 			@RequestParam("country")String country,	  @RequestParam("city")String city,
-			@RequestParam("region")String region, @RequestParam("rewardAmount")String rewardAmount) {
+			@RequestParam("region")String region, 	  @RequestParam("rewardAmount")String rewardAmount) {
 		
-		logger.info("PC : insertDelivery");
-		if(city.equals("kwavedonate_not_define")) {	city = "";	region = "";	}
+		if(country.equals("Korea")) {	city = "";	region = "";	}
+		
 		Map<String, Object> payment_result = new HashMap<String, Object>();
 		payment_result.putAll(getPaymentInfo(imp_uid));
 		
@@ -65,14 +65,16 @@ public class PaymentServiceController {
 		int DollarAmount = IntegerTotalAmount-IntegerShippingAmount;
 		int shippingAmount_ = Integer.parseInt(shippingAmount);
 		int rewardAmount_ = Integer.parseInt(rewardAmount);
-		if(shippingAmount_ != 0 &&(shippingAmount_ % 1100) == 0) {
+		if (IntegerTotalAmount == 11000) {
+			IntegerTotalAmount /= 1100;
+			payment_result.put("totalAmount", IntegerTotalAmount);
+		} else if(shippingAmount_ != 0 &&(shippingAmount_ % 1100) == 0) {
 			DollarAmount = (IntegerTotalAmount-IntegerShippingAmount) / 1100;
 			shippingAmount_ = shippingAmount_/ 1100;
 			rewardAmount_ = rewardAmount_ / 1100;
+			payment_result.put("totalAmount", DollarAmount);
 		}
-		
 		payment_result.put("campaignName", campaignName);
-		payment_result.put("totalAmount", DollarAmount);
 		payment_result.put("rewardNum", Integer.parseInt(rewardNum));
 		payment_result.put("rewardAmount", rewardAmount_);
 		payment_result.put("shippingAmount", shippingAmount_);
@@ -107,6 +109,7 @@ public class PaymentServiceController {
 			try {
 				transactionManager.rollback(status);	logger.info("ROLLBACK COMPLETE !!");
 				cancelPayment(imp_uid);	logger.info("결제 취소 완료 !!");
+				returnData.put("KEY", "FAIL");
 			} catch(Exception ee) {
 				 System.out.println("Exception in commit or rollback : "+ee);
 			}
@@ -133,8 +136,10 @@ public class PaymentServiceController {
 			int DollarAmount = (IntegerTotalAmount-IntegerShippingAmount);
 			int shippingAmount_ = Integer.parseInt(request.getParameter("shippingAmount"));
 			int rewardAmount_ = Integer.parseInt(request.getParameter("rewardAmount"));
-			
-			if(shippingAmount_ != 0 &&(shippingAmount_ % 1100) == 0) {
+			if (IntegerTotalAmount == 11000) {
+				IntegerTotalAmount = IntegerTotalAmount / 1100;
+			}
+			else if(shippingAmount_ != 0 &&(shippingAmount_ % 1100) == 0) {
 				DollarAmount = (IntegerTotalAmount-IntegerShippingAmount) / 1100;
 				shippingAmount_ = shippingAmount_/1100;
 				rewardAmount_ = rewardAmount_/1100;
@@ -146,7 +151,7 @@ public class PaymentServiceController {
 			payment_result.put("rewardNum", Integer.parseInt(request.getParameter("rewardNum")));
 			payment_result.put("rewardAmount", rewardAmount_);
 			payment_result.put("shippingAmount", shippingAmount_);
-			payment_result.put("shippingMethod", "TEST"/*request.getParameter("shippingMethod")*/);
+			payment_result.put("shippingMethod", request.getParameter("shippingMethod"));
 			payment_result.put("note", request.getParameter("note"));
 			payment_result.put("city", "city");
 			payment_result.put("region", "region");
@@ -180,12 +185,11 @@ public class PaymentServiceController {
 				} catch(Exception ee) {
 					 System.out.println("Exception in commit or rollback : "+ee);
 				}
-				
 				System.out.println("Exception in saveTemplatesToPCA() : "+e);
 			}
 			return "redirect:/completePayment?imp_uid=" + payment_uid;
 		} else {
-			return "/kwaveweb/common/error/throwble";
+			return "/common/error/throwble";
 		}
 		
 	}

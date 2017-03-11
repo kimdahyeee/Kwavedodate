@@ -81,9 +81,8 @@
 												</div>
 												<div class="appendArea"></div>
 												<c:if test="${user.COUNTRY eq 'Korea'}">
-													<input type="hidden" id="city" value="kwavedonate_not_define">
-													kwavedonate_not_define
-													<input type="hidden" id="region" value="kwavedonate_not_define">
+													<input type="hidden" id="city" value="">
+													<input type="hidden" id="region" value="">
 													<input type="hidden" id="shippingMethod" value="국내배송">
 												</c:if>
 												<c:if test="${user.COUNTRY ne 'Korea'}">

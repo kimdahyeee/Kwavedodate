@@ -27,20 +27,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kwavedonate.kwaveweb.core.util.BcryptEncoder;
 import com.kwavedonate.kwaveweb.core.util.GetIpAddress;
+import com.kwavedonate.kwaveweb.core.util.Sstring;
 import com.kwavedonate.kwaveweb.user.dao.UserDaoService;
 import com.kwavedonate.kwaveweb.user.vo.UserDetailsVo;
 
 @Controller
 public class UserController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-	
+
 	private Map<String, Object> emailCheck = new HashMap<String, Object>();
 	private int mailCount = 0;
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@Resource(name = "userDaoService")
 	private UserDaoService dao;
 
@@ -50,18 +51,22 @@ public class UserController {
 	/*
 	 * 회원가입 페이지 이동
 	 */
-	@RequestMapping(value="/signin", method=RequestMethod.GET)
+	@RequestMapping(value = "/signin", method = RequestMethod.GET)
 	public String signPage(HttpServletRequest request, HttpSession session, Model model) {
 		String webBrowserLocale = GetIpAddress.getClientIP(request);
 		logger.info("singin" + webBrowserLocale);
-		if(webBrowserLocale.equals("ko")) model.addAttribute("location", "ENG");
-		else if (webBrowserLocale.equals("en")) model.addAttribute("location", "KOR");
-		else if (webBrowserLocale.equals("ch")) model.addAttribute("location", "CHI");
-		else model.addAttribute("location", "KOR");
-		
+		if (webBrowserLocale.equals("ko"))
+			model.addAttribute("location", "ENG");
+		else if (webBrowserLocale.equals("en"))
+			model.addAttribute("location", "KOR");
+		else if (webBrowserLocale.equals("ch"))
+			model.addAttribute("location", "CHI");
+		else
+			model.addAttribute("location", "KOR");
+
 		return "signin";
 	}
-	
+
 	/*
 	 * find password by email
 	 */
@@ -69,7 +74,6 @@ public class UserController {
 	public String findpassword() {
 		return "findPassword";
 	}
-	
 
 	/*
 	 * ���� ���� ������
@@ -91,7 +95,6 @@ public class UserController {
 		return "myAccount";
 	}
 
-
 	/*
 	 * 회원가입
 	 */
@@ -99,20 +102,20 @@ public class UserController {
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
 	public HashMap<String, Object> insertUser(HttpServletRequest request, @RequestParam("userEmail") String userEmail,
 			@RequestParam("userPassword") String userPassword, @RequestParam("userName") String userName,
-			@RequestParam("location")String location) {
-		
+			@RequestParam("location") String location) {
+
 		String dbpw = encoder.encode(userPassword);
-		
+
 		Map<String, String> paramMap = new HashMap<String, String>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		
+
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("userPassword", dbpw);
 		paramMap.put("userName", userName);
-		if(location.equals("KOR")) {
+		if (location.equals("KOR")) {
 			paramMap.put("userNation", "KOR");
 			paramMap.put("authority", "ROLE_USER_KOR");
-		} else if(location.equals("ENG")) {
+		} else if (location.equals("ENG")) {
 			paramMap.put("userNation", "ENG");
 			paramMap.put("authority", "ROLE_USER_ENG");
 		} else {
@@ -133,7 +136,6 @@ public class UserController {
 			hashmap.put("KEY", "FAIL");
 		}
 
-
 		return hashmap;
 	}
 
@@ -141,21 +143,22 @@ public class UserController {
 	 * �ߺ�Ȯ��
 	 */
 	@ResponseBody
-	@RequestMapping(value="/FacebookValidate", method=RequestMethod.POST)
-	public HashMap<String, Object> FacebookValidate(HttpServletRequest request, @RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
-		
+	@RequestMapping(value = "/FacebookValidate", method = RequestMethod.POST)
+	public HashMap<String, Object> FacebookValidate(HttpServletRequest request,
+			@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
+
 		String ipc = GetIpAddress.getClientIP(request);
-		String dbpw = encoder.encode(userEmail+userName+"1@#$@#!$$$#@");
-		
+		String dbpw = encoder.encode(userEmail + userName + "1@#$@#!$$$#@");
+
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		
+
 		paramMap.put("userEmail", userEmail);
 		paramMap.put("userName", userName);
 		paramMap.put("userPassword", dbpw);
-		if(ipc.equals("en")) {
+		if (ipc.equals("en")) {
 			paramMap.put("userNation", "ENG");
-		} else if(ipc.equals("ko")) {
+		} else if (ipc.equals("ko")) {
 			paramMap.put("userNation", "KOR");
 		} else {
 			paramMap.put("userNation", "CHI");
@@ -163,29 +166,29 @@ public class UserController {
 		int result;
 
 		try {
-			//ó�� �����ϴ� ���
+			// ó�� �����ϴ� ���
 			result = dao.insertFacebookUser(paramMap);
 		} catch (Exception e) {
-			//�̹� ���Ե� ���
+			// �̹� ���Ե� ���
 			Map<String, Object> snsMap = dao.selectIsSns(userEmail);
 			int isSns = Integer.valueOf(snsMap.get("ISSNS").toString());
-			if(isSns == 1){
-				result = 1; //sns ���Ե� ���
-			}else{
-				result=0; //�α��� ����
+			if (isSns == 1) {
+				result = 1; // sns ���Ե� ���
+			} else {
+				result = 0; // �α��� ����
 			}
 		}
 
 		System.out.println("���Ծȵ�!" + result);
 		if (result == 1) {
-			hashmap.put("KEY", "SUCCESS"); //ó�� �����ϴ� ���
-		}else {
+			hashmap.put("KEY", "SUCCESS"); // ó�� �����ϴ� ���
+		} else {
 			hashmap.put("KEY", "FAIL");
 		}
 
 		return hashmap;
 	}
-	
+
 	// About You ����
 	@ResponseBody
 	@RequestMapping(value = "/modifyUser", method = RequestMethod.POST)
@@ -194,7 +197,7 @@ public class UserController {
 			@RequestParam("userEmail") String userEmail) {
 		Map<String, String> paramMap = new HashMap<String, String>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		
+
 		paramMap.put("authority", "ROLE_USER_" + userNation);
 		paramMap.put("userName", userName);
 		paramMap.put("phone", phone);
@@ -227,7 +230,7 @@ public class UserController {
 			@RequestParam("country") String country, @RequestParam("region") String region) {
 		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
-		
+
 		Map<String, String> paramMap = new HashMap<String, String>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		paramMap.put("userEmail", userEmail);
@@ -252,27 +255,26 @@ public class UserController {
 			hashmap.put("KEY", "FAIL");
 		}
 
-
 		return hashmap;
 	}
 
 	// password ����
 	@ResponseBody
-	@RequestMapping(value="/modifyPassword", method=RequestMethod.POST)
+	@RequestMapping(value = "/modifyPassword", method = RequestMethod.POST)
 	public HashMap<String, Object> modifyPassword(Authentication authentication,
 			@RequestParam("currentPassword") String currentPassword, @RequestParam("newPassword") String newPassword) {
-		
+
 		UserDetailsVo u = (UserDetailsVo) authentication.getPrincipal();
 		String userEmail = u.getUsername().toString();
 		int result = 0;
 		Map<String, Object> user = dao.selectPassword(userEmail);
 		Map<String, String> password = new HashMap<String, String>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		
+
 		boolean check = encoder.matches(currentPassword, user.get("ROWPASSWORD").toString());
-		
+
 		System.out.println("TEST password : " + check);
-		
+
 		if (check == true) {
 			String encodedPassword = encoder.encode(newPassword);
 			password.put("userEmail", userEmail);
@@ -293,53 +295,61 @@ public class UserController {
 			hashmap.put("KEY", "FAIL");
 		}
 
-
 		return hashmap;
 	}
 
-	
 	// userEmail
 	@ResponseBody
-	@RequestMapping(value="/sendLink", method=RequestMethod.POST)
-	public Map<String, Object> sendLink (HttpServletResponse response, @RequestParam("userEmail")String userEmail) throws Exception{
-		
-		response.setContentType("text/html; charset=UTF-8");
-		response.setCharacterEncoding("utf-8");
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		
-		Map<String, Object> userEmailExist = dao.selectEmail(userEmail);
-		userEmailExist.putAll(dao.selectIsSns(userEmail));
-		
-		if (userEmailExist.get("USEREMAIL") != null && userEmailExist.get("ISSNS").toString().equals("0")) {
-			
-			String mUserEmail = userEmailExist.get("USEREMAIL").toString();
-			String encEmail = encoder.encode(mUserEmail + String.valueOf(mailCount));
-			
-			emailCheck.put("userEmail", mUserEmail);
-			emailCheck.put("encoding" + mUserEmail, encEmail);
-			
-			System.out.println(encEmail);
-			String htmlContent = "" 
-					+"<h1>KWAVE DONATE 비밀번호 변경 안내 메일입니다.</h1><br/>"
-					+ "<h3>아래 링크를 통해 비밀번호 변경 페이지로 이동해주세요.</h3>"
-					+ "http://13.124.66.223:8181/kwaveweb/pwdService?bep=" + encEmail.toString();
-			
-			try {
-				MimeMessage message = mailSender.createMimeMessage();
-				
-				message.setFrom(new InternetAddress("lewis320@kwavedonate.com"));
-				message.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(userEmailExist.get("USEREMAIL").toString()));
-				message.setSubject("KWAVE DONATE 비밀번호 변경");
-				message.setText(htmlContent, "UTF-8", "html");
-				
-				mailSender.send(message);
-				result.put("KEY", "SUCCESS");
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println(e);
+	@RequestMapping(value = "/sendLink", method = RequestMethod.POST)
+	public Map<String, Object> sendLink(HttpServletResponse response, @RequestParam("userEmail") String userEmail)
+			throws Exception {
+
+		Map<String, Object> UserDetails;
+		Map<String, Object> result = new HashMap<String, Object>();
+		String htmlContent = "";
+		try {
+			UserDetails = dao.selectUser(userEmail);
+			if (UserDetails.get("ISSNS").toString().equals("0")) {
+				response.setContentType("text/html; charset=UTF-8");
+				response.setCharacterEncoding("utf-8");
+
+				String mUserEmail = UserDetails.get("USERNAME").toString();
+				String encEmail = encoder.encode(mUserEmail + String.valueOf(mailCount));
+
+				emailCheck.put("userEmail", mUserEmail);
+				emailCheck.put("encoding" + mUserEmail, encEmail);
+
+				if (UserDetails.get("USERNATION").toString().equals("KOR")) {
+					htmlContent = Sstring.KOR_MAIL_TEXT_START + encEmail.toString() + Sstring.KOR_MAIL_TEXT_END;
+				} else if (UserDetails.get("USERNATION").toString().equals("ENG")) {
+					htmlContent = Sstring.ENG_MAIL_TEXT_START + encEmail.toString() + Sstring.ENG_MAIL_TEXT_END;
+				} else if (UserDetails.get("USERNATION").toString().equals("CHI")) {
+					htmlContent = Sstring.CHI_MAIL_TEXT_START + encEmail.toString() + Sstring.CHI_MAIL_TEXT_END;
+				}
+
+				try {
+					MimeMessage message = mailSender.createMimeMessage();
+
+					message.setFrom(new InternetAddress("lewis320@kwavedonate.com"));
+					message.addRecipient(javax.mail.Message.RecipientType.TO,
+							new InternetAddress(UserDetails.get("USERNAME").toString()));
+					message.setSubject("KWAVE DONATE 비밀번호 변경");
+					message.setText(htmlContent, "UTF-8", "html");
+
+					mailSender.send(message);
+					result.put("KEY", "SUCCESS");
+				} catch (Exception e) {
+					result.put("KEY", "FAIL");
+					e.printStackTrace();
+					System.out.println(e);
+				}
+			} else {
+				result.put("KEY", "FAIL");
 			}
-		} else {
+		} catch (Exception e) {
 			result.put("KEY", "FAIL");
+			e.printStackTrace();
+			System.out.println(e);
 		}
 		return result;
 	}
@@ -366,7 +376,7 @@ public class UserController {
 
 	
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value="/pwdmodifyService", method=RequestMethod.POST)
 	public HashMap<String, Object> pwdmodifyService(@RequestParam("userEmail")String userEmail, @RequestParam("userPassword")String userPassword) {
