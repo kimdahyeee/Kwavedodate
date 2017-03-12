@@ -145,12 +145,11 @@ $(document).ready(function() {
     // 회원가입 validation
     if($("#validateSignIn").length>0) {
         $("#validateSignIn").validate({
-           
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/insertUser", 
+                    url: "/kwaveweb/insertUser", 
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val(),

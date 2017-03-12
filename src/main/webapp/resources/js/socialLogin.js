@@ -60,10 +60,10 @@ $(document).ready(function(){
 		                            	   if(data.KEY=="SUCCESS") {
 		                                       	location.replace(data.RETURNURI);
 		                            	   } else if(data.KEY=="SUCCESS_ADMIN") {
-		                                 	  	location.replace(data.RETURNURI);
+		                               			location.replace(data.RETURNURI);
 		                            	   } else {
-		                            		   alert("로그인 실패");
-		                            		   location.href="/login?fail";
+		                            		   	alert(failToLogin);
+			                                    location.replace("/login?fail");
 		                            	   }
 		                                }
 		                            });
