@@ -246,7 +246,11 @@ $(document).ready(function() {
                     success: function(data) {
                        //성공 시 데이터 처리 
                         if(data.KEY=="SUCCESS") {
+                        		//if(data.RETURNURI=="www.kwavedonate.com:8181/login") {
+                        			location.replace("/");
+                        		/*} else {
                               location.replace(data.RETURNURI);
+                        		}*/
                         } else if(data.KEY=="SUCCESS_ADMIN") {
                         	  location.replace(data.RETURNURI);
                         } else {
