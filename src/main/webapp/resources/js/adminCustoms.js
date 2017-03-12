@@ -4,21 +4,21 @@
 	if($("#validateCampaignAdd").length>0) {
 		 CKEDITOR.replace( "campaginKoSummary_editor" );
 		 CKEDITOR.replace( "campaginKoContents_editor", {
-			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
+			 filebrowserImageUploadUrl:"/admin/ckEditorImageUpload"
 		 });
 		 CKEDITOR.replace( "campaginEnSummary_editor" );
 		 CKEDITOR.replace( "campaginEnContents_editor", {
-			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
+			 filebrowserImageUploadUrl:"/admin/ckEditorImageUpload"
 		 });
 		 CKEDITOR.replace( "campaginChSummary_editor" );
 		 CKEDITOR.replace( "campaginChContents_editor", {
-			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
+			 filebrowserImageUploadUrl:"/admin/ckEditorImageUpload"
 		 });
 	}
 	if($("#validateCampaignChildUpdate").length>0){
 		 CKEDITOR.replace( "campaignSummary_editor" );
 		 CKEDITOR.replace( "campaignContents_editor", {
-			 filebrowserImageUploadUrl:"/kwaveweb/admin/ckEditorImageUpload"
+			 filebrowserImageUploadUrl:"/admin/ckEditorImageUpload"
 		 });
 	}
 	
@@ -54,7 +54,7 @@
         		campaignFormData.append("campaginChContents_editor", CKEDITOR.instances['campaginChContents_editor'].getData());
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/admin/insertCampaign", 
+                    url: "/admin/insertCampaign", 
                     contentType: false,
                     processData: false,
                     data:campaignFormData,
@@ -62,7 +62,7 @@
                     success: function(data) {
                     	if(data.KEY == "SUCCESS"){
                            alert("캠페인이 저장되었습니다.");
-                           location.href = "/kwaveweb/admin/manageCampaigns";
+                           location.href = "/admin/manageCampaigns";
                          }else{
                             alert("캠페인이 저장이 실패했습니다.");
                          }
@@ -217,7 +217,7 @@
         		campaignFormData.append("youtubeImgFile", $("input[name=youtubeImgFile]")[0].files[0]);
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/admin/updateCommonCampaign", 
+                    url: "/admin/updateCommonCampaign", 
                     contentType: false,
                     processData: false,
                     data:campaignFormData,
@@ -225,7 +225,7 @@
                     success: function(data) {
                     	if(data.KEY == "SUCCESS"){
                            alert($("#campaignName").val() +"캠페인이 수정되었습니다.");
-                           location.href = "/kwaveweb/admin/campaignDetail/" + $("#campaignName").val();
+                           location.href = "/admin/campaignDetail/" + $("#campaignName").val();
                          }else{
                             alert("캠페인이 저장이 실패했습니다.");
                          }
@@ -296,7 +296,7 @@
         	submitHandler: function(form) {   
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/admin/updateChildCampaign", 
+                    url: "/admin/updateChildCampaign", 
                     data: {
                     	"locale": $("#locale").val(),
                     	"campaignName": $("#campaignName").val(),
@@ -308,7 +308,7 @@
                     success: function(data) {
                     	if(data.KEY == "SUCCESS") {
                     		alert("캠페인(" + $("#locale").val() +") 내용이 변경되었습니다.");
-                    		window.location = "/kwaveweb/admin/campaignDetail/"+ $("#campaignName").val();
+                    		window.location = "/admin/campaignDetail/"+ $("#campaignName").val();
                     	} else {
                     		alert("캠페인(" + $("#locale").val() +") 변경에 실패하였습니다. 다시 시도해주세요.");
                     	}
@@ -383,7 +383,7 @@
         		formData.append("rewardChContents_editor", CKEDITOR.instances['rewardChContents_editor'].getData());
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/admin/insertReward", 
+                    url: "/admin/insertReward", 
                     contentType: false, // ajax 파일 전송 시 꼭 필요!!
                     processData: false, // ajax 파일 전송 시 꼭 필요!!
                     data: formData,
@@ -391,7 +391,7 @@
                     success: function(data) {
                     	if(data.key == "success") {
                     		alert($("#campaignName").val() + "의 리워드가 등록되었습니다.");
-                    		window.location = "/kwaveweb/admin/"+ $("#campaignName").val() +"/manageRewards";
+                    		window.location = "/admin/"+ $("#campaignName").val() +"/manageRewards";
                     	} else {
                     		alert("리워드 등록에 실패하였습니다. 다시 시도해주세요.");
                     	}
@@ -507,7 +507,7 @@
         		formData.append("rewardImgFile", $("input[name=rewardImgFile]")[0].files[0]);
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/admin/updateCommonReward", 
+                    url: "/admin/updateCommonReward", 
                     contentType: false, // ajax 파일 전송 시 꼭 필요!!
                     processData: false, // ajax 파일 전송 시 꼭 필요!!
                     data: formData,
@@ -515,7 +515,7 @@
                     success: function(data) {
                     	if(data.key == "success") {
                     		alert($("#campaignName").val() + "의 리워드가 변경되었습니다.");
-                    		window.location = "/kwaveweb/admin/"+ $("#campaignName").val() +"/manageRewards/" + $("#rewardNum").val();
+                    		window.location = "/admin/"+ $("#campaignName").val() +"/manageRewards/" + $("#rewardNum").val();
                     	} else {
                     		alert("리워드 변경에 실패하였습니다. 다시 시도해주세요.");
                     	}
@@ -574,7 +574,7 @@
         	submitHandler: function(form) {   
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/admin/updateRewardChild", 
+                    url: "/admin/updateRewardChild", 
                     data: {
                         "rewardNum": $("#rewardNum").val(),
                         "locale": $("#locale").val(),
@@ -585,7 +585,7 @@
                     success: function(data) {
                     	if(data.key == "success") {
                     		alert("리워드(언어) 내용이 변경되었습니다.");
-                    		window.location = "/kwaveweb/admin/"+ $("#campaignName").val() +"/manageRewards/" + $("#rewardNum").val();
+                    		window.location = "/admin/"+ $("#campaignName").val() +"/manageRewards/" + $("#rewardNum").val();
                     	} else {
                     		alert("리워드(언어) 변경에 실패하였습니다. 다시 시도해주세요.");
                     	}

@@ -19,7 +19,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<h2 class="text-center"><spring:message code="mainTitle3"/><strong><spring:message code="mainTitle4"/></strong></h2>
+							<h2 class="text-center"><spring:message code="mainTitle3"/><strong> <spring:message code="mainTitle4"/></strong></h2>
 						</div>
 					</div>
 					<div class="row">

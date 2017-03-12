@@ -237,7 +237,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                    type: "POST",
-                    url: "/kwaveweb/j_spring_security_check",
+                    url: "/j_spring_security_check",
                     data: {
                         "username": $("#userEmail").val(),
                         "password":$("#userPassword").val(),
@@ -876,7 +876,7 @@ $(document).ready(function() {
 
                       $.ajax({
                                type: "POST",
-                               url: "/kwaveweb/insertDelivery",   // delivery table
+                               url: "/insertDelivery",   // delivery table
                                data: {
                             	   "imp_uid" : rsp.imp_uid,
                             	   "campaignName" : $("#campaignName").val(),

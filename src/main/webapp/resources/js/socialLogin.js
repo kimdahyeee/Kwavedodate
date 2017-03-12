@@ -33,11 +33,11 @@ $(document).ready(function(){
 			    FB.api('/me', {fields: 'name,email'}, function(user){
 			    	if(user.email == null){
 			    		alert("이메일 정보가 누락된 sns 계정입니다. 일반 회원가입을 해주시길 바랍니다.");
-			    		location.replace("/kwaveweb/signin");
+			    		location.replace("/signin");
 			    	}else{
 			    		$.ajax({
 		                    type: "POST",
-		                    url: "/kwaveweb/FacebookValidate", 
+		                    url: "/FacebookValidate", 
 		                    data: {
 		                        "userEmail" : user.email,
 		                        "userName" : user.name
@@ -49,7 +49,7 @@ $(document).ready(function(){
 		                    	   //처음 페이스북 로그인시
 		                    	   $.ajax({
 		                           	type: "POST",
-		                               url: "/kwaveweb/j_spring_security_check",
+		                               url: "/j_spring_security_check",
 		                               data: {
 		                                   "username": user.email,
 		                                   "password":user.email+user.name+"1@#$@#!$$$#@"
@@ -63,13 +63,13 @@ $(document).ready(function(){
 		                                 	  	location.replace(data.RETURNURI);
 		                            	   } else {
 		                            		   alert("로그인 실패");
-		                            		   location.href="/kwaveweb/login?fail";
+		                            		   location.href="/login?fail";
 		                            	   }
 		                                }
 		                            });
 		                       }else{
    		                          alert("이미 회원가입 된 이메일입니다.");
-   		                          location.replace("/kwaveweb/login");
+   		                          location.replace("/login");
 		                       }
 		                    }
 		                });

@@ -17,7 +17,7 @@
 								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 isotope-item">
 									<div class="image-box style-2 mb-20 bordered text-center">
 									<c:set value="${rewards[0].campaignName}" var="campaignName"></c:set>
-										<a href="<c:url value='/payments/${campaignName}' />" class="btn btn-lg btn-danger" style="width: 90%"><strong> donate <spring:message code="notation"/>${defaultMoney} </strong></a>
+										<a href="<c:url value='/payments/${campaignName}' />" class="btn btn-lg btn-danger" style="width: 90%"><strong> donate <spring:message code="currency"/>${defaultMoney} </strong></a>
 									</div>
 								</div>
 								<c:forEach items="${rewards}" var="rewards">
@@ -39,7 +39,7 @@
 														<button class="btn btn-lg btn-danger" style="width: 100%" disabled><strong><spring:message code="soldOut"/></strong></button>
 													</c:when>
 													<c:otherwise>
-														<a href="<c:url value='/payments/${rewards.campaignName}/reward/${rewards.rewardNum}' />" class="btn btn-lg btn-danger" style="width: 100%"><strong> donate <spring:message code="notation"/>${rewards.rewardAmount } </strong></a>
+														<a href="<c:url value='/payments/${rewards.campaignName}/reward/${rewards.rewardNum}' />" class="btn btn-lg btn-danger" style="width: 100%"><strong> donate <spring:message code="currency"/>${rewards.rewardAmount } </strong></a>
 													</c:otherwise>
 												</c:choose>
 											</div>

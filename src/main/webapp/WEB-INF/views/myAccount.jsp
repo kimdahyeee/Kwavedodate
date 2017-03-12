@@ -21,7 +21,7 @@
 					</li>
 					<li>
 						<a href="#changePassword" role="tab" data-toggle="tab" title="text">
-							<strong><spring:message code="changePassword"/></strong>
+							<strong><spring:message code="changePassword_info"/></strong>
 						</a>
 					</li>
 				</ul>
