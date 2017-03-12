@@ -112,8 +112,6 @@ function wrapWindowByMask() {
     $('#loadingImg').show();
 }
 
-
-
 function closeWindowByMask() {
     $('#mask, #loadingImg').hide();
     $('#mask, #loadingImg').remove();  

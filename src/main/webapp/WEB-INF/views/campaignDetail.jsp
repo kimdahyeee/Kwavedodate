@@ -95,7 +95,7 @@
 					</div>
 				</div>
 
-				<div class="space-top"></div>
+				
 				<div class="container campaignContents">
 					<div class="row">
 						<div class="col-md-8 col-lg-8">
