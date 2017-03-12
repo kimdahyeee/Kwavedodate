@@ -36,8 +36,7 @@
 										</div>
 									</div>
 
-									<div class="separator"></div>
-
+                           <div class="separator"></div>
 									<div class="form-group">
 										<div class="col-sm-12">							
 											<a id="facebookLoginBtn" class="btn square btn-primary" style="width: 100%;">

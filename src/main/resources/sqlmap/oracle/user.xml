@@ -5,12 +5,12 @@
 <mapper namespace="user">
 	<insert id="insertUser">
 		insert into users
-		(userEmail, userPassword, userName, userRegdate, isSNS, userNation, authority
+		(userEmail, userPassword, userName, userRegdate, isSNS, userNation, authority,
 		<!--  phone, zipCode, address1, address2, city, region, country,  -->
-		authority, enabled)
-		values (#{userEmail}, #{userPassword}, #{userName}, sysdate, 0 , #{userNation}, #{authority}
+		enabled)
+		values (#{userEmail}, #{userPassword}, #{userName}, sysdate, 0 , #{userNation}, #{authority},
 		<!-- 'Nation', 'phone', 'zipCode', 'address1', 'address2', 'city', 'region', 'country', -->
-		'ROLE_USER', 1)
+		1)
 	</insert>
 	
 	<insert id="insertFacebookUser">

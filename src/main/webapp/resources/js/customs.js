@@ -145,12 +145,11 @@ $(document).ready(function() {
     // 회원가입 validation
     if($("#validateSignIn").length>0) {
         $("#validateSignIn").validate({
-           
             submitHandler: function(form) {   
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/insertUser", 
+                    url: "/kwaveweb/insertUser", 
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val(),
@@ -160,10 +159,10 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
-                          alert(signin_welcome);//회원가입을 축하드립니다
+                          alert(signInSuccess);//회원가입을 축하드립니다
                           location.replace("/login");
                        }else{
-                          alert("이미 회원가입 된 이메일입니다.");
+                          alert(alreadyRegister);
                           
                        }
                     }
@@ -198,24 +197,24 @@ $(document).ready(function() {
             },
             messages: {
                 userEmail: {
-                    required: "We need your email address to contact you.",
-                    email: "Please enter a valid email address."
+                    required: inputEmailAddress,
+                    email: validEmailAddress
                 },
                 userPassword: {
-                    required: "Please enter a password.",
-                    minlength: "Your password must be at least 6 charaters long."
+                    required: inputPassword,
+                    minlength: validPassword
                 },
                 userPasswordConfirm: {
-                    required: "Please confirm the password.",
-                    minlength: "Your password must be at least 6 charaters long.",
-                    equalTo: "Please enter the same password as above."
+                    required: inputPassword,
+                    minlength: validPassword,
+                    equalTo: confirmPassword
                 },
                 userName: {
-                    required: "Please enter your name.",
-                    minlength: "Your name must be at least 1 charaters long."
+                    required: inputUserName,
+                    minlength: validUserName
                 },
                 signInAgreement: {
-                    required: "Please accept our policy."
+                    required: acceptPolicy
                 }
             },
             errorElement: "span",
@@ -251,7 +250,7 @@ $(document).ready(function() {
                         } else if(data.KEY=="SUCCESS_ADMIN") {
                         	  location.replace(data.RETURNURI);
                         } else {
-                           alert("로그인 실패");
+                           alert(failToLogin);
                            location.replace("/login?fail");
                         }
                      }
@@ -274,12 +273,12 @@ $(document).ready(function() {
             },
             messages: {
                 userEmail: {
-                    required: "Please enter your email address.",
-                    email: "Please enter a valid email address."
+                    required: inputEmailAddress1,
+                    email: validEmailAddress
                 },
                 userPassword: {
-                    required: "Please enter your password.",
-                    minlength: "Your password must be at least 6 charaters long."
+                    required: inputPassword,
+                    minlength: validPassword
                 }
             },
             errorElement: "span",
@@ -311,11 +310,11 @@ $(document).ready(function() {
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
                     	    closeWindowByMask();
-                            alert("메일이 전송되었습니다.");
+                            alert(sendMail);
                             location.replace("/");
                          }else{
                         	closeWindowByMask();
-                            alert("메일을 확인해주세요.");
+                            alert(checkYourMail);
                             location.replace("/findPassword");
                          }
                     }
@@ -334,8 +333,8 @@ $(document).ready(function() {
             },
             messages: {
                 userEmail: {
-                    required: "Please enter your email address.",
-                    email: "Please enter a valid email address."
+                    required: inputEmailAddress1,
+                    email:validEmailAddress
                 }
             },
             errorElement: "span",
@@ -366,10 +365,10 @@ $(document).ready(function() {
                     success: function(data) {
                         //성공 시 데이터 처리 
                        if(data.KEY == "SUCCESS"){
-                            alert("비밀번호가 변경되었습니다.");
+                            alert(changePassword);
                             location.replace("/myAccount");
                          }else{
-                            alert("비밀번호를 확인해주세요.");
+                            alert(checkPassword);
                             location.replace("/myAccount");
                          }
                     }
@@ -397,17 +396,17 @@ $(document).ready(function() {
             },
             messages: {
                 currentPassword: {
-                    required: "Please enter a older password.",
-                    minlength: "Your password must be at least 6 charaters long."
+                    required: inputCurrentPassword,
+                    minlength: validPassword
                 },
                 newPassword: {
-                    required: "Please enter a new password.",
-                    minlength: "Your password must be at least 6 charaters long."
+                    required: inputNewPassword,
+                    minlength: validPassword
                 },
                 newPasswordConfirm: {
-                    required: confirm_password, //"Please confirm the password.",
-                    minlength: "Your password must be at least 6 charaters long.",
-                    equalTo: "Please enter the same password as above."
+                    required: confirmPassword,
+                    minlength: validPassword,
+                    equalTo: inputPasswordConfirm
                 }
             },
             errorElement: "span",
@@ -427,14 +426,14 @@ $(document).ready(function() {
        var cityInputTag = "" +
              "<div class='form-group has-feedback cityArea'>" +
                "<div class='col-sm-12'>" +
-                     "<input type='text' class='form-control' id='city' name='city' placeholder='City' value=''/>" +
+                     "<input type='text' class='form-control' id='city' name='city' placeholder='" + city +"' value=''/>" +
                      "<i class='fa fa-tag form-control-feedback fa-lg'></i>" +
                   "</div>" +
             "</div>";
       var regionInputTag = "" +
             "<div class='form-group has-feedback regionArea'>" +
                   "<div class='col-sm-12'>" +
-                  "<input type='text' class='form-control' id='region' name='region' placeholder='Region' value=''/>" +
+                  "<input type='text' class='form-control' id='region' name='region' placeholder='" + region +"' value=''/>" +
                   "<i class='fa fa-tags form-control-feedback fa-lg'></i>" +
                "</div>" +
             "</div>";
@@ -478,11 +477,11 @@ $(document).ready(function() {
                     success: function(data) {
                         //성공 시 데이터 처리 
                     	if(data.KEY == "SUCCESS"){
-                           alert(msg2); //회원정보수정이 완료되었습니다.
+                           alert(successUpdateUserInfo); //회원정보수정이 완료되었습니다.
                            location.replace("/myAccount");
                            
                          }else{
-                            alert("회원정보수정이 실패했습니다.");
+                            alert(failToUpdateUserInfo);
                          }
                     }
                 });
@@ -507,15 +506,15 @@ $(document).ready(function() {
             },
             messages: {
                 userEmail: {
-                    required: "Please enter your email address.",
-                    email: "Please enter a valid email address."
+                    required: inputEmailAddress1,
+                    email: validEmailAddress
                 },
                 userName: {
-                    required: "Please enter your name.",
-                    minlength: "Your name must be at least 1 charaters long."
+                    required: inputUserName,
+                    minlength: validUserName
                 },
                 nation: {
-                    required: "You have to select nation."
+                    required: selectNation
                 }
             },
             errorElement: "span",
@@ -547,11 +546,11 @@ $(document).ready(function() {
                     success: function(data) {
                         //성공 시 데이터 처리 
                        if(data.KEY == "SUCCESS"){
-                            alert("비밀 번호가 변경되었습니다. 로그인 해주세요.");
+                            alert(changePassword);
                             location.replace("/login");
                            
                          }else{
-                            alert("비밀번호 변경 실패하였습니다.");
+                            alert(failToChangePassword);
                          }
                     }
                 });
@@ -574,13 +573,13 @@ $(document).ready(function() {
             },
             messages: {
                 newPassword: {
-                    required: "Please enter a new password.",
-                    minlength: "Your password must be at least 6 charaters long."
+                    required: inputNewPassword,
+                    minlength: validPassword
                 },
                 newPasswordConfirm: {
-                    required: "Please confirm the password.",
-                    minlength: "Your password must be at least 6 charaters long.",
-                    equalTo: "Please enter the same password as above."
+                    required: confirmPassword,
+                    minlength: validPassword,
+                    equalTo: inputPasswordConfirm
                 }
             },
             errorElement: "span",
@@ -615,10 +614,10 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                        if(data.KEY == "SUCCESS"){
-                            alert("주소지 정보 수정이 완료되었습니다.");
+                            alert(successUserAddressInfo);
                             location.replace("/myAccount");
                          }else{
-                            alert("주소지 정보 수정이 실패했습니다.");
+                            alert(failUserAddressInfo);
                          }
                     }
                 });
@@ -659,25 +658,25 @@ $(document).ready(function() {
     	
 		var cityTag = "" +
 				"<div class='form-group has-feedback text-center cityArea'>" +
-					"<label for='inputCity' class='col-xs-3 col-sm-3'>City : </label>" +
+					"<label for='inputCity' class='col-xs-3 col-sm-3'>" + city +": </label>" +
 					"<div class='col-xs-9 col-sm-9'>" +
-						"<input type='text' class='form-control' id='city' name='city' placeholder='City' value='' required>" +
+						"<input type='text' class='form-control' id='city' name='city' placeholder='" + city +"' value='' required>" +
 						"</div>" +
 				"</div>";
 		var regionTag = "" +
 				"<div class='form-group has-feedback text-center regionArea'>" +
-					"<label for='inputCity' class='col-xs-3 col-sm-3'>Region : </label>" +
+					"<label for='inputCity' class='col-xs-3 col-sm-3'>" + region +": </label>" +
 					"<div class='col-xs-9 col-sm-9'>" +
-						"<input type='text' class='form-control' id='region' name='region' placeholder='Region' value='' required>" +
+						"<input type='text' class='form-control' id='region' name='region' placeholder='" + region +"' value='' required>" +
 						"</div>" +
 				"</div>";
 		
 		var paymentMethod = "" +
 				"<div id='paymentMethod'>" +
-					"<span><input type='radio' name='payment_method' id='payment_method_card' value='card' required/> Card</span><br><span class='paymentCardArea'></span>" +
-					"<span><input type='radio' name='payment_method' id='payment_method_trans' value='trans' required/> Trans</span><br><span class='paymentTransArea'></span>" +
-					"<span><input type='radio' name='payment_method' id='payment_method_phone' value='phone' required/> Phone</span><br><span class='paymentPhoneArea'</span>" +
-					"<span><input type='radio' name='payment_method' id='payment_method_paypal' value='paypal' required> Paypal</span><span class='paymentPaypalArea'></span>" +
+					"<span><input type='radio' name='payment_method' id='payment_method_card' value='card' required/> " + card +"</span><br><span class='paymentCardArea'></span>" +
+					"<span><input type='radio' name='payment_method' id='payment_method_trans' value='trans' required/> " + trans +"</span><br><span class='paymentTransArea'></span>" +
+					"<span><input type='radio' name='payment_method' id='payment_method_phone' value='phone' required/> " + phone +"</span><br><span class='paymentPhoneArea'</span>" +
+					"<span><input type='radio' name='payment_method' id='payment_method_paypal' value='paypal' required> " + paypal +"</span><span class='paymentPaypalArea'></span>" +
 				"</div>";
     	// payment 첫 Loading 시
     	function shippingAmountFunc(sAmount, sCountry, sMethod) {
@@ -697,15 +696,15 @@ $(document).ready(function() {
 		 	 else if (pageLocale == "ch")	cRewardAmount = cRewardAmount*165;
 		  	 else 							cRewardAmount = cRewardAmount;
 
-		 	 $(".rewardAmountArea").text(notation + rewardAmount*sCountry + "  ($" + rewardAmount + ")" );
-		 	 $(".shippingAmountArea").text(notation + sAmount*sCountry + "  ($" + sAmount + ")");
-			 $(".totalAmountArea").text(notation + cTotalAmount*sCountry + "  ($" + cTotalAmount + ")" );
+		 	 $(".rewardAmountArea").text(currency + rewardAmount*sCountry + "  ($" + rewardAmount + ")" );
+		 	 $(".shippingAmountArea").text(currency + sAmount*sCountry + "  ($" + sAmount + ")");
+			 $(".totalAmountArea").text(currency + cTotalAmount*sCountry + "  ($" + cTotalAmount + ")" );
 
 			 if (pageLocale == "ko") {
 				$(".paymentPaypalArea").text("  ($"+  cTotalAmount + ")");
-				$(".paymentTransArea").text("  ("+ notation + $("#totalAmount").val()*1100 + ")");
-				$(".paymentCardArea").text("  (" + notation + $("#totalAmount").val()*1100 + ")");
-				$(".paymentPhoneArea").text("  (" + notation + $("#totalAmount").val()*1100 + ")");
+				$(".paymentTransArea").text("  ("+ currency + $("#totalAmount").val()*1100 + ")");
+				$(".paymentCardArea").text("  (" + currency + $("#totalAmount").val()*1100 + ")");
+				$(".paymentPhoneArea").text("  (" + currency + $("#totalAmount").val()*1100 + ")");
 				
 			} else {
 				$(".paymentPaypalArea").text("  ($" + cTotalAmount + ")");
@@ -721,11 +720,6 @@ $(document).ready(function() {
 			if(!($(".cityArea").length>0 && $(".regionArea").length>0) && !($("#country").val() == "Korea")) {
 				$(".appendArea").append(cityTag);
 				$(".appendArea").append(regionTag);
-				/*$("#shippingMethod").val(sMethod);
-				$(".shippingMethod").text(sMethod);
-			} else {
-				$("#shippingMethod").val(sMethod);
-				$(".shippingMethod").text(sMethod);*/
 			}
 		}
     	// reward가 있는 경우
@@ -762,9 +756,9 @@ $(document).ready(function() {
     	else {
     		$("#shippingAmount").val("0");
     		$("#totalAmount").val("10");
-    		if(pageLocale == "ko") 			$(".totalAmountArea").text(notation + "11000" + "  ($10)" );
-    		else if (pageLocale == "ch") 	$(".totalAmountArea").text(notation + "1650" + "  ($10)" );
-    		else if (pageLocale == "en")	$(".totalAmountArea").text(notation + "10" + "  ($10)" );
+    		if(pageLocale == "ko") 			$(".totalAmountArea").text(currency + "11000" + "  ($10)" );
+    		else if (pageLocale == "ch") 	$(".totalAmountArea").text(currency + "1650" + "  ($10)" );
+    		else if (pageLocale == "en")	$(".totalAmountArea").text(currency + "10" + "  ($10)" );
     	}
     	
     	// 국가 변경 시
@@ -873,11 +867,11 @@ $(document).ready(function() {
                 	  
               }, function(rsp) {
                   if ( rsp.success ) {
-                      var msg = '결제가 완료되었습니다.';
-                      msg += '고유ID : ' + rsp.imp_uid;
-                      msg += '상점 거래ID : ' + rsp.merchant_uid;
-                      msg += '결제 금액 : ' + rsp.paid_amount;
-                      msg += '카드 승인번호 : ' + rsp.apply_num;
+//                      var msg = '결제가 완료되었습니다.';
+//                      msg += '고유ID : ' + rsp.imp_uid;
+//                      msg += '상점 거래ID : ' + rsp.merchant_uid;
+//                      msg += '결제 금액 : ' + rsp.paid_amount;
+//                      msg += '카드 승인번호 : ' + rsp.apply_num;
 
                       $.ajax({
                                type: "POST",
@@ -898,20 +892,19 @@ $(document).ready(function() {
 	                            dataType: "json",
 	                            success: function(data) {
 	                            	if(data.KEY == "SUCCESS"){
-	                            		alert("성공처리 되었습니다.")
+	                            		alert(successPayment)
 	                            		location.replace("/completePayment?imp_uid=" + rsp.imp_uid);
 	                                 }else{
-	                                    alert("결제에 실패했습니다. 다시 시도해주세요.");
+	                                    alert(failToPayment);
 	                                 }
 	                            }
         		        	});
-                  
     				} else {
-    					var msg = '결제에 실패하였습니다.';
-         		        msg += '에러내용 : ' + rsp.error_msg;
-         		        msg += '고유ID : ' + rsp.imp_uid;
-         		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-         		        msg += '결제 금액 : ' + rsp.paid_amount;
+    					var msg = failToPayment;
+//         		        msg += '에러내용 : ' + rsp.error_msg;
+//         		        msg += '고유ID : ' + rsp.imp_uid;
+//         		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+//         		        msg += '결제 금액 : ' + rsp.paid_amount;
     				}
     				alert(msg);
     			});
@@ -956,33 +949,33 @@ $(document).ready(function() {
             },
             messages: {
                 userEmail: {
-                    required: "Please enter your email address.",
-                    email: "Please enter a valid email address."
+                    required: inputEmailAddress1,
+                    email: validEmailAddress
                 },
                 userName: {
-                    required: "Please enter your name.",
-                    minlength: "Your name must be at least 1 charaters long."
+                    required: inputUserName,
+                    minlength: validUserName
                 },
                 phone: {
-                    required: "Please enter your phone number."
+                    required: inputPhoneNumber
                 },
                 zipCode: {
-                    required: "Please enter your zip code number."
+                    required: inputZipCode
                 },
                 address1: {
-                    required: "Please enter your address."
+                    required: inputAddress
                 },
                 city: {
-                    required: "Please enter your city."
+                    required: inputCity
                 },
                 region: {
-                    required: "Please enter your region."
+                    required: inputRegion
                 },
                 country: {
-                    required: "Please select your country. This depend on shipping amount."
+                    required: inputCountry
                 },
                 shippingMethod: {
-                    required: "Please enter your shipping method"
+                    required: inputShippingMethod
                 }
             },
             errorElement: "span",

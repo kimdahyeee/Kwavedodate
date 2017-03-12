@@ -56,9 +56,9 @@ public class UserController {
 		String webBrowserLocale = GetIpAddress.getClientIP(request);
 		logger.info("singin" + webBrowserLocale);
 		if (webBrowserLocale.equals("ko"))
-			model.addAttribute("location", "ENG");
-		else if (webBrowserLocale.equals("en"))
 			model.addAttribute("location", "KOR");
+		else if (webBrowserLocale.equals("en"))
+			model.addAttribute("location", "ENG");
 		else if (webBrowserLocale.equals("ch"))
 			model.addAttribute("location", "CHI");
 		else
@@ -105,7 +105,7 @@ public class UserController {
 			@RequestParam("location") String location) {
 
 		String dbpw = encoder.encode(userPassword);
-
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 
@@ -123,13 +123,13 @@ public class UserController {
 			paramMap.put("authority", "ROLE_USER_CHI");
 		}
 		int result;
-
+		
 		try {
 			result = dao.insertUser(paramMap);
 		} catch (Exception e) {
 			result = 0;
 		}
-
+		
 		if (result == 1) {
 			hashmap.put("KEY", "SUCCESS");
 		} else {

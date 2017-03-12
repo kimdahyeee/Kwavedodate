@@ -40,6 +40,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		} else {
 			map.put("KEY", "SUCCESS"); 
 			map.put("RETURNURI", getReturnUrl(request, response)+getReturnLang(auth));
+			System.out.println("returnuri" + getReturnLang(auth));
 		}
 		
 		

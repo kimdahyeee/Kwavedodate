@@ -1,5 +1,6 @@
 			<%@ page language="java" contentType="text/htmll; charset=UTF-8" pageEncoding="UTF-8"%>
 			<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+			<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 			<section class="main-container">
 				<div class="container">
@@ -7,15 +8,15 @@
 						<div class="col-md-10 col-md-offset-1">
 							<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
 								<div class="table-responsive" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-									<h1 class="text-center">Thank you for your donation!</h1>
+									<h1 class="text-center"><spring:message code="thankYouForYourDonation"/></h1>
 									<label></label>
 									<table class="table table-colored text-center">
 										<thead>
 											<tr>
-												<th>Pledge number</th>
-												<th>Campaigns</th>
-												<th>Amount</th>
-												<th>Date</th>
+												<th><spring:message code="pledgeNumber"/></th>
+												<th><spring:message code="campaigns"/></th>
+												<th><spring:message code="amount"/></th>
+												<th><spring:message code="date"/></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -45,11 +46,10 @@
 							</div>
 						</div>
 						<div class="col-md-10 col-md-offset-1 text-center">
-							<a href="/kwaveweb/" type="submit" class="btn square btn-danger">Home </a>
+							<a href="/kwaveweb/" type="submit" class="btn square btn-danger"><spring:message code="home"/> </a>
 							<label></label>
-							<a href="/myAccount" type="submit" class="btn square btn-danger">History </a>
+							<a href="/myAccount" type="submit" class="btn square btn-danger"><spring:message code="history"/> </a>
 						</div>
 					</div>
 				</div>
-				
 			</section>

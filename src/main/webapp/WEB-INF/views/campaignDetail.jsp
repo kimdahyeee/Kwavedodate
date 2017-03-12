@@ -1,4 +1,5 @@
 			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+			<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 			<section id="campaignDetailView" class="main-container">
 				<div class="container">
 				<input type="hidden" value="${details.youtubeCode}" id="youtube_code"/>
@@ -15,7 +16,7 @@
 											<a class="overlay-link" id="play_vid"> <i class="fa fa-play" aria-hidden="true"></i></a>
 										</c:when>
 										<c:when test="${details.duedateToSysdate == 'end'}">
-											<span class="campaign-badge-closed center"><i>Sorry! This campaign is finished!</i></span>
+											<span class="campaign-badge-closed center"><i><spring:message code="finishCampaignText1"/></i></span>
 										</c:when>
 									</c:choose>
 								</div>
@@ -55,7 +56,7 @@
 											</c:when>
 											<c:otherwise>
 												<div class="text-center">
-													<button class="btn btn-lg btn-danger campaign-enter-btn" style="width: 80%" disabled> finished campaign! </button>
+													<button class="btn btn-lg btn-danger campaign-enter-btn" style="width: 80%" disabled> <spring:message code="finishCampaignText2"/></button>
 												</div>
 											</c:otherwise>
 										</c:choose>

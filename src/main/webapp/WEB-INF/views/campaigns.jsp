@@ -1,10 +1,11 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+			<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+			<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 			<div class="banner campaigns-banner pv-40 dark-translucent-bg">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 text-center col-md-offset-2 pv-20">
-							<h1 class="title object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100">DREAM EXPERIENCES</h1>
+							<h1 class="title object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100"><spring:message code="campaignsText1"/></h1>
 						</div>
 					</div>
 				</div>
@@ -15,8 +16,8 @@
 					<div class="row">
 						<div class="main col-md-8 col-md-offset-2 text-center">
 							<ul class="nav nav-pills nav-justified" role="tablist">
-								<li class="active"><a href="#currentCampaigns" role="tab" data-toggle="tab"><h4><strong>Currnet campaigns</strong></h4></a></li>
-								<li><a href="#recentlyClosed" role="tab" data-toggle="tab"><h4><strong>Recently closed</strong></h4></a></li>
+								<li class="active"><a href="#currentCampaigns" role="tab" data-toggle="tab"><h4><strong><spring:message code="currentCampaign"/></strong></h4></a></li>
+								<li><a href="#recentlyClosed" role="tab" data-toggle="tab"><h4><strong><spring:message code="recentlyClosed"/></strong></h4></a></li>
 							</ul>
 							<div class="tab-content clear-style text-left">
 								<!-- #CURRENT CAMPAIGNS -->

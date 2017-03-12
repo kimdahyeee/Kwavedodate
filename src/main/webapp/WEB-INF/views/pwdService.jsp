@@ -8,8 +8,8 @@
                      <div class="form-block center-block p-30">
                         <h2 class="title text-center"><strong><spring:message code="password"/><spring:message code="change"/></strong></h2>
                         <form class="form-horizontal" id="validateFindPassword">
-                        	<input type="hidden" class="form-control" id="userEmail" name="userEmail" value="${ue}">
-                        	
+                           <input type="hidden" class="form-control" id="userEmail" name="userEmail" value="${ue}">
+                           
                            <div class="form-group has-feedback">
                               <div class="col-sm-12">
                                  <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="<spring:message code="newPassword"/>" required>

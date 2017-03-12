@@ -9,8 +9,8 @@
 <body>
 	<h1>page를 선택해주세요.</h1>
 	<hr>
-	<a href="/kwaveweb">kwaveweb으로 이동</a> <br>
-	<a href="/kwaveweb/admin/main">kwaveweb admin으로 이동</a>
+	<a href="/">kwaveweb으로 이동</a> <br>
+	<a href="/admin/main">kwaveweb admin으로 이동</a>
 	<hr>
 </body>
 </html>
