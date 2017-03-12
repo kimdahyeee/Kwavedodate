@@ -6,9 +6,9 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 text-center col-md-offset-2 pv-20">
-							<h1 class="title object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100">EXTRAORDINARY EXPERIENCE</h1>
+							<h1 class="title object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100"><spring:message code="mainTitle1"/></h1>
 							<p class="text-center object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100">
-								FOR A $10 DONATION, ANYONE HAS THE CHANCE TO WIN.
+								<spring:message code="mainTitle2"/>
 							</p>
 						</div>
 					</div>
@@ -19,7 +19,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<h2 class="text-center">AWESOME <strong><spring:message code="EXPERIENCE"/></strong></h2>
+							<h2 class="text-center"><spring:message code="mainTitle3"/><strong><spring:message code="mainTitle4"/></strong></h2>
 						</div>
 					</div>
 					<div class="row">
@@ -48,7 +48,7 @@
 							<label></label>
 							<c:if test="${fn:length(campaignsList) == '4'}">
 								<div class="text-center">
-									<a href="campaigns" class="btn btn-lg btn-danger"> See Them All </a>
+									<a href="campaigns" class="btn btn-lg btn-danger"><spring:message code="mainTitle8"/></a>
 								</div>
 							</c:if>
 						</div>
@@ -59,7 +59,7 @@
 			<section class="dark-translucent-bg" style="background-color: black;">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<h2 class="text-center">Because of your <strong>generosity</strong></h2>
+						<h2 class="text-center"><spring:message code="mainTitle5"/><strong><spring:message code="mainTitle6"/></strong></h2>
 					</div>
 				</div>
 				<div class="swiper-container">
@@ -92,7 +92,7 @@
 
 			<div class="section">
 				<div class="container text-center">
-					<h2><strong>Featured In</strong></h2>
+					<h2><strong><spring:message code="mainTitle7"/></strong></h2>
 					<div class="clients-container">
 						<div class="clients">
 							<div class="client-image object-non-visible" data-animation-effect="fadeIn" data-effect-delay="100">

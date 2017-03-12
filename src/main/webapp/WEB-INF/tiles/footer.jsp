@@ -1,4 +1,5 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+	<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 	<footer id="footer" class="clearfix dark">				
 		<div class="subfooter">
 			<div class="container">
@@ -6,7 +7,7 @@
 					<div class="row">
 						<div class="col-md-12 text-center">
 
-							<h3 class="title">follow us on: </h3>
+							<h3 class="title"><spring:message code="followUsOn"/></h3>
 							<ul class="social-links circle animated-effect-1">
 								<li class="facebook"><a target="_blank" href="https://www.facebook.com/kwavedonation/"><i class="fa fa-facebook"></i></a></li>
 								<li class="twitter"><a target="_blank" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
@@ -18,10 +19,10 @@
 							<div class="footer-category">
 								<div class="row text-center">
 									<div class="form-inline" data-animation-effect="fadeIn">
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="/kwaveweb/aboutUs">About Us</a>
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#">Partnership</a>
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#">Terms Of Use</a>
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#">Privacy Policy</a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="/kwaveweb/aboutUs"><spring:message code="aboutUs"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="partnership"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="privacyPolicy"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="termsOfUse"/></a>
 									</div>
 								</div>
 							</div>
