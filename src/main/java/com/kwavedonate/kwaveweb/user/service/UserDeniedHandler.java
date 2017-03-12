@@ -26,7 +26,7 @@ public class UserDeniedHandler implements AccessDeniedHandler {
 		logger.info("StackTrace : {}", ade.getStackTrace());
 
 		
-		response.sendRedirect("/kwaveweb/common/error/403");
+		response.sendRedirect("/common/error/403");
 	}
 
 }

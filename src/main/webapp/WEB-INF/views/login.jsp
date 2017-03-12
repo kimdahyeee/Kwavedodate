@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
@@ -7,7 +8,7 @@
 					<div class="row">
 						<div class="main object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
 							<div class="form-block center-block p-30">
-								<h2 class="title text-center"><strong>Hello There</strong></h2>
+								<h2 class="title text-center"><strong><spring:message code="helloThere"/></strong></h2>
 								<form class="form-horizontal" id="validateLogin" method="post">
 									<div class="form-group has-feedback">
 										<div class="col-sm-12">
@@ -23,15 +24,15 @@
 									</div>
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" id="remember_me" name="remember_me" checked/>Remember me.
+											<input type="checkbox" id="remember_me" name="remember_me" checked/><spring:message code="rememberMe"/>
 										</label>
 									</div>	
 									<div class="form-group">
 										<div class="col-sm-12">							
-											<button type="submit" class="btn square btn-danger" style="width: 100%;">Log In <i class="fa fa-user"></i></button>
-											<a class="btn square btn-gray-transparent col-md-6 col-xs-6 col-lg-6" href="signin">Sign In</a>
+											<button type="submit" class="btn square btn-danger" style="width: 100%;"><spring:message code="login"/><i class="fa fa-user"></i></button>
+											<a class="btn square btn-gray-transparent col-md-6 col-xs-6 col-lg-6" href="signin"><spring:message code="signIn"/></a>
 											
-											<a class="btn square btn-gray-transparent col-md-6 col-xs-6 col-lg-6" href="findPassword">Find password</a>
+											<a class="btn square btn-gray-transparent col-md-6 col-xs-6 col-lg-6" href="findPassword"><spring:message code="findPassword"/></a>
 										</div>
 									</div>
 
@@ -40,7 +41,7 @@
 									<div class="form-group">
 										<div class="col-sm-12">							
 											<a id="facebookLoginBtn" class="btn square btn-primary" style="width: 100%;">
-												<i class="fa fa-facebook"></i> facebook login
+												<i class="fa fa-facebook"></i><spring:message code="facebookLogin"/>
 											</a>
 										</div>
 									</div>
