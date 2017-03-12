@@ -39,10 +39,10 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 			map.put("RETURNURI", "/admin/choosePageView");
 		} else {
 			map.put("KEY", "SUCCESS"); 
+			//map.put("RETURNURI", getReturnUrl(request, response)+getReturnLang(auth));
 			map.put("RETURNURI", getReturnUrl(request, response)+getReturnLang(auth));
-			System.out.println("returnuri" + getReturnLang(auth));
 		}
-		
+		System.out.println("getReturnUrl : : : " + getReturnUrl(request, response));
 		
 		String jsonString = om.writeValueAsString(map); 
 		OutputStream out = response.getOutputStream(); 

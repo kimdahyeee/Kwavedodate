@@ -149,7 +149,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                     type: "POST",
-                    url: "/kwaveweb/insertUser", 
+                    url: "/insertUser", 
                     data: {
                         "userEmail": $("#userEmail").val(),
                         "userPassword": $("#userPassword").val(),
@@ -246,7 +246,11 @@ $(document).ready(function() {
                     success: function(data) {
                        //성공 시 데이터 처리 
                         if(data.KEY=="SUCCESS") {
+                        		//if(data.RETURNURI=="www.kwavedonate.com:8181/login") {
+                        			location.replace("/");
+                        		/*} else {
                               location.replace(data.RETURNURI);
+                        		}*/
                         } else if(data.KEY=="SUCCESS_ADMIN") {
                         	  location.replace(data.RETURNURI);
                         } else {
@@ -851,7 +855,7 @@ $(document).ready(function() {
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
                   buyer_postcode : $("#zipCode").val(),
-                  m_redirect_url : 'http://13.124.66.223:8181/m_redirect?'
+                  m_redirect_url : 'http://13.124.66.223/m_redirect?'
                 	  + "campaignName=" + $("#campaignName").val()
                 	  + "&note=" + $("#note").val()
                 	  + "&rewardNum=" + $("#rewardNum").val()
