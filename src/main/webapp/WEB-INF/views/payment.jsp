@@ -132,7 +132,7 @@
 			                                          	  <input type="hidden" id="rewardSubject" value="${reward.rewardSubject}">
 			                                          	  <div class="separator"></div>
 				                                          <span class="text-left"><spring:message code="rewardAmount"/>: </span> 
-				                                          <span class="text-right rewardAmountArea"><spring:message code="notation"/>${reward.rewardAmount}</span><br>
+				                                          <span class="text-right rewardAmountArea"><spring:message code="currency"/>${reward.rewardAmount}</span><br>
 				                                          <span class="text-left"><spring:message code="shippingAmount"/>: </span>
 				                                          <span class="text-right shippingAmountArea"></span><br>
 				                                          <span class="text-left"><spring:message code="totalAmount"/>:</span>
@@ -141,7 +141,7 @@
 			                                          </c:when>
 			                                          <c:otherwise>
 				                                          <span class="text-left"><spring:message code="totalAmount"/> : </span>
-				                                          <span class="text-right totalAmountArea"><spring:message code="notation"/>${defaultMoney}</span><br>
+				                                          <span class="text-right totalAmountArea"><spring:message code="currency"/>${defaultMoney}</span><br>
 				                                          <input type="hidden" id="rewardAmount" name="rewardAmount" value="${defaultMoney}"> 
 				                                          <input type="hidden" id="zipCode" value="" >
 														  <input type="hidden" id="address1" value="" >

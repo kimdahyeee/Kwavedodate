@@ -35,4 +35,9 @@
 		var inputShippingMethod="<spring:message code='inputShippingMethod'/>";
 		var failToLogin="<spring:message code='failToLogin'/>";
 		var currency="<spring:message code='currency'/>";
+		var city="<spring:message code='city'/>";
+		var region="<spring:message code='region'/>";
+		var card="<spring:message code='card'/>";
+		var trans="<spring:message code='trans'/>";
+		var paypal="<spring:message code='paypal'/>";;
 	</script>

@@ -236,7 +236,7 @@ $(document).ready(function() {
                 // 데이터 베이스에 저장 ajax 사용
                 $.ajax({
                    type: "POST",
-                    url: "/j_spring_security_check",
+                    url: "/kwaveweb/j_spring_security_check",
                     data: {
                         "username": $("#userEmail").val(),
                         "password":$("#userPassword").val(),
@@ -246,11 +246,12 @@ $(document).ready(function() {
                     success: function(data) {
                        //성공 시 데이터 처리 
                         if(data.KEY=="SUCCESS") {
-                        		//if(data.RETURNURI=="www.kwavedonate.com:8181/login") {
-                        			location.replace("/");
-                        		/*} else {
-                              location.replace(data.RETURNURI);
-                        		}*/
+                        	//alert(data.RETURNURI);
+                    		if(data.RETURNURI.substring(0, 5)=="?lang") {
+                    			location.replace("/");
+                    		} else {
+                    			location.replace(data.RETURNURI);
+                    		}
                         } else if(data.KEY=="SUCCESS_ADMIN") {
                         	  location.replace(data.RETURNURI);
                         } else {
