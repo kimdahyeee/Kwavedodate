@@ -76,6 +76,27 @@ public class HomeController {
 		logger.info("aboutUs");
 		return "aboutUs";
 	}
+
+	/**
+	 * privacy policy 화면
+	 * @return
+	 */
+	@RequestMapping("/privacyPolicy")
+	public String privacyPolicy() {
+		logger.info("privacyPolicy");
+		return "privacyPolicy";
+	}
+	
+	/**
+	 * termsOfUse 화면
+	 * @return
+	 */
+	@RequestMapping("/termsOfUse")
+	public String termsOfUse() {
+		logger.info("termsOfUse");
+		return "termsOfUse";
+	}
+	
 	
 	/**
 	 * login 화면

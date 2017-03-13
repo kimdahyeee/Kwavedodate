@@ -1,3 +1,4 @@
+	<%@ page language="java" contentType="text/htmll; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 	<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 	<footer id="footer" class="clearfix dark">				
@@ -19,10 +20,10 @@
 							<div class="footer-category">
 								<div class="row text-center">
 									<div class="form-inline" data-animation-effect="fadeIn">
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="/kwaveweb/aboutUs"><spring:message code="aboutUs"/></a>
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="partnership"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/aboutUs' />"><spring:message code="aboutUs"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/privacyPolicy' />"><spring:message code="partnership"/></a>
 										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="privacyPolicy"/></a>
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="termsOfUse"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/termsOfUse' />"><spring:message code="termsOfUse"/></a>
 									</div>
 								</div>
 							</div>

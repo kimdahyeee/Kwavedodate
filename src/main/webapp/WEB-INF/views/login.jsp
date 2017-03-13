@@ -29,7 +29,7 @@
 									</div>	
 									<div class="form-group">
 										<div class="col-sm-12">							
-											<button type="submit" class="btn square btn-danger" style="width: 100%;"><spring:message code="login"/><i class="fa fa-user"></i></button>
+											<button type="submit" class="btn square btn-danger" style="width: 100%;"><spring:message code="login"/> <i class="fa fa-user"></i></button>
 											<a class="btn square btn-gray-transparent col-md-6 col-xs-6 col-lg-6" href="signin"><spring:message code="signIn"/></a>
 											
 											<a class="btn square btn-gray-transparent col-md-6 col-xs-6 col-lg-6" href="findPassword"><spring:message code="findPassword"/></a>
@@ -40,7 +40,7 @@
 									<div class="form-group">
 										<div class="col-sm-12">							
 											<a id="facebookLoginBtn" class="btn square btn-primary" style="width: 100%;">
-												<i class="fa fa-facebook"></i><spring:message code="facebookLogin"/>
+												<i class="fa fa-facebook"></i> <spring:message code="facebookLogin"/>
 											</a>
 										</div>
 									</div>
