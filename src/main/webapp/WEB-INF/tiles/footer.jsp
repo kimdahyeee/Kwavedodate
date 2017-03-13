@@ -10,19 +10,17 @@
 
 							<h3 class="title"><spring:message code="followUsOn"/></h3>
 							<ul class="social-links circle animated-effect-1">
-								<li class="facebook"><a target="_blank" href="https://www.facebook.com/kwavedonation/"><i class="fa fa-facebook"></i></a></li>
-								<li class="twitter"><a target="_blank" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
-								<li class="googleplus"><a target="_blank" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a></li>
-								<li class="linkedin"><a target="_blank" href="http://www.linkedin.com"><i class="fa fa-linkedin"></i></a></li>
-								<li class="xing"><a target="_blank" href="http://www.xing.com"><i class="fa fa-xing"></i></a></li>
+								<li class="facebook"><a target="_blank" href="https://www.facebook.com/kwavedonation"><i class="fa fa-facebook"></i></a></li>
+								<li class="youtube"><a target="_blank" href="http://www.youtube.com/channel/UCVR24ARpynET8k8X-PN29YQ"><i class="fa fa-youtube"></i></a></li>
+								<li class="instagram"><a target="_blank" href="http://www.instagram.com/"><i class="fa fa-instagram"></i></a></li>
 							</ul>
 
 							<div class="footer-category">
 								<div class="row text-center">
 									<div class="form-inline" data-animation-effect="fadeIn">
 										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/aboutUs' />"><spring:message code="aboutUs"/></a>
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/privacyPolicy' />"><spring:message code="partnership"/></a>
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="privacyPolicy"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="partnership"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/privacyPolicy' />"><spring:message code="privacyPolicy"/></a>
 										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/termsOfUse' />"><spring:message code="termsOfUse"/></a>
 									</div>
 								</div>

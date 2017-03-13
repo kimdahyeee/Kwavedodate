@@ -33,7 +33,7 @@
 									</div>
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" id="signInAgreement" name="signInAgreement" required>Agreement <a href="#">privacy policy</a> and <a href="#">term of use</a>
+											<input type="checkbox" id="signInAgreement" name="signInAgreement" required>Agreement <a href="<c:url value='/privacyPolicy' />">privacy policy</a> and <a href="<c:url value='/termsOfUse' />">term of use</a>
 										</label>
 									</div>	
 									<input type="hidden" id="location" value="${location}">
