@@ -58,13 +58,17 @@ $(document).ready(function(){
 		                               success: function(data) {
 		                               	//성공 시 데이터 처리 
 		                            	   if(data.KEY=="SUCCESS") {
-		                                       	location.replace(data.RETURNURI);
-		                            	   } else if(data.KEY=="SUCCESS_ADMIN") {
-		                               			location.replace(data.RETURNURI);
-		                            	   } else {
-		                            		   	alert(failToLogin);
-			                                    location.replace("/login?fail");
-		                            	   }
+		                               			if(data.RETURNURI.substring(0, 5)=="?lang") {
+		                               				location.replace("/");
+		                               			} else {
+		                               				location.replace(data.RETURNURI);
+		                               			}
+		                                   } else if(data.KEY=="SUCCESS_ADMIN") {
+		                                   	  	location.replace(data.RETURNURI);
+		                                   } else {
+		                                	   alert(failToLogin);
+		                                	   location.replace("/login?fail");
+		                                   }
 		                                }
 		                            });
 		                       }else{
