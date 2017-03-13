@@ -97,6 +97,16 @@ public class HomeController {
 		return "termsOfUse";
 	}
 	
+	/**
+	 * partnership 화면
+	 * @return
+	 */
+	@RequestMapping("/partnership")
+	public String partnership() {
+		logger.info("partnership");
+		return "partnership";
+	}
+	
 	
 	/**
 	 * login 화면

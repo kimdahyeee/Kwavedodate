@@ -32,7 +32,7 @@ $(document).ready(function(){
 			    console.log(response.authResponse.accessToken);
 			    FB.api('/me', {fields: 'name,email'}, function(user){
 			    	if(user.email == null){
-			    		alert("이메일 정보가 누락된 sns 계정입니다. 일반 회원가입을 해주시길 바랍니다.");
+			    		alert(redirectSignIn);
 			    		location.replace("/signin");
 			    	}else{
 			    		$.ajax({
@@ -72,7 +72,7 @@ $(document).ready(function(){
 		                                }
 		                            });
 		                       }else{
-   		                          alert("이미 회원가입 된 이메일입니다.");
+   		                          alert(alreadyRegister);
    		                          location.replace("/login");
 		                       }
 		                    }

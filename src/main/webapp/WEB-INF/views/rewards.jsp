@@ -31,7 +31,7 @@
 											<div class="body">
 												<h3 class="text-center">${rewards.rewardSubject}</h3>
 												<div class="separator"></div>
-												<p class="small mb-10"><i class="icon-calendar"></i> Feb, 2015 <i class="pl-10 icon-tag-1"></i> App development</p>
+												<p class="small mb-10"><i class="icon-calendar"></i> 2017 <i class="pl-10 icon-tag-1"></i> App development</p>
 												<p class="text-muted ellipsis">${rewards.rewardContents }</p>
 												<c:set var="current" value="${rewards.rewardCurrentCnt}"/>
 												<c:choose>

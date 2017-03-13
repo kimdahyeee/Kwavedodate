@@ -39,5 +39,6 @@
 		var region="<spring:message code='region'/>";
 		var card="<spring:message code='card'/>";
 		var trans="<spring:message code='trans'/>";
-		var paypal="<spring:message code='paypal'/>";;
+		var paypal="<spring:message code='paypal'/>";
+		var redirectSignIn="<spring:message code='redirectSignIn'/>";
 	</script>

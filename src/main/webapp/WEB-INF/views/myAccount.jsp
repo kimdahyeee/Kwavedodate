@@ -54,7 +54,7 @@
 														<img src="${historyList[status.index].CCAMPAIGNIMG}">
 													</div>
 													<div class="table-footer">${historyList[status.index].CCAMPAIGNSUBJECT}
-														<c:if test="${not empty historyList[status.index].RREWARDSUBJECT}">/${historyList[status.index].RREWARDSUBJECT}</c:if>
+														<c:if test="${not empty historyList[status.index].RREWARDSUBJECT}"><br/>${historyList[status.index].RREWARDSUBJECT}</c:if>
 													</div>
 												</td>
 												<td>$${historyList[status.index].PTOTALAMOUNT }</td>

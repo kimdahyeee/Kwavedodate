@@ -58,20 +58,20 @@
 											
 											<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
 												<li>
-													<a href="<c:url value='/campaigns'/>"><spring:message code="campaigns"/></a>
+													<a href="<c:url value='/campaigns'/>"><strong><spring:message code="campaigns"/></strong></a>
 												</li>
 												<li>
-													<a href="<c:url value='/aboutUs'/>"><spring:message code="aboutUs"/></a>
+													<a href="<c:url value='/aboutUs'/>"><strong><spring:message code="aboutUs"/></strong></a>
 												</li>
 												<sec:authorize access="isAnonymous()">
 													<li>
-														<a href="<c:url value='/login'/>"><spring:message code="login"/></a>
+														<a href="<c:url value='/login'/>"><strong><spring:message code="login"/></strong></a>
 													</li>
 												</sec:authorize>
 										
 												<sec:authorize access="isAuthenticated()">
 													<li>
-														<a href="<c:url value='/myAccount'/>"><spring:message code="myAccount"/></a>
+														<a href="<c:url value='/myAccount'/>"><strong><spring:message code="myAccount"/></strong></a>
 													</li>
 												</sec:authorize>
 												<a href="<c:url value='?lang=ko'/>" class="btn btn-default btn-sm">한국어</a>
@@ -103,28 +103,28 @@
 												<div class="collapse navbar-collapse" id="navbar-collapse-1">
 													<ul class="nav navbar-nav">
 														<li>
-															<a href="<c:url value='/campaigns'/>"><spring:message code="campaigns"/></a>
+															<a href="<c:url value='/campaigns'/>"><strong><spring:message code="campaigns"/></strong></a>
 														</li>
 														<li>
-															<a href="<c:url value='/aboutUs'/>"><spring:message code="aboutUs"/></a>
+															<a href="<c:url value='/aboutUs'/>"><strong><spring:message code="aboutUs"/></strong></a>
 														</li>
 														<sec:authorize access="isAnonymous()">
 														<li>
-															<a href="<c:url value='/login'/>"><spring:message code="login"/></a>
+															<a href="<c:url value='/login'/>"><strong><spring:message code="login"/></strong></a>
 														</li>
 														</sec:authorize>
 												
 														<sec:authorize access="isAuthenticated()">
 															<li>
-																<a href="<c:url value='/myAccount'/>"><spring:message code="myAccount"/></a>
+																<a href="<c:url value='/myAccount'/>"><strong><spring:message code="myAccount"/></strong></a>
 															</li>
 														</sec:authorize>
 														<li class="header-top-dropdown">
-															<a href="#" class="dropdown-toggle language" data-toggle="dropdown"><spring:message code="language"/> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+															<a href="#" class="dropdown-toggle language" data-toggle="dropdown"><strong><spring:message code="language"/><i class="fa fa-angle-down" aria-hidden="true"></i></strong></a>
 															<ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-																<li><a href="<c:url value='?lang=ko'/>">한국어</a></li>
-																<li><a href="<c:url value='?lang=en'/>">English</a></li>
-																<li><a href="<c:url value='?lang=ch'/>">中文</a></li>
+																<li><a href="<c:url value='?lang=ko'/>"><strong>한국어</strong></a></li>
+																<li><a href="<c:url value='?lang=en'/>"><strong>English</strong></a></li>
+																<li><a href="<c:url value='?lang=ch'/>"><strong>中文</strong></a></li>
 															</ul>
 														</li>
 													</ul>

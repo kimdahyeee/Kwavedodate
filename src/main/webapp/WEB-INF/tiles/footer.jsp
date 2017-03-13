@@ -19,7 +19,7 @@
 								<div class="row text-center">
 									<div class="form-inline" data-animation-effect="fadeIn">
 										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/aboutUs' />"><spring:message code="aboutUs"/></a>
-										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="#"><spring:message code="partnership"/></a>
+										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/partnership' />"><spring:message code="partnership"/></a>
 										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/privacyPolicy' />"><spring:message code="privacyPolicy"/></a>
 										<a class="btn square btn-gray-transparent btn-lg foot-cate" href="<c:url value='/termsOfUse' />"><spring:message code="termsOfUse"/></a>
 									</div>
@@ -27,7 +27,7 @@
 							</div>
 
 							<label></label>
-							<p class="text-center">Copyright &#9400; 2016 KWAVE D. All Rights Reserved</p>
+							<p class="text-center">Copyright &#9400; 2017 KWAVE D. All Rights Reserved</p>
 						</div>
 					</div>
 				</div>
