@@ -21,19 +21,19 @@
 											<h3><spring:message code="paymentText2"/></h3>
 											<label></label>
 											<div class="form-group has-feedback text-center">
-												<label for="inputUserEmail" class="col-xs-3 col-sm-3"><spring:message code="email"/> : </label>
+												<label for="inputUserEmail" class="col-xs-3 col-sm-3"><spring:message code="email"/>: </label>
 												<div class="col-xs-9 col-sm-9">
 													<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="<spring:message code="email"/>" value="<sec:authentication property="principal.username"/>" required disabled>
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
-												<label for="inputUserName" class="col-xs-3 col-sm-3"><spring:message code="userName"/> : </label>
+												<label for="inputUserName" class="col-xs-3 col-sm-3"><spring:message code="userName"/>: </label>
 												<div class="col-xs-9 col-sm-9">
 													<input type="text" class="form-control" id="userName" name="userName" placeholder="<spring:message code="userName"/>" value="${user.USERNAME}" required>
 												</div>
 											</div>
 											<div class="form-group has-feedback text-center">
-												<label for="inputPhone" class="col-xs-3 col-sm-3"><spring:message code="phoneNumber"/> : </label>
+												<label for="inputPhone" class="col-xs-3 col-sm-3"><spring:message code="phoneNumber"/>: </label>
 												<div class="col-xs-9 col-sm-9">
 													<input type="text" class="form-control" id="phone" name="phone" placeholder="<spring:message code="phoneNumber"/>" value="${user.PHONE }" required>
 												</div>

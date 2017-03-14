@@ -46,9 +46,9 @@
 							</div>
 						</div>
 						<div class="col-md-10 col-md-offset-1 text-center">
-							<a href="/kwaveweb/" type="submit" class="btn square btn-danger"><spring:message code="home"/> </a>
+							<a href="<c:url value='/'/>" type="submit" class="btn square btn-danger"><spring:message code="home"/> </a>
 							<label></label>
-							<a href="/myAccount" type="submit" class="btn square btn-danger"><spring:message code="history"/> </a>
+							<a href="<c:url value='/myAccount'/>" type="submit" class="btn square btn-danger"><spring:message code="history"/> </a>
 						</div>
 					</div>
 				</div>

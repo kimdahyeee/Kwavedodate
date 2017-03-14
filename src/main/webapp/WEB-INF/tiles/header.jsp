@@ -41,7 +41,7 @@
 
 	<body class="no-trans transparent-header">	
 		<div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
-		
+		<input id="locale" type="hidden" value="<spring:message code='locale'/>"/>
 
 			<div class="header-container">
 				<header class="header fixed clearfix dark">

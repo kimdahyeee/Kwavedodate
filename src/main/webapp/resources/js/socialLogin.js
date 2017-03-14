@@ -23,67 +23,70 @@ window.fbAsyncInit =function(){
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-$(document).ready(function(){
-	$("#facebookLoginBtn").click(function(event){
-		FB.getLoginStatus(function(response) {
-			 FB.login(function(response) {
-				 
-			  if (response.status === 'connected') {
-			    console.log(response.authResponse.accessToken);
-			    FB.api('/me', {fields: 'name,email'}, function(user){
-			    	if(user.email == null){
-			    		alert(redirectSignIn);
-			    		location.replace("/signin");
-			    	}else{
-			    		$.ajax({
-		                    type: "POST",
-		                    url: "/FacebookValidate", 
-		                    data: {
-		                        "userEmail" : user.email,
-		                        "userName" : user.name
-		                    },
-		                    dataType: "json",
-		                    success: function(data) {
-		                       if(data.KEY == "SUCCESS"){
-		                    	   wrapWindowByMask();
-		                    	   //처음 페이스북 로그인시
-		                    	   $.ajax({
-		                           	type: "POST",
-		                               url: "/j_spring_security_check",
-		                               data: {
-		                                   "username": user.email,
-		                                   "password":user.email+user.name+"1@#$@#!$$$#@"
-		                               },
-		                               dataType: "json",
-		                               success: function(data) {
-		                               	//성공 시 데이터 처리 
-		                            	   if(data.KEY=="SUCCESS") {
-		                               			if(data.RETURNURI.substring(0, 5)=="?lang") {
-		                               				location.replace("/");
-		                               			} else {
-		                               				location.replace(data.RETURNURI);
-		                               			}
-		                                   } else if(data.KEY=="SUCCESS_ADMIN") {
-		                                   	  	location.replace(data.RETURNURI);
-		                                   } else {
-		                                	   alert(failToLogin);
-		                                	   location.replace("/login?fail");
-		                                   }
-		                                }
-		                            });
-		                       }else{
-   		                          alert(alreadyRegister);
-   		                          location.replace("/login");
-		                       }
-		                    }
-		                });
-			    	}
-			    });
-			  }
-			},{scope: 'public_profile, email'});
+
+	if($("#facebookLoginBtn").length>0) {
+		$("#facebookLoginBtn").click(function(event){
+		
+			FB.getLoginStatus(function(response) {
+				 FB.login(function(response) {
+				  if (response.status === 'connected') {
+				    console.log(response.authResponse.accessToken);
+				    FB.api('/me', {fields: 'name,email'}, function(user){
+				    	if(user.email == null){
+				    		alert(redirectSignIn);
+				    		location.replace("/signin");
+				    	}else{
+				    		$.ajax({
+			                    type: "POST",
+			                    url: "/FacebookValidate", 
+			                    data: {
+			                        "userEmail" : user.email,
+			                        "userName" : user.name
+			                    },
+			                    dataType: "json",
+			                    success: function(data) {
+			                       if(data.KEY == "SUCCESS"){
+			                    	   wrapWindowByMask();
+			                    	   //처음 페이스북 로그인시
+			                    	   $.ajax({
+			                           	type: "POST",
+			                               url: "/j_spring_security_check",
+			                               data: {
+			                                   "username": user.email,
+			                                   "password":user.email+user.name+"1@#$@#!$$$#@"
+			                               },
+			                               dataType: "json",
+			                               success: function(data) {
+			                               	//성공 시 데이터 처리 
+			                            	   if(data.KEY=="SUCCESS") {
+			                               			if(data.RETURNURI.substring(0, 5)=="?lang") {
+			                               				location.replace("/");
+			                               			} else {
+			                               				location.replace(data.RETURNURI);
+			                               			}
+			                                   } else if(data.KEY=="SUCCESS_ADMIN") {
+			                                   	  	location.replace(data.RETURNURI);
+			                                   } else {
+			                                	   alert(failToLogin);
+			                                	   location.replace("/login?fail");
+			                                   }
+			                                }
+			                            });
+			                       }else{
+	   		                          alert(alreadyRegister);
+	   		                          location.replace("/login");
+			                       }
+			                    }
+			                });
+				    	}
+				    });
+				  } else {
+					  alert("aaa");
+				  }
+				},{scope: 'public_profile, email'});
+			});
 		});
-	});
-});
+	}
 
 function wrapWindowByMask() {
     //화면의 높이와 너비를 구한다.

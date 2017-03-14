@@ -12,7 +12,7 @@
 							<ul class="social-links circle animated-effect-1">
 								<li class="facebook"><a target="_blank" href="https://www.facebook.com/kwavedonation"><i class="fa fa-facebook"></i></a></li>
 								<li class="youtube"><a target="_blank" href="http://www.youtube.com/channel/UCVR24ARpynET8k8X-PN29YQ"><i class="fa fa-youtube"></i></a></li>
-								<li class="instagram"><a target="_blank" href="http://www.instagram.com/"><i class="fa fa-instagram"></i></a></li>
+								<li class="instagram"><a target="_blank" href="https://www.instagram.com/kwave_d/"><i class="fa fa-instagram"></i></a></li>
 							</ul>
 
 							<div class="footer-category">
@@ -57,8 +57,8 @@
 	<script type="text/javascript" src="<c:url value='/resources/plugins/jquery.countdown/jquery.countdown.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/coming.soon.config.js' />"></script>
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/template.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/socialLogin.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/template.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/customs.js' />"></script>
 	</body>
 </html>

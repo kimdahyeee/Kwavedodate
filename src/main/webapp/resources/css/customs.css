@@ -400,6 +400,8 @@ article.campaign-img-border {
 
 /* 화면 너비 0px ~ 431px */
 @media (max-width: 431px) {
+	
+	
   .form-block {
     width: inherit;
     margin: 0px 10px;
@@ -415,6 +417,13 @@ article.campaign-img-border {
 
 /* 화면 너비 0px ~ 691px */
 @media (max-width: 691px) {
+	.banner.video-background-banner h1{
+	    font-size: 40px;
+	}
+	.banner.video-background-banner p{
+	    font-size: 20px;
+	}
+	
   .tab-content > .tab-pane .pills-space {
     margin-top: 50px;
   }
@@ -434,7 +443,6 @@ article.campaign-img-border {
 
 /* 화면 너비 0px ~ 767px */
 @media (max-width: 767px) {
-
 	.header-left .header-dropdown-buttons {
     position: absolute;
     top: 5px;
@@ -523,6 +531,14 @@ article.campaign-img-border {
 
 /* 화면 너비 691px ~ 768px */
 @media (min-width: 691px) and (max-width: 768px) {
+	
+	.banner.video-background-banner h1{
+	    font-size: 60px;
+	}
+	.banner.video-background-banner p{
+	    font-size: 25px;
+	}
+	
   .tab-content > .tab-pane .pills-space {
     margin-top: 60px;
   }
@@ -537,7 +553,7 @@ article.campaign-img-border {
 @media (min-width: 768px) and (max-width: 991px) {
   header.header .header-right {
   	margin: 0 auto;
-  	width: 396px;
+  	width: 398px;
   }
 }
 

@@ -256,7 +256,7 @@ $(document).ready(function() {
                         	  location.replace(data.RETURNURI);
                         } else {
                            alert(failToLogin);
-                           location.replace("/login?fail");
+                          
                         }
                      }
                  });
@@ -856,7 +856,7 @@ $(document).ready(function() {
                   buyer_tel : $("#phone").val(),
                   buyer_addr : $("#address1").val(),
                   buyer_postcode : $("#zipCode").val(),
-                  m_redirect_url : 'http://13.124.66.223/m_redirect?'
+                  m_redirect_url : 'http://www.kwavedonate.com/m_redirect?'
                 	  + "campaignName=" + $("#campaignName").val()
                 	  + "&note=" + $("#note").val()
                 	  + "&rewardNum=" + $("#rewardNum").val()
@@ -906,12 +906,12 @@ $(document).ready(function() {
         		        	});
     				} else {
     					var msg = failToPayment;
-//         		        msg += '에러내용 : ' + rsp.error_msg;
-//         		        msg += '고유ID : ' + rsp.imp_uid;
-//         		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-//         		        msg += '결제 금액 : ' + rsp.paid_amount;
+         		        msg += '에러내용 : ' + rsp.error_msg;
+         		        msg += '고유ID : ' + rsp.imp_uid;
+         		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+         		        msg += '결제 금액 : ' + rsp.paid_amount;
+    					alert(msg);
     				}
-    				alert(msg);
     			});
     		},
             errorPlacement: function(error, element) {  
@@ -1084,6 +1084,8 @@ if(jQuery("#player").length > 0){
 	    });
 	});	
 }
+
+
 
 
 

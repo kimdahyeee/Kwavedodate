@@ -44,8 +44,9 @@
 										<c:forEach items="${historyList}" var="historyLists" begin="0" end="${fn:length(historyList)}" step="1" varStatus="status">
 											<tr>
 												<td>
+													
 													<c:choose>
-				                           				<c:when test="${not empty historyList[status.index].PRECEIPT_URL}"><a href="${completePaymentInfo.receipt_url}" onclick="window.open(this.href, 'popup', 'popup');return false;" target="_blank"><strong>${historyList[status.index].PIMP_UID}</strong></a></c:when>
+				                           				<c:when test="${not empty historyList[status.index].PRECEIPT_URL}"><a href="${historyList[status.index].PRECEIPT_URL}" onclick="window.open(this.href, 'popup', 'popup');return false;" target="_blank"><strong>${historyList[status.index].PIMP_UID}</strong></a></c:when>
 						                           		<c:otherwise><strong>${historyList[status.index].PIMP_UID}</strong></c:otherwise>
 						                           	</c:choose>
 												</td>
@@ -348,7 +349,7 @@
 													<form class="form-horizontal" id="validateChangePassword">
 														<div class="form-group has-feedback">
 															<div class="col-sm-12">
-																<p><spring:message code="changePasswordText1"/><br/>
+																<p><spring:message code="changePasswordText"/><br/>
 																<spring:message code="changePasswordText1"/></p>
 															</div>
 														</div>

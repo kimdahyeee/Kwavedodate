@@ -36,10 +36,10 @@
 										</div>
 									</div>
 
-                           <div class="separator"></div>
+                           			<div class="separator"></div>
 									<div class="form-group">
 										<div class="col-sm-12">							
-											<a id="facebookLoginBtn" class="btn square btn-primary" style="width: 100%;">
+											<a id="facebookLoginBtn" class="btn square btn-primary" style="width: 100%; z-idex:9999;">
 												<i class="fa fa-facebook"></i> <spring:message code="facebookLogin"/>
 											</a>
 										</div>

@@ -10,7 +10,19 @@
 
 (function($){
 	$(document).ready(function(){
-
+		
+		/*header 부분 언어별 정렬...*/
+		if (Modernizr.mq('only all and (min-width: 768px)')) {
+			if($("#locale").val()=="ko") {
+				$('header:not(.full-width) .navbar-collapse').css('padding-left', '40px');
+			} else if($("#locale").val()=="en") {
+				$('header:not(.full-width) .navbar-collapse').css('padding-left', '0px');
+			}else {
+				$('header:not(.full-width) .navbar-collapse').css('padding-left', '64px');
+			}
+		};
+		
+		
 		if ($('.boxed .fullscreen-bg').length>0) {
 			$("body").addClass("transparent-page-wrapper");
 		};
