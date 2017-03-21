@@ -423,6 +423,9 @@ article.campaign-img-border {
 	.banner.video-background-banner p{
 	    font-size: 20px;
 	}
+	.banner.campaigns-banner h1 {
+	    font-size: 50px;
+	}
 	
   .tab-content > .tab-pane .pills-space {
     margin-top: 50px;
@@ -537,6 +540,9 @@ article.campaign-img-border {
 	}
 	.banner.video-background-banner p{
 	    font-size: 25px;
+	}
+	.banner.campaigns-banner h1 {
+	    font-size: 80px;
 	}
 	
   .tab-content > .tab-pane .pills-space {

@@ -34,7 +34,7 @@
 														<a class="overlay-link" href="<c:url value='/campaigns/${currentList[status.index].campaignName}' />"></a>
 													</div>
 													<div class="body">
-														<p class="small mb-10 text-muted"><i class="icon-calendar"></i> 2017 <i class="pl-10 icon-tag-1"></i> Web Design</p>
+														<p class="small mb-10 text-muted"> <i class="pl-10 icon-tag-1"></i> Web Design</p>
 														<h4 class="ellipsis"><strong>${currentList[status.index].campaignSubject}</strong></h4>
 														<label></label>
 														<div class="btn-learn-more">

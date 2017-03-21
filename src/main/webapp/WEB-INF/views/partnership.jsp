@@ -20,6 +20,7 @@
 	                        <div class="col-md-12">
 	                            <h3 style="color: black; text-align: center;"><strong><spring:message code="text1"/></strong></h3>
 	                            <h4 style="color: black; text-align: center;""><strong><spring:message code="text2"/></strong></h4>
+	                           
 	                        </div>
 	                    </div>
 	                </div>

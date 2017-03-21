@@ -15,10 +15,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="<c:url value='/resources/images/favicon.png' />">
 
-		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+
 
 		<link href="<c:url value='/resources/bootstrap/css/bootstrap.css' />" rel="stylesheet">
 		<link href="<c:url value='/resources/fonts/font-awesome/css/font-awesome.css' />" rel="stylesheet">
@@ -78,11 +79,10 @@
 												<a href="<c:url value='?lang=en'/>" class="btn btn-default btn-sm">English</a>
 												<a href="<c:url value='?lang=ch'/>" class="btn btn-default btn-sm">中文</a>
 											</ul>
-											
 										</div>
 									</div>
 									<div id="logo" class="logo">
-										<a href="<c:url value='/'/>"><img id="logo_img" src="<c:url value='/resources/images/logo.png' />" alt="The Project"></a>
+										<a href="<c:url value='/'/>"><img id="logo_img" width="120px" src="<c:url value='/resources/images/logo.png' />" alt="The Project"></a>
 									</div>
 								</div>
 							</div>

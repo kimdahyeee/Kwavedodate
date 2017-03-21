@@ -17,7 +17,7 @@
 								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 isotope-item">
 									<div class="image-box style-2 mb-20 bordered text-center">
 									<c:set value="${rewards[0].campaignName}" var="campaignName"></c:set>
-										<a href="<c:url value='/payments/${campaignName}' />" class="btn btn-lg btn-danger" style="width: 90%"><strong> donate <spring:message code="currency"/>${defaultMoney} </strong></a>
+										<a href="<c:url value='/payments/${campaignName}' />" class="btn btn-lg btn-danger" style="width: 90%"><strong> enter <spring:message code="currency"/>${defaultMoney} </strong></a>
 									</div>
 								</div>
 								<c:forEach items="${rewards}" var="rewards">
@@ -31,7 +31,6 @@
 											<div class="body">
 												<h3 class="text-center">${rewards.rewardSubject}</h3>
 												<div class="separator"></div>
-												<p class="small mb-10"><i class="icon-calendar"></i> 2017 <i class="pl-10 icon-tag-1"></i> App development</p>
 												<p class="text-muted ellipsis">${rewards.rewardContents }</p>
 												<c:set var="current" value="${rewards.rewardCurrentCnt}"/>
 												<c:choose>

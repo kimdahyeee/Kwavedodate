@@ -80,9 +80,7 @@ window.fbAsyncInit =function(){
 			                });
 				    	}
 				    });
-				  } else {
-					  alert("aaa");
-				  }
+				  } 
 				},{scope: 'public_profile, email'});
 			});
 		});

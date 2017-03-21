@@ -27,7 +27,7 @@
 							</div>
 
 							<label></label>
-							<p class="text-center">Copyright &#9400; 2017 KWAVE D. All Rights Reserved</p>
+							<p class="text-center">Copyright &#9400; 2017 FANDLE INC. & KWAVE D. All Rights Reserved</p>
 						</div>
 					</div>
 				</div>
@@ -45,7 +45,7 @@
 	<script type="text/javascript" src="<c:url value='/resources/plugins/magnific-popup/jquery.magnific-popup.min.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/plugins/waypoints/jquery.waypoints.min.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/plugins/jquery.countTo.js' />"></script>
-	<script type="text/javascript" src="//tbctour.com/script/jquery-scrolltofixed.js" ></script>
+	<script type="text/javascript" src="<c:url value='/resources/plugins/jquery-scrolltofixed.js' />" ></script>
 	<script type="text/javascript" src="<c:url value='/resources/plugins/jquery.parallax-1.1.3.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/plugins/jquery.validate.js' />"></script>
 	<script type="text/javascript" src="<c:url value='/resources/plugins/vide/jquery.vide.js' />"></script>

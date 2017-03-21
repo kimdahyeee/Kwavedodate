@@ -16,7 +16,7 @@
 			if($("#locale").val()=="ko") {
 				$('header:not(.full-width) .navbar-collapse').css('padding-left', '40px');
 			} else if($("#locale").val()=="en") {
-				$('header:not(.full-width) .navbar-collapse').css('padding-left', '0px');
+				$('header:not(.full-width) .navbar-collapse').css('padding-left', '5px');
 			}else {
 				$('header:not(.full-width) .navbar-collapse').css('padding-left', '64px');
 			}
