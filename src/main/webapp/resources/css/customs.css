@@ -5,6 +5,17 @@ Created: 2017-01-15
 File Description: custom CSS styles
 */
 
+/* progress bar custom */
+.progress {
+	border-radius: 0px;
+	margin-bottom: 10px;
+	background-color: #D1D2D4;
+}
+
+.progress-bar-dark {
+    background-color: #FF6363;
+}
+
 .tab-pane p {
 	margin: 0;
 	padding: 0;

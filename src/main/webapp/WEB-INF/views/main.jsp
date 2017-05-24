@@ -34,12 +34,26 @@
 											<img src="${campaignsList[status.index].campaignImg}" />
 											<a class="overlay-link" href="<c:url value='/campaigns/${campaignsList[status.index].campaignName}' />"></a>
 										</div>
+										<div class="progress">
+												<div class="progress-bar progress-bar-dark" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%">	</div>
+										</div>
+										<div class="col-md-4 col-xs-4 col-lg-4 col-sm-4 text-center text-info" style="border-right: solid #D0D0D0 1px;">
+											<span class="" style="font-weight:bold; font-size:15px; padding:0px; margin:0px;">60%</span><br>
+											<span class="small text-muted" style="margin:0px; padding:0px;">funded</span>
+										</div>
+										<div class="col-md-4 col-xs-4 col-lg-4 col-sm-4 text-center text-info" style="border-right: solid #D0D0D0 1px;">
+											<span class="" style="font-weight:bold; font-size:15px; padding:0px; margin:0px;">$100000</span><br>
+											<span class="small text-muted" style="margin:0px; padding:0px;">pledge</span>
+										</div>
+										<div class="col-md-4 col-xs-4 col-lg-4 col-sm-4 text-center text-info">
+											<span class="" style="font-weight:bold; font-size:15px; padding:0px; margin:0px;">10</span><br>
+											<span class="small text-muted" style="margin:0px; padding:0px;">backers</span>
+										</div>
 										<div class="body">
-											<p class="small mb-10 text-muted"><i class="pl-10 icon-tag-1"></i> Web Design</p>
-											<h4 class="ellipsis"><strong><c:out value="${campaignsList[status.index].campaignSubject }"/></strong></h4>
 											<label></label>
+											<h4 class="ellipsis"><strong><c:out value="${campaignsList[status.index].campaignSubject }"/></strong></h4>
 											<div class="btn-learn-more">
-												<a class="text-info btn-md-link" href="<c:url value='/campaigns/${campaignsList[status.index].campaignName}' />">Learn more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+												<a class="text-info btn-md-link" href="<c:url value='/campaigns/${currentList[status.index].campaignName}' />">Learn More <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 											</div>
 										</div>
 									</div>

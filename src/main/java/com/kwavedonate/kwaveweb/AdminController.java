@@ -40,7 +40,7 @@ public class AdminController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-	private static final String contextPath = "http://13.124.66.223/resources/uploads/";
+	private static final String contextPath = "https://13.124.66.223/resources/uploads/";
 
 	@Resource(name="adminService")
 	private AdminService adminService;
