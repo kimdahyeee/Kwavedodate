@@ -163,7 +163,6 @@ $(document).ready(function() {
                           location.replace("/login");
                        }else{
                           alert(alreadyRegister);
-                          
                        }
                     }
                 });
