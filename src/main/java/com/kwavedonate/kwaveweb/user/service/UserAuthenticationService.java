@@ -20,7 +20,7 @@ public class UserAuthenticationService implements UserDetailsService {
 	private static final Logger logger = LoggerFactory.getLogger(UserAuthenticationService.class);
 	private SqlSessionTemplate sqlSession;
 
-	public UserAuthenticationService() {
+	public UserAuthenticationService() { 
 
 	}
 
@@ -34,11 +34,9 @@ public class UserAuthenticationService implements UserDetailsService {
 		user = sqlSession.selectOne("user.selectUser", username);
 		if (user == null)
 			throw new UsernameNotFoundException(username);
-		// userEmail, userPassword, userName, userRegdate, isSNS, 
-		//userNation, phone, zipCode, address1, address2, city, region, country
-		//authority, enabled
 		List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
 		gas.add(new SimpleGrantedAuthority(user.get("AUTHORITY").toString()));
+
 		return new UserDetailsVo(user.get("USERNAME").toString(), user.get("PASSWORD").toString(), true, true, true, 	true, gas, user.get("USER_NAME").toString(), user.get("USERNATION").toString());
 	}	
 }

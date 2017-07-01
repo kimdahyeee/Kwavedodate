@@ -20,7 +20,6 @@
 				<prop key="mail.debug">true</prop>
 			</props>
 		</property>
-	
 	</bean>
 	
 	<bean id="someNotifier" class="com.kwavedonate.kwaveweb.core.util.EmailSenderService">

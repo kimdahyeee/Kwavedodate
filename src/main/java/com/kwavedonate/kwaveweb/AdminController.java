@@ -283,7 +283,7 @@ public class AdminController {
 		model.addAttribute("currentCampaignList", separateCampaignsByDate.currentCampaignList);
 		model.addAttribute("closedCamapaignList", separateCampaignsByDate.closedCamapaignList);
 		
-		return "admin/selectCampaignBeforeRewardView";
+		return "admin/CampaignBeforeRewardView";
 	}
 	
 	/**

@@ -22,6 +22,16 @@ public class UserDetailsVo extends User {
 	private String userRegDate;
 	private String isSns;
 	
+	public UserDetailsVo(String username, String password, 
+			boolean enabled, 				// true
+			boolean accountNonExpired,		// true
+			boolean credentialsNonExpired,  // true
+			boolean accountNonLocked, 		// true
+			Collection<? extends GrantedAuthority> authorities, String user_name, String userNation) {
+		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+		setUserNation(userNation);
+	}
+	
 	public String getIsSns() {
 		return isSns;
 	}
@@ -37,37 +47,6 @@ public class UserDetailsVo extends User {
 	public void setUserRegDate(String userRegDate) {
 		this.userRegDate = userRegDate;
 	}
-
-	public UserDetailsVo(String username, String password, 
-			boolean enabled, 				// true
-			boolean accountNonExpired,		// true
-			boolean credentialsNonExpired,  // true
-			boolean accountNonLocked, 		// true
-			Collection<? extends GrantedAuthority> authorities,
-			String user_name, String userNation) {
-		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		setUserNation(userNation);
-	}
-
-/*	public UserDetailsVO(String username, String password, 
-			boolean enabled, 				// true
-			boolean accountNonExpired,		// true
-			boolean credentialsNonExpired,  // true
-			boolean accountNonLocked, 		// true
-			Collection<? extends GrantedAuthority> authorities,
-			String user_name, String userNation, String phone, String zipCode, String address1, String address2,
-			String city, String region, String country) {
-		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		this.user_name = user_name;
-		this.userNation = userNation;
-		this.phone = phone;
-		this.zipCode = zipCode;
-		this.address1 = address1;
-		this.address2 = address2;
-		this.city = city;
-		this.region = region;
-		this.country = country;
-	}*/
 
 	public String getUser_name() {
 		return user_name;

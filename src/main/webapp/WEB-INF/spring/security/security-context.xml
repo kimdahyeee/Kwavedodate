@@ -53,16 +53,14 @@
 			/>
 	</security:http>
 
-	<bean id="userService" class="com.kwavedonate.kwaveweb.user.service.UserAuthenticationService">
-		<constructor-arg name="sqlSession" ref="sqlSession"/>
-	</bean>
-	
-	
-	
 	<bean id="userDeniedHandler" class="com.kwavedonate.kwaveweb.user.service.UserDeniedHandler"/>
 	<bean id="userLoginSuccessHandler" class="com.kwavedonate.kwaveweb.user.service.UserLoginSuccessHandler"/>
 	<bean id="userLoginFailureHandler" class="com.kwavedonate.kwaveweb.user.service.UserLoginFailureHandler"/>
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
+	<bean id="userService" class="com.kwavedonate.kwaveweb.user.service.UserAuthenticationService">
+		<constructor-arg name="sqlSession" ref="sqlSession"/>
+	</bean>
 	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="userService">
